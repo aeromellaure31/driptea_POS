@@ -15,4 +15,9 @@ class CustomerDetailsController extends Controller
 
         return response()->json(compact('customerDetails'));
     }
+
+    public function retrieveCustomer(Request $request){
+        $customerDetails = CustomerDetails::find($request->id);
+        return response()->json(compact('customerDetails'));
+    }
 }

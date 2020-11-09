@@ -69,7 +69,7 @@ export default {
             name: 'productOnline',
             component: resolve => require(['@/js/modules/onlineOrder/productOnline'], resolve),
             meta: {
-                tokenRequired: false
+                tokenRequired: true
             }
         },
         {

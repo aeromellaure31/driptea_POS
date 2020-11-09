@@ -40,9 +40,15 @@ class ProductController extends Controller
     }
 
     public function updateProduct(Request $request){
-        // $imageName = time().'.'.$request->image->getClientOriginalExtension();
         $data = $request->all();
         $product = Product::firstOrCreate(['id' => $request->id]);
+        if($product->image === $data['image']){
+            $product->image = $data['image'];
+        }else{
+            $imageName = time().'.'.$request->image->getClientOriginalExtension();
+            $request->image->move(public_path('images'), $imageName);
+            $product->image = 'images/'.$imageName;
+        }
         $product->lowPrice = $data['lowPrice'];
         $product->highPrice = $data['highPrice'];
         $product->overPrice = $data['overPrice'];
@@ -53,7 +59,6 @@ class ProductController extends Controller
         $product->description = $data['description'];
         $product->productName = $data['productName'];
         $product->status = $data['status'];
-        $product->image = $data['image'];
         $product->save();
         return response()->json(compact('product'));
     }

@@ -110,7 +110,7 @@
         >mdi-window-close</v-icon>
         <v-icon
           v-else
-          class="btn btn-warning"
+        
           small
           @click="productStatusAvailable(item.id)"
         >mdi-check</v-icon>
@@ -156,7 +156,7 @@
         >mdi-window-close</v-icon>
         <v-icon
           v-else
-          class="btn btn-warning"
+        
           small
           @click="availableStatusUpdate(item.id)"
         >mdi-check</v-icon>
@@ -200,7 +200,7 @@
           small
           @click="NACupUpdate(item.id)"
         >mdi-window-close</v-icon>
-        <v-icon v-else class="btn btn-warning" small @click="availableCupUpdate(item.id)">mdi-check</v-icon>
+        <v-icon v-else small @click="availableCupUpdate(item.id)">mdi-check</v-icon>
       </template>
     </v-data-table>
 
@@ -265,7 +265,8 @@
                                 <v-card-actions>
                                     <v-spacer></v-spacer>
                                         <v-btn color="blue darken-1" text @click="dialogForCategory = false"> Close</v-btn>
-                                        <v-btn color="blue darken-1" text  type="submit" class="btn btn-primary">Add Category</v-btn>
+                                        <v-btn v-if="!editCat" color="blue darken-1" text  type="submit" class="btn btn-primary">Add Category</v-btn>
+                                        <v-btn v-if="editCat" color="blue darken-1" text  type="button" class="btn btn-primary" @click="updateCategory($event)">Edit Category</v-btn>
                                     </v-card-actions>
                         </v-form></v-card-text>
                     </v-card>
@@ -468,9 +469,7 @@
                 </v-dialog>
             </v-row>
         </template>
-
-
-
+        <loading v-if="loadingShow"></loading>
   </div>
 </template>
 
@@ -649,6 +648,7 @@ import loading from '../../basic/loading.vue';
 export default {
   data() {
     return {
+      editCat: false,
       tableForCategory: true,
       tableForProduct: false,
       tableForAddOns: false,
@@ -715,6 +715,7 @@ export default {
       dialogForAddOns: false,
       dialogForCupSize: false,
       dataHeader: null,
+      catId: null,
       headersForAddOns: [
         { text: "#", value: "id" },
         { text: "Add Ons Name", value: "addons_name" },
@@ -735,7 +736,7 @@ export default {
         { text: "#", value: "id" },
         { text: "images", value: "image" },
         { text: "Product Category", value: "productCategory" },
-        { text: "Status", value: "status" },
+        // { text: "Status", value: "status" },
         { text: "ACTION", value: "actions", sortable: false }
       ],
 
@@ -1106,6 +1107,51 @@ export default {
       this.image = e.target.files[0];
       this.imageURL = URL.createObjectURL(e.target.files[0]);
     },
+    editCategories(item){
+      this.dialogForCategory = true;
+      this.editCat = true;
+      this.image = item.image
+      this.imageURL = item.image;
+      this.productType = item.productCategory;
+      this.catId = item.id
+    },
+    updateCategory(e){
+      this.loadingShow = true
+      if (this.image !== null && this.productType !== null) {
+        e.preventDefault();
+        let currentObj = this;
+
+        const config = {
+          headers: {
+              "content-type": "multipart/form-data",
+              Authorization: 'Bearer ' + localStorage.getItem('userToken')
+            }
+        }
+        let formData = new FormData();
+        formData.append("id", this.catId);
+        formData.append("image", this.image);
+        formData.append("productCategory", this.productType);
+        axios
+          .post("/updateCategory", formData, config)
+          .then(function(response) {
+            if(response.data.status){
+              AUTH.deauthenticate()
+            }
+            currentObj.loadingShow = false
+            currentObj.success = response.data.success;
+            currentObj.retrieveCategories();
+            currentObj.retrieveProducts();
+            currentObj.hide();
+          })
+          .catch(function(error) {
+            currentObj.loadingShow = false
+            currentObj.output = error;
+          });
+      } else {
+        this.errorMessage = "All fields are required!";
+        this.loadingShow = false
+      }
+    },
     formSubmit(e) {
       this.loadingShow = true
       if (this.image !== null && this.productType !== null) {
@@ -1261,6 +1307,7 @@ export default {
       this.img = null;
     },
     showCategory() {
+      this.editCat = false
       this.image = null
       this.productType = null
       this.dialogForCategory = true;

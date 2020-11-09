@@ -1,49 +1,8 @@
 <template>
     <div class="sudlanan">
-        <center>
-            <div v-if="data !== null" class="row">
-                <div>
-                    <h1>Mao ni</h1>
-                    <div class="my-custom-scrollbar">
-                        <table class="table table-bordered table-striped categoryTable" id="myTable">
-                            <thead class="thead-light">
-                                <tr class="header">
-                                    <th scope="col">#</th>
-                                    <th scope="col">lowDose</th>
-                                    <th scope="col">highDose</th>
-                                    <th scope="col">overDose</th>
-                                    <th scope="col">total</th>
-                                    <th scope="col">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <template>
-                                    <tr v-for="(item, index) in finalData" :key="index">
-                                        <td scope="row">Customer {{index+1}}</td>
-                                        <td>{{getLowDose(item)}}</td>
-                                        <td>{{getHighDose(item)}}</td>
-                                        <td>{{getOverDose(item)}}</td>
-                                        <td style="font-weight: bold">{{getTotal(item)}}</td>
-                                        <td>
-                                            <div style="text-align: left">
-                                                <button class="btn btn-primary" @click="showData()">Sample</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </template>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div v-else class="secRow">
-                <center>
-                    <img class="noImage" src="@/assets/data.png">
-                    <h2>No Product Yet</h2>
-                    <button class="btn btn-primary">Sample</button>
-                </center>   
-            </div>
-        </center>
+        <div class="w-100">
+            <div class="mx-auto w-50" ref="paypal"></div>
+        </div>
     </div>
 </template>
 <style scoped>
@@ -86,88 +45,55 @@ import ROUTER from '../../router'
 export default {
     data(){
         return{
-            chosenCat: this.$route.params.itemChosen,
-            data: null,
-            success: null,
-            size: null,
-            sugarLevel: null,
-            addOns: null,
-            quantity: null,
-            finalData: [],
-            productData:null,
-            categoryData:null,
+            product: {
+                price: 3.99,
+                description: "backlink from"
+            },
         }
     },
     mounted(){
-        this.retrieveProduct()
-        this.getAllProducts()
-        this.getAllCategory()
-
+        const script = document.createElement("script");
+            script.src =
+            "https://www.paypal.com/sdk/js?client-id=AXdLSpMUd2etAVVMF5OKhuJ1jjPD7KjVamJfOjR2OBxP35jDxVAyclSTWL3q5uAiY8mXO4ga1wznZtbX";
+            script.addEventListener("load", this.setLoaded);
+            document.body.appendChild(script);
     },
     methods: {
-        getTotal(item){
-            let total = 0
-            item.forEach(el => {
-                total += el.quantity
+        setLoaded: function(resp) {
+        this.loaded = true;
+        window.paypal
+            .Buttons({
+            createOrder: (data, actions) => {
+                return actions.order.create({
+                purchase_units: [
+                    {
+                    description: this.product.description,
+                    amount: {
+                        currency_code: "USD",
+                        value: this.product.price
+                    }
+                    }
+                ]
+                });
+            },
+            onApprove: async (data, actions, resp) => {
+                this.loadding = true;
+                const order = await actions.order.capture();
+                this.data;
+                this.paidFor = true;
+                this.loadding = false;
+                // window.location.href = "/productOnline";
+                this.redirect('/productOnline')
+            },
+            onError: err => {
+                console.log(err);
+            }
             })
-            return total
+            .render(this.$refs.paypal);
         },
-        getLowDose(item){
-            let total = 0
-            item.forEach(el => {
-                if(el.size === 'lowDose'){
-                    total += el.quantity
-                }
-            })
-            return total
+        redirect(param){
+            ROUTER.push(param).catch(()=>{})
         },
-        getHighDose(item){
-            let total = 0
-            item.forEach(el => {
-                if(el.size === 'highDose'){
-                    total += el.quantity
-                }
-            })
-            return total
-        },
-        getOverDose(item){
-            let total = 0
-            item.forEach(el => {
-                if(el.size === 'overDose'){
-                    total += el.quantity
-                }
-            })
-            return total
-        },
-        showData(){
-            // console.log(this.finalData)
-        },
-        dataMethod(item){
-            Object.keys(item).forEach(element => {
-                this.finalData.push(item[element])
-            })
-        },
-        retrieveProduct(){
-            this.$axios.post(AUTH.url + 'retrieveAllCheckouts').then(res => {
-                this.data = res.data.storeOrder
-                this.dataMethod(res.data.storeOrder)
-            })
-        },
-        getAllProducts(){
-             this.$axios.post(AUTH.url + 'retrieveAllProduct').then(res => {
-                this.productData = res.data.product
-            })
-
-        },
-        getAllCategory(){
-            this.$axios.post(AUTH.url + 'retrieveCategory').then(res => {
-                this.categoryData = res.data.addCategory
-
-            })
-
-        },
-
-
-    }
+    },
 }
 </script>

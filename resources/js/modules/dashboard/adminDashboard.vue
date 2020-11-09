@@ -297,9 +297,7 @@ export default {
   },
   computed: {},
   mounted() {
-    console.log("...................... ",AUTH.user.fullname);
     this.getTop3();
-    console.log("ang top3 ", this.topProdArr);
     let date = new Date();
     let month =
       date.getMonth() + 1 > 9
@@ -380,7 +378,6 @@ export default {
         this.xlabels.push(i);
       }
       this.categories = this.xlabels;
-      // console.log("........ " + this.categories);
     },
     onFilter() {
       if (this.thefilter == "Daily") {
@@ -420,7 +417,6 @@ export default {
             curve: "smooth"
           }
         };
-        // console.log("monthly cat bruh " + this.categories);
         this.ok = false;
         this.ok2 = true;
         this.ok3 = false;
@@ -703,9 +699,7 @@ export default {
       let endYear = values[1];
       let graphLabel = startingYR + " - " + endYear;
       this.MonthLabel = graphLabel;
-      // console.log("************* 1 " + startingYR);
       let gap = endYear - startingYR;
-      // console.log("************* 2 " + gap);
 
       let array = [];
       let labelsArr = [];
@@ -727,7 +721,6 @@ export default {
         });
         this.points = array;
         this.annualLabels = labelsArr;
-        // console.log("--------------- " + this.points);
         this.series = [
           {
             data: this.points
@@ -763,7 +756,6 @@ export default {
         response.data.prods.forEach(element => {
           indexes.push(response.data.prods.indexOf(element));
         });
-        // console.log(",,,,,, ", indexes);
         for (var i = 0; i < 3; i++) {
           if (indexes.includes(i)) {
             this.topProdArr.push({

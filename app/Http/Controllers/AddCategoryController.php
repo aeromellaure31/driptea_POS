@@ -29,10 +29,15 @@ class AddCategoryController extends Controller
     }
 
     public function updateCategory(Request $request){
-        $imageName = time().'.'.$request->image->getClientOriginalExtension();
         $addCategory = AddCategory::firstOrCreate(['id' => $request->id]);
+        if($addCategory->image === $request->image){
+            $addCategory->image = $request->image;
+        }else{
+            $imageName = time().'.'.$request->image->getClientOriginalExtension();
+            $request->image->move(public_path('images'), $imageName);
+            $addCategory->image = 'images/'.$imageName;
+        }
         $addCategory->productCategory = $request['productCategory'];
-        $addCategory->image = 'images/'.$imageName;
         $addCategory->save();
         return response()->json(compact('addCategory'));
     }

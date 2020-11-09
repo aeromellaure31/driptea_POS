@@ -304,9 +304,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {},
   mounted: function mounted() {
-    console.log("...................... ", _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].user.fullname);
     this.getTop3();
-    console.log("ang top3 ", this.topProdArr);
     var date = new Date();
     var month = date.getMonth() + 1 > 9 ? date.getMonth() + 1 : "0" + (date.getMonth() + 1);
     this.thedate = date.getFullYear() + "-" + month;
@@ -383,7 +381,7 @@ __webpack_require__.r(__webpack_exports__);
         this.xlabels.push(i);
       }
 
-      this.categories = this.xlabels; // console.log("........ " + this.categories);
+      this.categories = this.xlabels;
     },
     onFilter: function onFilter() {
       if (this.thefilter == "Daily") {
@@ -421,8 +419,7 @@ __webpack_require__.r(__webpack_exports__);
             width: 2,
             curve: "smooth"
           }
-        }; // console.log("monthly cat bruh " + this.categories);
-
+        };
         this.ok = false;
         this.ok2 = true;
         this.ok3 = false;
@@ -738,10 +735,8 @@ __webpack_require__.r(__webpack_exports__);
       var startingYR = values[0];
       var endYear = values[1];
       var graphLabel = startingYR + " - " + endYear;
-      this.MonthLabel = graphLabel; // console.log("************* 1 " + startingYR);
-
-      var gap = endYear - startingYR; // console.log("************* 2 " + gap);
-
+      this.MonthLabel = graphLabel;
+      var gap = endYear - startingYR;
       var array = [];
       var labelsArr = [];
       var params = {
@@ -762,8 +757,7 @@ __webpack_require__.r(__webpack_exports__);
           }
         });
         _this6.points = array;
-        _this6.annualLabels = labelsArr; // console.log("--------------- " + this.points);
-
+        _this6.annualLabels = labelsArr;
         _this6.series = [{
           data: _this6.points
         }];
@@ -799,7 +793,7 @@ __webpack_require__.r(__webpack_exports__);
         var resLen = response.data.prods.length;
         response.data.prods.forEach(function (element) {
           indexes.push(response.data.prods.indexOf(element));
-        }); // console.log(",,,,,, ", indexes);
+        });
 
         for (var i = 0; i < 3; i++) {
           if (indexes.includes(i)) {

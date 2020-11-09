@@ -10,6 +10,11 @@
                 <center>
                     <v-card class="ml-10">
                         <center>
+                            <div v-if="customerType === 'online' || customerType === 'fb'">
+                                <p style="text-align: left; margin-left: 5%;">Name: {{name}}</p><br>
+                                <p style="text-align: right; margin-right: 5%;">Contact#: {{contact}}</p><br><br>
+                                <p style="text-align: left; margin-left: 5%; margin-bottom: -5%;">Address: {{address}}</p>
+                            </div>
                             <img v-if="customerType === 'walkin'" style="width: 70px; height: 50px; border: solid 1px black" src="@/assets/walkin.jpg">
                             <img v-if="customerType === 'foodpanda'" style="width: 70px; height: 50px;" src="@/assets/foodpanda1.png">
                             <img v-if="customerType === 'grab'" style="width: 70px; height: 50px;" src="@/assets/grab2.png">
@@ -163,7 +168,10 @@ export default {
             error: false,
             receiptShow: false,
             receiptData: null,
-            loadingShow: false
+            loadingShow: false,
+            name: '',
+            address: '',
+            contact: '',
         }
     },
     components: {
@@ -241,7 +249,6 @@ export default {
                     }
                     this.tableData = res.data.order
                     this.fee = 50
-                    this.loadingShow = false
                 })
             }else{
                 let params = {
@@ -252,8 +259,24 @@ export default {
                         AUTH.deauthenticate()
                     }
                     this.tableData = res.data.order
+                })
+            }
+            if(this.customerType === 'online' || this.customerType === 'fb'){
+                let param = {
+                    id: localStorage.getItem('customerId')
+                }
+                this.$axios.post(AUTH.url + 'retrieveCustomer', param, AUTH.config).then(res => {
+                    if(res.data.status){
+                        AUTH.deauthenticate()
+                    }
+                    this.name = res.data.customerDetails.customerName
+                    this.address = res.data.customerDetails.customerAddress
+                    this.contact = res.data.customerDetails.customerContactNumber
                     this.loadingShow = false
                 })
+            }
+            else{
+                this.loadingShow = false
             }
         },
         getAddOns(item){
@@ -340,7 +363,7 @@ export default {
         },
         checkoutOrder(){
             if(this.customerType !== 'fb' && this.customerType !== 'online'){
-                if(this.convertTotalPrice() !== null && this.cash !== null && this.convertChange() >= 0){
+                if(this.cash > parseInt(this.convertTotalPrice()) && this.convertTotalPrice() !== null && this.cash !== null && this.convertChange() >= 0){
                     this.error = false
                     this.checkoutMethod()
                 }else{
