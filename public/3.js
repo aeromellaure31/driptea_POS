@@ -65,6 +65,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../router */ "./resources/js/router/index.js");
 /* harmony import */ var _config_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../config.js */ "./resources/js/config.js");
 /* harmony import */ var _basic_empty_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../basic/empty.vue */ "./resources/js/basic/empty.vue");
+/* harmony import */ var _assets_logo_png__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../assets/logo.png */ "./resources/assets/logo.png");
+/* harmony import */ var _assets_logo_png__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_assets_logo_png__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _assets_profile_jpg__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../assets/profile.jpg */ "./resources/assets/profile.jpg");
+/* harmony import */ var _assets_profile_jpg__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_assets_profile_jpg__WEBPACK_IMPORTED_MODULE_7__);
 //
 //
 //
@@ -224,6 +228,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+
+
 
 
 
@@ -245,6 +254,8 @@ __webpack_require__.r(__webpack_exports__);
       payment: null,
       available: null,
       error: '',
+      profilePic: _assets_profile_jpg__WEBPACK_IMPORTED_MODULE_7___default.a,
+      imageLogo: _assets_logo_png__WEBPACK_IMPORTED_MODULE_6___default.a,
       payments: ["Cash on Delivery", "G-cash"],
       availability: ["Call me", "Cancel Order"]
     };
@@ -366,7 +377,14 @@ __webpack_require__.r(__webpack_exports__);
       return parseInt(deliveryFee).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
     },
     direct: function direct() {
-      _router__WEBPACK_IMPORTED_MODULE_3__["default"].push("/orderHistory")["catch"](function () {});
+      _router__WEBPACK_IMPORTED_MODULE_3__["default"].push("/customerCart")["catch"](function () {});
+    },
+    viewProfile: function viewProfile() {
+      var id = localStorage.getItem("customerId");
+      _router__WEBPACK_IMPORTED_MODULE_3__["default"].push('/personalInfo/' + id)["catch"](function () {});
+    },
+    orderHistory: function orderHistory() {
+      _router__WEBPACK_IMPORTED_MODULE_3__["default"].push('/orderHistory')["catch"](function () {});
     }
   }
 });
@@ -537,7 +555,19 @@ var render = function() {
         [
           _c("div", { staticClass: "container" }, [
             _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-6" }, [_vm._v("DRIPTEA")]),
+              _c(
+                "div",
+                { staticClass: "col-6" },
+                [
+                  _c(
+                    "v-avatar",
+                    [_c("v-img", { attrs: { src: _vm.imageLogo } })],
+                    1
+                  ),
+                  _vm._v("DRIPTEA")
+                ],
+                1
+              ),
               _vm._v(" "),
               _c(
                 "div",
@@ -546,7 +576,7 @@ var render = function() {
                   _c(
                     "v-btn",
                     {
-                      staticStyle: { "margin-right": "1%" },
+                      staticStyle: { "margin-right": "2%" },
                       attrs: { icon: "" },
                       on: {
                         click: function($event) {
@@ -561,7 +591,7 @@ var render = function() {
                   _c(
                     "v-btn",
                     {
-                      staticStyle: { "margin-right": "2%" },
+                      staticStyle: { "margin-right": "5%" },
                       attrs: { icon: "" },
                       on: {
                         click: function($event) {
@@ -574,22 +604,7 @@ var render = function() {
                       _vm._v(" "),
                       _c("span", { staticStyle: { "margin-left": "-3%" } }, [
                         _vm._v("Cart")
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "span",
-                        {
-                          staticStyle: {
-                            "background-color": "red",
-                            color: "white",
-                            "border-radius": "20%",
-                            "font-size": "10px",
-                            "margin-left": "-10%",
-                            "margin-top": "-20%"
-                          }
-                        },
-                        [_vm._v(_vm._s(_vm.count > 0 ? "New" : ""))]
-                      )
+                      ])
                     ],
                     1
                   ),
@@ -606,17 +621,21 @@ var render = function() {
                             var attrs = ref.attrs
                             return [
                               _c(
-                                "v-btn",
-                                _vm._g(
-                                  _vm._b(
-                                    { attrs: { dark: "", icon: "" } },
-                                    "v-btn",
-                                    attrs,
-                                    false
-                                  ),
-                                  on
-                                ),
-                                [_c("v-icon", [_vm._v("mdi-dots-vertical")])],
+                                "v-avatar",
+                                [
+                                  _c(
+                                    "v-img",
+                                    _vm._g(
+                                      _vm._b(
+                                        { attrs: { src: _vm.profilePic } },
+                                        "v-img",
+                                        attrs,
+                                        false
+                                      ),
+                                      on
+                                    )
+                                  )
+                                ],
                                 1
                               )
                             ]
@@ -631,7 +650,13 @@ var render = function() {
                         [
                           _c(
                             "v-list-item",
-                            [_c("v-list-item-title", [_vm._v("Profile")])],
+                            [
+                              _c(
+                                "v-list-item-title",
+                                { on: { click: _vm.viewProfile } },
+                                [_vm._v("Profile")]
+                              )
+                            ],
                             1
                           ),
                           _vm._v(" "),
@@ -640,7 +665,7 @@ var render = function() {
                             [
                               _c(
                                 "v-list-item-title",
-                                { on: { click: _vm.direct } },
+                                { on: { click: _vm.orderHistory } },
                                 [_vm._v("Order History")]
                               )
                             ],
@@ -1053,6 +1078,17 @@ var staticRenderFns = []
 render._withStripped = true
 
 
+
+/***/ }),
+
+/***/ "./resources/assets/profile.jpg":
+/*!**************************************!*\
+  !*** ./resources/assets/profile.jpg ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/profile.jpg?d1ba46d2eede0a422fe963b840360759";
 
 /***/ }),
 

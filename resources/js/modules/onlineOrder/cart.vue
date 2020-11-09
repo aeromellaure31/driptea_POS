@@ -4,28 +4,31 @@
    <div class="header" style="background-color:#ff5b04">
      <div class="container">
        <div class="row">
-         <div class="col-6">DRIPTEA</div>
+         <div class="col-6">
+           <v-avatar>
+                        <v-img  :src="imageLogo"></v-img>
+                        </v-avatar>DRIPTEA</div>
          <div class="col-6 text-right">
-           <v-btn icon style="margin-right: 1%;" @click="home()">
+           <v-btn icon style="margin-right: 2%;" @click="home()">
              <v-icon>mdi-home</v-icon>
            </v-btn>
-           <v-btn icon @click="direct()" style="margin-right: 2%;">
+           <v-btn icon @click="direct()" style="margin-right: 5%;">
                         <v-icon>mdi-cart</v-icon>
                         <span style="margin-left: -3%;">Cart</span>
-                        <span style="background-color: red; color: white; border-radius: 20%; font-size: 10px; margin-left: -10%; margin-top: -20%;">{{count > 0 ? 'New' : ''}}</span>
                     </v-btn>
            <v-menu bottom left>
              <template v-slot:activator="{ on, attrs }">
-               <v-btn dark icon v-bind="attrs" v-on="on">
-                 <v-icon>mdi-dots-vertical</v-icon>
-               </v-btn>
+               <v-avatar>
+               <v-img :src="profilePic" v-bind="attrs" v-on="on">
+               </v-img>
+             </v-avatar>
              </template>
              <v-list>
                <v-list-item>
-                 <v-list-item-title>Profile</v-list-item-title>
+                 <v-list-item-title @click="viewProfile">Profile</v-list-item-title>
                </v-list-item>
                <v-list-item>
-                 <v-list-item-title @click="direct">Order History</v-list-item-title>
+                 <v-list-item-title @click="orderHistory">Order History</v-list-item-title>
                </v-list-item>
              </v-list>
            </v-menu>
@@ -164,6 +167,10 @@ import AUTH from "../../services/auth";
 import ROUTER from "../../router";
 import config from "../../config.js";
 import empty from "../../basic/empty.vue";
+import imageLogo from "../../../assets/logo.png";
+import profilePic from "../../../assets/profile.jpg";
+
+
 export default {
  data() {
    return {
@@ -179,6 +186,8 @@ export default {
      payment:null,
      available:null,
      error:'',
+     profilePic:profilePic,
+     imageLogo:imageLogo,
  
      payments: [ "Cash on Delivery", "G-cash"],
      availability:["Call me","Cancel Order"]
@@ -300,8 +309,16 @@ export default {
        .replace(/\d(?=(\d{3})+\.)/g, "$&,");
    },
    direct() {
-     ROUTER.push("/orderHistory").catch(() => {});
+     ROUTER.push("/customerCart").catch(() => {});
+   },
+   viewProfile(){
+     let id = localStorage.getItem("customerId")
+      ROUTER.push('/personalInfo/'+ id).catch(()=>{})
+   },
+   orderHistory(){
+      ROUTER.push('/orderHistory').catch(()=>{})
    }
+   
  }
 };
 </script>

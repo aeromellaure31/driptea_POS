@@ -1,5 +1,41 @@
 <template>
   <div>
+      <!-- <div class="header" style="background-color:#ff5b04" v-if="">
+           <div class="container" >
+               <div class="row">
+                   <div class="col-6">
+                        <v-avatar>
+                        <v-img  :src="imageLogo"></v-img>
+                        </v-avatar>DRIPTEA</div>
+                   
+                   <div class="col-6 text-right">
+                   <v-btn icon style="margin-right: 2%;"  @click="home()">
+                        <v-icon >mdi-home</v-icon>
+                    </v-btn>
+                     <v-btn icon @click="direct()" style="margin-right: 5%;">
+                        <v-icon>mdi-cart</v-icon>
+                        <span style="margin-left: -3%;">Cart</span>
+                    </v-btn>
+                 <v-menu bottom left>
+             <template v-slot:activator="{ on, attrs }">
+               <v-avatar>
+               <v-img :src="profilepic" v-bind="attrs" v-on="on">
+               </v-img>
+             </v-avatar>
+             </template>
+             <v-list>
+               <v-list-item>
+                 <v-list-item-title @click="viewProfile">Profile</v-list-item-title>
+               </v-list-item>
+               <v-list-item>
+                 <v-list-item-title @click="orderHistory">Order History</v-list-item-title>
+               </v-list-item>
+             </v-list>
+           </v-menu>
+                   </div>
+               </div>
+           </div>
+      </div> -->
     <div class="thetitle">
       <center>
         <span class="title">Personal Information</span>
@@ -9,7 +45,7 @@
         >Basic Information that you provided upon registration name and contact information</span>
       </center>
     </div>
-    <div class="container">
+    <div class="container container1">
       <span class="title">Profile</span>
       <hr>
       <div class="text-left DP">
@@ -313,7 +349,7 @@
   </div>
 </template>
 
-<style>
+<style scoped>
 .updateText {
   width: auto;
   vertical-align: middle;
@@ -340,8 +376,7 @@
 .subtitle {
   font-size: 15px;
 }
-.container {
-  margin-top: 3%;
+.container1 {
   border: 1px solid gray;
   border-radius: 1%;
   width: 70%;
@@ -359,6 +394,8 @@
 
 <script>
 import ProfilePic from "../../../assets/profile.jpg";
+import imageLogo from "../../../assets/logo.png";
+import ROUTER from '../../router'
 import AUTH from "../../services/auth";
 import Axios from "axios";
 import $ from "jquery";
@@ -367,6 +404,7 @@ import $ from "jquery";
 export default {
   data() {
     return {
+      imageLogo:imageLogo,
       errorMessage: null,
       modalShow: true,
       profilepic: ProfilePic,
@@ -490,7 +528,17 @@ export default {
       this.newaddress = null;
       this.newName = null;
       this.Cpassword = null;
-    }
+    },
+  //   direct() {
+  //    ROUTER.push("/customerCart").catch(() => {});
+  //  },
+  //  viewProfile(){
+  //    let id = localStorage.getItem("customerId")
+  //     ROUTER.push('/personalInfo/'+ id).catch(()=>{})
+  //  },
+  //  orderHistory(){
+  //     ROUTER.push('/orderHistory').catch(()=>{})
+  //  }
   }
 };
 </script>

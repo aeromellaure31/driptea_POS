@@ -4,32 +4,36 @@
             <div class="container" >
                 <div class="row">
                     <div class="col-6">
+                        <v-avatar>
+                        <v-img  :src="imageLogo"></v-img>
+                        </v-avatar>
                         DRIPTEA
                     </div>
                     <div class="col-6 text-right">
                     <v-btn icon style="margin-right: 2%;" @click="home()">
                         <v-icon>mdi-home</v-icon>
                     </v-btn>
-                    <v-btn icon @click="direct()" style="margin-right: 2%;">
+                    <v-btn icon @click="direct()" style="margin-right: 5%;">
                         <v-icon>mdi-cart</v-icon>
                         <span style="margin-left: -3%;">Cart</span>
                         <span style="background-color: red; color: white; border-radius: 20%; font-size: 10px; margin-left: -10%; margin-top: -20%;">{{count > 0 ? 'New' : ''}}</span>
                     </v-btn>
-                              <v-menu bottom left>
-                        <template v-slot:activator="{ on, attrs }">
-                            <v-btn dark icon v-bind="attrs" v-on="on">
-                                <v-icon>mdi-dots-vertical</v-icon>
-                            </v-btn>
-                        </template>
-                        <v-list>
-                            <v-list-item >
-                                <v-list-item-title @click="profile">Profile</v-list-item-title>
-                            </v-list-item>
-                            <v-list-item>
-                                <v-list-item-title @click="direct">Order History</v-list-item-title>
-                            </v-list-item>
-                        </v-list>
-                    </v-menu>
+                     <v-menu bottom left>
+             <template v-slot:activator="{ on, attrs }">
+               <v-avatar>
+               <v-img :src="profilePic" v-bind="attrs" v-on="on">
+               </v-img>
+             </v-avatar>
+             </template>
+             <v-list>
+               <v-list-item>
+                 <v-list-item-title @click="viewProfile">Profile</v-list-item-title>
+               </v-list-item>
+               <v-list-item>
+                 <v-list-item-title @click="direct">Order History</v-list-item-title>
+               </v-list-item>
+             </v-list>
+           </v-menu>
                     </div>
                 </div>
                 <!--/row-->
@@ -211,6 +215,9 @@
 </style>
 <script>
 import AUTH from '../../services/auth'
+import imageLogo from "../../../assets/logo.png";
+import profilePic from "../../../assets/profile.jpg";
+
 import ROUTER from '../../router'
 import $ from 'jquery'
 import config from '../../config.js'
@@ -219,6 +226,7 @@ import loading from '../../basic/loading.vue';
 export default {
     data(){
         return{
+            imageLogo:imageLogo,
             config: config,
             data: null,
             productData: null,
@@ -244,7 +252,8 @@ export default {
             priceShown: 0,
             count: 0,
             loadingShow:false,
-            loading:false
+            loading:false,
+            profilePic:profilePic
         }
     },
     components:{
@@ -439,7 +448,14 @@ export default {
             this.description = item.description
             this.itemId = item.id
             this.getSizePrice()
-        }
+        },
+        viewProfile(){
+     let id = localStorage.getItem("customerId")
+      ROUTER.push('/personalInfo/'+ id).catch(()=>{})
+   },
+    home() {
+     ROUTER.push("/onlineDashboard").catch(() => {});
+   },
     }
 }
 </script>
