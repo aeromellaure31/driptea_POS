@@ -9,7 +9,7 @@
       </b>
     </div>
     <div class="row body">
-      <div class="col-sm-8">
+      <div class="col-sm-7">
         <v-card class="subhead">
           <v-toolbar color="#f2f2f2" dark>
             <div class="row insideToolbar">
@@ -72,8 +72,8 @@
         </v-card>
         <div>
           <salesChart
-            class="chart"
             ref="realtimeChart"
+            height='300px'
             type="line"
             :options="options"
             :series="series"
@@ -85,6 +85,7 @@
           </div>
         </div>
       </div>
+      <div class="col-sm-1"></div>
       <div class="col-sm-4 top3">
         <v-toolbar color="#f2f2f2" dark class="TB3">
           <v-toolbar-title class="text1">TOP 3 SALABLE PRODUCTS</v-toolbar-title>
@@ -92,23 +93,23 @@
         <div class="prods">
           <v-card>
             <div class="theimage">
-              <v-img class="white--text align-end thetop3" :src="topProdArr[0].img">
+              <v-img class="white--text align-end thetop3" >
                 <v-card-title class="Prod_name">
-                  <i>{{topProdArr[0].pName}}</i>
+                  <i>{{topprodarr[0].name}}</i>
                 </v-card-title>
               </v-img>
             </div>
             <div class="theimage">
-              <v-img class="white--text align-end thetop3" :src="topProdArr[1].img">
+              <v-img class="white--text align-end thetop3">
                 <v-card-title class="Prod_name">
-                  <i>{{topProdArr[1].pName}}</i>
+                  <i></i>
                 </v-card-title>
               </v-img>
             </div>
             <div class="theimage">
-              <v-img class="white--text align-end thetop3" :src="topProdArr[2].img">
+              <v-img class="white--text align-end thetop3">
                 <v-card-title class="Prod_name">
-                  <i>{{topProdArr[2].pName}}</i>
+                  <i></i>
                 </v-card-title>
               </v-img>
             </div>
@@ -174,9 +175,9 @@
 .subhead {
   margin-bottom: 20px;
 }
-.chart {
-  width: 100%;
-}
+/* .chart {
+  width: 50%;
+} */
 .body {
   margin-left: 3%;
   margin-right: 3%;
@@ -191,12 +192,12 @@
 }
 .thetop3{
   height: 180px;
-  width: auto;
+  width: 290px;
 }
 .theimage {
   margin: 2%;
   height: 200px;
-  width: auto;
+  width: 300px;
 }
 .Prod_name {
   color: black;
@@ -217,7 +218,7 @@ import loading from '../../basic/loading.vue';
 export default {
   data() {
     return {
-      tempIMG: nodataImg,
+      tempimg: nodataImg,
       Multiyrvalue: [],
       date: ["2019-09-10", "2019-09-20"],
       menu: false,
@@ -237,7 +238,8 @@ export default {
       options: {
         colors: ["#ff5b04"],
         chart: {
-          id: "sales-summary"
+          id: "sales-summary",
+          
         },
         xaxis: {
           categories: []
@@ -284,7 +286,11 @@ export default {
       first_Half: null,
       second_Half: null,
       semi_Data: [],
-      topProdArr: [],
+      topprodarr: [
+        {img: nodataImg, name: ""},
+        {img: nodataImg, name: ""},
+        {img: nodataImg, name: ""}
+        ],
       defaultDate: null,
       DatePickerFormat: "yyyy",
       loadingShow: false
@@ -297,7 +303,7 @@ export default {
   },
   computed: {},
   mounted() {
-    this.getTop3();
+    // console.log("-------------- ",nodataImg);
     let date = new Date();
     let month =
       date.getMonth() + 1 > 9
@@ -310,8 +316,11 @@ export default {
     this.getDate();
     this.xvalues();
     this.getDailySummary();
+
   },
-  created() {},
+  created() {
+    this.getTop3();
+  },
   methods: {
     getDailySummary() {
       this.loadingShow = true
@@ -746,30 +755,36 @@ export default {
       let params = {
         year: null
       };
+      let top3 = [];
       let indexes = [];
       Axios.post(AUTH.url + "getTopProd", params, AUTH.config).then(response => {
         if(response.data.status){
           AUTH.deauthenticate()
         }
-        this.loadingShow = false
-        let resLen = response.data.prods.length;
+        
+        // let resLen = response.data.prods;
         response.data.prods.forEach(element => {
           indexes.push(response.data.prods.indexOf(element));
         });
         for (var i = 0; i < 3; i++) {
           if (indexes.includes(i)) {
-            this.topProdArr.push({
+            top3.push({
               img: response.data.prods[i].img,
               name: response.data.prods[i].pName
             });
           } else {
-            this.topProdArr.push({
-              img: this.tempIMG,
-              name: " "
+            console.log("sa else ni sulod")
+            top3.push({
+              img: this.tempimg,
+              name: "pisti na ni "
             });
           }
+        console.log("----------------------------- ",top3[0].name)
+        console.log("================ ",this.tempimg)
         }
+        this.loadingShow = false
       });
+      this.topprodarr = top3;
     }
   }
 };

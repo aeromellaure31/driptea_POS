@@ -227,6 +227,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -239,7 +240,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      tempIMG: _assets_noDatatoShow_png__WEBPACK_IMPORTED_MODULE_6___default.a,
+      tempimg: _assets_noDatatoShow_png__WEBPACK_IMPORTED_MODULE_6___default.a,
       Multiyrvalue: [],
       date: ["2019-09-10", "2019-09-20"],
       menu: false,
@@ -291,7 +292,16 @@ __webpack_require__.r(__webpack_exports__);
       first_Half: null,
       second_Half: null,
       semi_Data: [],
-      topProdArr: [],
+      topprodarr: [{
+        img: _assets_noDatatoShow_png__WEBPACK_IMPORTED_MODULE_6___default.a,
+        name: ""
+      }, {
+        img: _assets_noDatatoShow_png__WEBPACK_IMPORTED_MODULE_6___default.a,
+        name: ""
+      }, {
+        img: _assets_noDatatoShow_png__WEBPACK_IMPORTED_MODULE_6___default.a,
+        name: ""
+      }],
       defaultDate: null,
       DatePickerFormat: "yyyy",
       loadingShow: false
@@ -304,7 +314,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {},
   mounted: function mounted() {
-    this.getTop3();
+    // console.log("-------------- ",nodataImg);
     var date = new Date();
     var month = date.getMonth() + 1 > 9 ? date.getMonth() + 1 : "0" + (date.getMonth() + 1);
     this.thedate = date.getFullYear() + "-" + month;
@@ -315,7 +325,9 @@ __webpack_require__.r(__webpack_exports__);
     this.xvalues();
     this.getDailySummary();
   },
-  created: function created() {},
+  created: function created() {
+    this.getTop3();
+  },
   methods: {
     getDailySummary: function getDailySummary() {
       var _this = this;
@@ -783,32 +795,39 @@ __webpack_require__.r(__webpack_exports__);
       var params = {
         year: null
       };
+      var top3 = [];
       var indexes = [];
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(_services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].url + "getTopProd", params, _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].config).then(function (response) {
         if (response.data.status) {
           _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].deauthenticate();
-        }
+        } // let resLen = response.data.prods;
 
-        _this7.loadingShow = false;
-        var resLen = response.data.prods.length;
+
         response.data.prods.forEach(function (element) {
           indexes.push(response.data.prods.indexOf(element));
         });
 
         for (var i = 0; i < 3; i++) {
           if (indexes.includes(i)) {
-            _this7.topProdArr.push({
+            top3.push({
               img: response.data.prods[i].img,
               name: response.data.prods[i].pName
             });
           } else {
-            _this7.topProdArr.push({
-              img: _this7.tempIMG,
-              name: " "
+            console.log("sa else ni sulod");
+            top3.push({
+              img: _this7.tempimg,
+              name: "pisti na ni "
             });
           }
+
+          console.log("----------------------------- ", top3[0].name);
+          console.log("================ ", _this7.tempimg);
         }
+
+        _this7.loadingShow = false;
       });
+      this.topprodarr = top3;
     }
   }
 });
@@ -827,7 +846,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.welcome {\r\n  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,\r\n    Helvetica Neue, Arial, sans-serif;\r\n  font-size: 25px;\r\n  margin-bottom: 10px;\r\n  margin-left: 4%;\r\n  font-weight: bold;\r\n  margin-top: 5%;\n}\n.insideToolbar {\r\n  margin-top: 25px;\n}\n.GraphLabel {\r\n  margin-left: 45%;\r\n  font-weight: bold;\n}\n.annualDateCal1,\r\n.annualDateCal2,\r\n.yearMenu,\r\n.graphTitle {\r\n  color: black;\n}\n.graphTitle,\r\n.text1 {\r\n  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,\r\n    Helvetica Neue, Arial, sans-serif;\r\n  font-size: 1rem;\r\n  font-weight: bold;\n}\n.YRcal {\r\n  color: black;\n}\n.Cname,\r\n.GraphLabel {\r\n  color: #ff5b04;\n}\n.text1 {\r\n  margin-left: 10%;\r\n  text-align: center;\r\n  color: #ff5b04;\n}\n.TB3 {\r\n  margin-bottom: 20px;\r\n  justify-content: center;\r\n  border-radius: 1%;\n}\n.prods {\r\n  border: 1px solid #999999;\r\n  border-radius: 1%;\n}\n.subhead {\r\n  margin-bottom: 20px;\n}\n.chart {\r\n  width: 100%;\n}\n.body {\r\n  margin-left: 3%;\r\n  margin-right: 3%;\r\n  height: 100%;\r\n  margin-bottom: 5%;\n}\n.top3 {\r\n  width: 20%;\r\n  height: 50%;\r\n  border: 1px solid #999999;\r\n  border-radius: 1%;\n}\n.thetop3{\r\n  height: 180px;\r\n  width: auto;\n}\n.theimage {\r\n  margin: 2%;\r\n  height: 200px;\r\n  width: auto;\n}\n.Prod_name {\r\n  color: black;\n}\r\n", ""]);
+exports.push([module.i, "\n.welcome {\r\n  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,\r\n    Helvetica Neue, Arial, sans-serif;\r\n  font-size: 25px;\r\n  margin-bottom: 10px;\r\n  margin-left: 4%;\r\n  font-weight: bold;\r\n  margin-top: 5%;\n}\n.insideToolbar {\r\n  margin-top: 25px;\n}\n.GraphLabel {\r\n  margin-left: 45%;\r\n  font-weight: bold;\n}\n.annualDateCal1,\r\n.annualDateCal2,\r\n.yearMenu,\r\n.graphTitle {\r\n  color: black;\n}\n.graphTitle,\r\n.text1 {\r\n  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,\r\n    Helvetica Neue, Arial, sans-serif;\r\n  font-size: 1rem;\r\n  font-weight: bold;\n}\n.YRcal {\r\n  color: black;\n}\n.Cname,\r\n.GraphLabel {\r\n  color: #ff5b04;\n}\n.text1 {\r\n  margin-left: 10%;\r\n  text-align: center;\r\n  color: #ff5b04;\n}\n.TB3 {\r\n  margin-bottom: 20px;\r\n  justify-content: center;\r\n  border-radius: 1%;\n}\n.prods {\r\n  border: 1px solid #999999;\r\n  border-radius: 1%;\n}\n.subhead {\r\n  margin-bottom: 20px;\n}\r\n/* .chart {\r\n  width: 50%;\r\n} */\n.body {\r\n  margin-left: 3%;\r\n  margin-right: 3%;\r\n  height: 100%;\r\n  margin-bottom: 5%;\n}\n.top3 {\r\n  width: 20%;\r\n  height: 50%;\r\n  border: 1px solid #999999;\r\n  border-radius: 1%;\n}\n.thetop3{\r\n  height: 180px;\r\n  width: 290px;\n}\n.theimage {\r\n  margin: 2%;\r\n  height: 200px;\r\n  width: 300px;\n}\n.Prod_name {\r\n  color: black;\n}\r\n", ""]);
 
 // exports
 
@@ -888,7 +907,7 @@ var render = function() {
       [
         _c(
           "div",
-          { staticClass: "col-sm-8" },
+          { staticClass: "col-sm-7" },
           [
             _c(
               "v-card",
@@ -1151,8 +1170,8 @@ var render = function() {
               [
                 _c("salesChart", {
                   ref: "realtimeChart",
-                  staticClass: "chart",
                   attrs: {
+                    height: "300px",
                     type: "line",
                     options: _vm.options,
                     series: _vm.series
@@ -1188,6 +1207,8 @@ var render = function() {
           1
         ),
         _vm._v(" "),
+        _c("div", { staticClass: "col-sm-1" }),
+        _vm._v(" "),
         _c(
           "div",
           { staticClass: "col-sm-4 top3" },
@@ -1214,13 +1235,10 @@ var render = function() {
                     [
                       _c(
                         "v-img",
-                        {
-                          staticClass: "white--text align-end thetop3",
-                          attrs: { src: _vm.topProdArr[0].img }
-                        },
+                        { staticClass: "white--text align-end thetop3" },
                         [
                           _c("v-card-title", { staticClass: "Prod_name" }, [
-                            _c("i", [_vm._v(_vm._s(_vm.topProdArr[0].pName))])
+                            _c("i", [_vm._v(_vm._s(_vm.topprodarr[0].name))])
                           ])
                         ],
                         1
@@ -1235,13 +1253,10 @@ var render = function() {
                     [
                       _c(
                         "v-img",
-                        {
-                          staticClass: "white--text align-end thetop3",
-                          attrs: { src: _vm.topProdArr[1].img }
-                        },
+                        { staticClass: "white--text align-end thetop3" },
                         [
                           _c("v-card-title", { staticClass: "Prod_name" }, [
-                            _c("i", [_vm._v(_vm._s(_vm.topProdArr[1].pName))])
+                            _c("i")
                           ])
                         ],
                         1
@@ -1256,13 +1271,10 @@ var render = function() {
                     [
                       _c(
                         "v-img",
-                        {
-                          staticClass: "white--text align-end thetop3",
-                          attrs: { src: _vm.topProdArr[2].img }
-                        },
+                        { staticClass: "white--text align-end thetop3" },
                         [
                           _c("v-card-title", { staticClass: "Prod_name" }, [
-                            _c("i", [_vm._v(_vm._s(_vm.topProdArr[2].pName))])
+                            _c("i")
                           ])
                         ],
                         1
