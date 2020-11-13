@@ -202,9 +202,9 @@ export default {
             addOns: [],
             quantity: 1,
             productName: null,
-            price: null,
-            highprice: null,
-            overprice: null,
+            price: 0,
+            highprice: 0,
+            overprice: 0,
             addOnsData: null,
             cupData: null,
             total: 0,
@@ -395,7 +395,7 @@ export default {
             this.totalAddOns = 0
             this.cupTypePrice = 0
             this.price = parseInt(item.onlinelowPrice)
-            this.highprice = paseInt(item.onlinehighPrice)
+            this.highprice = parseInt(item.onlinehighPrice)
             this.overprice = parseInt(item.onlineoverPrice)
             this.productName = item.productName
             this.image = item.image
