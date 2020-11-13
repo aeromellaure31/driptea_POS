@@ -426,7 +426,7 @@ __webpack_require__.r(__webpack_exports__);
         this.basePrice = this.price;
       }
 
-      this.priceShown = this.quantity * (this.basePrice + this.totalAddOns + this.cupTypePrice);
+      this.priceShown = parseInt(this.quantity) * (parseInt(this.total) + parseInt(this.totalAddOns) + parseInt(this.cupTypePrice));
     },
     getCupPrice: function getCupPrice() {
       var _this5 = this;
@@ -438,12 +438,12 @@ __webpack_require__.r(__webpack_exports__);
           _services_auth__WEBPACK_IMPORTED_MODULE_3__["default"].deauthenticate();
         }
 
-        _this5.cupTypePrice = res.data.cupType[0].inputCupOnlinePrice;
-        _this5.priceShown = _this5.quantity * (_this5.basePrice + _this5.totalAddOns + _this5.cupTypePrice);
+        _this5.cupTypePrice = parseInt(res.data.cupType[0].inputCupOnlinePrice);
+        _this5.priceShown = parseInt(_this5.quantity) * (parseInt(_this5.total) + parseInt(_this5.totalAddOns) + parseInt(_this5.cupTypePrice));
       });
     },
     getQuantity: function getQuantity() {
-      this.priceShown = this.quantity * (this.basePrice + this.totalAddOns + this.cupTypePrice);
+      this.priceShown = parseInt(this.quantity) * (parseInt(this.total) + parseInt(this.totalAddOns) + parseInt(this.cupTypePrice));
     },
     retrieveCupType: function retrieveCupType() {
       var _this6 = this;
@@ -483,16 +483,6 @@ __webpack_require__.r(__webpack_exports__);
     redirect: function redirect(param) {
       _router__WEBPACK_IMPORTED_MODULE_4__["default"].push("/productOnline/" + param)["catch"](function () {});
     },
-    // retrieveProduct(){
-    //     this.loadingShow = true
-    //     this.$axios.post(AUTH.url + "retrieveAllProductAscending", {}, AUTH.config).then(res => {
-    //         if(res.data.status){
-    //             AUTH.deauthenticate()
-    //         }
-    //         this.productData = res.data.product
-    //         this.loadingShow = false
-    //     })
-    // },
     addTotalPrice: function addTotalPrice(item, event) {
       var _this9 = this;
 
@@ -506,12 +496,12 @@ __webpack_require__.r(__webpack_exports__);
         _this9.addOnsPrice = response.data.addons.onlineAddOnsPrice;
 
         if (event.target.checked) {
-          _this9.totalAddOns += _this9.addOnsPrice;
+          _this9.totalAddOns += parseInt(_this9.addOnsPrice);
         } else {
-          _this9.totalAddOns -= _this9.addOnsPrice;
+          _this9.totalAddOns -= parseInt(_this9.addOnsPrice);
         }
 
-        _this9.priceShown = _this9.quantity * (_this9.basePrice + _this9.totalAddOns + _this9.cupTypePrice);
+        _this9.priceShown = parseInt(_this9.quantity) * (parseInt(_this9.total) + parseInt(_this9.totalAddOns) + parseInt(_this9.cupTypePrice));
       });
     },
     showModal: function showModal(item) {
@@ -526,7 +516,7 @@ __webpack_require__.r(__webpack_exports__);
 
         _this10.addOnsData.forEach(function (e) {
           if (el.addOns === e.addons_name) {
-            _this10.totalAddOns += e.onlineAddOnsPrice;
+            _this10.totalAddOns += parseInt(e.onlineAddOnsPrice);
           }
         });
       });
@@ -536,12 +526,12 @@ __webpack_require__.r(__webpack_exports__);
       this.cupTypePrice = 0;
       this.cupData.forEach(function (el) {
         if (el.cupTypeName === item.cupType) {
-          _this10.cupTypePrice = el.inputCupOnlinePrice;
+          _this10.cupTypePrice = parseInt(el.inputCupOnlinePrice);
         }
       });
-      this.price = item.order_product[0].onlinelowPrice;
-      this.highprice = item.order_product[0].onlinehighPrice;
-      this.overprice = item.order_product[0].onlineoverPrice;
+      this.price = parseInt(item.order_product[0].onlinelowPrice);
+      this.highprice = parseInt(item.order_product[0].onlinehighPrice);
+      this.overprice = parseInt(item.order_product[0].onlineoverPrice);
       this.productNameOrder = item.order_product[0].productName;
       this.image = item.order_product[0].image;
       this.description = item.description;
@@ -1087,7 +1077,7 @@ var render = function() {
                             _vm._v(" "),
                             _c("h3", [
                               _vm._v(
-                                "Base Price (₱" + _vm._s(_vm.basePrice) + ")"
+                                "Base Price (₱" + _vm._s(_vm.basePrice) + ".00)"
                               )
                             ]),
                             _vm._v(" "),

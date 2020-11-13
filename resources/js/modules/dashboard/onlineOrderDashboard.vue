@@ -241,19 +241,19 @@ export default {
             }else if(this.size === 'lowDose'){
                 this.total = this.price
             }
-            this.priceShown = this.quantity * (this.total + this.totalAddOns + this.cupTypePrice)
+            this.priceShown = parseInt(this.quantity) * (parseInt(this.total) + parseInt(this.totalAddOns) + parseInt(this.cupTypePrice))
         },
         getCupPrice(){
             this.$axios.post(AUTH.url + 'retrieveOneCupType', {cupType: this.cupType}, AUTH.config).then(res => {
                 if(res.data.status){
                     AUTH.deauthenticate()
                 }
-                this.cupTypePrice = res.data.cupType[0].inputCupOnlinePrice
-                this.priceShown = this.quantity * (this.total + this.totalAddOns + this.cupTypePrice)
+                this.cupTypePrice = parseInt(res.data.cupType[0].inputCupOnlinePrice)
+                this.priceShown = parseInt(this.quantity) * (parseInt(this.total) + parseInt(this.totalAddOns) + parseInt(this.cupTypePrice))
             })
         },
         getQuantity(){
-            this.priceShown = this.quantity * (this.total + this.totalAddOns + this.cupTypePrice)
+            this.priceShown = parseInt(this.quantity) * (parseInt(this.total) + parseInt(this.totalAddOns) + parseInt(this.cupTypePrice))
         },
         retrieveCupType(){
             this.$axios.post(AUTH.url + "retrieveCupType", {}, AUTH.config).then(response => {
@@ -299,13 +299,13 @@ export default {
                 if(response.data.status){
                     AUTH.deauthenticate()
                 }
-                this.addOnsPrice = response.data.addons.onlineAddOnsPrice
+                this.addOnsPrice = parseInt(response.data.addons.onlineAddOnsPrice)
                 if(event.target.checked){
                     this.totalAddOns += this.addOnsPrice
                 }else{
                     this.totalAddOns -= this.addOnsPrice
                 }
-                this.priceShown = this.quantity * (this.total + this.totalAddOns + this.cupTypePrice)
+                this.priceShown = parseInt(this.quantity) * (parseInt(this.total) + parseInt(this.totalAddOns) + parseInt(this.cupTypePrice))
             })
         },
         addToCart(){
@@ -394,9 +394,9 @@ export default {
             this.total = 0
             this.totalAddOns = 0
             this.cupTypePrice = 0
-            this.price = item.onlinelowPrice
-            this.highprice = item.onlinehighPrice
-            this.overprice = item.onlineoverPrice
+            this.price = parseInt(item.onlinelowPrice)
+            this.highprice = paseInt(item.onlinehighPrice)
+            this.overprice = parseInt(item.onlineoverPrice)
             this.productName = item.productName
             this.image = item.image
             this.description = item.description

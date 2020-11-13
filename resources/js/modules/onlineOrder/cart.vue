@@ -106,7 +106,7 @@
                                 <center>
                                     <img class="imageSize2" :src="image">
                                     <div ><br>
-                                        <h3>Base Price (₱{{basePrice}})</h3>
+                                        <h3>Base Price (₱{{basePrice}}.00)</h3>
                                         <h3>{{productNameOrder}}</h3>
                                         <p class="productDescription">{{description}}</p>
                                     </div>
@@ -350,8 +350,7 @@ export default {
         this.total = this.price;
         this.basePrice = this.price;
       }
-      this.priceShown =
-        this.quantity * (this.basePrice + this.totalAddOns + this.cupTypePrice);
+      this.priceShown = parseInt(this.quantity) * (parseInt(this.total) + parseInt(this.totalAddOns) + parseInt(this.cupTypePrice))
     },
     getCupPrice() {
       this.$axios
@@ -364,15 +363,12 @@ export default {
           if (res.data.status) {
             AUTH.deauthenticate();
           }
-          this.cupTypePrice = res.data.cupType[0].inputCupOnlinePrice;
-          this.priceShown =
-            this.quantity *
-            (this.basePrice + this.totalAddOns + this.cupTypePrice);
+          this.cupTypePrice = parseInt(res.data.cupType[0].inputCupOnlinePrice)
+          this.priceShown = parseInt(this.quantity) * (parseInt(this.total) + parseInt(this.totalAddOns) + parseInt(this.cupTypePrice))
         });
     },
     getQuantity() {
-      this.priceShown =
-        this.quantity * (this.basePrice + this.totalAddOns + this.cupTypePrice);
+      this.priceShown = parseInt(this.quantity) * (parseInt(this.total) + parseInt(this.totalAddOns) + parseInt(this.cupTypePrice))
     },
     retrieveCupType() {
       this.$axios
@@ -409,16 +405,6 @@ export default {
     redirect(param) {
       ROUTER.push("/productOnline/" + param).catch(() => {});
     },
-    // retrieveProduct(){
-    //     this.loadingShow = true
-    //     this.$axios.post(AUTH.url + "retrieveAllProductAscending", {}, AUTH.config).then(res => {
-    //         if(res.data.status){
-    //             AUTH.deauthenticate()
-    //         }
-    //         this.productData = res.data.product
-    //         this.loadingShow = false
-    //     })
-    // },
     addTotalPrice(item, event) {
       this.$axios
         .post(AUTH.url + "retrieveOneAddOn", { id: item.id }, AUTH.config)
@@ -428,13 +414,11 @@ export default {
           }
           this.addOnsPrice = response.data.addons.onlineAddOnsPrice;
           if (event.target.checked) {
-            this.totalAddOns += this.addOnsPrice;
+            this.totalAddOns += parseInt(this.addOnsPrice)
           } else {
-            this.totalAddOns -= this.addOnsPrice;
+            this.totalAddOns -= parseInt(this.addOnsPrice)
           }
-          this.priceShown =
-            this.quantity *
-            (this.basePrice + this.totalAddOns + this.cupTypePrice);
+          this.priceShown = parseInt(this.quantity) * (parseInt(this.total) + parseInt(this.totalAddOns) + parseInt(this.cupTypePrice))
         });
     },
     showModal(item) {
@@ -446,7 +430,7 @@ export default {
         this.addOns.push(el.addOns);
         this.addOnsData.forEach(e => {
             if(el.addOns === e.addons_name){
-                this.totalAddOns += e.onlineAddOnsPrice
+                this.totalAddOns += parseInt(e.onlineAddOnsPrice)
             }
         })
       });
@@ -456,12 +440,12 @@ export default {
       this.cupTypePrice = 0
       this.cupData.forEach(el => {
           if(el.cupTypeName === item.cupType){
-              this.cupTypePrice = el.inputCupOnlinePrice;
+              this.cupTypePrice = parseInt(el.inputCupOnlinePrice)
           }
       })
-      this.price = item.order_product[0].onlinelowPrice;
-      this.highprice = item.order_product[0].onlinehighPrice;
-      this.overprice = item.order_product[0].onlineoverPrice;
+      this.price = parseInt(item.order_product[0].onlinelowPrice);
+      this.highprice = parseInt(item.order_product[0].onlinehighPrice);
+      this.overprice = parseInt(item.order_product[0].onlineoverPrice);
       this.productNameOrder = item.order_product[0].productName;
       this.image = item.order_product[0].image;
       this.description = item.description;
