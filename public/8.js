@@ -258,7 +258,7 @@ __webpack_require__.r(__webpack_exports__);
         this.total = this.price;
       }
 
-      this.priceShown = this.quantity * (this.total + this.totalAddOns + this.cupTypePrice);
+      this.priceShown = parseInt(this.quantity) * (parseInt(this.total) + parseInt(this.totalAddOns) + parseInt(this.cupTypePrice));
     },
     getCupPrice: function getCupPrice() {
       var _this = this;
@@ -270,12 +270,12 @@ __webpack_require__.r(__webpack_exports__);
           _services_auth__WEBPACK_IMPORTED_MODULE_1__["default"].deauthenticate();
         }
 
-        _this.cupTypePrice = res.data.cupType[0].inputCupOnlinePrice;
-        _this.priceShown = _this.quantity * (_this.total + _this.totalAddOns + _this.cupTypePrice);
+        _this.cupTypePrice = parseInt(res.data.cupType[0].inputCupOnlinePrice);
+        _this.priceShown = parseInt(_this.quantity) * (parseInt(_this.total) + parseInt(_this.totalAddOns) + parseInt(_this.cupTypePrice));
       });
     },
     getQuantity: function getQuantity() {
-      this.priceShown = this.quantity * (this.total + this.totalAddOns + this.cupTypePrice);
+      this.priceShown = parseInt(this.quantity) * (parseInt(this.total) + parseInt(this.totalAddOns) + parseInt(this.cupTypePrice));
     },
     retrieveCupType: function retrieveCupType() {
       var _this2 = this;
@@ -338,7 +338,7 @@ __webpack_require__.r(__webpack_exports__);
           _services_auth__WEBPACK_IMPORTED_MODULE_1__["default"].deauthenticate();
         }
 
-        _this6.addOnsPrice = response.data.addons.onlineAddOnsPrice;
+        _this6.addOnsPrice = parseInt(response.data.addons.onlineAddOnsPrice);
 
         if (event.target.checked) {
           _this6.totalAddOns += _this6.addOnsPrice;
@@ -346,7 +346,7 @@ __webpack_require__.r(__webpack_exports__);
           _this6.totalAddOns -= _this6.addOnsPrice;
         }
 
-        _this6.priceShown = _this6.quantity * (_this6.total + _this6.totalAddOns + _this6.cupTypePrice);
+        _this6.priceShown = parseInt(_this6.quantity) * (parseInt(_this6.total) + parseInt(_this6.totalAddOns) + parseInt(_this6.cupTypePrice));
       });
     },
     addToCart: function addToCart() {
@@ -443,9 +443,9 @@ __webpack_require__.r(__webpack_exports__);
       this.total = 0;
       this.totalAddOns = 0;
       this.cupTypePrice = 0;
-      this.price = item.onlinelowPrice;
-      this.highprice = item.onlinehighPrice;
-      this.overprice = item.onlineoverPrice;
+      this.price = parseInt(item.onlinelowPrice);
+      this.highprice = paseInt(item.onlinehighPrice);
+      this.overprice = parseInt(item.onlineoverPrice);
       this.productName = item.productName;
       this.image = item.image;
       this.description = item.description;
