@@ -565,15 +565,15 @@ __webpack_require__.r(__webpack_exports__);
     getSubTotal: function getSubTotal() {
       var total = 0;
       this.tableData.forEach(function (element) {
-        total += element.subTotal;
+        total += parseInt(element.subTotal);
       });
       this.subTotal = total;
       return parseInt(total).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
     },
     getTotal: function getTotal() {
       var total = 0;
-      var subTotal = this.subTotal;
-      total = subTotal + 100;
+      var subTotal = parseInt(this.subTotal);
+      total = subTotal + this.deliveryFee;
       this.total = total;
       return parseInt(total).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
     },

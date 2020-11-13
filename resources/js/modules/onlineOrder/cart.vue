@@ -476,7 +476,7 @@ export default {
     getSubTotal() {
       let total = 0;
       this.tableData.forEach(element => {
-        total += element.subTotal;
+        total += parseInt(element.subTotal);
       });
       this.subTotal = total;
       return parseInt(total)
@@ -485,8 +485,8 @@ export default {
     },
     getTotal() {
       let total = 0;
-      let subTotal = this.subTotal;
-      total = subTotal + 100;
+      let subTotal = parseInt(this.subTotal);
+      total = subTotal + this.deliveryFee;
       this.total = total;
       return parseInt(total)
         .toFixed(2)
