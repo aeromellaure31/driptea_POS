@@ -401,7 +401,8 @@ __webpack_require__.r(__webpack_exports__);
         addOns: this.addOns,
         quantity: this.quantity,
         sugarLevel: this.sugarLevel,
-        subTotal: this.priceShown
+        subTotal: this.priceShown,
+        choosenPrice: this.basePrice
       };
       this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_3__["default"].url + "updateCustomerOrder", param, _services_auth__WEBPACK_IMPORTED_MODULE_3__["default"].config).then(function (res) {
         if (res.data.status) {

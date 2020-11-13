@@ -325,7 +325,8 @@ export default {
         addOns: this.addOns,
         quantity: this.quantity,
         sugarLevel: this.sugarLevel,
-        subTotal: this.priceShown
+        subTotal: this.priceShown,
+        choosenPrice: this.basePrice
       };
       this.$axios
         .post(AUTH.url + "updateCustomerOrder", param, AUTH.config)

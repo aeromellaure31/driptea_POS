@@ -122,6 +122,7 @@ class OrderController extends Controller
         $product->size = $data['size'];
         $product->sugarLevel = $data['sugarLevel'];
         $product->cupType = $data['cupType'];
+        $product->choosenPrice = $data['choosenPrice'];
         $product->subTotal = $data['subTotal'];
         $product->save();
     }
