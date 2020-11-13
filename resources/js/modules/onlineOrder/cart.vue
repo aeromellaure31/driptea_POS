@@ -1,38 +1,6 @@
  
 <template>
  <div>
-   <div class="header" style="background-color:#ff5b04">
-     <div class="container">
-       <div class="row">
-         <div class="col-6">DRIPTEA</div>
-         <div class="col-6 text-right">
-           <v-btn icon style="margin-right: 1%;" @click="home()">
-             <v-icon>mdi-home</v-icon>
-           </v-btn>
-           <v-btn icon @click="direct()" style="margin-right: 2%;">
-                        <v-icon>mdi-cart</v-icon>
-                        <span style="margin-left: -3%;">Cart</span>
-                        <span style="background-color: red; color: white; border-radius: 20%; font-size: 10px; margin-left: -10%; margin-top: -20%;">{{count > 0 ? 'New' : ''}}</span>
-                    </v-btn>
-           <v-menu bottom left>
-             <template v-slot:activator="{ on, attrs }">
-               <v-btn dark icon v-bind="attrs" v-on="on">
-                 <v-icon>mdi-dots-vertical</v-icon>
-               </v-btn>
-             </template>
-             <v-list>
-               <v-list-item>
-                 <v-list-item-title>Profile</v-list-item-title>
-               </v-list-item>
-               <v-list-item>
-                 <v-list-item-title @click="direct">Order History</v-list-item-title>
-               </v-list-item>
-             </v-list>
-           </v-menu>
-         </div>
-       </div>
-       <!--/row-->
-     </div>
      <v-card mb="20px">
        <v-container fluid>
             <center>
@@ -62,24 +30,26 @@
                  <th>Unit Price</th>
                  <th>Quantity</th>
                  <th>Total</th>
-                 <th style="width: 15px;">❌</th>
+                 <th>Action</th>
                </tr>
              </thead>
              <tbody>
                <tr v-for="(item, index) in tableData" :key="index">
                  <td>{{item.order_product ? item.order_product[0].productName : ''}}</td>
                  <td>{{item.same_order ? getAddOns(item.same_order) : ''}}</td>
-                 <td>{{item.cupType ? item.cupType : ''}}</td>
+                 <td>{{getCup(item.cupType)}}</td>
                  <td>{{item.choosenPrice}}</td>
                  <td>{{item.quantity}}</td>
                  <td>{{item.subTotal}}</td>
                  <td>
-                   <button
-                     style="font-size: 10px"
-                     type="button"
-                     aria-expanded="false"
-                     @click="deleteOrder(item.id)"
-                   >❌</button>
+                     <v-icon
+                    small
+                   data-toggle="modal" data-target="#myModal" @click="showModal(item)"
+                  >mdi-pencil</v-icon>
+                  <v-icon
+                    small
+                   @click="deleteOrder(item.id)"
+                  >mdi-delete</v-icon> 
                  </td>
                </tr>
              </tbody>
@@ -118,46 +88,103 @@
             </center>
        </v-container>
      </v-card>
-     </div>
   
    <!-- This is a modal for processing -->
  
-   <template>
-     
-     <div class="text-center">
-       <v-dialog v-model="processModal" width="500">
-         <v-card-title class="headline grey lighten-2">Order</v-card-title>
-         <v-row class="fill-height" align-content="center" justify="center">
-           <v-col class="subtitle-1 text-center" cols="12">Processing your order .......</v-col>
-           <v-col cols="6">
-             <v-progress-linear color="deep-purple accent-4" indeterminate rounded height="6"></v-progress-linear>
-           </v-col>
-         </v-row>
-         <v-divider></v-divider>
- 
-         <v-card-actions>
-           <v-spacer></v-spacer>
-           <v-btn color="primary" text @click="processModal = false">Okay</v-btn>
-         </v-card-actions>
-       </v-dialog>
-     </div>
-   </template>
+  <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div v-if="success !== null" class="alert alert-success" role="alert">
+                          {{success}}
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6" >
+                                <center>
+                                    <img class="imageSize2" :src="image">
+                                    <div ><br>
+                                        <h3>Base Price (₱{{basePrice}})</h3>
+                                        <h3>{{productNameOrder}}</h3>
+                                        <p class="productDescription">{{description}}</p>
+                                    </div>
+                                </center>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="modalDiv">
+                                    <form>
+                                        <div class="form-group">
+                                            <label for="size" style="font-size: 15px; font-weight: bold">Size :</label>
+                                            <select class="form-control" v-model="size" @change="getSizePrice()">
+                                                <option value="lowDose" selected>Low Dose</option>
+                                                <option value="highDose">High Dose</option>
+                                                <option value="overDose">Over Dose</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="cupType" style="font-size: 15px; font-weight: bold">Cup Type :</label>
+                                            <select class="form-control" v-model="cupType" @change="getCupPrice()">
+                                                <option v-for="(item, index) in cupData" :key="index" :value="item.cupTypeName">{{item.cupTypeName}} (+ ₱{{item.inputCupOnlinePrice}})</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sugarLevel" style="font-size: 15px; font-weight: bold">Sugar Level:</label>
+                                            <select class="form-control" v-model="sugarLevel">
+                                                <option value="extra">100%(Normal Sugar)</option>
+                                                <option value="normal">75%(Three fourth Sugar)</option>
+                                                <option value="less">50%(Half Sugar)</option>
+                                                <option value="half">25%(One fourth Sugar)</option>
+                                                <option value="no">0%(No Sugar)</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="size" style="font-size: 15px; font-weight: bold">Add&nbsp;Ons(Optional):</label><br>
+                                            <div class="checkboxStyle">
+                                                <div v-for="(item, index) in addOnsData" :key="index">
+                                                    <input type="checkbox" :id="item.addons_name" :value="item.addons_name" v-model="addOns" @click="addTotalPrice(item, $event)">
+                                                    <label :for="item.addons_name">{{item.addons_name}} (+ ₱{{item.onlineAddOnsPrice}})</label><br>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <center>
+                            <div style="text-align: center;">
+                                <label for="quantity" style="font-size: 15px; font-weight: bold; display: inline;">Quantity:</label>
+                                <input v-model="quantity" type="number" min="1" style="width:100px; display: inline;" class="form-control" @change="getQuantity()">
+                            </div>
+                        </center>
+                        <br>
+                           <p style="float:right;margin-right:5%">TOTAL: <b> ₱{{priceShown}}.00</b></p> 
 
-
-
-
- <loading v-if="loadingShow"></loading>
- 
- 
- 
-          </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal" >Cancel</button>
+                        <center><button type="submit" class="btn btn-success btnRegister" @click="updateCustomerOrder()">Save Change</button></center>                        
+                    </div>
+                </div>
+            </div>
+        </div>
+            <loading v-if="loadingShow"></loading>
+        </div>
 </template>
 <style scoped>
 .table {
- width: 70%;
+  width: 170%;
+}
+.imageSize2 {
+  height: 300px;
+  width: 300px;
+  margin-top: 2%;
 }
 </style>
 <script>
+import $ from "jquery";
+
 import swal from "sweetalert";
 import loading from "../../basic/loading.vue";
 import AUTH from "../../services/auth";
@@ -165,143 +192,328 @@ import ROUTER from "../../router";
 import config from "../../config.js";
 import empty from "../../basic/empty.vue";
 export default {
- data() {
-   return {
-       search:null,
-     tableData: null,
-     config: config,
-     count: 0,
-     subTotal: 0,
-     total: 0,
-     deliveryFee: 0,
-     processModal: false,
-     loadingShow: false,
-     payment:null,
-     available:null,
-     error:'',
- 
-     payments: [ "Cash on Delivery", "G-cash"],
-     availability:["Call me","Cancel Order"]
-   };
- },
- components: {
-   empty,
-   loading
- },
- mounted() {
-   this.count = 0;
-   this.retrieveProduct();
-   let pusher = new Pusher(this.config.PUSHER_APP_KEY, {
-     cluster: this.config.PUSHER_APP_CLUSTER,
-     encrypted: true
-   });
- 
-   //Subscribe to the channel we specified in our Adonis Application
-   let channel = pusher.subscribe("driptea-channel");
- 
-   channel.bind("driptea-data", data => {
-     this.count++;
-     this.retrieveProduct();
-   });
- },
- methods: {
-   home() {
-     ROUTER.push("/onlineDashboard").catch(() => {});
-   },
-   retrieveProduct() {
-     this.loadingShow = true;
-     let params = {
-       id: localStorage.getItem("customerId")
-     };
-     this.$axios.post(AUTH.url + "retrieveCustomerOrder", params, AUTH.config).then(res => {
-       if(res.data.status){
-           AUTH.deauthenticate()
-       }
-       this.tableData = res.data.order;
-       this.loadingShow = false;
-     });
-   },
-   getAddOns(item) {
-     let storeAddOns = "";
-     let index = item.length;
-     item.forEach(el => {
-       if (item.indexOf(el) >= index - 1) {
-         storeAddOns += el.addOns;
-       } else {
-         storeAddOns += el.addOns + ", ";
-       }
-     });
-     return storeAddOns;
-   },
-   deleteOrder(prodId) {
-  
-     this.$axios.post(AUTH.url + "deleteOrder", { id: prodId }, AUTH.config).then(res => {
-       if(res.data.status){
-           AUTH.deauthenticate()
-       }
-           swal({
-             title: "Deleted!",
-             text: "Your order is successfully deleted",
-             icon: "success"
-           });
-       this.retrieveProduct();
- 
-     });
-   },
-   orderNow() {
-     if(this.payment !== null){
-       this.loadingShow = true;
- 
-     let params = {
-       id: localStorage.getItem("customerId"),
-       status: "pendingCustomer"
-     };
-     this.$axios.post(AUTH.url + "updateStatus", params, AUTH.config).then(res => {
-       if(res.data.status){
-           AUTH.deauthenticate()
-       }
-       this.retrieveProduct();
-       localStorage.removeItem("customerOnlineId");
-       this.loadingShow = false;
- 
-       this.processModal = true;
-     });
+  data() {
+    return {
+      size: null,
+      cupSize: null,
+      cupType: null,
+      quantity: null,
+      sugarLevel: null,
+      priceShown: 0,
+      addOnsData: [],
+      cupData: [],
+      price: null,
+      image: null,
+      basePrice: 0,
+      description: null,
+      addOns: [],
+      success: null,
+      productNameOrder: null,
+      search: null,
+      tableData: null,
+      config: config,
+      count: 0,
+      subTotal: 0,
+      total: 0,
+      deliveryFee: 0,
+      processModal: false,
+      loadingShow: false,
+      payment: null,
+      available: null,
+      error: "",
+      idForProduct: null,
+      tableDataForEdit: [],
+      itemId: null,
+      payments: ["Cash on Delivery", "G-cash"],
+      availability: ["Call me", "Cancel Order"],
+      totalAddOns: 0
+    };
+  },
+  components: {
+    empty,
+    loading
+  },
+  mounted() {
+    this.count = 0;
+    this.retrieveProduct();
+    this.retrieveCupType();
+    this.retrieveAddOns();
+  },
+  methods: {
+    getCup(item) {
+      let cup = "";
+      this.cupData.forEach(el => {
+        if (item === el.cupTypeName) {
+          if (parseInt(el.inputCupOnlinePrice) === 0) {
+            cup = item;
+          } else {
+            cup = item + "(+" + el.inputCupOnlinePrice + ".00)";
+          }
+        }
+      });
+      return cup;
+    },
+    home() {
+      ROUTER.push("/onlineDashboard").catch(() => {});
+    },
+    retrieveProduct() {
+      this.loadingShow = true;
+      let params = {
+        id: localStorage.getItem("customerId")
+      };
+      this.$axios
+        .post(AUTH.url + "retrieveCustomerOrder", params, AUTH.config)
+        .then(res => {
+          if (res.data.status) {
+            AUTH.deauthenticate();
+          }
+          this.tableData = res.data.order;
+          this.loadingShow = false;
+        });
+    },
+    getAddOns(item) {
+      let storeAddOns = "";
+      let index = item.length;
+      item.forEach(el => {
+        this.addOnsData.forEach(e => {
+          if (el.addOns === e.addons_name) {
+            if (item.indexOf(el) >= index - 1) {
+              storeAddOns += el.addOns + " (+" + e.onlineAddOnsPrice + ".00)";
+            } else {
+              storeAddOns += el.addOns + " (+" + e.onlineAddOnsPrice + ".00), ";
+            }
+          }
+        });
+        // if (item.indexOf(el) >= index - 1) {
+        //   storeAddOns += el.addOns;
+        // } else {
+        //   storeAddOns += el.addOns + ", ";
+        // }
+      });
+      return storeAddOns;
+    },
+    deleteOrder(prodId) {
+      swal({
+        title: "Are you sure you want to delete?",
+        text: "Once deleted, you will not be able to recover this order!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true
+      }).then(willDelete => {
+        if (willDelete) {
+          this.$axios
+            .post(AUTH.url + "deleteOrder", { id: prodId }, AUTH.config)
+            .then(res => {
+              if (res.data.status) {
+                AUTH.deauthenticate();
+              }
+            });
+          this.retrieveProduct();
+          swal("Your order is succssfully deleted!", {
+            icon: "success"
+          });
+        } else {
+          swal("Your order remains to cart");
+        }
+      });
+    },
+    updateCustomerOrder() {
+      let param = {
+        id: this.itemId,
+        size: this.size,
+        cupType: this.cupType,
+        addOns: this.addOns,
+        quantity: this.quantity,
+        sugarLevel: this.sugarLevel,
+        subTotal: this.priceShown
+      };
+      this.$axios
+        .post(AUTH.url + "updateCustomerOrder", param, AUTH.config)
+        .then(res => {
+          if (res.data.status) {
+            AUTH.deauthenticate();
+          }
+          this.retrieveProduct();
 
-     }
-     else{
-       this.error = "This filed is required"
-     }
-     
-   },
-   getSubTotal() {
-     let total = 0;
-     this.tableData.forEach(element => {
-       total += element.subTotal;
-     });
-     this.subTotal = total;
-     return parseInt(total)
-       .toFixed(2)
-       .replace(/\d(?=(\d{3})+\.)/g, "$&,");
-   },
-   getTotal() {
-     let total = 0;
-     let subTotal = this.subTotal;
-     total = subTotal + 100;
-     this.total = total;
-     return parseInt(total)
-       .toFixed(2)
-       .replace(/\d(?=(\d{3})+\.)/g, "$&,");
-   },
-   getDeliveryFee() {
-     let deliveryFee = 50;
-     this.deliveryFee = deliveryFee;
-     return parseInt(deliveryFee)
-       .toFixed(2)
-       .replace(/\d(?=(\d{3})+\.)/g, "$&,");
-   },
-   direct() {
-     ROUTER.push("/orderHistory").catch(() => {});
-   }
- }
+          $("#myModal").modal("hide");
+          swal("Order Updated!", "Successfully", "success");
+        });
+    },
+    getSizePrice() {
+      if (this.size === "highDose") {
+        this.total = this.highprice;
+        this.basePrice = this.highprice;
+      } else if (this.size === "overDose") {
+        this.total = this.overprice;
+        this.basePrice = this.overprice;
+      } else if (this.size === "lowDose") {
+        this.total = this.price;
+        this.basePrice = this.price;
+      }
+      this.priceShown =
+        this.quantity * (this.basePrice + this.totalAddOns + this.cupTypePrice);
+    },
+    getCupPrice() {
+      this.$axios
+        .post(
+          AUTH.url + "retrieveOneCupType",
+          { cupType: this.cupType },
+          AUTH.config
+        )
+        .then(res => {
+          if (res.data.status) {
+            AUTH.deauthenticate();
+          }
+          this.cupTypePrice = res.data.cupType[0].inputCupOnlinePrice;
+          this.priceShown =
+            this.quantity *
+            (this.basePrice + this.totalAddOns + this.cupTypePrice);
+        });
+    },
+    getQuantity() {
+      this.priceShown =
+        this.quantity * (this.basePrice + this.totalAddOns + this.cupTypePrice);
+    },
+    retrieveCupType() {
+      this.$axios
+        .post(AUTH.url + "retrieveCupType", {}, AUTH.config)
+        .then(response => {
+          if (response.data.status) {
+            AUTH.deauthenticate();
+          }
+          this.cupData = response.data.cupType;
+        });
+    },
+    retrieveAddOns() {
+      this.$axios
+        .post(AUTH.url + "retrievingAddOns", {}, AUTH.config)
+        .then(response => {
+          if (response.data.status) {
+            AUTH.deauthenticate();
+          }
+          this.addOnsData = response.data.addons;
+        });
+    },
+    retrieveCategory() {
+      this.loadingShow = true;
+      this.$axios
+        .post(AUTH.url + "retrieveCategoryAscending", {}, AUTH.config)
+        .then(res => {
+          if (res.data.status) {
+            AUTH.deauthenticate();
+          }
+          this.data = res.data.addCategory;
+          this.loadingShow = false;
+        });
+    },
+    redirect(param) {
+      ROUTER.push("/productOnline/" + param).catch(() => {});
+    },
+    // retrieveProduct(){
+    //     this.loadingShow = true
+    //     this.$axios.post(AUTH.url + "retrieveAllProductAscending", {}, AUTH.config).then(res => {
+    //         if(res.data.status){
+    //             AUTH.deauthenticate()
+    //         }
+    //         this.productData = res.data.product
+    //         this.loadingShow = false
+    //     })
+    // },
+    addTotalPrice(item, event) {
+      this.$axios
+        .post(AUTH.url + "retrieveOneAddOn", { id: item.id }, AUTH.config)
+        .then(response => {
+          if (response.data.status) {
+            AUTH.deauthenticate();
+          }
+          this.addOnsPrice = response.data.addons.onlineAddOnsPrice;
+          if (event.target.checked) {
+            this.totalAddOns += this.addOnsPrice;
+          } else {
+            this.totalAddOns -= this.addOnsPrice;
+          }
+          this.priceShown =
+            this.quantity *
+            (this.basePrice + this.totalAddOns + this.cupTypePrice);
+        });
+    },
+    showModal(item) {
+      this.totalAddOns = 0
+      this.size = item.size;
+      this.sugarLevel = item.sugarLevel;
+      this.cupType = item.cupType;
+      item.same_order.forEach(el => {
+        this.addOns.push(el.addOns);
+        this.addOnsData.forEach(e => {
+            if(el.addOns === e.addons_name){
+                this.totalAddOns += e.onlineAddOnsPrice
+            }
+        })
+      });
+      this.cupType = item.cupType
+      this.quantity = item.quantity;
+      this.total = 0;
+      this.cupTypePrice = 0
+      this.cupData.forEach(el => {
+          if(el.cupTypeName === item.cupType){
+              this.cupTypePrice = el.inputCupOnlinePrice;
+          }
+      })
+      this.price = item.order_product[0].onlinelowPrice;
+      this.highprice = item.order_product[0].onlinehighPrice;
+      this.overprice = item.order_product[0].onlineoverPrice;
+      this.productNameOrder = item.order_product[0].productName;
+      this.image = item.order_product[0].image;
+      this.description = item.description;
+      this.itemId = item.id;
+      this.getSizePrice();
+    },
+    orderNow() {
+      if (this.payment !== null) {
+        let params = {
+          id: localStorage.getItem("customerId"),
+          status: "pendingCustomer"
+        };
+        this.$axios
+          .post(AUTH.url + "updateStatus", params, AUTH.config)
+          .then(res => {
+            if (res.data.status) {
+              AUTH.deauthenticate();
+            }
+            swal("Order Successfully!", "Processing .........", "success");
+            this.retrieveProduct();
+            localStorage.removeItem("customerOnlineId");
+          });
+      } else {
+        this.error = "This filed is required";
+      }
+    },
+    getSubTotal() {
+      let total = 0;
+      this.tableData.forEach(element => {
+        total += element.subTotal;
+      });
+      this.subTotal = total;
+      return parseInt(total)
+        .toFixed(2)
+        .replace(/\d(?=(\d{3})+\.)/g, "$&,");
+    },
+    getTotal() {
+      let total = 0;
+      let subTotal = this.subTotal;
+      total = subTotal + 100;
+      this.total = total;
+      return parseInt(total)
+        .toFixed(2)
+        .replace(/\d(?=(\d{3})+\.)/g, "$&,");
+    },
+    getDeliveryFee() {
+      let deliveryFee = 50;
+      this.deliveryFee = deliveryFee;
+      return parseInt(deliveryFee)
+        .toFixed(2)
+        .replace(/\d(?=(\d{3})+\.)/g, "$&,");
+    }
+  }
 };
 </script>

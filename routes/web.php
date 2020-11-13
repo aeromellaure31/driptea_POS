@@ -50,12 +50,17 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('updateStatus','App\Http\Controllers\OrderController@updateStatus');
     Route::post('updateOnlineStatus','App\Http\Controllers\OrderController@updateOnlineStatus');
     Route::post('deleteOrder','App\Http\Controllers\OrderController@deleteOrder');
+    Route::post('updateCustomerOrder','App\Http\Controllers\OrderController@updateCustomerOrder');
+
     Route::post('retrieveOrder','App\Http\Controllers\OrderController@retrieveOrder');
     Route::post('retrieveCustomerOrder','App\Http\Controllers\OrderController@retrieveCustomerOrder');
     Route::post('retrieveOnlineOrder','App\Http\Controllers\OrderController@retrieveOnlineOrder');
     Route::post('retrieveWholeOrder','App\Http\Controllers\OrderController@retrieveWholeOrder');
     Route::post('getOrder','App\Http\Controllers\OrderController@getOrder');
     Route::post('retrieveSalesReportPerCategory','App\Http\Controllers\OrderController@retrieveSalesReportPerCategory');
+    Route::post('retrievePendingOrders','App\Http\Controllers\OrderController@retrieveOnlineOrder');
+    Route::post('retrieveCustomersOrdersForEdit','App\Http\Controllers\OrderController@retrieveCustomersOrdersForEdit');
+
 
 
     Route::post('addingAddOns','App\Http\Controllers\AddAddOnsController@addAddons');

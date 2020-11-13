@@ -1,85 +1,45 @@
 <template >
     <div>   
-        <div class="header" style="background-color:#ff5b04">
-            <div class="container" >
-                <div class="row">
-                    <div class="col-6">
-                        DRIPTEA
-                    </div>
-                    <div class="col-6 text-right">
-                    <v-btn icon style="margin-right: 2%;" @click="home()">
-                        <v-icon>mdi-home</v-icon>
-                    </v-btn>
-                    <v-btn icon @click="direct()" style="margin-right: 2%;">
-                        <v-icon>mdi-cart</v-icon>
-                        <span style="margin-left: -3%;">Cart</span>
-                        <span style="background-color: red; color: white; border-radius: 20%; font-size: 10px; margin-left: -10%; margin-top: -20%;">{{count > 0 ? 'New' : ''}}</span>
-                    </v-btn>
-                              <v-menu bottom left>
-                        <template v-slot:activator="{ on, attrs }">
-                            <v-btn dark icon v-bind="attrs" v-on="on">
-                                <v-icon>mdi-dots-vertical</v-icon>
-                            </v-btn>
-                        </template>
-                        <v-list>
-                            <v-list-item >
-                                <v-list-item-title @click="profile">Profile</v-list-item-title>
-                            </v-list-item>
-                            <v-list-item>
-                                <v-list-item-title @click="direct">Order History</v-list-item-title>
-                            </v-list-item>
-                        </v-list>
-                    </v-menu>
-                    </div>
-                </div>
-                <!--/row-->
-            </div>
-            <!--container-->
-        </div>
-        <nav class="navbar navbar-expand-sm sticky-top navbar-light " style="background-color:#ff5b04">
-                    <div class="container">
-                            <ul class="nav nav-tabs justify-content-center">
-                                <li class="nav-item"  v-for="(item, index) in data" :key="index">
-                                    <a class="nav-link" :href="'#'+item.productCategory" style="color: white;">{{item.productCategory}}</a>
-                                </li>
-                            
-                            </ul>
-                    </div>
-                </nav>
-
-
-        <div class="container" fluid>
+        <template >
+            <v-tabs
+            align-with-title
+            >
+            <v-tabs-slider color="yellow"></v-tabs-slider>
+                <v-tab v-for="(item, index) in data" :key="index">
+                    <a class="nav-link" :href="'#'+item.productCategory" style="color: black;">{{item.productCategory}}</a>
+                </v-tab>
+            </v-tabs>
+        </template>
+        <div class="sudlanan" fluid>
+            <center>
+                <h1 style="margin-top: -4%; margin-bottom: -5%;">Products</h1>
+            </center>
             <div class="row">
                 <div class="col-12 py-4">
-                    
-                    <div  :id="item.productCategory"  class="categoryStorage" v-for="(item, index) in data" :key="index" >
-                            <br>
-                        
-                            <h3>{{item.productCategory}}</h3>
-                            <br>
-                            <div v-if="productData !== null && data.length > 0" class="row"   >
-                                <div v-if="item.productCategory === items.productCategory" class="col-md-3 imageSize" v-for="(items, ind) in productData" :key="ind">
-                                    <center>
-                                        <img class="imgItem" data-toggle="modal" data-target="#viewDetails" :src="items.image" @click="showModal(items)">
-                                        <br>
-                                        <h4>{{items.productName}}</h4>
-                                    </center>
-                                </div>
-                            </div>
-                            <div v-else class="secRow">
+                    <div :id="item.productCategory"  class="categoryStorage" v-for="(item, index) in data" :key="index" >
+                        <br>
+                        <h3>{{item.productCategory}}</h3>
+                        <br>
+                        <div v-if="productData !== null && data.length > 0" class="row"   >
+                            <div v-if="item.productCategory === items.productCategory" class="col-md-3 imageSize" v-for="(items, ind) in productData" :key="ind">
                                 <center>
-                                    <img class="noImage" src="@/assets/data.png">
-                                    <h2>No Product Yet</h2>
-                                </center>   
+                                    <img class="imgItem" data-toggle="modal" data-target="#viewDetails" :src="items.image" @click="showModal(items)">
+                                    <br>
+                                    <h4>{{items.productName}}</h4>
+                                </center>
                             </div>
                         </div>
+                        <div v-else class="secRow">
+                            <center>
+                                <img class="noImage" src="@/assets/data.png">
+                                <h2>No Product Yet</h2>
+                            </center>   
+                        </div>
+                    </div>
 
                 </div>
             </div>
-            <!--/row-->
         </div>
-       
-          
         <div class="modal fade" id="viewDetails" role="dialog">
             <div class="modal-dialog modal-lg">
             <!-- Modal content-->
@@ -148,10 +108,13 @@
                                 <input v-model="quantity" type="number" min="1" style="width:100px; display: inline;" class="form-control" @change="getQuantity()">
                             </div>
                         </center>
+                        <br>
+                           <p style="float:right;margin-right:5%">TOTAL: <b> ₱{{priceShown}}.00</b></p> 
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal" @click="cancel">Cancel</button>
-                        <center><button type="submit" class="btn btn-success btnRegister" @click="addToCart()">Add to Cart - {{priceShown}}</button></center>                        
+                        <center><button type="submit" class="btn btn-success btnRegister" @click="addToCart()">Add to Cart</button></center>                        
                     </div>
                 </div>
             </div>
@@ -160,7 +123,9 @@
     </div>
 </template>
 <style scoped>
-
+.sudlanan{
+    padding: 5%;
+}
 .categoryStorage{
     margin-top: 3%;
     border-radius: 5px;
@@ -187,6 +152,11 @@
     height: 170px;
     width: 70%;
 }
+.fixed-tabs-bar .v-tabs__bar {
+    top: 4rem;
+  z-index: 2;
+    position: -webkit-sticky;
+    position: sticky;}
 @media screen and (max-width: 900px) {
     .imageSize2{
         height: 300px;
@@ -210,6 +180,8 @@
 
 </style>
 <script>
+import swal from "sweetalert";
+
 import AUTH from '../../services/auth'
 import ROUTER from '../../router'
 import $ from 'jquery'
@@ -256,17 +228,6 @@ export default {
         this.retrieveProduct()
         this.retrieveAddOns()
         this.retrieveCupType()
-
-        let pusher = new Pusher(this.config.PUSHER_APP_KEY, {
-            cluster: this.config.PUSHER_APP_CLUSTER,
-            encrypted: true
-        });
-        let channel = pusher.subscribe('driptea-channel')
-        channel.bind('driptea-data', (data) => {
-            if(data.order.status === 'incart'){
-                this.count++
-            }
-        })
     },
     methods: {
         direct(){
@@ -392,6 +353,7 @@ export default {
                                 AUTH.deauthenticate()
                             }
                             $('#viewDetails').modal('hide')
+                             swal("Order added to cart", "Successfully", "success")
                         })
                     })
                 }else{
@@ -415,6 +377,7 @@ export default {
                             AUTH.deauthenticate()
                         }
                         $('#viewDetails').modal('hide')
+
                     })
                 }
             }

@@ -68,6 +68,11 @@ class OrderController extends Controller
         $order = Order::with('orderProduct')->with('sameOrder')->where('onlineId', $request->id)->where('status', 'incart')->where('deleted_at', null)->orderBy('id','DESC')->get();
         return response()->json(compact('order'));
     }
+    // public function retrieveCustomersOrdersForEdit(Request $request){
+    //     $order = Order::with('orderProduct')->with('sameOrder')->where('id', $request->id)->where('status', 'incart')->where('deleted_at', null)->orderBy('id','DESC')->get();
+    //     // dd($order);
+    //     return response()->json(compact('order'));
+    // }
 
     public function updateStatus(Request $request){
         if($request['status'] === 'complete'){
@@ -108,4 +113,28 @@ class OrderController extends Controller
             ->get();
         return response()->JSON(compact('prods'));
     }
+    public function updateCustomerOrder(Request $request){
+        $data = $request->all();
+        $product = Order::firstOrCreate(['id' => $request->id]);
+        $dataAddOns = $data['addOns'];
+        $this->updateAddOns($dataAddOns, $product->id);
+        $product->quantity = $data['quantity'];
+        $product->size = $data['size'];
+        $product->sugarLevel = $data['sugarLevel'];
+        $product->cupType = $data['cupType'];
+        $product->subTotal = $data['subTotal'];
+        $product->save();
+    }
+
+    public function updateAddOns($dataParams, $id){
+        $Ons = AddOns::where('orderId', $id);
+        $Ons->delete();
+        foreach ($dataParams as $value) {
+            $addOns = new AddOns();
+            $addOns['orderId'] = $id;
+            $addOns['addOns'] = $value;
+            $addOns->save();
+        }
+    }
+
 }

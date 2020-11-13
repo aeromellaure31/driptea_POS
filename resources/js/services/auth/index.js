@@ -57,7 +57,7 @@ export default {
                     this.setUser(res.data.user.id, res.data.user.name, res.data.user.account_type)
                     ROUTER.push('/casherDashboard')
                 }else{
-                    localStorage.setItem('fullName', res.data.user.fullname)
+                    localStorage.setItem('fullName', res.data.user.firstname+" "+ res.data.user.lastname )
                     localStorage.setItem('address', res.data.user.address)
                     localStorage.setItem('contactNumber', res.data.user.contactNumber)
                     this.setUser(res.data.user.id, res.data.user.name, res.data.user.account_type)

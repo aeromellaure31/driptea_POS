@@ -1,73 +1,24 @@
 <template>
 <div>
-        <div class="header" style="background-color:#ff5b04">
-           <div class="container" >
-               <div class="row">
-                   <div class="col-6">
-                       DRIPTEA
-                   </div>
-                   <div class="col-6 text-right">
-                   <v-btn icon style="margin-right: 2%;"  @click="home()">
-                        <v-icon >mdi-home</v-icon>
-                    </v-btn>
-                     <v-btn icon @click="direct()" style="margin-right: 2%;">
-                        <v-icon>mdi-cart</v-icon>
-                        <span style="margin-left: -3%;">Cart</span>
-                        <span style="background-color: red; color: white; border-radius: 20%; font-size: 10px; margin-left: -10%; margin-top: -20%;">{{count > 0 ? 'New' : ''}}</span>
-                    </v-btn>
-                    <v-menu bottom left>
-                        <template v-slot:activator="{ on, attrs }">
-                            <v-btn dark icon v-bind="attrs" v-on="on">
-                                <v-icon>mdi-dots-vertical</v-icon>
-                            </v-btn>
-                        </template>
-                        <v-list>
-                            <v-list-item >
-                                <v-list-item-title @click="profile">Profile</v-list-item-title>
-                            </v-list-item>
-                            <v-list-item>
-                                <v-list-item-title @click="direct">Order History</v-list-item-title>
-                            </v-list-item>
-                        </v-list>
-                    </v-menu>
-                   </div>
-               </div>
-           </div>
-        </div>
        <center>
-        
-     
-          
+            <v-card>
+                <v-tabs
+                color="deep-orange accent-4"
+                right
+                >
+                <v-tab @click="tableDataCompleteOrder=true,tableDataPendingOrders=false">Completed Orders</v-tab>
+                <v-tab @click="tableDataCompleteOrder=false,tableDataPendingOrders=true">Pending Orders</v-tab>
+
+              
+                </v-tabs>
+            </v-card>
+ 
             <div v-if="tableDataCompleteOrder">
             <v-simple-table
  
                :items-per-page="5"
                class="elevation-3"
                >
-               <template v-slot:top>
-                   <v-toolbar class="mb-2" color="#ff5b04" dark flat>
-                   <v-toolbar-title class="col pa-3 py-4 white--text">Complete Orders</v-toolbar-title>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                   <v-text-field
-                       v-model="search"
-                       clearable
-                       flat
-                       solo-inverted
-                       prepend-inner-icon="mdi-magnify"
-                       class="mt-7"
-                       label="Search"
-                   ></v-text-field>
-                   <v-divider class="mx-4" vertical></v-divider>
-                    <v-btn
-                       color="primary"
-                       type="button"
-                       class="btn btn-primary btnModal"
-                       dark
-                       @click="tableDataPendingOrders = true,tableDataCompleteOrder=false"
-                   >+ Pending Orders</v-btn>
-                 
-                   </v-toolbar>
-               </template>
-              
                  <thead >
                    <tr v-if="tableData !== null && tableData.length > 0">
                        <th style="width: 30%;">Date</th>
@@ -88,7 +39,7 @@
                            <td>{{getProduct(item)}}</td>
                            <td>{{item[0].get_checkouts[0].total}}</td>
                            <td>
-                               <button class="btn btn-primary">View</button>
+                               <button class="btn btn-primary"  data-toggle="modal" data-target="#myModal" @click="viewOrderComplete(item)">View</button>
                            </td>
                        </tr>
                    </tbody>
@@ -106,29 +57,7 @@
                :items-per-page="5"
                class="elevation-3"
                >
-               <template v-slot:top>
-                   <v-toolbar class="mb-2" color="#ff5b04" dark flat>
-                   <v-toolbar-title class="col pa-3 py-4 white--text">Pending Orders</v-toolbar-title>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                   <v-text-field
-                       v-model="search"
-                       clearable
-                       flat
-                       solo-inverted
-                       prepend-inner-icon="mdi-magnify"
-                       class="mt-7"
-                       label="Search"
-                   ></v-text-field>
-                   <v-divider class="mx-4" vertical></v-divider>
-                    <v-btn
-                       color="primary"
-                       type="button"
-                       class="btn btn-primary btnModal"
-                       dark
-                       @click="tableDataCompleteOrder = true, tableDataPendingOrders = false"
-                   >+ Completed Orders</v-btn>
-                 
-                   </v-toolbar>
-               </template>
+              
                  <thead>
                    <tr v-if="tableDataPending !== null && tableDataPending.length > 0">
                        <th scope="2">Date</th>
@@ -155,7 +84,7 @@
                            <td>₱ {{getTotal(items)}}</td>
                            <td>Pending Order</td>
                            <td>
-                               <button class="btn btn-primary">View</button>
+                               <button class="btn btn-primary"  data-toggle="modal" data-target="#myModal" @click="viewOrderPending(items)">View</button>
                            </td>
                        </tr>
                    </tbody>
@@ -165,20 +94,89 @@
              
                </v-simple-table>
                </div>
+               
              
           
        </center>
- 
- <loading v-if="loadingShow"></loading>
- 
+       <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6" >
+                                <center>
+                                    <img class="imageSize2" :src="image">
+                                    <div ><br>
+                                        <h3>Base Price (₱{{basePrice}})</h3>
+                                        <h3>{{productName}}</h3>
+                                        <p class="productDescription">{{description}}</p>
+                                    </div>
+                                </center>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="modalDiv">
+                                    <div style="float:left" >
+                                        <label for="sizdatee" style="font-size: 15px; font-weight: bold" >Date :</label>
+
+
+                                        <p>{{getDate(orderDate)}}</p>
+                                  
+                                        <label for="size" style="font-size: 15px; font-weight: bold" >Cup Size:</label>
+                                            
+                                            <p>{{sizeName}}</p>
+                                            
+                                           
+                                            <label for="cupType" style="font-size: 15px; font-weight: bold">Cup Type :</label>
+                                            <p>{{cupType}}</p>
+
+                                          
+                                            <label for="sugarLevel" style="font-size: 15px; font-weight: bold">Sugar Level:</label>
+                                            <p>{{sugarLevel}}</p>
+                                           
+                                            <label for="size" style="font-size: 15px; font-weight: bold">Add&nbsp;Ons(Optional):</label><br>
+                                            <p>{{addOns}}</p>
+
+                                            <label for="quantity" style="font-size: 15px; font-weight: bold; display: inline;">Quantity:</label>
+                                            <p>{{quantity}}</p>
+
+                                            <label v-if="tableDataCompleteOrder" for="delivery" style="font-size: 15px; font-weight: bold; display: inline;">Delivery Fee:</label>
+                                            <p v-if="tableDataCompleteOrder">{{deliveryFee}}</p>
+
+                                            <p style="float:right;margin-right:5%;font-size:20px">TOTAL: <b> ₱{{priceShown}}.00</b></p> 
+
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                       
+                        <br>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" >Okay</button>
+                        <!-- <center><button type="submit" class="btn btn-success btnRegister" @click="updateCustomerOrder()">Save Change</button></center>                         -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <loading v-if="loadingShow"></loading>
    </div>
- 
- 
 </template>
 <style scoped>
 .table {
    width: 70%;
    margin-left:5%
+}
+.imageSize2{
+    height: 300px;
+    width: 300px;
+    margin-top: 2%;
 }
 </style>
 <script>
@@ -198,6 +196,20 @@ export default {
             loadingShow:false,
             tableDataPending:[],
             search:null,
+            productName:null,
+            description:null,
+            image:null,
+            cupType:null,
+            cupSize:null,
+            size:null,
+            sugarLevel:null,
+            addOns:null,
+            priceShown:null,
+            quantity:null,
+            basePrice:null,
+            sizeName:null,
+            orderDate:null,
+            deliveryFee:null,
         }
     },
     mounted(){
@@ -236,6 +248,19 @@ export default {
             })
             return product
         },
+         getSizePrice(){
+            if(this.size === 'highDose'){
+                this.sizeName = "High Dose"
+                this.basePrice = this.highPrice
+            }else if(this.size === 'overDose'){
+                this.sizeName = "Over Dose"
+                this.basePrice = this.overPrice
+            }else if(this.size === 'lowDose'){
+                this.sizeName = "Low Dose"
+                this.basePrice = this.price
+
+            }
+         },
         
         retrieve(){
             this.loadingShow = true
@@ -250,13 +275,15 @@ export default {
                 Object.keys(response.data.storeOrder).forEach(element => {
                     this.tableData.push(response.data.storeOrder[element])
                 });
+            this.tableDataCompleteOrder=true
+
             })
         },
         retrievePending(){
             let parameter = {
                 id: localStorage.getItem('customerId'),
             }
-            this.$axios.post(AUTH.url + 'retrieveOnlineOrders', parameter, AUTH.config).then(response => {
+            this.$axios.post(AUTH.url + 'retrievePendingOrders', parameter, AUTH.config).then(response => {
                 if(response.data.status){
                     AUTH.deauthenticate()
                 }
@@ -280,13 +307,51 @@ export default {
             })
             return storeAddOns
         },
-        home(){
-            ROUTER.push('/onlineDashboard').catch(()=>{})
-        },
-         direct(){
-            ROUTER.push('/orderHistory').catch(()=>{})
-        }
+      viewOrderPending(item){
+            this.size = item[0].size
+            this.sugarLevel = item[0].sugarLevel
+            this.cupType = item[0].cupType
+            this.addOns = item[0].same_order[0].addOns
+            this.quantity = item[0].quantity
+            this.priceShown = item[0].subTotal
+            this.orderDate = item[0].created_at
+            // this.cupTypePrice = 0
+            this.price = item[0].order_product[0].onlinelowPrice
+            this.highPrice = item[0].order_product[0].onlinehighPrice
+            this.overPrice = item[0].order_product[0].onlineoverPrice
+            this.productName = item[0].order_product[0].productName
+            this.image = item[0].order_product[0].image
+            this.description = item[0].order_product[0].description
+           
+            // this.itemId = item.id
+            this.getSizePrice()
+            //  });
+      },
+       viewOrderComplete(item){
+            this.size = item[0].size
+            this.sugarLevel = item[0].sugarLevel
+            this.cupType = item[0].cupType
+            this.addOns = item[0].same_order[0].addOns
+            this.quantity = item[0].quantity
+            // this.priceShown = item[0].subTotal
+            this.orderDate = item[0].get_checkouts[0].created_at
+            // this.cupTypePrice = 0
+            this.price = item[0].order_product[0].onlinelowPrice
+            this.highPrice = item[0].order_product[0].onlinehighPrice
+            this.overPrice = item[0].order_product[0].onlineoverPrice
+            this.productName = item[0].order_product[0].productName
+            this.image = item[0].order_product[0].image
+            this.description = item[0].order_product[0].description
+            this.deliveryFee= item[0].get_checkouts[0].deliveryFee
+            this.priceShown= item[0].get_checkouts[0].total
 
+            // this.itemId = item.id
+            this.getSizePrice()
+            //  });
+      },
+       getDate(date){
+      return moment(date).format('MM/DD/YYYY')
+    },
  
    }
 }
