@@ -14,11 +14,13 @@ use Illuminate\Support\Facades\Storage;
 class UserController extends Controller
 {
     public function updateImage(Request $request){
-        $filenamewithextension = $request->image->getClientOriginalName();
-        $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
-        $extension = $request->image->getClientOriginalExtension();
-        $filenametostore = $filename.'_'.time().'.'.$extension;
-        Storage::disk('s3')->put($filenametostore, fopen($request->image, 'r+'), 'public');
+        if($request->hasFile('profile_image')) {
+            $filenamewithextension = $request->file('profile_image')->getClientOriginalName();
+            $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
+            $extension = $request->file('profile_image')->getClientOriginalExtension();
+            $filenametostore = $filename.'_'.time().'.'.$extension;
+            Storage::disk('s3')->put($filenametostore, fopen($request->file('profile_image'), 'r+'), 'public');
+        }
 
         $user = User::firstOrCreate(['id' => $request->id]);
         $imageName = time().'.'.$request->image->getClientOriginalExtension();
@@ -26,7 +28,7 @@ class UserController extends Controller
         $user->image = 'images/'.$imageName;
         $user->save();
         event(new pusherEvent($user));
-        return response()->json(compact('user'));
+        return response()->json(compact('user')); 
     }
 
     public function authenticate(Request $request)
