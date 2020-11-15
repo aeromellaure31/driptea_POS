@@ -339,6 +339,7 @@ export default {
         this.retrieve();
       }
       if (data.order.image) {
+        console.log('nisulod dnhi sa image')
         this.retrieveImage();
       }
       if (data.order.status === "incart") {
