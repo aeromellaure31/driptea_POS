@@ -331,6 +331,7 @@ export default {
     let channel = pusher.subscribe("driptea-channel");
     let obj = this;
     channel.bind("driptea-data", data => {
+      console.log('nisulod dnhi sa pusher')
       if (data.order === "pendingCustomer") {
         // this.playSound('file://resources/audio/notify.mp3')
         this.playSound(
