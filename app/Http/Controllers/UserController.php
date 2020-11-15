@@ -9,10 +9,17 @@ use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Support\Facades\DB;
 use App\Events\pusherEvent;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
     public function updateImage(Request $request){
+        $filenamewithextension = $request->image->getClientOriginalName();
+        $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
+        $extension = $request->image->getClientOriginalExtension();
+        $filenametostore = $filename.'_'.time().'.'.$extension;
+        Storage::disk('s3')->put($filenametostore, fopen($request->image, 'r+'), 'public');
+
         $user = User::firstOrCreate(['id' => $request->id]);
         $imageName = time().'.'.$request->image->getClientOriginalExtension();
         $request->image->move(public_path('images'), $imageName);
