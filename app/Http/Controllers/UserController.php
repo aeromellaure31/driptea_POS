@@ -15,7 +15,7 @@ class UserController extends Controller
 {
     public function updateImage(Request $request){
         // if($request->hasFile('profile_image')) {
-            dd(fopen($request->image));
+            dd(fopen($request->image, 'r+'));
             $filenamewithextension = $request->image->getClientOriginalName();
             $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
             $extension = $request->image->getClientOriginalExtension();
