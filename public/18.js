@@ -1018,7 +1018,11 @@ var render = function() {
               ),
               _vm._v(" "),
               _c("input", {
-                attrs: { id: "file-input", type: "file" },
+                attrs: {
+                  id: "file-input",
+                  type: "file",
+                  name: "profile_image"
+                },
                 on: { change: _vm.onImgChange }
               })
             ]),
