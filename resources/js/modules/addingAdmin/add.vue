@@ -59,12 +59,13 @@
           >+CATEGORY</v-btn>
         </v-toolbar>
       </template>
+      <template v-slot:item.id="{ item }"><span>{{getNumberDate(item.created_at, item.id)}}</span> </template>
       <template v-slot:item.image="{ item }">
         <v-img :src="item.image" style="width:50px;hieght:50px"></v-img>
       </template>
       <template v-slot:item.actions="{ item }">
         <v-icon small class="mr-2" @click="editCategories(item)">mdi-pencil</v-icon>
-        <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
+        <v-icon small @click="showDelete(item.id, 'category')">mdi-delete</v-icon>
       </template>
     </v-data-table>
 
@@ -98,6 +99,7 @@
           >+ PRODUCT</v-btn>
         </v-toolbar>
       </template>
+      <template v-slot:item.id="{ item }"><span>{{getNumberDate(item.created_at, item.id)}}</span> </template>
       <template v-slot:item.image="{ item }">
         <v-img :src="item.image" style="width:50px;hieght:50px"></v-img>
       </template>
@@ -110,10 +112,10 @@
         >mdi-window-close</v-icon>
         <v-icon
           v-else
-        
           small
           @click="productStatusAvailable(item.id)"
         >mdi-check</v-icon>
+        <v-icon small @click="showDelete(item.id, 'product')">mdi-delete</v-icon>
       </template>
     </v-data-table>
 
@@ -147,6 +149,7 @@
           >+ ADD ONS</v-btn>
         </v-toolbar>
       </template>
+      <template v-slot:item.id="{ item }"><span>{{getNumberDate(item.created_at, item.id)}}</span> </template>
       <template v-slot:item.actions="{ item }">
         <v-icon small class="mr-2" @click="editAddOns(item)">mdi-pencil</v-icon>
         <v-icon
@@ -160,6 +163,7 @@
           small
           @click="availableStatusUpdate(item.id)"
         >mdi-check</v-icon>
+        <v-icon small @click="showDelete(item.id, 'addOns')">mdi-delete</v-icon>
       </template>
     </v-data-table>
 
@@ -193,6 +197,7 @@
           >+ CUP TYPE</v-btn>
         </v-toolbar>
       </template>
+      <template v-slot:item.id="{ item }"><span>{{getNumberDate(item.created_at, item.id)}}</span> </template>
       <template v-slot:item.actions="{ item }">
         <v-icon small class="mr-2" @click="editCup(item)">mdi-pencil</v-icon>
         <v-icon
@@ -201,6 +206,7 @@
           @click="NACupUpdate(item.id)"
         >mdi-window-close</v-icon>
         <v-icon v-else small @click="availableCupUpdate(item.id)">mdi-check</v-icon>
+        <v-icon small @click="showDelete(item.id, 'cupType')">mdi-delete</v-icon>
       </template>
     </v-data-table>
 
@@ -235,6 +241,7 @@
           >+ CUP SIZE</v-btn>
         </v-toolbar>
       </template>
+      <template v-slot:item.created_at="{ item }"><span>{{getDate(item.created_at)}}</span> </template>  
     </v-data-table>
 
     <!-- MODALS -->
@@ -249,26 +256,34 @@
                         <span class="headline">ADD CATEGORY</span>
                         </v-card-title>
                         <v-card-text>
-                        <v-form @submit="formSubmit" enctype="multipart/form-data" action>
-                                <span class="errorColor" v-if="errorMessage !== null">{{errorMessage}}</span>
-                                <v-container>
-                                    <v-row>
-                                        <v-text-field label="ProductCategory Name" outlined dense v-model="productType" type="text" required></v-text-field>
-                                    </v-row>
-                                    <v-row>
-                                    <center>
-                                            <v-img :src="imageURL"></v-img><br>
-                                            <input type="file" class="fileStyle" v-on:change="onImageChange" required><br>
-                                    </center>
-                                    </v-row>  
-                                </v-container>
-                                <v-card-actions>
-                                    <v-spacer></v-spacer>
-                                        <v-btn color="blue darken-1" text @click="dialogForCategory = false"> Close</v-btn>
-                                        <v-btn v-if="!editCat" color="blue darken-1" text  type="submit" class="btn btn-primary">Add Category</v-btn>
-                                        <v-btn v-if="editCat" color="blue darken-1" text  type="button" class="btn btn-primary" @click="updateCategory($event)">Edit Category</v-btn>
-                                    </v-card-actions>
-                        </v-form></v-card-text>
+                          NOTE: <span class="text-danger text-center">All fields are required</span>
+                          <v-form @submit="formSubmit" enctype="multipart/form-data" action>
+                            <i><span class="errorColor" v-if="errorMessage !== null">{{errorMessage}}</span></i>
+                            <v-container>
+                                <v-row>
+                                    <v-text-field label="ProductCategory Name" outlined dense v-model="productType" type="text" required></v-text-field>
+                                </v-row>
+                                <v-row>
+                                <div class="form-group">
+                                  <center>
+                                    <img class="addOnsImage" :src="imageURL"><br>
+                                    <input type="file" class="fileStyle" v-on:change="onImageChange" required><br>
+                                  </center>
+                                </div>
+                                <!-- <center>
+                                    <v-img class="addOnsImage" :src="imageURL"></v-img><br>
+                                    <input type="file" class="fileStyle" v-on:change="onImageChange" required><br>
+                                </center> -->
+                                </v-row>  
+                            </v-container>
+                            <v-card-actions>
+                            <v-spacer></v-spacer>
+                                <v-btn color="blue darken-1" text @click="dialogForCategory = false"> Close</v-btn>
+                                <v-btn v-if="!editCat" color="blue darken-1" text  type="submit" class="btn btn-primary">Add Category</v-btn>
+                                <v-btn v-if="editCat" color="blue darken-1" text  type="button" class="btn btn-primary" @click="updateCategory($event)">Edit Category</v-btn>
+                            </v-card-actions>
+                          </v-form>
+                        </v-card-text>
                     </v-card>
                 </v-dialog>
             </v-row>
@@ -283,82 +298,84 @@
                         <span class="headline">PRODUCT</span>
                         </v-card-title>
                         <v-card-text>
+                        NOTE: <span class="text-danger text-center">All fields are required</span>
                         <v-form @submit="formSubmitProduct" enctype="multipart/form-data" action>
-                                <span class="errorColor" v-if="errorMessage !== null">{{errorMessage}}</span>
-                                <v-container>
-                                    <v-row>
-                                        <v-col cols="12" sm="6"> 
-                                           
-                                            <v-select
-                                            :items="categoryName"
-                                            label="Product Category"
-                                            dense
-                                            outlined
-                                            v-model="prodType"
-                                            ></v-select>
-                                        </v-col>
-                                        <v-col cols="12" sm="6"> 
-                                            <v-text-field  label="Product Name" outlined  v-model="productName"></v-text-field>
-                                        </v-col>
-                                        <v-col>
-                                            <v-text-field label="Description" outlined  v-model="description"></v-text-field>
-                                        </v-col>
-                                    </v-row>
-                                    <v-row>
-                                       <v-tabs dark background-color="secondary" fixed-tabs >
-                                    <v-tabs-slider></v-tabs-slider>
-                                    <v-tab @click="normal = true, online = false">
-                                        Normal Price
-                                    </v-tab>
-                                    <v-tab @click="online = true, normal = false">
-                                        Online Price 
-                                    </v-tab>
-                                    </v-tabs>                            
-                                    </v-row>
-                                   <div v-if="normal" style="border: 1px solid #d8dce3; margin-top: -0.5%;"> 
-                                       <v-row>
-                                           <v-col cols="12" sm="6" >
-                                            <v-text-field v-model="lowPrice" label="Low Dose Price" outlined type="number" required ></v-text-field>
-                                           </v-col>
-                                           <v-col cols="12" sm="6" >
-                                            <v-text-field v-model="highPrice" label="High Dose Price" outlined  type="number" required></v-text-field>
-                                           </v-col>
-                                       </v-row>
-                                       <v-row>
-                                           <v-col cols="12" sm="6">
-                                            <v-text-field v-model="overPrice" label="Over Dose Price" outlined  type="number" required></v-text-field>
-                                           </v-col>
-                                       </v-row>
-                                    </div>
-                                     <div v-if="online" style="border: 1px solid #d8dce3; margin-top: -0.5%;"> 
-                                       <v-row>
-                                           <v-col cols="12" sm="6" >
-                                            <v-text-field v-model="onlinelowPrice" label="Online Low Dose Price" outlined type="number" required ></v-text-field>
-                                           </v-col>
-                                           <v-col cols="12" sm="6" >
-                                            <v-text-field v-model="onlinehighPrice" label="Online High Dose Price" outlined  type="number" required></v-text-field>
-                                           </v-col>
-                                       </v-row>
-                                       <v-row>
-                                           <v-col cols="12" sm="6">
-                                            <v-text-field v-model="onlineoverPrice" label="Online Over Dose Price" outlined  type="number" required></v-text-field>
-                                           </v-col>
-                                       </v-row>
-                                    </div>
-                                    <div class="form-group">
-                                        <center>
-                                            <img class="addOnsImage" :src="imgURL"><br>
-                                            <input type="file" class="fileStyle" v-on:change="onImgChange" required><br>
-                                        </center>
-                                    </div>
-                                
-                                <v-card-actions>
-                                    <v-spacer></v-spacer>
-                                        <v-btn color="blue darken-1" text @click="dialogForProduct = false"> Close</v-btn>
-                                        <v-btn v-if="productAdd" type="submit" class="btn btn-primary" >Add Product</v-btn>
-                                        <v-btn v-if="productEdit" type="button" class="btn btn-primary" @click="updateProduct($event)">Edit Product</v-btn>
-                                    </v-card-actions>
-                                    </v-container>
+                          <i><span class="errorColor" v-if="errorMessage !== null">{{errorMessage}}</span></i>
+                          <v-container>
+                            <v-row>
+                                <v-col cols="12" sm="6"> 
+                                    
+                                    <v-select
+                                    :items="categoryName"
+                                    label="Product Category"
+                                    dense
+                                    outlined
+                                    v-model="prodType"
+                                    ></v-select>
+                                </v-col>
+                                <v-col cols="12" sm="6"> 
+                                    <v-text-field  label="Product Name" outlined  v-model="productName"></v-text-field>
+                                </v-col>
+                                <v-col>
+                                    <v-text-field label="Description" outlined  v-model="description"></v-text-field>
+                                </v-col>
+                            </v-row>
+                            <v-row>
+                                <v-tabs dark background-color="secondary" fixed-tabs >
+                            <v-tabs-slider></v-tabs-slider>
+                            <v-tab @click="normal = true, online = false">
+                                Normal Price
+                            </v-tab>
+                            <v-tab @click="online = true, normal = false">
+                                Online Price 
+                            </v-tab>
+                            </v-tabs>                            
+                            </v-row>
+                            <div v-if="normal" style="border: 1px solid #d8dce3; margin-top: -0.5%;"> 
+                                <i><span class="errorColor" v-if="errorMessage1 !== null">{{errorMessage1}}</span></i>
+                                <v-row>
+                                    <v-col cols="12" sm="6" >
+                                    <v-text-field v-model="lowPrice" label="Low Dose Price" outlined v-on:keyup="validate('lowDose')" min="1" type="number" required ></v-text-field>
+                                    </v-col>
+                                    <v-col cols="12" sm="6" >
+                                    <v-text-field v-model="highPrice" label="High Dose Price" outlined v-on:keyup="validate('highDose')" min="1"  type="number" required></v-text-field>
+                                    </v-col>
+                                </v-row>
+                                <v-row>
+                                    <v-col cols="12" sm="6">
+                                    <v-text-field v-model="overPrice" label="Over Dose Price" outlined v-on:keyup="validate('overDose')" min="1"  type="number" required></v-text-field>
+                                    </v-col>
+                                </v-row>
+                            </div>
+                              <div v-if="online" style="border: 1px solid #d8dce3; margin-top: -0.5%;"> 
+                                <i><span class="errorColor" v-if="errorMessage1 !== null">{{errorMessage1}}</span></i>
+                                <v-row>
+                                    <v-col cols="12" sm="6" >
+                                    <v-text-field v-model="onlinelowPrice" label="Online Low Dose Price" v-on:keyup="validate('onlineLowDose')" min="1" outlined type="number" required ></v-text-field>
+                                    </v-col>
+                                    <v-col cols="12" sm="6" >
+                                    <v-text-field v-model="onlinehighPrice" label="Online High Dose Price" v-on:keyup="validate('onlineHighDose')" min="1" outlined  type="number" required></v-text-field>
+                                    </v-col>
+                                </v-row>
+                                <v-row>
+                                    <v-col cols="12" sm="6">
+                                    <v-text-field v-model="onlineoverPrice" label="Online Over Dose Price" v-on:keyup="validate('onlineOverDose')" min="1" outlined  type="number" required></v-text-field>
+                                    </v-col>
+                                </v-row>
+                            </div>
+                            <div class="form-group">
+                                <center>
+                                    <img class="addOnsImage" :src="imgURL"><br>
+                                    <input type="file" class="fileStyle" v-on:change="onImgChange" required><br>
+                                </center>
+                            </div>
+                            <v-card-actions>
+                                <v-spacer></v-spacer>
+                                <v-btn color="blue darken-1" text @click="dialogForProduct = false"> Close</v-btn>
+                                <v-btn v-if="productAdd" type="submit" class="btn btn-primary" >Add Product</v-btn>
+                                <v-btn v-if="productEdit" type="button" class="btn btn-primary" @click="updateProduct($event)">Edit Product</v-btn>
+                            </v-card-actions>
+                          </v-container>
                         </v-form>
                         </v-card-text>
                     </v-card>
@@ -375,17 +392,20 @@
                         <span class="headline">ADD ADD ONS</span>
                         </v-card-title>
                         <v-card-text>
+                        NOTE: <span class="text-danger text-center">All fields are required</span>
                         <v-form>
-                            <span class="errorColor" v-if="errorMessage !== null">{{errorMessage}}</span>
+                            <i><span class="errorColor" v-if="errorMessage !== null">{{errorMessage}}</span></i>
                                 <v-container>
                                 <v-row>
                                     <v-text-field label="Add Ons Name" outlined dense v-model="inputAddOns" type="text" id="cupName"></v-text-field>
                                 </v-row>
-                                <v-row>    
-                                    <v-text-field label="Addons Price" outlined dense v-model="addOnsPrice" type="number"></v-text-field>
+                                <i><span class="errorColor" v-if="errorMessage2 !== null">{{errorMessage2}}</span></i>
+                                <v-row>
+                                  <v-text-field label="Addons Price" outlined dense v-model="addOnsPrice" @keyup="validate('addOnsPrice')" type="number"></v-text-field>
                                 </v-row>  
-                                <v-row>    
-                                    <v-text-field label="Online Addons Price" outlined dense v-model="onlineAddOnsPrice" type="number"></v-text-field>
+                                <i><span class="errorColor" v-if="errorMessage3 !== null">{{errorMessage3}}</span></i>
+                                <v-row>
+                                  <v-text-field label="Online Addons Price" outlined dense v-model="onlineAddOnsPrice" @keyup="validate('onlineAddOnsPrice')" type="number"></v-text-field>
                                 </v-row>  
                             </v-container>
                         </v-form>
@@ -394,7 +414,7 @@
                         <v-spacer></v-spacer>
                             <v-btn color="blue darken-1" text @click="dialogForAddOns = false"> Close</v-btn>
                             <v-btn color="blue darken-1" text v-if="addonsShow" type="button" class="btn btn-primary" @click="addAddOns">Add Add Ons</v-btn>
-                            <v-btn color="blue darken-1" text  v-if="editAddOnsShow" type="button" class="btn btn-primary" @click="editAddOnsData">SAVE</v-btn>
+                            <v-btn color="blue darken-1" text  v-if="editAddOnsShow" type="button" class="btn btn-primary" @click="editAddOnsData">Save</v-btn>
                         </v-card-actions>
                     </v-card>
                 </v-dialog>
@@ -410,18 +430,21 @@
                         <span class="headline">ADD CUP TYPE</span>
                         </v-card-title>
                         <v-card-text>
+                        NOTE: <span class="text-danger text-center">All fields are required</span>
                         <v-form>
-                            <span class="errorColor" v-if="errorMessage !== null">{{errorMessage}}</span>
-                                <v-container>
-                                <v-row>
-                                    <v-text-field label="Cup Type Name" outlined dense v-model="inputCup" type="text" id="cupName"></v-text-field>
-                                </v-row>
-                                <v-row>    
-                                    <v-text-field label="Normal Price" outlined dense v-model="inputCupPrice" type="number"></v-text-field>
-                                </v-row>  
-                                <v-row>    
-                                    <v-text-field label="Online Price" outlined dense v-model="inputCupOnlinePrice" type="number" min="1"  id="price"></v-text-field> 
-                                </v-row>
+                            <i><span class="errorColor" v-if="errorMessage !== null">{{errorMessage}}</span></i>
+                            <v-container>
+                              <v-row>
+                                  <v-text-field label="Cup Type Name" outlined dense v-model="inputCup" type="text" id="cupName"></v-text-field>
+                              </v-row>
+                              <i><span class="errorColor" v-if="errorMessage4 !== null">{{errorMessage4}}</span></i>
+                              <v-row>    
+                                  <v-text-field label="Normal Price" outlined dense v-model="inputCupPrice" @keyup="validate('cupTypePrice')" type="number"></v-text-field>
+                              </v-row>
+                              <i><span class="errorColor" v-if="errorMessage5 !== null">{{errorMessage5}}</span></i>
+                              <v-row>    
+                                  <v-text-field label="Online Price" outlined dense v-model="inputCupOnlinePrice" type="number" @keyup="validate('onlineCupTypePrice')" id="price"></v-text-field> 
+                              </v-row>
                             </v-container>
                         </v-form>
                         </v-card-text>
@@ -445,18 +468,20 @@
                         <span class="headline">ADD CUP SIZE</span>
                         </v-card-title>
                         <v-card-text>
+                        NOTE: <span class="text-danger text-center">All fields are required</span>
                         <v-form>
-                            <span class="errorColor" v-if="errorMessage !== null">{{errorMessage}}</span>
-                                <v-container>
-                                <v-row>
-                                    <v-text-field label="Low Dose Cup" outlined dense v-model="lowDoseCup" type="number"  min=0 id="lowDoseCup"></v-text-field>
-                                </v-row>
-                                <v-row>    
-                                    <v-text-field label="High Dose Cup" outlined dense v-model="highDoseCup" type="number" min=0 id="highDoseCup"></v-text-field>
-                                </v-row>  
-                                <v-row>    
-                                    <v-text-field label="Over Dose Cup" outlined dense v-model="overDoseCup" type="number" min=0 id="overDoseCup"></v-text-field> 
-                                </v-row>
+                            <i><span class="errorColor" v-if="errorMessage !== null">{{errorMessage}}</span></i>
+                            <i><span class="errorColor" v-if="errorMessage6 !== null">{{errorMessage6}}</span></i>
+                            <v-container>
+                              <v-row>
+                                  <v-text-field label="Low Dose Cup" outlined dense v-model="lowDoseCup" type="number" @keyup="validate('cupSize')" id="lowDoseCup"></v-text-field>
+                              </v-row>
+                              <v-row>    
+                                  <v-text-field label="High Dose Cup" outlined dense v-model="highDoseCup" type="number" @keyup="validate('cupSize')" id="highDoseCup"></v-text-field>
+                              </v-row>  
+                              <v-row>    
+                                  <v-text-field label="Over Dose Cup" outlined dense v-model="overDoseCup" type="number" @keyup="validate('cupSize')" id="overDoseCup"></v-text-field> 
+                              </v-row>
                             </v-container>
                         </v-form>
                         </v-card-text>
@@ -464,6 +489,25 @@
                         <v-spacer></v-spacer>
                             <v-btn color="blue darken-1" text @click="dialogForCupSize = false"> Close</v-btn>
                             <v-btn color="blue darken-1" text  type="button" class="btn btn-primary" @click="addingCupSize">Add Cup Size</v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </v-dialog>
+            </v-row>
+        </template>
+        <template>
+            <v-row justify="center">
+                <v-dialog v-model="dialogConfirmation" persistent max-width="600px">
+                    <v-card>
+                        <v-card-title>
+                        <span class="headline">Confirmation</span>
+                        </v-card-title>
+                        <v-card-text>
+                          Are you sure you want to delete?
+                        </v-card-text>
+                        <v-card-actions>
+                        <v-spacer></v-spacer>
+                            <v-btn color="blue darken-1" text @click="dialogConfirmation = false">No</v-btn>
+                            <v-btn color="blue darken-1" text  type="button" class="btn btn-primary" @click="deleteNow()">Yes</v-btn>
                         </v-card-actions>
                     </v-card>
                 </v-dialog>
@@ -645,9 +689,13 @@ label {
 import AUTH from "../../services/auth";
 import ROUTER from "../../router";
 import loading from '../../basic/loading.vue';
+import swal from "sweetalert";
+import moment from 'moment'
 export default {
   data() {
     return {
+      auth: AUTH,
+      dialogConfirmation: false,
       editCat: false,
       tableForCategory: true,
       tableForProduct: false,
@@ -716,6 +764,9 @@ export default {
       dialogForCupSize: false,
       dataHeader: null,
       catId: null,
+      exampleRules : {
+        min: value => value >= 0
+      },
       headersForAddOns: [
         { text: "#", value: "id" },
         { text: "Add Ons Name", value: "addons_name" },
@@ -739,15 +790,18 @@ export default {
         // { text: "Status", value: "status" },
         { text: "ACTION", value: "actions", sortable: false }
       ],
-
       headersForProduct: [
         { text: "#", value: "id" },
         { text: "images", value: "image" },
-        { text: "Product Name", value: "productName" },
-        { text: "Product Category", value: "productCategory" },
+        { text: "Name", value: "productName" },
+        { text: "Description", value: "description" },
+        { text: "Category", value: "productCategory" },
         { text: "Low Dose Price", value: "lowPrice" },
         { text: "High Dose Price", value: "highPrice" },
         { text: "Over Dose Price", value: "overPrice" },
+        { text: "Low Dose Online Price", value: "onlinelowPrice" },
+        { text: "High Dose Online Price", value: "onlineoverPrice" },
+        { text: "Over Dose Online Price", value: "overPrice" },
         { text: "Status", value: "status" },
         { text: "ACTION", value: "actions", sortable: false }
       ],
@@ -758,7 +812,15 @@ export default {
         { text: "Over Dose Cup", value: "incomingOverDose" },
         { text: "Total IncomingCup", value: "incomingOverDose" + "" }
       ],
-      loadingShow: false
+      loadingShow: false,
+      errorMessage1: null,
+      errorMessage2: null,
+      errorMessage3: null,
+      errorMessage4: null,
+      errorMessage5: null,
+      errorMessage6: null,
+      deleteID: null,
+      deleteParam: null,
     };
   },
   mounted() {
@@ -772,6 +834,189 @@ export default {
     loading
   },
   methods: {
+    deleteNow(){
+      if(this.deleteParam === 'category'){
+        this.deleteCategory(this.deleteID)
+      }else if(this.deleteParam === 'product'){
+        this.deleteProduct(this.deleteID)
+      }else if(this.deleteParam === 'addOns'){
+        this.deleteAddOns(this.deleteID)
+      }else if(this.deleteParam === 'cupType'){
+        this.deleteCupType(this.deleteID)
+      }
+    },
+    showDelete(id, param){
+      this.dialogConfirmation = true
+      this.deleteID = id
+      this.deleteParam = param
+    },
+    validate(param){
+      if(param === 'lowDose'){
+        if(parseInt(this.lowPrice) < 1){
+          this.errorMessage1 = 'Low Dose Price must be greater than 0'
+        }else{
+          this.errorMessage1 = null
+        }
+      }else if(param === 'highDose'){
+        if(parseInt(this.highPrice) <= parseInt(this.lowPrice)){
+          this.errorMessage1 = 'High Dose Price must be greater than Low Dose Price'
+        }else{
+          this.errorMessage1 = null
+        }
+      }else if(param === 'overDose'){
+        if(parseInt(this.overPrice) <= parseInt(this.highPrice)){
+          this.errorMessage1 = 'Over Dose Price must be greater than High Dose Price'
+        }else{
+          this.errorMessage1 = null
+        }
+      }else if(param === 'onlineLowDose'){
+        if(parseInt(this.onlinelowPrice) <= 0){
+          this.errorMessage1 = 'Over Dose Online Price must be greater than High Dose Price'
+        }else{
+          this.errorMessage1 = null
+        }
+      }else if(param === 'onlineHighDose'){
+        if(parseInt(this.onlinehighPrice) <= parseInt(this.onlinelowPrice)){
+          this.errorMessage1 = 'Over Dose Online Price must be greater than High Dose Price'
+        }else{
+          this.errorMessage1 = null
+        }
+      }else if(param === 'onlineOverDose'){
+        if(parseInt(this.onlineoverPrice) <= parseInt(this.onlinehighPrice)){
+          this.errorMessage1 = 'Over Dose Online Price must be greater than High Dose Price'
+        }else{
+          this.errorMessage1 = null
+        }
+      }else if(param === 'addOnsPrice'){
+        if(parseInt(this.addOnsPrice) < 0){
+          this.errorMessage2 = 'Add-ons Price must be greater than 0'
+        }else{
+          this.errorMessage2 = null
+        }
+      }else if(param === 'onlineAddOnsPrice'){
+        if(parseInt(this.onlineAddOnsPrice) < parseInt(this.addOnsPrice)){
+          this.errorMessage3 = 'Online Add-ons Price must be greater than Add-ons Price'
+        }else{
+          this.errorMessage3 = null
+        }
+      }else if(param === 'cupTypePrice'){
+        if(parseInt(this.inputCupPrice) < 0){
+          this.errorMessage4 = 'Cup Type Price must be greater 0'
+        }else{
+          this.errorMessage4 = null
+        }
+      }else if(param === 'onlineCupTypePrice'){
+        if(parseInt(this.inputCupOnlinePrice) < parseInt(this.inputCupPrice)){
+          this.errorMessage5 = 'Online Cup Type Price must be greater than Cup Type Price'
+        }else{
+          this.errorMessage5 = null
+        }
+      }else if(param === 'cupSize'){
+        if(parseInt(this.lowDoseCup) <= 0 || parseInt(this.highDoseCup) <= 0 || parseInt(this.overDoseCup) <= 0){
+          this.errorMessage6 = 'Cup Size Quantity must be greater than 0'
+        }else{
+          this.errorMessage6 = null
+        }
+      }
+    },
+    getNumberDate(date, id){
+      return moment(date).format('MMDDYY') + id
+    },
+    getDate(date){
+      return moment(date).format('MM/DD/YYYY')
+    },
+    deleteCupType(id){
+      this.loadingShow = true
+      let param = {
+        id: id
+      };
+      this.$axios
+        .post(AUTH.url + "deleteCupType", param, AUTH.config)
+        .then(response => {
+          if(response.data.status === 'Token is Expired'){
+            AUTH.deauthenticate()
+          }
+          this.deleteID = null
+          this.deleteParam = null
+          this.dialogConfirmation = false
+          this.loadingShow = false
+          swal({
+            title: "Congrats!",
+            text: "You successfully deleted the cup type",
+            icon: "success"
+          });
+          this.retrieveCupType();
+      });
+    },
+    deleteAddOns(id){
+      this.loadingShow = true
+      let param = {
+        id: id
+      };
+      this.$axios
+        .post(AUTH.url + "deleteAddOns", param, AUTH.config)
+        .then(response => {
+          if(response.data.status === 'Token is Expired'){
+            AUTH.deauthenticate()
+          }
+          this.deleteID = null
+          this.deleteParam = null
+          this.dialogConfirmation = false
+          this.loadingShow = false
+          swal({
+            title: "Congrats!",
+            text: "You successfully deleted the add-ons",
+            icon: "success"
+          });
+          this.retrieveAddOns();
+      });
+    },
+    deleteProduct(id){
+      this.loadingShow = true
+      let param = {
+        id: id
+      };
+      this.$axios
+        .post(AUTH.url + "deleteProduct", param, AUTH.config)
+        .then(response => {
+          if(response.data.status === 'Token is Expired'){
+            AUTH.deauthenticate()
+          }
+          this.deleteID = null
+          this.deleteParam = null
+          this.dialogConfirmation = false
+          this.loadingShow = false
+          swal({
+            title: "Congrats!",
+            text: "You successfully deleted the product",
+            icon: "success"
+          });
+          this.retrieveProducts();
+      });
+    },
+    deleteCategory(id){
+      this.loadingShow = true
+      let param = {
+        id: id
+      };
+      this.$axios
+        .post(AUTH.url + "deleteCategory", param, AUTH.config)
+        .then(response => {
+          if(response.data.status === 'Token is Expired'){
+            AUTH.deauthenticate()
+          }
+          this.deleteID = null
+          this.deleteParam = null
+          this.dialogConfirmation = false
+          this.loadingShow = false
+          swal({
+            title: "Congrats!",
+            text: "You successfully deleted the category",
+            icon: "success"
+          });
+          this.retrieveCategories();
+      });
+    },
     changeName(param){
       if(param === 'category'){
         this.cat = true
@@ -854,7 +1099,7 @@ export default {
           AUTH.deauthenticate()
         }
         this.loadingShow = false
-        this.cupSizeData = response.data.quantityCupsInDB;
+        this.cupSizeData = response.data.quantityCupsInDB.reverse();
             
         response.data.quantityCupsInDB.forEach(element => {
             
@@ -871,7 +1116,8 @@ export default {
           Authorization: 'Bearer ' + localStorage.getItem('userToken')
         }
       }
-      if (this.inputCupPrice !== null && this.inputCup !== null) {
+      if (this.inputCupPrice !== null && this.inputCup !== null && 
+      this.errorMessage4 === null && this.errorMessage5 === null) {
         let param = {
           cupType: this.inputCup,
           inputCupOnlinePrice: this.inputCupOnlinePrice,
@@ -883,11 +1129,16 @@ export default {
             AUTH.deauthenticate()
           }
           this.loadingShow = false
+          swal({
+            title: "Congrats!",
+            text: "You have successfully added a cup type!",
+            icon: "success"
+          });
           this.retrieveCupType();
           this.dialogForCupType = false;
         });
       } else {
-        this.errorMessage = "All fields are required!";
+        this.errorMessage = "Please fill up all fields";
         this.loadingShow = false
       }
     },
@@ -896,7 +1147,8 @@ export default {
       if (
         this.lowDoseCup !== null &&
         this.highDoseCup !== null &&
-        this.overDoseCup !== null
+        this.overDoseCup !== null && 
+        this.errorMessage6 === null
       ) {
         let param = {
           incomingLowDose: this.lowDoseCup,
@@ -908,17 +1160,23 @@ export default {
             AUTH.deauthenticate()
           }
           this.loadingShow = false
+          swal({
+              title: "Congrats!",
+              text: "You have successfully added cups!",
+              icon: "success"
+            });
           this.retrieveCupSize();
           this.hide();
         });
       } else {
         this.loadingShow = false
-        this.errorMessage = "All fields are required!";
+        this.errorMessage = "Please fill up all fields";
       }
     },
     editingCupType() {
       this.loadingShow = true
-      if (this.inputCupPrice !== null && this.inputCup !== null) {
+      if (this.inputCupPrice !== null && this.inputCup !== null && 
+      this.errorMessage4 === null && this.errorMessage5 === null) {
         let param = {
           id: this.idCup,
           cupType: this.inputCup,
@@ -931,11 +1189,16 @@ export default {
             AUTH.deauthenticate()
           }
           this.loadingShow = false
+          swal({
+              title: "Congrats!",
+              text: "You have successfully updated the cup type!",
+              icon: "success"
+            });
           this.retrieveCupType();
           this.hide()
         });
       } else {
-        this.errorMessage = "All fields are required!";
+        this.errorMessage = "Please fill up all fields";
         this.loadingShow = false
       }
     },
@@ -968,9 +1231,13 @@ export default {
         this.imgURL = URL.createObjectURL(e.target.files[0])
     },
     formSubmitProduct(e) {
+      e.preventDefault();
       this.loadingShow = true
-      if (this.img !== null && this.prodType !== null && this.productName !== null && this.lowPrice !== null && this.highPrice !== null && this.overPrice !== null && this.onlinelowPrice !== null && this.onlinehighPrice !== null & this.onlineoverPrice !== null){
-          e.preventDefault();
+      if (this.img !== null && this.prodType !== null && this.productName !== null &&
+       this.lowPrice !== null && this.highPrice !== null && this.overPrice !== null &&
+       this.onlinelowPrice !== null && this.onlinehighPrice !== null & this.onlineoverPrice !== null &&
+       this.lowPrice > 0 && this.highPrice > 0 && this.overPrice > 0 &&
+       this.onlinelowPrice > 0 && this.onlinehighPrice > 0 && this.onlineoverPrice > 0 && this.errorMessage1 === null){
           let currentObj = this;
           const config = {
               headers: {
@@ -992,6 +1259,11 @@ export default {
           formData.append('onlineoverPrice', this.onlineoverPrice)
           this.$axios.post('/formSubmit', formData, config).then(function (response) {
             currentObj.loadingShow = false
+            swal({
+              title: "Congrats!",
+              text: "You have successfully added a product!",
+              icon: "success"
+            });
             currentObj.success = response.data.success
             currentObj.retrieveCategories()
             currentObj.retrieveProducts()
@@ -1005,11 +1277,12 @@ export default {
             currentObj.loadingShow = false
           });
       }else{
-          this.errorMessage = 'All fields are required!'
+          this.errorMessage = 'Please fill up all fields'
           this.loadingShow = false
       }
     },
     editProduct(item) {
+      this.errorMessage = null;
         this.dialogForProduct = true;
         this.productName = item.productName
         this.description = item.description
@@ -1029,7 +1302,10 @@ export default {
     },
     updateProduct(e) {
       this.loadingShow = true
-      if (this.img !== null && this.prodType !== null && this.productName !== null && this.lowPrice !== null && this.highPrice !== null && this.overPrice !== null && this.onlinelowPrice !== null && this.onlinehighPrice !== null & this.onlineoverPrice !== null){
+      if (this.img !== null && this.prodType !== null && this.productName !== null && 
+      this.lowPrice !== null && this.highPrice !== null && this.overPrice !== null && 
+      this.onlinelowPrice !== null && this.onlinehighPrice !== null && 
+      this.onlineoverPrice !== null && this.errorMessage1 === null){
           e.preventDefault();
           let currentObj = this;
           const config = {
@@ -1057,6 +1333,11 @@ export default {
               AUTH.deauthenticate()
             }
             currentObj.loadingShow = false
+            swal({
+              title: "Congrats!",
+              text: "You have successfully updated the product!",
+              icon: "success"
+            });
             currentObj.success = response.data.success
             currentObj.retrieveCategories()
             currentObj.retrieveProducts()
@@ -1067,7 +1348,7 @@ export default {
               currentObj.loadingShow = false
           });
       }else{
-          this.errorMessage = 'All fields are required!'
+          this.errorMessage = 'Please fill up all fields'
           this.loadingShow = false
       }
     },
@@ -1108,6 +1389,7 @@ export default {
       this.imageURL = URL.createObjectURL(e.target.files[0]);
     },
     editCategories(item){
+      this.errorMessage = null;
       this.dialogForCategory = true;
       this.editCat = true;
       this.image = item.image
@@ -1138,6 +1420,11 @@ export default {
               AUTH.deauthenticate()
             }
             currentObj.loadingShow = false
+            swal({
+              title: "Congrats!",
+              text: "You have successfully updated the category",
+              icon: "success"
+            });
             currentObj.success = response.data.success;
             currentObj.retrieveCategories();
             currentObj.retrieveProducts();
@@ -1148,7 +1435,7 @@ export default {
             currentObj.output = error;
           });
       } else {
-        this.errorMessage = "All fields are required!";
+        this.errorMessage = "Please fill up all fields";
         this.loadingShow = false
       }
     },
@@ -1174,6 +1461,11 @@ export default {
               AUTH.deauthenticate()
             }
             currentObj.loadingShow = false
+            swal({
+              title: "Congrats!",
+              text: "You have successfully added a category",
+              icon: "success"
+            });
             currentObj.success = response.data.success;
             currentObj.retrieveCategories();
             currentObj.retrieveProducts();
@@ -1184,7 +1476,7 @@ export default {
             currentObj.output = error;
           });
       } else {
-        this.errorMessage = "All fields are required!";
+        this.errorMessage = "Please fill up all fields";
         this.loadingShow = false
       }
     },
@@ -1276,6 +1568,7 @@ export default {
       this.size = false;
     },
     showAddOns() {
+      this.errorMessage = null
       this.dialogForAddOns = true;
       this.editAddOnsShow = false;
       this.addonsShow = true;
@@ -1284,6 +1577,7 @@ export default {
       this.addOnsPrice = null;
     },
     showCupSize() {
+      this.errorMessage = null;
       this.dialogForCupSize = true;
       this.cupSizeShow = true;
       this.lowDoseCup = null;
@@ -1291,6 +1585,7 @@ export default {
       this.overDoseCup = null;
     },
     showProduct() {
+      this.errorMessage = null;
       this.dialogForProduct = true;
       this.productAdd = true;
       this.productEdit = false;
@@ -1313,8 +1608,10 @@ export default {
       this.dialogForCategory = true;
       this.imageURL = null;
       this.productType = null;
+      this.errorMessage = null;
     },
     showCupType() {
+      this.errorMessage = null
       this.dialogForCupType = true;
       this.btnCupType = true;
       this.btnEditCupType = false;
@@ -1324,6 +1621,7 @@ export default {
       this.inputCupQuantity = null;
     },
     editCup(item) {
+      this.errorMessage = null;
       this.dialogForCupType = true;
       this.btnEditCupType = true;
       this.btnCupType    = false;
@@ -1356,7 +1654,9 @@ export default {
       if (
         this.addOnsPrice !== null &&
         this.inputAddOns !== null &&
-        this.onlineAddOnsPrice !== null
+        this.onlineAddOnsPrice !== null && 
+        this.errorMessage2 === null && 
+        this.errorMessage3 === null
       ) {
         let param = {
           addOns: this.inputAddOns,
@@ -1369,11 +1669,17 @@ export default {
             AUTH.deauthenticate()
           }
           this.loadingShow = false
+          swal({
+            title: "Congrats!",
+            text: "You have successfully added an add-ons!",
+            icon: "success"
+          });
           this.retrieveAddOns();
           this.dialogForAddOns = false;
+
         });
       } else {
-        this.errorMessage = "All fields are required!";
+        this.errorMessage = "Please fill up all fields";
         this.loadingShow = false
       }
     },
@@ -1388,18 +1694,21 @@ export default {
       });
     },
     editAddOns(item) {
+      this.errorMessage = null;
       this.dialogForAddOns = true;
       this.inputAddOns = item.addons_name;
       this.addOnsPrice = item.addons_price;
       this.onlineAddOnsPrice = item.onlineAddOnsPrice;
       this.addOnsStat = item.status;
+      this.addonsShow = false;
       this.editAddOnsShow = true;
       this.addAddOns = false;
       this.idAddOns = item.id;
     },
     editAddOnsData() {
       this.loadingShow = true
-      if (this.addOnsPrice !== null && this.inputAddOns !== null) {
+      if (this.addOnsPrice !== null && this.inputAddOns !== null && 
+      this.errorMessage2 === null && this.errorMessage3 === null) {
         let param = {
           id: this.idAddOns,
           addOns: this.inputAddOns,
@@ -1412,11 +1721,16 @@ export default {
             AUTH.deauthenticate()
           }
           this.loadingShow = false
+          swal({
+            title: "Congrats!",
+            text: "You have successfully updated the add-ons!",
+            icon: "success"
+          });
           this.retrieveAddOns();
           this.hide();
         });
       } else {
-        this.errorMessage = "All fields are required!";
+        this.errorMessage = "Please fill up all fields";
         this.loadingShow = false
       }
     },

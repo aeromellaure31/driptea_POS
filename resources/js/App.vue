@@ -297,18 +297,6 @@ export default {
         }
       }
     },
-    // getusername(id){
-    //   console.log("na piste na baya ko nimo ahh ",id)
-    //   let params = {
-    //     uname: id
-    //   };
-    //   Axios.post(AUTH.url + "getUserName", params).then(response => {
-    //     response.data.userdata.forEach(element => {
-    //       console.log("********************************* ",element)
-    //       this.username = element.fullname;
-    //     })
-    //   })
-    // },
     getOrder(item, event) {
       event.target.classList.add("color");
       localStorage.setItem("customerId", item[0].customerId);

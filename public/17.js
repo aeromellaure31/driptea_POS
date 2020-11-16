@@ -178,15 +178,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -306,7 +297,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
 
       this.loadingShow = true;
-      this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_1__["default"].url + "retrieveAllProduct", {}, _services_auth__WEBPACK_IMPORTED_MODULE_1__["default"].config).then(function (response) {
+      this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_1__["default"].url + "RetrieveWithDelete", {}, _services_auth__WEBPACK_IMPORTED_MODULE_1__["default"].config).then(function (response) {
         if (response.data.status) {
           _services_auth__WEBPACK_IMPORTED_MODULE_1__["default"].deauthenticate();
         }
@@ -362,7 +353,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.zui-table[data-v-1e034772] {\r\n  border: none;\r\n  /* border-right: solid 1px #DDEFEF; */\r\n  border-collapse: separate;\r\n  border-spacing: 0;\r\n  font: normal 13px Arial, sans-serif;\n}\n.zui-table thead th[data-v-1e034772] {\r\n  /* background-color: #DDEFEF; */\r\n  border: none;\r\n  color: #336b6b;\r\n  padding: 10px;\r\n  text-align: left;\r\n  /* text-shadow: 1px 1px 1px #fff; */\r\n  white-space: nowrap;\n}\n.zui-table tbody td[data-v-1e034772] {\r\n  /* border-bottom: solid 1px #DDEFEF; */\r\n  color: #333;\r\n  padding: 10px;\r\n  /* text-shadow: 1px 1px 1px #fff; */\r\n  white-space: nowrap;\n}\n.zui-wrapper[data-v-1e034772] {\r\n  position: relative;\n}\n.zui-scroller[data-v-1e034772] {\r\n  margin-left: 570px;\r\n  overflow-x: scroll;\r\n  overflow-y: visible;\r\n  padding-bottom: 5px;\r\n  width: 500px;\n}\n.zui-table .zui-sticky-col[data-v-1e034772] {\r\n  /* border-left: solid 1px #DDEFEF; */\r\n  left: 0;\r\n  position: absolute;\r\n  top: auto;\r\n  width: 80px;\n}\n.zui-table .zui-sticky-col2[data-v-1e034772] {\r\n  /* border-right: solid 1px #DDEFEF; */\r\n  left: 80px;\r\n  position: absolute;\r\n  top: auto;\r\n  width: 110px;\n}\n.zui-table .zui-sticky-col3[data-v-1e034772] {\r\n  /* border-right: solid 1px #DDEFEF; */\r\n  left: 190px;\r\n  position: absolute;\r\n  top: auto;\r\n  width: 180px;\n}\n.zui-table .zui-sticky-col4[data-v-1e034772] {\r\n  /* border-right: solid 1px #DDEFEF; */\r\n  left: 370px;\r\n  position: absolute;\r\n  top: auto;\r\n  width: 200px;\n}\n.zui-table .zui-sticky-col5[data-v-1e034772] {\r\n  /* border-right: solid 1px #DDEFEF; */\r\n  left: 1070px;\r\n  position: absolute;\r\n  top: auto;\r\n  width: 100px;\n}\r\n", ""]);
+exports.push([module.i, "\n.zui-table[data-v-1e034772] {\r\n  border: none;\r\n  /* border-right: solid 1px #DDEFEF; */\r\n  border-collapse: separate;\r\n  border-spacing: 0;\r\n  font: normal 13px Arial, sans-serif;\n}\n.zui-table thead th[data-v-1e034772] {\r\n  /* background-color: #DDEFEF; */\r\n  border: none;\r\n  color: #336b6b;\r\n  padding: 10px;\r\n  text-align: left;\r\n  /* text-shadow: 1px 1px 1px #fff; */\r\n  white-space: nowrap;\n}\n.zui-table tbody td[data-v-1e034772] {\r\n  /* border-bottom: solid 1px #DDEFEF; */\r\n  color: #333;\r\n  padding: 10px;\r\n  /* text-shadow: 1px 1px 1px #fff; */\r\n  white-space: nowrap;\n}\n.zui-wrapper[data-v-1e034772] {\r\n  position: relative;\n}\n.zui-scroller[data-v-1e034772] {\r\n  margin-left: 490px;\r\n  overflow-x: scroll;\r\n  overflow-y: visible;\r\n  padding-bottom: 5px;\r\n  width: 600px;\n}\n.zui-table .zui-sticky-col2[data-v-1e034772] {\r\n  /* border-right: solid 1px #DDEFEF; */\r\n  left: 0;\r\n  position: absolute;\r\n  top: auto;\r\n  width: 110px;\n}\n.zui-table .zui-sticky-col3[data-v-1e034772] {\r\n  /* border-right: solid 1px #DDEFEF; */\r\n  left: 110px;\r\n  position: absolute;\r\n  top: auto;\r\n  width: 180px;\n}\n.zui-table .zui-sticky-col4[data-v-1e034772] {\r\n  /* border-right: solid 1px #DDEFEF; */\r\n  left: 290px;\r\n  position: absolute;\r\n  top: auto;\r\n  width: 200px;\n}\n.zui-table .zui-sticky-col5[data-v-1e034772] {\r\n  /* border-right: solid 1px #DDEFEF; */\r\n  left: 1090px;\r\n  position: absolute;\r\n  top: auto;\r\n  width: 100px;\n}\r\n", ""]);
 
 // exports
 
@@ -531,16 +522,6 @@ var render = function() {
                     _c(
                       "th",
                       {
-                        staticClass: "zui-sticky-col",
-                        staticStyle: { "text-align": "center" },
-                        attrs: { rowspan: "3" }
-                      },
-                      [_vm._v("#")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "th",
-                      {
                         staticClass: "zui-sticky-col2",
                         staticStyle: { "text-align": "center" },
                         attrs: { rowspan: "3" }
@@ -622,15 +603,6 @@ var render = function() {
                     "tr",
                     { key: indexes },
                     [
-                      _c(
-                        "td",
-                        {
-                          staticClass: "zui-sticky-col",
-                          staticStyle: { "text-align": "center" }
-                        },
-                        [_vm._v(_vm._s(items[0].customerId))]
-                      ),
-                      _vm._v(" "),
                       _c(
                         "td",
                         {

@@ -26,6 +26,7 @@ class CreateProducts extends Migration
             $table->double('onlinehighPrice');
             $table->double('onlineoverPrice');
             $table->string('image');
+            $table->string('remove')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

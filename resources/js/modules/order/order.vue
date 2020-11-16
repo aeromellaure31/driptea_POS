@@ -333,7 +333,7 @@ export default {
                     cupType: this.cupType,
                     status: 'pending',
                     addOns: this.addOns,
-                    subTotal: this.quantity * (this.total + this.addOnsAmount + this.cupPrice)
+                    subTotal: parseInt(this.quantity) * (parseInt(this.total) + parseInt(this.addOnsAmount) + parseInt(this.cupPrice))
                 }
                 this.$axios.post(AUTH.url + 'addOrder', parameter, AUTH.config).then(response => {
                     this.loadingShow = false

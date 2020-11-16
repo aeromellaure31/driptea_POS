@@ -116,7 +116,7 @@ __webpack_require__.r(__webpack_exports__);
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this.dataInDB = response.data.quantityCupsInDB;
+        _this.dataInDB = response.data.quantityCupsInDB.reverse();
         _this.headersForCup = [{
           text: "Date",
           value: "created_at"
@@ -146,7 +146,7 @@ __webpack_require__.r(__webpack_exports__);
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this2.dataInDB = response.data.quantityCupsInDB;
+        _this2.dataInDB = response.data.quantityCupsInDB.reverse();
         _this2.headersForCup = [{
           text: "Date",
           value: "created_at"
@@ -176,7 +176,7 @@ __webpack_require__.r(__webpack_exports__);
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this3.dataInDB = response.data.quantityCupsInDB;
+        _this3.dataInDB = response.data.quantityCupsInDB.reverse();
         _this3.headersForCup = [{
           text: "Date",
           value: "created_at"
@@ -206,7 +206,7 @@ __webpack_require__.r(__webpack_exports__);
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this4.dataInDB = response.data.quantityCupsInDB;
+        _this4.dataInDB = response.data.quantityCupsInDB.reverse();
         _this4.headersForCup = [{
           text: "Date",
           value: "created_at"

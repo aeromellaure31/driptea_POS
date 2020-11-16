@@ -391,7 +391,7 @@ __webpack_require__.r(__webpack_exports__);
           cupType: this.cupType,
           status: 'pending',
           addOns: this.addOns,
-          subTotal: this.quantity * (this.total + this.addOnsAmount + this.cupPrice)
+          subTotal: parseInt(this.quantity) * (parseInt(this.total) + parseInt(this.addOnsAmount) + parseInt(this.cupPrice))
         };
         this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + 'addOrder', parameter, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
           _this6.loadingShow = false;

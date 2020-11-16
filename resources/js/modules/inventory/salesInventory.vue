@@ -140,7 +140,7 @@ export default {
         },
         retrieveAddOns() {
             this.loadingShow = true
-            this.$axios.post(AUTH.url + "retrieveAllAddOns", {}, AUTH.config).then(response => {
+            this.$axios.post(AUTH.url + "retrieveWithDeleteAddOns", {}, AUTH.config).then(response => {
                 if(response.data.status){
                     AUTH.deauthenticate()
                 }

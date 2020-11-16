@@ -12,6 +12,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_auth__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../services/auth */ "./resources/js/services/auth/index.js");
 /* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../router */ "./resources/js/router/index.js");
 /* harmony import */ var _basic_loading_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../basic/loading.vue */ "./resources/js/basic/loading.vue");
+/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! sweetalert */ "./node_modules/sweetalert/dist/sweetalert.min.js");
+/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_4__);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 //
@@ -657,6 +661,52 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 
 
 
@@ -665,6 +715,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var _ref;
 
     return _ref = {
+      auth: _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"],
+      dialogConfirmation: false,
       editCat: false,
       tableForCategory: true,
       tableForProduct: false,
@@ -718,7 +770,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       status: null,
       prodId: null,
       priceEvent: ""
-    }, _defineProperty(_ref, "online", false), _defineProperty(_ref, "errorMessage", null), _defineProperty(_ref, "lowDoseCup", null), _defineProperty(_ref, "highDoseCup", null), _defineProperty(_ref, "overDoseCup", null), _defineProperty(_ref, "cupSizeData", []), _defineProperty(_ref, "search", null), _defineProperty(_ref, "title", null), _defineProperty(_ref, "dialogForCupType", false), _defineProperty(_ref, "dialogForProduct", false), _defineProperty(_ref, "dialogForCategory", false), _defineProperty(_ref, "dialogForAddOns", false), _defineProperty(_ref, "dialogForCupSize", false), _defineProperty(_ref, "dataHeader", null), _defineProperty(_ref, "catId", null), _defineProperty(_ref, "headersForAddOns", [{
+    }, _defineProperty(_ref, "online", false), _defineProperty(_ref, "errorMessage", null), _defineProperty(_ref, "lowDoseCup", null), _defineProperty(_ref, "highDoseCup", null), _defineProperty(_ref, "overDoseCup", null), _defineProperty(_ref, "cupSizeData", []), _defineProperty(_ref, "search", null), _defineProperty(_ref, "title", null), _defineProperty(_ref, "dialogForCupType", false), _defineProperty(_ref, "dialogForProduct", false), _defineProperty(_ref, "dialogForCategory", false), _defineProperty(_ref, "dialogForAddOns", false), _defineProperty(_ref, "dialogForCupSize", false), _defineProperty(_ref, "dataHeader", null), _defineProperty(_ref, "catId", null), _defineProperty(_ref, "exampleRules", {
+      min: function min(value) {
+        return value >= 0;
+      }
+    }), _defineProperty(_ref, "headersForAddOns", [{
       text: "#",
       value: "id"
     }, {
@@ -777,10 +833,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       text: "images",
       value: "image"
     }, {
-      text: "Product Name",
+      text: "Name",
       value: "productName"
     }, {
-      text: "Product Category",
+      text: "Description",
+      value: "description"
+    }, {
+      text: "Category",
       value: "productCategory"
     }, {
       text: "Low Dose Price",
@@ -790,6 +849,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       value: "highPrice"
     }, {
       text: "Over Dose Price",
+      value: "overPrice"
+    }, {
+      text: "Low Dose Online Price",
+      value: "onlinelowPrice"
+    }, {
+      text: "High Dose Online Price",
+      value: "onlineoverPrice"
+    }, {
+      text: "Over Dose Online Price",
       value: "overPrice"
     }, {
       text: "Status",
@@ -813,7 +881,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }, {
       text: "Total IncomingCup",
       value: "incomingOverDose" + ""
-    }]), _defineProperty(_ref, "loadingShow", false), _ref;
+    }]), _defineProperty(_ref, "loadingShow", false), _defineProperty(_ref, "errorMessage1", null), _defineProperty(_ref, "errorMessage2", null), _defineProperty(_ref, "errorMessage3", null), _defineProperty(_ref, "errorMessage4", null), _defineProperty(_ref, "errorMessage5", null), _defineProperty(_ref, "errorMessage6", null), _defineProperty(_ref, "deleteID", null), _defineProperty(_ref, "deleteParam", null), _ref;
   },
   mounted: function mounted() {
     this.retrieveCategories();
@@ -826,6 +894,197 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     loading: _basic_loading_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   methods: {
+    deleteNow: function deleteNow() {
+      if (this.deleteParam === 'category') {
+        this.deleteCategory(this.deleteID);
+      } else if (this.deleteParam === 'product') {
+        this.deleteProduct(this.deleteID);
+      } else if (this.deleteParam === 'addOns') {
+        this.deleteAddOns(this.deleteID);
+      } else if (this.deleteParam === 'cupType') {
+        this.deleteCupType(this.deleteID);
+      }
+    },
+    showDelete: function showDelete(id, param) {
+      this.dialogConfirmation = true;
+      this.deleteID = id;
+      this.deleteParam = param;
+    },
+    validate: function validate(param) {
+      if (param === 'lowDose') {
+        if (parseInt(this.lowPrice) < 1) {
+          this.errorMessage1 = 'Low Dose Price must be greater than 0';
+        } else {
+          this.errorMessage1 = null;
+        }
+      } else if (param === 'highDose') {
+        if (parseInt(this.highPrice) <= parseInt(this.lowPrice)) {
+          this.errorMessage1 = 'High Dose Price must be greater than Low Dose Price';
+        } else {
+          this.errorMessage1 = null;
+        }
+      } else if (param === 'overDose') {
+        if (parseInt(this.overPrice) <= parseInt(this.highPrice)) {
+          this.errorMessage1 = 'Over Dose Price must be greater than High Dose Price';
+        } else {
+          this.errorMessage1 = null;
+        }
+      } else if (param === 'onlineLowDose') {
+        if (parseInt(this.onlinelowPrice) <= 0) {
+          this.errorMessage1 = 'Over Dose Online Price must be greater than High Dose Price';
+        } else {
+          this.errorMessage1 = null;
+        }
+      } else if (param === 'onlineHighDose') {
+        if (parseInt(this.onlinehighPrice) <= parseInt(this.onlinelowPrice)) {
+          this.errorMessage1 = 'Over Dose Online Price must be greater than High Dose Price';
+        } else {
+          this.errorMessage1 = null;
+        }
+      } else if (param === 'onlineOverDose') {
+        if (parseInt(this.onlineoverPrice) <= parseInt(this.onlinehighPrice)) {
+          this.errorMessage1 = 'Over Dose Online Price must be greater than High Dose Price';
+        } else {
+          this.errorMessage1 = null;
+        }
+      } else if (param === 'addOnsPrice') {
+        if (parseInt(this.addOnsPrice) < 0) {
+          this.errorMessage2 = 'Add-ons Price must be greater than 0';
+        } else {
+          this.errorMessage2 = null;
+        }
+      } else if (param === 'onlineAddOnsPrice') {
+        if (parseInt(this.onlineAddOnsPrice) < parseInt(this.addOnsPrice)) {
+          this.errorMessage3 = 'Online Add-ons Price must be greater than Add-ons Price';
+        } else {
+          this.errorMessage3 = null;
+        }
+      } else if (param === 'cupTypePrice') {
+        if (parseInt(this.inputCupPrice) < 0) {
+          this.errorMessage4 = 'Cup Type Price must be greater 0';
+        } else {
+          this.errorMessage4 = null;
+        }
+      } else if (param === 'onlineCupTypePrice') {
+        if (parseInt(this.inputCupOnlinePrice) < parseInt(this.inputCupPrice)) {
+          this.errorMessage5 = 'Online Cup Type Price must be greater than Cup Type Price';
+        } else {
+          this.errorMessage5 = null;
+        }
+      } else if (param === 'cupSize') {
+        if (parseInt(this.lowDoseCup) <= 0 || parseInt(this.highDoseCup) <= 0 || parseInt(this.overDoseCup) <= 0) {
+          this.errorMessage6 = 'Cup Size Quantity must be greater than 0';
+        } else {
+          this.errorMessage6 = null;
+        }
+      }
+    },
+    getNumberDate: function getNumberDate(date, id) {
+      return moment__WEBPACK_IMPORTED_MODULE_4___default()(date).format('MMDDYY') + id;
+    },
+    getDate: function getDate(date) {
+      return moment__WEBPACK_IMPORTED_MODULE_4___default()(date).format('MM/DD/YYYY');
+    },
+    deleteCupType: function deleteCupType(id) {
+      var _this = this;
+
+      this.loadingShow = true;
+      var param = {
+        id: id
+      };
+      this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "deleteCupType", param, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
+        if (response.data.status === 'Token is Expired') {
+          _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
+        }
+
+        _this.deleteID = null;
+        _this.deleteParam = null;
+        _this.dialogConfirmation = false;
+        _this.loadingShow = false;
+        sweetalert__WEBPACK_IMPORTED_MODULE_3___default()({
+          title: "Congrats!",
+          text: "You successfully deleted the cup type",
+          icon: "success"
+        });
+
+        _this.retrieveCupType();
+      });
+    },
+    deleteAddOns: function deleteAddOns(id) {
+      var _this2 = this;
+
+      this.loadingShow = true;
+      var param = {
+        id: id
+      };
+      this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "deleteAddOns", param, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
+        if (response.data.status === 'Token is Expired') {
+          _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
+        }
+
+        _this2.deleteID = null;
+        _this2.deleteParam = null;
+        _this2.dialogConfirmation = false;
+        _this2.loadingShow = false;
+        sweetalert__WEBPACK_IMPORTED_MODULE_3___default()({
+          title: "Congrats!",
+          text: "You successfully deleted the add-ons",
+          icon: "success"
+        });
+
+        _this2.retrieveAddOns();
+      });
+    },
+    deleteProduct: function deleteProduct(id) {
+      var _this3 = this;
+
+      this.loadingShow = true;
+      var param = {
+        id: id
+      };
+      this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "deleteProduct", param, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
+        if (response.data.status === 'Token is Expired') {
+          _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
+        }
+
+        _this3.deleteID = null;
+        _this3.deleteParam = null;
+        _this3.dialogConfirmation = false;
+        _this3.loadingShow = false;
+        sweetalert__WEBPACK_IMPORTED_MODULE_3___default()({
+          title: "Congrats!",
+          text: "You successfully deleted the product",
+          icon: "success"
+        });
+
+        _this3.retrieveProducts();
+      });
+    },
+    deleteCategory: function deleteCategory(id) {
+      var _this4 = this;
+
+      this.loadingShow = true;
+      var param = {
+        id: id
+      };
+      this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "deleteCategory", param, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
+        if (response.data.status === 'Token is Expired') {
+          _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
+        }
+
+        _this4.deleteID = null;
+        _this4.deleteParam = null;
+        _this4.dialogConfirmation = false;
+        _this4.loadingShow = false;
+        sweetalert__WEBPACK_IMPORTED_MODULE_3___default()({
+          title: "Congrats!",
+          text: "You successfully deleted the category",
+          icon: "success"
+        });
+
+        _this4.retrieveCategories();
+      });
+    },
     changeName: function changeName(param) {
       if (param === 'category') {
         this.cat = true;
@@ -860,7 +1119,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     NACupUpdate: function NACupUpdate(id) {
-      var _this = this;
+      var _this5 = this;
 
       this.loadingShow = true;
       var param = {
@@ -868,9 +1127,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         status: "Not Available"
       };
       this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "updateAvailableCupType", param, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
-        _this.retrieveCupType();
+        _this5.retrieveCupType();
 
-        _this.loadingShow = false;
+        _this5.loadingShow = false;
 
         if (response.data.status === 'Token is Expired') {
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
@@ -878,7 +1137,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     availableCupUpdate: function availableCupUpdate(id) {
-      var _this2 = this;
+      var _this6 = this;
 
       this.loadingShow = true;
       var param = {
@@ -890,13 +1149,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this2.retrieveCupType();
+        _this6.retrieveCupType();
 
-        _this2.loadingShow = false;
+        _this6.loadingShow = false;
       });
     },
     retrieveCupType: function retrieveCupType() {
-      var _this3 = this;
+      var _this7 = this;
 
       this.loadingShow = true;
       this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "retrieveAllCupType", {}, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
@@ -904,12 +1163,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this3.cupData = response.data.cupType;
-        _this3.loadingShow = false;
+        _this7.cupData = response.data.cupType;
+        _this7.loadingShow = false;
       });
     },
     retrieveCupSize: function retrieveCupSize() {
-      var _this4 = this;
+      var _this8 = this;
 
       this.loadingShow = true;
       this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "retrieveCupSize", {}, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
@@ -917,14 +1176,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this4.loadingShow = false;
-        _this4.cupSizeData = response.data.quantityCupsInDB;
+        _this8.loadingShow = false;
+        _this8.cupSizeData = response.data.quantityCupsInDB.reverse();
         response.data.quantityCupsInDB.forEach(function (element) {});
         var totalCup = response.data.quantityCupsInDB.incomingOverDose;
       });
     },
     addingCupType: function addingCupType() {
-      var _this5 = this;
+      var _this9 = this;
 
       this.loadingShow = true;
       var config = {
@@ -933,7 +1192,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       };
 
-      if (this.inputCupPrice !== null && this.inputCup !== null) {
+      if (this.inputCupPrice !== null && this.inputCup !== null && this.errorMessage4 === null && this.errorMessage5 === null) {
         var param = {
           cupType: this.inputCup,
           inputCupOnlinePrice: this.inputCupOnlinePrice,
@@ -945,23 +1204,28 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
           }
 
-          _this5.loadingShow = false;
+          _this9.loadingShow = false;
+          sweetalert__WEBPACK_IMPORTED_MODULE_3___default()({
+            title: "Congrats!",
+            text: "You have successfully added a cup type!",
+            icon: "success"
+          });
 
-          _this5.retrieveCupType();
+          _this9.retrieveCupType();
 
-          _this5.dialogForCupType = false;
+          _this9.dialogForCupType = false;
         });
       } else {
-        this.errorMessage = "All fields are required!";
+        this.errorMessage = "Please fill up all fields";
         this.loadingShow = false;
       }
     },
     addingCupSize: function addingCupSize() {
-      var _this6 = this;
+      var _this10 = this;
 
       this.loadingShow = true;
 
-      if (this.lowDoseCup !== null && this.highDoseCup !== null && this.overDoseCup !== null) {
+      if (this.lowDoseCup !== null && this.highDoseCup !== null && this.overDoseCup !== null && this.errorMessage6 === null) {
         var param = {
           incomingLowDose: this.lowDoseCup,
           incomingHighDose: this.highDoseCup,
@@ -972,23 +1236,28 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
           }
 
-          _this6.loadingShow = false;
+          _this10.loadingShow = false;
+          sweetalert__WEBPACK_IMPORTED_MODULE_3___default()({
+            title: "Congrats!",
+            text: "You have successfully added cups!",
+            icon: "success"
+          });
 
-          _this6.retrieveCupSize();
+          _this10.retrieveCupSize();
 
-          _this6.hide();
+          _this10.hide();
         });
       } else {
         this.loadingShow = false;
-        this.errorMessage = "All fields are required!";
+        this.errorMessage = "Please fill up all fields";
       }
     },
     editingCupType: function editingCupType() {
-      var _this7 = this;
+      var _this11 = this;
 
       this.loadingShow = true;
 
-      if (this.inputCupPrice !== null && this.inputCup !== null) {
+      if (this.inputCupPrice !== null && this.inputCup !== null && this.errorMessage4 === null && this.errorMessage5 === null) {
         var param = {
           id: this.idCup,
           cupType: this.inputCup,
@@ -1001,14 +1270,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
           }
 
-          _this7.loadingShow = false;
+          _this11.loadingShow = false;
+          sweetalert__WEBPACK_IMPORTED_MODULE_3___default()({
+            title: "Congrats!",
+            text: "You have successfully updated the cup type!",
+            icon: "success"
+          });
 
-          _this7.retrieveCupType();
+          _this11.retrieveCupType();
 
-          _this7.hide();
+          _this11.hide();
         });
       } else {
-        this.errorMessage = "All fields are required!";
+        this.errorMessage = "Please fill up all fields";
         this.loadingShow = false;
       }
     },
@@ -1045,10 +1319,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.imgURL = URL.createObjectURL(e.target.files[0]);
     },
     formSubmitProduct: function formSubmitProduct(e) {
+      e.preventDefault();
       this.loadingShow = true;
 
-      if (this.img !== null && this.prodType !== null && this.productName !== null && this.lowPrice !== null && this.highPrice !== null && this.overPrice !== null && this.onlinelowPrice !== null && this.onlinehighPrice !== null & this.onlineoverPrice !== null) {
-        e.preventDefault();
+      if (this.img !== null && this.prodType !== null && this.productName !== null && this.lowPrice !== null && this.highPrice !== null && this.overPrice !== null && this.onlinelowPrice !== null && this.onlinehighPrice !== null & this.onlineoverPrice !== null && this.lowPrice > 0 && this.highPrice > 0 && this.overPrice > 0 && this.onlinelowPrice > 0 && this.onlinehighPrice > 0 && this.onlineoverPrice > 0 && this.errorMessage1 === null) {
         var currentObj = this;
         var config = {
           headers: {
@@ -1070,6 +1344,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         formData.append('onlineoverPrice', this.onlineoverPrice);
         this.$axios.post('/formSubmit', formData, config).then(function (response) {
           currentObj.loadingShow = false;
+          sweetalert__WEBPACK_IMPORTED_MODULE_3___default()({
+            title: "Congrats!",
+            text: "You have successfully added a product!",
+            icon: "success"
+          });
           currentObj.success = response.data.success;
           currentObj.retrieveCategories();
           currentObj.retrieveProducts();
@@ -1083,11 +1362,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           currentObj.loadingShow = false;
         });
       } else {
-        this.errorMessage = 'All fields are required!';
+        this.errorMessage = 'Please fill up all fields';
         this.loadingShow = false;
       }
     },
     editProduct: function editProduct(item) {
+      this.errorMessage = null;
       this.dialogForProduct = true;
       this.productName = item.productName;
       this.description = item.description;
@@ -1108,7 +1388,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     updateProduct: function updateProduct(e) {
       this.loadingShow = true;
 
-      if (this.img !== null && this.prodType !== null && this.productName !== null && this.lowPrice !== null && this.highPrice !== null && this.overPrice !== null && this.onlinelowPrice !== null && this.onlinehighPrice !== null & this.onlineoverPrice !== null) {
+      if (this.img !== null && this.prodType !== null && this.productName !== null && this.lowPrice !== null && this.highPrice !== null && this.overPrice !== null && this.onlinelowPrice !== null && this.onlinehighPrice !== null && this.onlineoverPrice !== null && this.errorMessage1 === null) {
         e.preventDefault();
         var currentObj = this;
         var config = {
@@ -1136,6 +1416,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           }
 
           currentObj.loadingShow = false;
+          sweetalert__WEBPACK_IMPORTED_MODULE_3___default()({
+            title: "Congrats!",
+            text: "You have successfully updated the product!",
+            icon: "success"
+          });
           currentObj.success = response.data.success;
           currentObj.retrieveCategories();
           currentObj.retrieveProducts();
@@ -1145,12 +1430,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           currentObj.loadingShow = false;
         });
       } else {
-        this.errorMessage = 'All fields are required!';
+        this.errorMessage = 'Please fill up all fields';
         this.loadingShow = false;
       }
     },
     productStatusUpdate: function productStatusUpdate(id) {
-      var _this8 = this;
+      var _this12 = this;
 
       this.loadingShow = true;
       var param = {
@@ -1162,13 +1447,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this8.retrieveProducts();
+        _this12.retrieveProducts();
 
-        _this8.loadingShow = false;
+        _this12.loadingShow = false;
       });
     },
     productStatusAvailable: function productStatusAvailable(id) {
-      var _this9 = this;
+      var _this13 = this;
 
       this.loadingShow = true;
       var param = {
@@ -1180,9 +1465,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this9.retrieveProducts();
+        _this13.retrieveProducts();
 
-        _this9.loadingShow = false;
+        _this13.loadingShow = false;
       });
     },
     onImageChange: function onImageChange(e) {
@@ -1190,6 +1475,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.imageURL = URL.createObjectURL(e.target.files[0]);
     },
     editCategories: function editCategories(item) {
+      this.errorMessage = null;
       this.dialogForCategory = true;
       this.editCat = true;
       this.image = item.image;
@@ -1219,6 +1505,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           }
 
           currentObj.loadingShow = false;
+          sweetalert__WEBPACK_IMPORTED_MODULE_3___default()({
+            title: "Congrats!",
+            text: "You have successfully updated the category",
+            icon: "success"
+          });
           currentObj.success = response.data.success;
           currentObj.retrieveCategories();
           currentObj.retrieveProducts();
@@ -1228,7 +1519,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           currentObj.output = error;
         });
       } else {
-        this.errorMessage = "All fields are required!";
+        this.errorMessage = "Please fill up all fields";
         this.loadingShow = false;
       }
     },
@@ -1253,6 +1544,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           }
 
           currentObj.loadingShow = false;
+          sweetalert__WEBPACK_IMPORTED_MODULE_3___default()({
+            title: "Congrats!",
+            text: "You have successfully added a category",
+            icon: "success"
+          });
           currentObj.success = response.data.success;
           currentObj.retrieveCategories();
           currentObj.retrieveProducts();
@@ -1262,7 +1558,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           currentObj.output = error;
         });
       } else {
-        this.errorMessage = "All fields are required!";
+        this.errorMessage = "Please fill up all fields";
         this.loadingShow = false;
       }
     },
@@ -1375,6 +1671,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.size = false;
     },
     showAddOns: function showAddOns() {
+      this.errorMessage = null;
       this.dialogForAddOns = true;
       this.editAddOnsShow = false;
       this.addonsShow = true;
@@ -1383,6 +1680,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.addOnsPrice = null;
     },
     showCupSize: function showCupSize() {
+      this.errorMessage = null;
       this.dialogForCupSize = true;
       this.cupSizeShow = true;
       this.lowDoseCup = null;
@@ -1390,6 +1688,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.overDoseCup = null;
     },
     showProduct: function showProduct() {
+      this.errorMessage = null;
       this.dialogForProduct = true;
       this.productAdd = true;
       this.productEdit = false;
@@ -1412,8 +1711,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.dialogForCategory = true;
       this.imageURL = null;
       this.productType = null;
+      this.errorMessage = null;
     },
     showCupType: function showCupType() {
+      this.errorMessage = null;
       this.dialogForCupType = true;
       this.btnCupType = true;
       this.btnEditCupType = false;
@@ -1423,6 +1724,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.inputCupQuantity = null;
     },
     editCup: function editCup(item) {
+      this.errorMessage = null;
       this.dialogForCupType = true;
       this.btnEditCupType = true;
       this.btnCupType = false;
@@ -1451,11 +1753,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       _router__WEBPACK_IMPORTED_MODULE_1__["default"].push(route)["catch"](function () {});
     },
     addAddOns: function addAddOns() {
-      var _this10 = this;
+      var _this14 = this;
 
       this.loadingShow = true;
 
-      if (this.addOnsPrice !== null && this.inputAddOns !== null && this.onlineAddOnsPrice !== null) {
+      if (this.addOnsPrice !== null && this.inputAddOns !== null && this.onlineAddOnsPrice !== null && this.errorMessage2 === null && this.errorMessage3 === null) {
         var param = {
           addOns: this.inputAddOns,
           onlineAddOnsPrice: this.onlineAddOnsPrice,
@@ -1467,19 +1769,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
           }
 
-          _this10.loadingShow = false;
+          _this14.loadingShow = false;
+          sweetalert__WEBPACK_IMPORTED_MODULE_3___default()({
+            title: "Congrats!",
+            text: "You have successfully added an add-ons!",
+            icon: "success"
+          });
 
-          _this10.retrieveAddOns();
+          _this14.retrieveAddOns();
 
-          _this10.dialogForAddOns = false;
+          _this14.dialogForAddOns = false;
         });
       } else {
-        this.errorMessage = "All fields are required!";
+        this.errorMessage = "Please fill up all fields";
         this.loadingShow = false;
       }
     },
     retrieveAddOns: function retrieveAddOns() {
-      var _this11 = this;
+      var _this15 = this;
 
       this.loadingShow = true;
       this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "retrieveAllAddOns", {}, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
@@ -1487,26 +1794,28 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this11.datas = response.data.addons;
-        _this11.loadingShow = false;
+        _this15.datas = response.data.addons;
+        _this15.loadingShow = false;
       });
     },
     editAddOns: function editAddOns(item) {
+      this.errorMessage = null;
       this.dialogForAddOns = true;
       this.inputAddOns = item.addons_name;
       this.addOnsPrice = item.addons_price;
       this.onlineAddOnsPrice = item.onlineAddOnsPrice;
       this.addOnsStat = item.status;
+      this.addonsShow = false;
       this.editAddOnsShow = true;
       this.addAddOns = false;
       this.idAddOns = item.id;
     },
     editAddOnsData: function editAddOnsData() {
-      var _this12 = this;
+      var _this16 = this;
 
       this.loadingShow = true;
 
-      if (this.addOnsPrice !== null && this.inputAddOns !== null) {
+      if (this.addOnsPrice !== null && this.inputAddOns !== null && this.errorMessage2 === null && this.errorMessage3 === null) {
         var param = {
           id: this.idAddOns,
           addOns: this.inputAddOns,
@@ -1519,19 +1828,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
           }
 
-          _this12.loadingShow = false;
+          _this16.loadingShow = false;
+          sweetalert__WEBPACK_IMPORTED_MODULE_3___default()({
+            title: "Congrats!",
+            text: "You have successfully updated the add-ons!",
+            icon: "success"
+          });
 
-          _this12.retrieveAddOns();
+          _this16.retrieveAddOns();
 
-          _this12.hide();
+          _this16.hide();
         });
       } else {
-        this.errorMessage = "All fields are required!";
+        this.errorMessage = "Please fill up all fields";
         this.loadingShow = false;
       }
     },
     NAStatusUpdate: function NAStatusUpdate(id) {
-      var _this13 = this;
+      var _this17 = this;
 
       this.loadingShow = true;
       var param = {
@@ -1543,13 +1857,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this13.loadingShow = false;
+        _this17.loadingShow = false;
 
-        _this13.retrieveAddOns();
+        _this17.retrieveAddOns();
       });
     },
     availableStatusUpdate: function availableStatusUpdate(id) {
-      var _this14 = this;
+      var _this18 = this;
 
       this.loadingShow = true;
       var param = {
@@ -1561,13 +1875,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this14.loadingShow = false;
+        _this18.loadingShow = false;
 
-        _this14.retrieveAddOns();
+        _this18.retrieveAddOns();
       });
     },
     retrieveProducts: function retrieveProducts() {
-      var _this15 = this;
+      var _this19 = this;
 
       this.loadingShow = true;
       this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "retrieveAllProduct", {}, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
@@ -1575,12 +1889,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this15.loadingShow = false;
-        _this15.productData = response.data.product;
+        _this19.loadingShow = false;
+        _this19.productData = response.data.product;
       });
     },
     retrieveCategories: function retrieveCategories() {
-      var _this16 = this;
+      var _this20 = this;
 
       this.loadingShow = true;
       this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "retrieveCategory", {}, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
@@ -1588,10 +1902,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this16.loadingShow = false;
-        _this16.categoryData = response.data.addCategory;
+        _this20.loadingShow = false;
+        _this20.categoryData = response.data.addCategory;
         response.data.addCategory.forEach(function (element) {
-          _this16.categoryName.push(element.productCategory);
+          _this20.categoryName.push(element.productCategory);
         });
       });
     }
@@ -1863,6 +2177,19 @@ var render = function() {
                   proxy: true
                 },
                 {
+                  key: "item.id",
+                  fn: function(ref) {
+                    var item = ref.item
+                    return [
+                      _c("span", [
+                        _vm._v(
+                          _vm._s(_vm.getNumberDate(item.created_at, item.id))
+                        )
+                      ])
+                    ]
+                  }
+                },
+                {
                   key: "item.image",
                   fn: function(ref) {
                     var item = ref.item
@@ -1899,7 +2226,7 @@ var render = function() {
                           attrs: { small: "" },
                           on: {
                             click: function($event) {
-                              return _vm.deleteItem(item)
+                              return _vm.showDelete(item.id, "category")
                             }
                           }
                         },
@@ -1911,7 +2238,7 @@ var render = function() {
               ],
               null,
               false,
-              3842161829
+              3083376748
             )
           })
         : _vm._e(),
@@ -1992,6 +2319,19 @@ var render = function() {
                   proxy: true
                 },
                 {
+                  key: "item.id",
+                  fn: function(ref) {
+                    var item = ref.item
+                    return [
+                      _c("span", [
+                        _vm._v(
+                          _vm._s(_vm.getNumberDate(item.created_at, item.id))
+                        )
+                      ])
+                    ]
+                  }
+                },
+                {
                   key: "item.image",
                   fn: function(ref) {
                     var item = ref.item
@@ -2046,14 +2386,27 @@ var render = function() {
                               }
                             },
                             [_vm._v("mdi-check")]
-                          )
+                          ),
+                      _vm._v(" "),
+                      _c(
+                        "v-icon",
+                        {
+                          attrs: { small: "" },
+                          on: {
+                            click: function($event) {
+                              return _vm.showDelete(item.id, "product")
+                            }
+                          }
+                        },
+                        [_vm._v("mdi-delete")]
+                      )
                     ]
                   }
                 }
               ],
               null,
               false,
-              2534127425
+              1315124137
             )
           })
         : _vm._e(),
@@ -2130,6 +2483,19 @@ var render = function() {
                   proxy: true
                 },
                 {
+                  key: "item.id",
+                  fn: function(ref) {
+                    var item = ref.item
+                    return [
+                      _c("span", [
+                        _vm._v(
+                          _vm._s(_vm.getNumberDate(item.created_at, item.id))
+                        )
+                      ])
+                    ]
+                  }
+                },
+                {
                   key: "item.actions",
                   fn: function(ref) {
                     var item = ref.item
@@ -2172,14 +2538,27 @@ var render = function() {
                               }
                             },
                             [_vm._v("mdi-check")]
-                          )
+                          ),
+                      _vm._v(" "),
+                      _c(
+                        "v-icon",
+                        {
+                          attrs: { small: "" },
+                          on: {
+                            click: function($event) {
+                              return _vm.showDelete(item.id, "addOns")
+                            }
+                          }
+                        },
+                        [_vm._v("mdi-delete")]
+                      )
                     ]
                   }
                 }
               ],
               null,
               false,
-              3905875131
+              3622054763
             )
           })
         : _vm._e(),
@@ -2256,6 +2635,19 @@ var render = function() {
                   proxy: true
                 },
                 {
+                  key: "item.id",
+                  fn: function(ref) {
+                    var item = ref.item
+                    return [
+                      _c("span", [
+                        _vm._v(
+                          _vm._s(_vm.getNumberDate(item.created_at, item.id))
+                        )
+                      ])
+                    ]
+                  }
+                },
+                {
                   key: "item.actions",
                   fn: function(ref) {
                     var item = ref.item
@@ -2298,14 +2690,27 @@ var render = function() {
                               }
                             },
                             [_vm._v("mdi-check")]
-                          )
+                          ),
+                      _vm._v(" "),
+                      _c(
+                        "v-icon",
+                        {
+                          attrs: { small: "" },
+                          on: {
+                            click: function($event) {
+                              return _vm.showDelete(item.id, "cupType")
+                            }
+                          }
+                        },
+                        [_vm._v("mdi-delete")]
+                      )
                     ]
                   }
                 }
               ],
               null,
               false,
-              2963331001
+              2736671972
             )
           })
         : _vm._e(),
@@ -2380,11 +2785,20 @@ var render = function() {
                     ]
                   },
                   proxy: true
+                },
+                {
+                  key: "item.created_at",
+                  fn: function(ref) {
+                    var item = ref.item
+                    return [
+                      _c("span", [_vm._v(_vm._s(_vm.getDate(item.created_at)))])
+                    ]
+                  }
                 }
               ],
               null,
               false,
-              676378731
+              2770599221
             )
           })
         : _vm._e(),
@@ -2419,6 +2833,11 @@ var render = function() {
                     _c(
                       "v-card-text",
                       [
+                        _vm._v("\n                        NOTE: "),
+                        _c("span", { staticClass: "text-danger text-center" }, [
+                          _vm._v("All fields are required")
+                        ]),
+                        _vm._v(" "),
                         _c(
                           "v-form",
                           {
@@ -2429,11 +2848,13 @@ var render = function() {
                             on: { submit: _vm.formSubmit }
                           },
                           [
-                            _vm.errorMessage !== null
-                              ? _c("span", { staticClass: "errorColor" }, [
-                                  _vm._v(_vm._s(_vm.errorMessage))
-                                ])
-                              : _vm._e(),
+                            _c("i", [
+                              _vm.errorMessage !== null
+                                ? _c("span", { staticClass: "errorColor" }, [
+                                    _vm._v(_vm._s(_vm.errorMessage))
+                                  ])
+                                : _vm._e()
+                            ]),
                             _vm._v(" "),
                             _c(
                               "v-container",
@@ -2461,13 +2882,14 @@ var render = function() {
                                   1
                                 ),
                                 _vm._v(" "),
-                                _c(
-                                  "v-row",
-                                  [
-                                    _c(
-                                      "center",
-                                      [
-                                        _c("v-img", {
+                                _c("v-row", [
+                                  _c(
+                                    "div",
+                                    { staticClass: "form-group" },
+                                    [
+                                      _c("center", [
+                                        _c("img", {
+                                          staticClass: "addOnsImage",
                                           attrs: { src: _vm.imageURL }
                                         }),
                                         _c("br"),
@@ -2478,12 +2900,11 @@ var render = function() {
                                           on: { change: _vm.onImageChange }
                                         }),
                                         _c("br")
-                                      ],
-                                      1
-                                    )
-                                  ],
-                                  1
-                                )
+                                      ])
+                                    ],
+                                    1
+                                  )
+                                ])
                               ],
                               1
                             ),
@@ -2590,6 +3011,11 @@ var render = function() {
                     _c(
                       "v-card-text",
                       [
+                        _vm._v("\n                      NOTE: "),
+                        _c("span", { staticClass: "text-danger text-center" }, [
+                          _vm._v("All fields are required")
+                        ]),
+                        _vm._v(" "),
                         _c(
                           "v-form",
                           {
@@ -2600,11 +3026,13 @@ var render = function() {
                             on: { submit: _vm.formSubmitProduct }
                           },
                           [
-                            _vm.errorMessage !== null
-                              ? _c("span", { staticClass: "errorColor" }, [
-                                  _vm._v(_vm._s(_vm.errorMessage))
-                                ])
-                              : _vm._e(),
+                            _c("i", [
+                              _vm.errorMessage !== null
+                                ? _c("span", { staticClass: "errorColor" }, [
+                                    _vm._v(_vm._s(_vm.errorMessage))
+                                  ])
+                                : _vm._e()
+                            ]),
                             _vm._v(" "),
                             _c(
                               "v-container",
@@ -2706,7 +3134,7 @@ var render = function() {
                                           },
                                           [
                                             _vm._v(
-                                              "\n                                      Normal Price\n                                  "
+                                              "\n                              Normal Price\n                          "
                                             )
                                           ]
                                         ),
@@ -2723,7 +3151,7 @@ var render = function() {
                                           },
                                           [
                                             _vm._v(
-                                              "\n                                      Online Price \n                                  "
+                                              "\n                              Online Price \n                          "
                                             )
                                           ]
                                         )
@@ -2744,6 +3172,20 @@ var render = function() {
                                         }
                                       },
                                       [
+                                        _c("i", [
+                                          _vm.errorMessage1 !== null
+                                            ? _c(
+                                                "span",
+                                                { staticClass: "errorColor" },
+                                                [
+                                                  _vm._v(
+                                                    _vm._s(_vm.errorMessage1)
+                                                  )
+                                                ]
+                                              )
+                                            : _vm._e()
+                                        ]),
+                                        _vm._v(" "),
                                         _c(
                                           "v-row",
                                           [
@@ -2757,8 +3199,16 @@ var render = function() {
                                                   attrs: {
                                                     label: "Low Dose Price",
                                                     outlined: "",
+                                                    min: "1",
                                                     type: "number",
                                                     required: ""
+                                                  },
+                                                  on: {
+                                                    keyup: function($event) {
+                                                      return _vm.validate(
+                                                        "lowDose"
+                                                      )
+                                                    }
                                                   },
                                                   model: {
                                                     value: _vm.lowPrice,
@@ -2782,8 +3232,16 @@ var render = function() {
                                                   attrs: {
                                                     label: "High Dose Price",
                                                     outlined: "",
+                                                    min: "1",
                                                     type: "number",
                                                     required: ""
+                                                  },
+                                                  on: {
+                                                    keyup: function($event) {
+                                                      return _vm.validate(
+                                                        "highDose"
+                                                      )
+                                                    }
                                                   },
                                                   model: {
                                                     value: _vm.highPrice,
@@ -2813,8 +3271,16 @@ var render = function() {
                                                   attrs: {
                                                     label: "Over Dose Price",
                                                     outlined: "",
+                                                    min: "1",
                                                     type: "number",
                                                     required: ""
+                                                  },
+                                                  on: {
+                                                    keyup: function($event) {
+                                                      return _vm.validate(
+                                                        "overDose"
+                                                      )
+                                                    }
                                                   },
                                                   model: {
                                                     value: _vm.overPrice,
@@ -2845,6 +3311,20 @@ var render = function() {
                                         }
                                       },
                                       [
+                                        _c("i", [
+                                          _vm.errorMessage1 !== null
+                                            ? _c(
+                                                "span",
+                                                { staticClass: "errorColor" },
+                                                [
+                                                  _vm._v(
+                                                    _vm._s(_vm.errorMessage1)
+                                                  )
+                                                ]
+                                              )
+                                            : _vm._e()
+                                        ]),
+                                        _vm._v(" "),
                                         _c(
                                           "v-row",
                                           [
@@ -2858,9 +3338,17 @@ var render = function() {
                                                   attrs: {
                                                     label:
                                                       "Online Low Dose Price",
+                                                    min: "1",
                                                     outlined: "",
                                                     type: "number",
                                                     required: ""
+                                                  },
+                                                  on: {
+                                                    keyup: function($event) {
+                                                      return _vm.validate(
+                                                        "onlineLowDose"
+                                                      )
+                                                    }
                                                   },
                                                   model: {
                                                     value: _vm.onlinelowPrice,
@@ -2884,9 +3372,17 @@ var render = function() {
                                                   attrs: {
                                                     label:
                                                       "Online High Dose Price",
+                                                    min: "1",
                                                     outlined: "",
                                                     type: "number",
                                                     required: ""
+                                                  },
+                                                  on: {
+                                                    keyup: function($event) {
+                                                      return _vm.validate(
+                                                        "onlineHighDose"
+                                                      )
+                                                    }
                                                   },
                                                   model: {
                                                     value: _vm.onlinehighPrice,
@@ -2917,9 +3413,17 @@ var render = function() {
                                                   attrs: {
                                                     label:
                                                       "Online Over Dose Price",
+                                                    min: "1",
                                                     outlined: "",
                                                     type: "number",
                                                     required: ""
+                                                  },
+                                                  on: {
+                                                    keyup: function($event) {
+                                                      return _vm.validate(
+                                                        "onlineOverDose"
+                                                      )
+                                                    }
                                                   },
                                                   model: {
                                                     value: _vm.onlineoverPrice,
@@ -3063,14 +3567,21 @@ var render = function() {
                     _c(
                       "v-card-text",
                       [
+                        _vm._v("\n                      NOTE: "),
+                        _c("span", { staticClass: "text-danger text-center" }, [
+                          _vm._v("All fields are required")
+                        ]),
+                        _vm._v(" "),
                         _c(
                           "v-form",
                           [
-                            _vm.errorMessage !== null
-                              ? _c("span", { staticClass: "errorColor" }, [
-                                  _vm._v(_vm._s(_vm.errorMessage))
-                                ])
-                              : _vm._e(),
+                            _c("i", [
+                              _vm.errorMessage !== null
+                                ? _c("span", { staticClass: "errorColor" }, [
+                                    _vm._v(_vm._s(_vm.errorMessage))
+                                  ])
+                                : _vm._e()
+                            ]),
                             _vm._v(" "),
                             _c(
                               "v-container",
@@ -3098,6 +3609,16 @@ var render = function() {
                                   1
                                 ),
                                 _vm._v(" "),
+                                _c("i", [
+                                  _vm.errorMessage2 !== null
+                                    ? _c(
+                                        "span",
+                                        { staticClass: "errorColor" },
+                                        [_vm._v(_vm._s(_vm.errorMessage2))]
+                                      )
+                                    : _vm._e()
+                                ]),
+                                _vm._v(" "),
                                 _c(
                                   "v-row",
                                   [
@@ -3107,6 +3628,11 @@ var render = function() {
                                         outlined: "",
                                         dense: "",
                                         type: "number"
+                                      },
+                                      on: {
+                                        keyup: function($event) {
+                                          return _vm.validate("addOnsPrice")
+                                        }
                                       },
                                       model: {
                                         value: _vm.addOnsPrice,
@@ -3120,6 +3646,16 @@ var render = function() {
                                   1
                                 ),
                                 _vm._v(" "),
+                                _c("i", [
+                                  _vm.errorMessage3 !== null
+                                    ? _c(
+                                        "span",
+                                        { staticClass: "errorColor" },
+                                        [_vm._v(_vm._s(_vm.errorMessage3))]
+                                      )
+                                    : _vm._e()
+                                ]),
+                                _vm._v(" "),
                                 _c(
                                   "v-row",
                                   [
@@ -3129,6 +3665,13 @@ var render = function() {
                                         outlined: "",
                                         dense: "",
                                         type: "number"
+                                      },
+                                      on: {
+                                        keyup: function($event) {
+                                          return _vm.validate(
+                                            "onlineAddOnsPrice"
+                                          )
+                                        }
                                       },
                                       model: {
                                         value: _vm.onlineAddOnsPrice,
@@ -3197,7 +3740,7 @@ var render = function() {
                                 },
                                 on: { click: _vm.editAddOnsData }
                               },
-                              [_vm._v("SAVE")]
+                              [_vm._v("Save")]
                             )
                           : _vm._e()
                       ],
@@ -3244,14 +3787,21 @@ var render = function() {
                     _c(
                       "v-card-text",
                       [
+                        _vm._v("\n                      NOTE: "),
+                        _c("span", { staticClass: "text-danger text-center" }, [
+                          _vm._v("All fields are required")
+                        ]),
+                        _vm._v(" "),
                         _c(
                           "v-form",
                           [
-                            _vm.errorMessage !== null
-                              ? _c("span", { staticClass: "errorColor" }, [
-                                  _vm._v(_vm._s(_vm.errorMessage))
-                                ])
-                              : _vm._e(),
+                            _c("i", [
+                              _vm.errorMessage !== null
+                                ? _c("span", { staticClass: "errorColor" }, [
+                                    _vm._v(_vm._s(_vm.errorMessage))
+                                  ])
+                                : _vm._e()
+                            ]),
                             _vm._v(" "),
                             _c(
                               "v-container",
@@ -3279,6 +3829,16 @@ var render = function() {
                                   1
                                 ),
                                 _vm._v(" "),
+                                _c("i", [
+                                  _vm.errorMessage4 !== null
+                                    ? _c(
+                                        "span",
+                                        { staticClass: "errorColor" },
+                                        [_vm._v(_vm._s(_vm.errorMessage4))]
+                                      )
+                                    : _vm._e()
+                                ]),
+                                _vm._v(" "),
                                 _c(
                                   "v-row",
                                   [
@@ -3288,6 +3848,11 @@ var render = function() {
                                         outlined: "",
                                         dense: "",
                                         type: "number"
+                                      },
+                                      on: {
+                                        keyup: function($event) {
+                                          return _vm.validate("cupTypePrice")
+                                        }
                                       },
                                       model: {
                                         value: _vm.inputCupPrice,
@@ -3301,6 +3866,16 @@ var render = function() {
                                   1
                                 ),
                                 _vm._v(" "),
+                                _c("i", [
+                                  _vm.errorMessage5 !== null
+                                    ? _c(
+                                        "span",
+                                        { staticClass: "errorColor" },
+                                        [_vm._v(_vm._s(_vm.errorMessage5))]
+                                      )
+                                    : _vm._e()
+                                ]),
+                                _vm._v(" "),
                                 _c(
                                   "v-row",
                                   [
@@ -3310,8 +3885,14 @@ var render = function() {
                                         outlined: "",
                                         dense: "",
                                         type: "number",
-                                        min: "1",
                                         id: "price"
+                                      },
+                                      on: {
+                                        keyup: function($event) {
+                                          return _vm.validate(
+                                            "onlineCupTypePrice"
+                                          )
+                                        }
                                       },
                                       model: {
                                         value: _vm.inputCupOnlinePrice,
@@ -3427,14 +4008,29 @@ var render = function() {
                     _c(
                       "v-card-text",
                       [
+                        _vm._v("\n                      NOTE: "),
+                        _c("span", { staticClass: "text-danger text-center" }, [
+                          _vm._v("All fields are required")
+                        ]),
+                        _vm._v(" "),
                         _c(
                           "v-form",
                           [
-                            _vm.errorMessage !== null
-                              ? _c("span", { staticClass: "errorColor" }, [
-                                  _vm._v(_vm._s(_vm.errorMessage))
-                                ])
-                              : _vm._e(),
+                            _c("i", [
+                              _vm.errorMessage !== null
+                                ? _c("span", { staticClass: "errorColor" }, [
+                                    _vm._v(_vm._s(_vm.errorMessage))
+                                  ])
+                                : _vm._e()
+                            ]),
+                            _vm._v(" "),
+                            _c("i", [
+                              _vm.errorMessage6 !== null
+                                ? _c("span", { staticClass: "errorColor" }, [
+                                    _vm._v(_vm._s(_vm.errorMessage6))
+                                  ])
+                                : _vm._e()
+                            ]),
                             _vm._v(" "),
                             _c(
                               "v-container",
@@ -3448,8 +4044,12 @@ var render = function() {
                                         outlined: "",
                                         dense: "",
                                         type: "number",
-                                        min: "0",
                                         id: "lowDoseCup"
+                                      },
+                                      on: {
+                                        keyup: function($event) {
+                                          return _vm.validate("cupSize")
+                                        }
                                       },
                                       model: {
                                         value: _vm.lowDoseCup,
@@ -3472,8 +4072,12 @@ var render = function() {
                                         outlined: "",
                                         dense: "",
                                         type: "number",
-                                        min: "0",
                                         id: "highDoseCup"
+                                      },
+                                      on: {
+                                        keyup: function($event) {
+                                          return _vm.validate("cupSize")
+                                        }
                                       },
                                       model: {
                                         value: _vm.highDoseCup,
@@ -3496,8 +4100,12 @@ var render = function() {
                                         outlined: "",
                                         dense: "",
                                         type: "number",
-                                        min: "0",
                                         id: "overDoseCup"
+                                      },
+                                      on: {
+                                        keyup: function($event) {
+                                          return _vm.validate("cupSize")
+                                        }
                                       },
                                       model: {
                                         value: _vm.overDoseCup,
@@ -3550,6 +4158,88 @@ var render = function() {
                             on: { click: _vm.addingCupSize }
                           },
                           [_vm._v("Add Cup Size")]
+                        )
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ],
+              1
+            )
+          ],
+          1
+        )
+      ],
+      _vm._v(" "),
+      [
+        _c(
+          "v-row",
+          { attrs: { justify: "center" } },
+          [
+            _c(
+              "v-dialog",
+              {
+                attrs: { persistent: "", "max-width": "600px" },
+                model: {
+                  value: _vm.dialogConfirmation,
+                  callback: function($$v) {
+                    _vm.dialogConfirmation = $$v
+                  },
+                  expression: "dialogConfirmation"
+                }
+              },
+              [
+                _c(
+                  "v-card",
+                  [
+                    _c("v-card-title", [
+                      _c("span", { staticClass: "headline" }, [
+                        _vm._v("Confirmation")
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("v-card-text", [
+                      _vm._v(
+                        "\n                        Are you sure you want to delete?\n                      "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "v-card-actions",
+                      [
+                        _c("v-spacer"),
+                        _vm._v(" "),
+                        _c(
+                          "v-btn",
+                          {
+                            attrs: { color: "blue darken-1", text: "" },
+                            on: {
+                              click: function($event) {
+                                _vm.dialogConfirmation = false
+                              }
+                            }
+                          },
+                          [_vm._v("No")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "v-btn",
+                          {
+                            staticClass: "btn btn-primary",
+                            attrs: {
+                              color: "blue darken-1",
+                              text: "",
+                              type: "button"
+                            },
+                            on: {
+                              click: function($event) {
+                                return _vm.deleteNow()
+                              }
+                            }
+                          },
+                          [_vm._v("Yes")]
                         )
                       ],
                       1

@@ -4,7 +4,7 @@
 <style scoped>
 .loading {
   position: fixed;
-  z-index: 999;
+  z-index: 999999;
   height: 2em;
   width: 2em;
   overflow: visible;

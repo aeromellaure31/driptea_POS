@@ -19,6 +19,11 @@ class adminSeeder extends Seeder
         User::create([
             'account_type' => 'Admin',
             'name' => 'laurex',
+            'email' => 'laurex@gmail.com',
+            'firstname' => 'Aero',
+            'lastname' => 'Laure',
+            'address' => 'Talamban',
+            'contactNumber' => '09161571895',
             'password' => Hash::make('Aero@mel31'),
             'remember_token' => Str::random(10)
         ]);

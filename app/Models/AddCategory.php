@@ -12,6 +12,6 @@ class AddCategory extends Model
     use SoftDeletes;
     protected $table = 'add_categories';
     protected $fillable = [
-        'image', 'productCategory'
+        'image', 'productCategory', 'remove'
     ];
 }

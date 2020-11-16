@@ -65,28 +65,40 @@ class ProductController extends Controller
 
     public function retrieveProduct(Request $request){
         $type = $request['type'];
-        $product = Product::where('productCategory', $type)->where('status', 'Available')->get();
+        $product = Product::where('productCategory', $type)->where('status', 'Available')->where('remove', null)->get();
         return response()->json(compact('product'));
     }
 
     public function retrieveAllProduct(Request $request){
-        $product = Product::orderBy('id','DESC')->get();
+        $product = Product::orderBy('productName','ASC')->where('remove', null)->get();
+        return response()->json(compact('product'));
+    }
+
+    public function RetrieveWithDelete(Request $request){
+        $product = Product::orderBy('productName','ASC')->get();
         return response()->json(compact('product'));
     }
 
     public function retrieveAllProductAscending(Request $request){
-        $product = Product::orderBy('id','ASC')->get();
+        $product = Product::orderBy('id','ASC')->where('remove', null)->get();
         return response()->json(compact('product'));
     }
 
     public function retrieveOneProduct(Request $request){
-        $product = Product::where('id', $request->id)->get();
+        $product = Product::where('id', $request->id)->where('remove', null)->get();
         return response()->json(compact('product'));
     }
 
     public function updateStatusProduct(Request $request){
         $product = Product::firstOrCreate(['id' => $request->id]);
         $product->status = $request['status'];
+        $product->save();
+        return response()->json(['success' => 'successfully updated!']);
+    }
+
+    public function deleteProduct(Request $request){
+        $product = Product::firstOrCreate(['id' => $request->id]);
+        $product->remove = 'deleted';
         $product->save();
         return response()->json(['success' => 'successfully updated!']);
     }

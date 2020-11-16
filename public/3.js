@@ -372,7 +372,7 @@ __webpack_require__.r(__webpack_exports__);
       return parseInt(total).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
     },
     getDeliveryFee: function getDeliveryFee() {
-      var deliveryFee = 100;
+      var deliveryFee = 50;
       this.deliveryFee = deliveryFee;
       return parseInt(deliveryFee).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
     },

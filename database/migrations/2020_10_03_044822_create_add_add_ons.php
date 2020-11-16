@@ -19,6 +19,7 @@ class CreateAddAddOns extends Migration
             $table->double('addons_price');
             $table->double('onlineAddOnsPrice');
             $table->string('status');
+            $table->string('remove')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

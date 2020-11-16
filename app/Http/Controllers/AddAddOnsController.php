@@ -19,12 +19,17 @@ class AddAddOnsController extends Controller
     }
     
     public function retrieveAddOns(Request $request){
-        $addons = AddAddOns::where('status', 'Available')->get();
+        $addons = AddAddOns::where('status', 'Available')->where('remove', null)->get();
         return response()->json(compact('addons'));
     }
 
     public function retrieveAllAddOns(Request $request){
-        $addons = AddAddOns::get();
+        $addons = AddAddOns::orderBy('addons_name','ASC')->where('remove', null)->get();
+        return response()->json(compact('addons'));
+    }
+
+    public function retrieveWithDeleteAddOns(Request $request){
+        $addons = AddAddOns::orderBy('addons_name','ASC')->get();
         return response()->json(compact('addons'));
     }
 
@@ -51,6 +56,13 @@ class AddAddOnsController extends Controller
         $addons->addons_price = $request['price'];
         $addons->onlineAddOnsPrice = $request['onlineAddOnsPrice'];
         $addons->status = $request['status'];
+        $addons->save();
+        return response()->json(['success' => 'successfully updated!']);
+    }
+
+    public function deleteAddOns(Request $request){
+        $addons = AddAddOns::firstOrCreate(['id' => $request->id]);
+        $addons->remove = 'deleted';
         $addons->save();
         return response()->json(['success' => 'successfully updated!']);
     }

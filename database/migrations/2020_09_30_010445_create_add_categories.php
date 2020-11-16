@@ -17,6 +17,7 @@ class CreateAddCategories extends Migration
             $table->increments('id');
             $table->string('productCategory');
             $table->string('image');
+            $table->string('remove')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

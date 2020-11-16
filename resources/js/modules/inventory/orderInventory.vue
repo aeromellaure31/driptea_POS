@@ -38,7 +38,6 @@
           <div class="zui-scroller">
             <thead>
               <tr>
-                <th style="text-align: center" rowspan="3" class="zui-sticky-col">#</th>
                 <th style="text-align: center" rowspan="3" class="zui-sticky-col2">Date</th>
                 <th style="text-align: center" rowspan="3" class="zui-sticky-col3">Name</th>
                 <th style="text-align: center" rowspan="3" class="zui-sticky-col4">Address</th>
@@ -63,7 +62,6 @@
             </thead>
             <tbody>
               <tr v-for="(items, indexes) in finalData" :key="indexes">
-                <td style="text-align: center" class="zui-sticky-col">{{items[0].customerId}}</td>
                 <td
                   style="text-align: center"
                   class="zui-sticky-col2"
@@ -128,43 +126,36 @@
   position: relative;
 }
 .zui-scroller {
-  margin-left: 570px;
+  margin-left: 490px;
   overflow-x: scroll;
   overflow-y: visible;
   padding-bottom: 5px;
-  width: 500px;
-}
-.zui-table .zui-sticky-col {
-  /* border-left: solid 1px #DDEFEF; */
-  left: 0;
-  position: absolute;
-  top: auto;
-  width: 80px;
+  width: 600px;
 }
 .zui-table .zui-sticky-col2 {
   /* border-right: solid 1px #DDEFEF; */
-  left: 80px;
+  left: 0;
   position: absolute;
   top: auto;
   width: 110px;
 }
 .zui-table .zui-sticky-col3 {
   /* border-right: solid 1px #DDEFEF; */
-  left: 190px;
+  left: 110px;
   position: absolute;
   top: auto;
   width: 180px;
 }
 .zui-table .zui-sticky-col4 {
   /* border-right: solid 1px #DDEFEF; */
-  left: 370px;
+  left: 290px;
   position: absolute;
   top: auto;
   width: 200px;
 }
 .zui-table .zui-sticky-col5 {
   /* border-right: solid 1px #DDEFEF; */
-  left: 1070px;
+  left: 1090px;
   position: absolute;
   top: auto;
   width: 100px;
@@ -284,7 +275,7 @@ export default {
     retrieveProducts() {
       this.loadingShow = true;
       this.$axios
-        .post(AUTH.url + "retrieveAllProduct", {}, AUTH.config)
+        .post(AUTH.url + "RetrieveWithDelete", {}, AUTH.config)
         .then(response => {
           if (response.data.status) {
             AUTH.deauthenticate();

@@ -19,6 +19,7 @@ class CreateCupType extends Migration
             $table->integer('inputCupOnlinePrice');
             $table->double('cupTypePrice');
             $table->string('status');
+            $table->string('remove')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

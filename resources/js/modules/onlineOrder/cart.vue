@@ -302,7 +302,7 @@ export default {
        .replace(/\d(?=(\d{3})+\.)/g, "$&,");
    },
    getDeliveryFee() {
-     let deliveryFee = 100;
+     let deliveryFee = 50;
      this.deliveryFee = deliveryFee;
      return parseInt(deliveryFee)
        .toFixed(2)

@@ -9,69 +9,11 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _services_auth__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../services/auth */ "./resources/js/services/auth/index.js");
 //
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      category: [],
-      totalPerCategory: [],
-      headerForSalesReport: [{
-        text: "Date",
-        value: "created_at"
-      }, {
-        text: "Date",
-        value: "created_at"
-      }]
-    };
-  },
-  mounted: function mounted() {
-    this.retrieveSalesReport();
-    this.retrieveCategory();
-  },
-  methods: {
-    retrieveSalesReport: function retrieveSalesReport() {
-      var _this = this;
-
-      this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "retrieveSalesReportPerCategory").then(function (response) {
-        _this.totalPerCategory = response.data.totalSalesPerCategory;
-      });
-    },
-    retrieveCategory: function retrieveCategory() {
-      var _this2 = this;
-
-      this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "retrieveCategoryForSales").then(function (response) {
-        _this2.category = response.data.addCategory; // response.data.addCategory.forEach(element =>{
-        //   this.category.push(element.productCategory)
-        // })
-      });
-    }
-  }
-});
+/* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
 
@@ -90,36 +32,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("table", { staticClass: "table" }, [
-      _c("thead", [
-        _c(
-          "tr",
-          _vm._l(_vm.category, function(row, rindex) {
-            return _c("th", { key: rindex }, [
-              _vm._v("\n        " + _vm._s(row.productCategory) + "\n        ")
-            ])
-          }),
-          0
-        )
-      ]),
-      _vm._v(" "),
-      _c(
-        "tbody",
-        _vm._l(_vm.totalPerCategory, function(total, index) {
-          return _c(
-            "tr",
-            { key: index },
-            _vm._l(_vm.category, function(row, rindex) {
-              return _c("td", { key: rindex }, [_vm._v(_vm._s(total.subTotal))])
-            }),
-            0
-          )
-        }),
-        0
-      )
-    ])
-  ])
+  return _c("div")
 }
 var staticRenderFns = []
 render._withStripped = true

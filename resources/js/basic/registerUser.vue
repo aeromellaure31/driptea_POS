@@ -34,12 +34,38 @@
                   <v-flex xs12 sm11>
                     <v-text-field
                       color="orange"
-                      label="Fullname"
+                      label="firstname"
                       outlined
-                      v-model="fullname"
-                      v-on:keyup="validate('fullname')"
+                      v-model="firstname"
+                      v-on:keyup="validate('firstname')"
                       type="text"
-                      id="fullname"
+                      id="firstname"
+                      required
+                    ></v-text-field>
+                  </v-flex>
+                </v-row>
+                <i>
+                  <span
+                    v-if="errorMessage12 !== null"
+                    class="text-danger text-center"
+                  >{{errorMessage12}}</span>
+                </i>
+                <i>
+                  <span
+                    v-if="errorMessage13 !== null"
+                    class="text-danger text-center"
+                  >{{errorMessage13}}</span>
+                </i>
+                <v-row>
+                  <v-flex xs12 sm11>
+                    <v-text-field
+                      color="orange"
+                      label="lastname"
+                      outlined
+                      v-model="lastname"
+                      v-on:keyup="validate('lastname')"
+                      type="text"
+                      id="lastname"
                       required
                     ></v-text-field>
                   </v-flex>
@@ -94,6 +120,38 @@
             </div>
             <div class="col-sm-6">
               <center>
+                <i>
+                  <span
+                    v-if="errorMessage14 !== null"
+                    class="text-danger text-center"
+                  >{{errorMessage14}}</span>
+                </i>
+                <i>
+                  <span
+                    v-if="errorMessage15 !== null"
+                    class="text-danger text-center"
+                  >{{errorMessage15}}</span>
+                </i>
+                <i>
+                  <span
+                    v-if="errorMessage16 !== null"
+                    class="text-danger text-center"
+                  >{{errorMessage16}}</span>
+                </i>
+                <v-row>
+                  <v-flex xs12 sm11>
+                    <v-text-field
+                      color="orange"
+                      label="username"
+                      outlined
+                      v-model="username"
+                      v-on:keyup="validate('username')"
+                      type="text"
+                      id="username"
+                      required
+                    ></v-text-field>
+                  </v-flex>
+                </v-row>
                 <i>
                   <span
                     v-if="errorMessage3 !== null"
@@ -254,9 +312,11 @@ export default {
     return {
       show3: false,
       show4: false,
-      type: "CUSTOMER",
+      type: "Customer",
       image: image,
-      fullname: "",
+      firstname: "",
+      lastname: "",
+      username: "",
       address: "",
       contactNum: "",
       email: "",
@@ -279,6 +339,11 @@ export default {
       errorMessage9: null,
       errorMessage10: null,
       errorMessage11: null,
+      errorMessage12: null,
+      errorMessage13: null,
+      errorMessage14: null,
+      errorMessage15: null,
+      errorMessage16: null,
       loadingShow: false
     };
   },
@@ -293,7 +358,9 @@ export default {
     register(e) {
       e.preventDefault()
       this.loadingShow = true
-      this.validate("fullname");
+      this.validate("firstname");
+      this.validate("lastname");
+      this.validate("username");
       this.validate("address");
       this.validate("contact");
       this.validate("email");
@@ -301,10 +368,12 @@ export default {
       this.validate("confirmPass");
       let parameter = {
         account_type: this.type,
-        fullname: this.fullname,
+        firstname: this.firstname,
+        lastname: this.lastname,
         address: this.address,
         contactNumber: this.contactNum,
-        name: this.email,
+        email: this.email,
+        name: this.username,
         password: this.password,
         password_confirmation: this.confirmPass
       };
@@ -315,7 +384,15 @@ export default {
         this.errorMessage4 === null &&
         this.errorMessage5 === null &&
         this.errorMessage6 === null &&
-        this.errorMessage7 === null
+        this.errorMessage7 === null &&
+        this.errorMessage8 === null &&
+        this.errorMessage9 === null &&
+        this.errorMessage10 === null &&
+        this.errorMessage11 === null &&
+        this.errorMessage12 === null &&
+        this.errorMessage13 === null &&
+        this.errorMessage14 === null &&
+        this.errorMessage15 === null
       ) {
         this.$axios
           .post(AUTH.url + "register", parameter)
@@ -326,11 +403,14 @@ export default {
               text: "You have successfully registered!",
               icon: "success"
             });
-            this.authenticate(this.email, this.password);
+            this.authenticate(this.username, this.password);
           })
           .catch(error => {
             if (error.response.status === 300) {
-              this.errorMessage3 = "Username already exist";
+              this.errorMessage14 = "Username already exist";
+            }
+            if (error.response.status === 301) {
+              this.errorMessage3 = "Email already exist";
             }
             this.loadingShow = false
           });
@@ -363,18 +443,44 @@ export default {
       this.successMessage = null;
       let reqWhiteSpace = /\d/;
       let specialChar = /^[A-Za-z0-9 ]+$/;
-      if (input === "fullname") {
+      if (input === "firstname") {
         this.errorMessage1 = null;
-        if (reqWhiteSpace.test(this.fullname)) {
-          this.errorMessage1 = "Fullname should not contain a number.";
-        } else if (this.fullname === "") {
-          this.errorMessage2 = "Fullname is required.";
-        } else if (!specialChar.test(this.fullname)) {
+        if (reqWhiteSpace.test(this.firstname)) {
+          this.errorMessage1 = "firstname should not contain a number.";
+        } else if (this.firstname === "") {
+          this.errorMessage2 = "firstname is required.";
+        } else if (!specialChar.test(this.firstname)) {
           this.errorMessage2 =
-            "Fullname should not contain a special character.";
+            "firstname should not contain a special character.";
         } else {
           this.errorMessage1 = null;
           this.errorMessage2 = null;
+        }
+      } else if (input === "lastname") {
+        this.errorMessage12 = null;
+        if (reqWhiteSpace.test(this.lastname)) {
+          this.errorMessage12 = "lastname should not contain a number.";
+        } else if (this.lastname === "") {
+          this.errorMessage13 = "lastname is required.";
+        } else if (!specialChar.test(this.lastname)) {
+          this.errorMessage13 =
+            "lastname should not contain a special character.";
+        } else {
+          this.errorMessage12 = null;
+          this.errorMessage13 = null;
+        }
+      } else if (input === "username") {
+        this.errorMessage14 = null;
+        if (reqWhiteSpace.test(this.username)) {
+          this.errorMessage14 = "Username should not contain a space.";
+        } else if (this.username === "") {
+          this.errorMessage15 = "Username is required.";
+        } else if (this.username.length < 6) {
+          this.errorMessage16 = "Username must be atleast 6 characters";
+        } else {
+          this.errorMessage14 = null;
+          this.errorMessage15 = null;
+          this.errorMessage16 = null;
         }
       } else if (input === "email") {
         this.errorMessage3 = null;
@@ -428,13 +534,13 @@ export default {
       } else if (
         this.contactNum != null &&
         this.address != null &&
-        this.fullname.length >= 6 &&
+        this.firstname.length >= 6 &&
         this.email !== null &&
         this.password !== null &&
         this.password.length >= 6 &&
         this.password.localeCompare(this.confirmPass) === 0 &&
         this.type !== null &&
-        AUTH.validateEmail(this.email) === true
+        this.validateEmail(this.email) === true
       ) {
         this.errorMessage1 = null;
       } else {

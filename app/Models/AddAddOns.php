@@ -12,6 +12,6 @@ class AddAddOns extends Model
     use SoftDeletes;
     protected $table = 'add_add_ons';
     protected $fillable = [
-        'addons_name', 'addons_price', 'status', 'onlineAddOnsPrice'
+        'addons_name', 'addons_price', 'status', 'onlineAddOnsPrice', 'remove'
     ];
 }

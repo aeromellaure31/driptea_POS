@@ -24,7 +24,8 @@
                             <table class="table table-responsive table-bordered overline" id="myTable">
                                 <tr>
                                     <th style="width: 45%;">Product Name</th>
-                                    <th>Add&nbsp;ons</th>
+                                    <th>Add-ons</th>
+                                    <th>Cup Type</th>
                                     <th>Unit Price</th>
                                     <th>Quantity</th>
                                     <th>Total</th>
@@ -34,9 +35,10 @@
                                     <tr v-for="(item, index) in tableData" :key="index">
                                         <td>{{item.order_product[0].productName}}</td>
                                         <td>{{getAddOns(item.same_order)}}</td>
-                                        <td>{{item.choosenPrice}}</td>
+                                        <td>{{getCup(item.cupType)}}</td>
+                                        <td>{{convert(item.choosenPrice)}}</td>
                                         <td>{{item.quantity}}</td>
-                                        <td>{{item.subTotal}}</td>
+                                        <td>{{convert(item.subTotal)}}</td>
                                         <td>
                                             <button style="font-size: 10px" type="button" aria-expanded="false" @click="deleteOrder(item.id)">❌</button>
                                         </td>
@@ -172,6 +174,8 @@ export default {
             name: '',
             address: '',
             contact: '',
+            addOnsData: [],
+            cupData: []
         }
     },
     components: {
@@ -181,8 +185,44 @@ export default {
     mounted(){
         this.retrieveCategory()
         this.retrieveProduct()
+        this.retrieveAddOns()
+        this.retrieveCupType()
     },
     methods: {
+        convert(item){
+            return parseInt(item).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
+        },
+        getCup(item){
+            let cup = ""
+            this.cupData.forEach(el => {
+                if(item === el.cupTypeName){
+                    if(this.customerType === 'foodpanda' || this.customerType === 'grab' || this.customerType === 'online'){
+                        if(parseInt(el.inputCupOnlinePrice) === 0){
+                            cup = (item)
+                        }else{
+                            cup = (item + '(+' + el.inputCupOnlinePrice + '.00)')
+                        }
+                    }else{
+                        if(parseInt(el.cupTypePrice === 0)){
+                            cup = (item)
+                        }else{
+                            cup = (item + '(+' + el.cupTypePrice + '.00)')
+                        }
+                    }
+                }
+            })
+            return cup
+        },
+        retrieveCupType() {
+            this.loadingShow = true
+            this.$axios.post(AUTH.url + "retrieveAllCupType", {}, AUTH.config).then(response => {
+                if(response.data.status){
+                    AUTH.deauthenticate()
+                }
+                this.cupData = response.data.cupType;
+                this.loadingShow = false
+            });
+        },
         hideReceipt(){
             this.receiptShow = false
         },
@@ -228,7 +268,7 @@ export default {
             if(this.tableData != null){
                 let total = 0
                 this.tableData.forEach(element => {
-                    total += element.subTotal
+                    total += parseInt(element.subTotal)
                 });
                 this.subTotalPrice = total
                 return parseInt(total).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
@@ -279,15 +319,37 @@ export default {
                 this.loadingShow = false
             }
         },
+        retrieveAddOns(){
+            this.loadingShow = true
+            this.$axios.post(AUTH.url + "retrieveAllAddOns", {}, AUTH.config).then(response => {
+                if(response.data.status){
+                    AUTH.deauthenticate()
+                }
+                this.addOnsData = response.data.addons
+                this.loadingShow = false
+            });
+        },
         getAddOns(item){
             let storeAddOns = ""
             let index = item.length
             item.forEach(el => {
-                if(item.indexOf(el) >= (index - 1)){
-                    storeAddOns += el.addOns
-                }else{
-                    storeAddOns += el.addOns + ", "
-                }
+                this.addOnsData.forEach(e => {
+                    if(el.addOns === e.addons_name){
+                        if(item.indexOf(el) >= (index - 1)){
+                            if(this.customerType === 'foodpanda' || this.customerType === 'grab' || this.customerType === 'online'){
+                                storeAddOns += (el.addOns + ' (+' + e.onlineAddOnsPrice + '.00)')
+                            }else{
+                                storeAddOns += (el.addOns + ' (+' + e.addons_price + '.00)')
+                            }
+                        }else{
+                            if(this.customerType === 'foodpanda' || this.customerType === 'grab' || this.customerType === 'online'){
+                                 storeAddOns += (el.addOns + ' (+' + e.onlineAddOnsPrice + '.00), ')
+                            }else{
+                                storeAddOns += (el.addOns + ' (+' + e.addons_price + '.00), ')
+                            }
+                        }
+                    }
+                })
             })
             return storeAddOns
         },

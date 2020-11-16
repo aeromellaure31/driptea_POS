@@ -260,6 +260,64 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -271,9 +329,11 @@ __webpack_require__.r(__webpack_exports__);
     return {
       show3: false,
       show4: false,
-      type: "CUSTOMER",
+      type: "Customer",
       image: _assets_logo_png__WEBPACK_IMPORTED_MODULE_3___default.a,
-      fullname: "",
+      firstname: "",
+      lastname: "",
+      username: "",
       address: "",
       contactNum: "",
       email: "",
@@ -302,6 +362,11 @@ __webpack_require__.r(__webpack_exports__);
       errorMessage9: null,
       errorMessage10: null,
       errorMessage11: null,
+      errorMessage12: null,
+      errorMessage13: null,
+      errorMessage14: null,
+      errorMessage15: null,
+      errorMessage16: null,
       loadingShow: false
     };
   },
@@ -318,7 +383,9 @@ __webpack_require__.r(__webpack_exports__);
 
       e.preventDefault();
       this.loadingShow = true;
-      this.validate("fullname");
+      this.validate("firstname");
+      this.validate("lastname");
+      this.validate("username");
       this.validate("address");
       this.validate("contact");
       this.validate("email");
@@ -326,15 +393,17 @@ __webpack_require__.r(__webpack_exports__);
       this.validate("confirmPass");
       var parameter = {
         account_type: this.type,
-        fullname: this.fullname,
+        firstname: this.firstname,
+        lastname: this.lastname,
         address: this.address,
         contactNumber: this.contactNum,
-        name: this.email,
+        email: this.email,
+        name: this.username,
         password: this.password,
         password_confirmation: this.confirmPass
       };
 
-      if (this.errorMessage1 === null && this.errorMessage2 === null && this.errorMessage3 === null && this.errorMessage4 === null && this.errorMessage5 === null && this.errorMessage6 === null && this.errorMessage7 === null) {
+      if (this.errorMessage1 === null && this.errorMessage2 === null && this.errorMessage3 === null && this.errorMessage4 === null && this.errorMessage5 === null && this.errorMessage6 === null && this.errorMessage7 === null && this.errorMessage8 === null && this.errorMessage9 === null && this.errorMessage10 === null && this.errorMessage11 === null && this.errorMessage12 === null && this.errorMessage13 === null && this.errorMessage14 === null && this.errorMessage15 === null) {
         this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].url + "register", parameter).then(function (response) {
           _this.loadingShow = false;
           sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
@@ -343,10 +412,14 @@ __webpack_require__.r(__webpack_exports__);
             icon: "success"
           });
 
-          _this.authenticate(_this.email, _this.password);
+          _this.authenticate(_this.username, _this.password);
         })["catch"](function (error) {
           if (error.response.status === 300) {
-            _this.errorMessage3 = "Username already exist";
+            _this.errorMessage14 = "Username already exist";
+          }
+
+          if (error.response.status === 301) {
+            _this.errorMessage3 = "Email already exist";
           }
 
           _this.loadingShow = false;
@@ -381,18 +454,45 @@ __webpack_require__.r(__webpack_exports__);
       var reqWhiteSpace = /\d/;
       var specialChar = /^[A-Za-z0-9 ]+$/;
 
-      if (input === "fullname") {
+      if (input === "firstname") {
         this.errorMessage1 = null;
 
-        if (reqWhiteSpace.test(this.fullname)) {
-          this.errorMessage1 = "Fullname should not contain a number.";
-        } else if (this.fullname === "") {
-          this.errorMessage2 = "Fullname is required.";
-        } else if (!specialChar.test(this.fullname)) {
-          this.errorMessage2 = "Fullname should not contain a special character.";
+        if (reqWhiteSpace.test(this.firstname)) {
+          this.errorMessage1 = "firstname should not contain a number.";
+        } else if (this.firstname === "") {
+          this.errorMessage2 = "firstname is required.";
+        } else if (!specialChar.test(this.firstname)) {
+          this.errorMessage2 = "firstname should not contain a special character.";
         } else {
           this.errorMessage1 = null;
           this.errorMessage2 = null;
+        }
+      } else if (input === "lastname") {
+        this.errorMessage12 = null;
+
+        if (reqWhiteSpace.test(this.lastname)) {
+          this.errorMessage12 = "lastname should not contain a number.";
+        } else if (this.lastname === "") {
+          this.errorMessage13 = "lastname is required.";
+        } else if (!specialChar.test(this.lastname)) {
+          this.errorMessage13 = "lastname should not contain a special character.";
+        } else {
+          this.errorMessage12 = null;
+          this.errorMessage13 = null;
+        }
+      } else if (input === "username") {
+        this.errorMessage14 = null;
+
+        if (reqWhiteSpace.test(this.username)) {
+          this.errorMessage14 = "Username should not contain a space.";
+        } else if (this.username === "") {
+          this.errorMessage15 = "Username is required.";
+        } else if (this.username.length < 6) {
+          this.errorMessage16 = "Username must be atleast 6 characters";
+        } else {
+          this.errorMessage14 = null;
+          this.errorMessage15 = null;
+          this.errorMessage16 = null;
         }
       } else if (input === "email") {
         this.errorMessage3 = null;
@@ -443,7 +543,7 @@ __webpack_require__.r(__webpack_exports__);
           this.errorMessage8 = null;
           this.errorMessage9 = null;
         }
-      } else if (this.contactNum != null && this.address != null && this.fullname.length >= 6 && this.email !== null && this.password !== null && this.password.length >= 6 && this.password.localeCompare(this.confirmPass) === 0 && this.type !== null && _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].validateEmail(this.email) === true) {
+      } else if (this.contactNum != null && this.address != null && this.firstname.length >= 6 && this.email !== null && this.password !== null && this.password.length >= 6 && this.password.localeCompare(this.confirmPass) === 0 && this.type !== null && this.validateEmail(this.email) === true) {
         this.errorMessage1 = null;
       } else {
         this.errorMessage7 = "Please fill in all required fields.";
@@ -616,23 +716,79 @@ var render = function() {
                                   _c("v-text-field", {
                                     attrs: {
                                       color: "orange",
-                                      label: "Fullname",
+                                      label: "firstname",
                                       outlined: "",
                                       type: "text",
-                                      id: "fullname",
+                                      id: "firstname",
                                       required: ""
                                     },
                                     on: {
                                       keyup: function($event) {
-                                        return _vm.validate("fullname")
+                                        return _vm.validate("firstname")
                                       }
                                     },
                                     model: {
-                                      value: _vm.fullname,
+                                      value: _vm.firstname,
                                       callback: function($$v) {
-                                        _vm.fullname = $$v
+                                        _vm.firstname = $$v
                                       },
-                                      expression: "fullname"
+                                      expression: "firstname"
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c("i", [
+                            _vm.errorMessage12 !== null
+                              ? _c(
+                                  "span",
+                                  { staticClass: "text-danger text-center" },
+                                  [_vm._v(_vm._s(_vm.errorMessage12))]
+                                )
+                              : _vm._e()
+                          ]),
+                          _vm._v(" "),
+                          _c("i", [
+                            _vm.errorMessage13 !== null
+                              ? _c(
+                                  "span",
+                                  { staticClass: "text-danger text-center" },
+                                  [_vm._v(_vm._s(_vm.errorMessage13))]
+                                )
+                              : _vm._e()
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "v-row",
+                            [
+                              _c(
+                                "v-flex",
+                                { attrs: { xs12: "", sm11: "" } },
+                                [
+                                  _c("v-text-field", {
+                                    attrs: {
+                                      color: "orange",
+                                      label: "lastname",
+                                      outlined: "",
+                                      type: "text",
+                                      id: "lastname",
+                                      required: ""
+                                    },
+                                    on: {
+                                      keyup: function($event) {
+                                        return _vm.validate("lastname")
+                                      }
+                                    },
+                                    model: {
+                                      value: _vm.lastname,
+                                      callback: function($$v) {
+                                        _vm.lastname = $$v
+                                      },
+                                      expression: "lastname"
                                     }
                                   })
                                 ],
@@ -757,6 +913,72 @@ var render = function() {
                       _c(
                         "center",
                         [
+                          _c("i", [
+                            _vm.errorMessage14 !== null
+                              ? _c(
+                                  "span",
+                                  { staticClass: "text-danger text-center" },
+                                  [_vm._v(_vm._s(_vm.errorMessage14))]
+                                )
+                              : _vm._e()
+                          ]),
+                          _vm._v(" "),
+                          _c("i", [
+                            _vm.errorMessage15 !== null
+                              ? _c(
+                                  "span",
+                                  { staticClass: "text-danger text-center" },
+                                  [_vm._v(_vm._s(_vm.errorMessage15))]
+                                )
+                              : _vm._e()
+                          ]),
+                          _vm._v(" "),
+                          _c("i", [
+                            _vm.errorMessage16 !== null
+                              ? _c(
+                                  "span",
+                                  { staticClass: "text-danger text-center" },
+                                  [_vm._v(_vm._s(_vm.errorMessage16))]
+                                )
+                              : _vm._e()
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "v-row",
+                            [
+                              _c(
+                                "v-flex",
+                                { attrs: { xs12: "", sm11: "" } },
+                                [
+                                  _c("v-text-field", {
+                                    attrs: {
+                                      color: "orange",
+                                      label: "username",
+                                      outlined: "",
+                                      type: "text",
+                                      id: "username",
+                                      required: ""
+                                    },
+                                    on: {
+                                      keyup: function($event) {
+                                        return _vm.validate("username")
+                                      }
+                                    },
+                                    model: {
+                                      value: _vm.username,
+                                      callback: function($$v) {
+                                        _vm.username = $$v
+                                      },
+                                      expression: "username"
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
                           _c("i", [
                             _vm.errorMessage3 !== null
                               ? _c(

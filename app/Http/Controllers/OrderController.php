@@ -104,4 +104,54 @@ class OrderController extends Controller
             ->get();
         return response()->JSON(compact('prods'));
     }
+
+    public function DailyProductSales(Request $request){
+        $prods = DB::table('store_orders')->leftJoin('products', 'store_orders.productId', '=', 'products.id')
+            ->select(DB::raw('products.productName as ProductName'),DB::raw('SUM(store_orders.quantity) as quan'),DB::raw('products.id as ID'),DB::raw('DAY(store_orders.created_at) as date'),DB::raw('YEAR(store_orders.created_at) as year'),DB::raw('MONTH(store_orders.created_at) as month'))
+            ->whereMonth('store_orders.created_at', '=', $request->month)
+            ->whereYear('store_orders.created_at', '=', $request->year)
+            ->groupBy('year','month','date','ID','ProductName')
+            // ->orderBy('quan', 'desc')
+            ->get();
+        return response()->JSON(compact('prods'));
+    }
+
+    public function MonthlyProductSales(Request $request){
+        $prods = DB::table('store_orders')->leftJoin('products', 'store_orders.productId', '=', 'products.id')
+            ->select(DB::raw('products.productName as ProductName'),DB::raw('SUM(store_orders.quantity) as quan'),DB::raw('MONTH(store_orders.created_at) as month'))
+            ->whereYear('store_orders.created_at', '=', $request->year)
+            ->groupBy('month','ProductName')
+            // ->orderBy('quan', 'desc')
+            ->get();
+        return response()->JSON(compact('prods'));
+    }
+
+    public function QuarterlyProductSales(Request $request){
+        $prods = DB::table('store_orders')->leftJoin('products', 'store_orders.productId', '=', 'products.id')
+            ->select(DB::raw('products.productName as ProductName'),DB::raw('SUM(store_orders.quantity) as quan'),DB::raw('MONTH(store_orders.created_at) as month'))
+            ->whereYear('store_orders.created_at', '=', $request->year)
+            ->groupBy('month','ProductName')
+            // ->orderBy('quan', 'desc')
+            ->get();
+        return response()->JSON(compact('prods'));
+    }
+
+    public function SemiProductSales(Request $request){
+        $prods = DB::table('store_orders')->leftJoin('products', 'store_orders.productId', '=', 'products.id')
+            ->select(DB::raw('products.productName as ProductName'),DB::raw('SUM(store_orders.quantity) as quan'),DB::raw('MONTH(store_orders.created_at) as month'))
+            ->whereYear('store_orders.created_at', '=', $request->year)
+            ->groupBy('month','ProductName')
+            // ->orderBy('quan', 'desc')
+            ->get();
+        return response()->JSON(compact('prods'));
+    }
+
+    public function AnnualProductSales(Request $request){
+        $prods = DB::table('store_orders')->leftJoin('products', 'store_orders.productId', '=', 'products.id')
+            ->select(DB::raw('products.productName as ProductName'),DB::raw('SUM(store_orders.quantity) as quan'),DB::raw('products.id as ID'),DB::raw('DAY(store_orders.created_at) as date'),DB::raw('YEAR(store_orders.created_at) as year'),DB::raw('MONTH(store_orders.created_at) as month'))
+            ->groupBy('year','ID')
+            // ->orderBy('quan', 'desc')
+            ->get();
+        return response()->JSON(compact('prods'));
+    }
 }

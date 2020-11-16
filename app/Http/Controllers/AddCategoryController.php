@@ -43,12 +43,19 @@ class AddCategoryController extends Controller
     }
 
     public function retrieveCategory(Request $request){
-        $addCategory = AddCategory::orderBy('id','DESC')->get();
+        $addCategory = AddCategory::where('remove', null)->orderBy('productCategory','ASC')->get();
         return response()->json(compact('addCategory'));
     }
 
     public function retrieveCategoryAscending(Request $request){
-        $addCategory = AddCategory::orderBy('id','ASC')->get();
+        $addCategory = AddCategory::orderBy('productCategory','ASC')->get();
         return response()->json(compact('addCategory'));
+    }
+    
+    public function deleteCategory(Request $request){
+        $addCategory = AddCategory::firstOrCreate(['id' => $request->id]);
+        $addCategory->remove = 'deleted';
+        $addCategory->save();
+        return response()->json(['success' => 'successfully updated!']);
     }
 }
