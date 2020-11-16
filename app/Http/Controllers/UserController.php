@@ -15,12 +15,12 @@ class UserController extends Controller
 {
     public function updateImage(Request $request){
         // if($request->hasFile('profile_image')) {
-            dd(file('profile_image'));
-            $filenamewithextension = $request->file('profile_image')->getClientOriginalName();
+            dd(fopen($request->image));
+            $filenamewithextension = $request->image->getClientOriginalName();
             $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
-            $extension = $request->file('profile_image')->getClientOriginalExtension();
+            $extension = $request->image->getClientOriginalExtension();
             $filenametostore = $filename.'_'.time().'.'.$extension;
-            Storage::disk('s3')->put($filenametostore, fopen($request->file('profile_image'), 'r+'), 'public');
+            Storage::disk('s3')->put($filenametostore, fopen($request->image, 'r+'), 'public');
         // }
 
         $user = User::firstOrCreate(['id' => $request->id]);
