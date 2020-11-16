@@ -362,19 +362,19 @@ __webpack_require__.r(__webpack_exports__);
       var _this6 = this;
 
       if (this.quantity <= 0) {
-        this.errorMessage3 = 'quantity must be greater than 0!';
+        this.errorMessage3 = 'Quantity must be greater than 0!';
       }
 
       if (this.cupSize === null) {
-        this.errorMessage = 'cup size is required!';
+        this.errorMessage = 'Cup size is required!';
       }
 
       if (this.sugarLevel === null) {
-        this.errorMessage2 = 'sugar level is required!';
+        this.errorMessage2 = 'Sugar level is required!';
       }
 
       if (this.cupType === null) {
-        this.errorMessage1 = 'cup type is required!';
+        this.errorMessage1 = 'Cup type is required!';
       }
 
       if (this.quantity > 0 && this.cupSize !== null && this.sugarLevel !== null && this.cupType !== null) {
