@@ -19,7 +19,7 @@ class UserController extends Controller
             $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
             $extension = $request->image->getClientOriginalExtension();
             $filenametostore = $filename.'_'.time().'.'.$extension;
-            dd($filenametostore);
+            dd($request->image);
             Storage::disk('s3')->put($filenametostore, fopen($request->image, 'r+'), 'public');
         // }
 
