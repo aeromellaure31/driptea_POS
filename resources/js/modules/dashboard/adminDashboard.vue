@@ -120,7 +120,7 @@
   </div>
 </template>
 
-<style>
+<style scoped>
 .welcome {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
     Helvetica Neue, Arial, sans-serif;

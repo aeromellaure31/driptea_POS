@@ -250,7 +250,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 
@@ -353,12 +352,7 @@ __webpack_require__.r(__webpack_exports__);
               storeAddOns += el.addOns + " (+" + e.onlineAddOnsPrice + ".00), ";
             }
           }
-        }); // if (item.indexOf(el) >= index - 1) {
-        //   storeAddOns += el.addOns;
-        // } else {
-        //   storeAddOns += el.addOns + ", ";
-        // }
-
+        });
       });
       return storeAddOns;
     },

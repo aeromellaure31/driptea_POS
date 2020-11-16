@@ -21,7 +21,6 @@
                  <v-divider class="mx-4" vertical></v-divider>
                </v-toolbar>
              </template>
- 
              <thead>
                <tr>
                  <th style="width: 30%;">Product Name</th>
@@ -284,11 +283,6 @@ export default {
             }
           }
         });
-        // if (item.indexOf(el) >= index - 1) {
-        //   storeAddOns += el.addOns;
-        // } else {
-        //   storeAddOns += el.addOns + ", ";
-        // }
       });
       return storeAddOns;
     },
