@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Support\Facades\DB;
-
+use App\Events\pusherEvent;
 
 class UserController extends Controller
 {
@@ -18,6 +18,7 @@ class UserController extends Controller
         $request->image->move(public_path('images'), $imageName);
         $user->image = 'images/'.$imageName;
         $user->save();
+        event(new pusherEvent($user));
         return response()->json(compact('user'));
     }
 

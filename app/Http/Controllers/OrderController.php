@@ -65,12 +65,21 @@ class OrderController extends Controller
     }
 
     public function retrieveCustomerOrder(Request $request){
-        $order = Order::with('orderProduct')->with('sameOrder')->where('customerId', $request->id)->where('status', 'incart')->where('deleted_at', null)->orderBy('id','DESC')->get();
+        $order = Order::with('orderProduct')->with('sameOrder')->where('onlineId', $request->id)->where('status', 'incart')->where('deleted_at', null)->orderBy('id','DESC')->get();
         return response()->json(compact('order'));
     }
+    // public function retrieveCustomersOrdersForEdit(Request $request){
+    //     $order = Order::with('orderProduct')->with('sameOrder')->where('id', $request->id)->where('status', 'incart')->where('deleted_at', null)->orderBy('id','DESC')->get();
+    //     // dd($order);
+    //     return response()->json(compact('order'));
+    // }
 
     public function updateStatus(Request $request){
-        $order = Order::where('customerId', $request->id)->where('deleted_at', null)->get();
+        if($request['status'] === 'complete'){
+            $order = Order::where('customerId', $request->id)->where('deleted_at', null)->get();
+        }else{
+            $order = Order::where('onlineId', $request->id)->where('deleted_at', null)->get();
+        }
         foreach ($order as $value) {
             $ord = Order::firstOrCreate(['id' => $value->id]);
             $ord->status = $request['status'];
@@ -104,6 +113,7 @@ class OrderController extends Controller
             ->get();
         return response()->JSON(compact('prods'));
     }
+<<<<<<< HEAD
 
     public function DailyProductSales(Request $request){
         $prods = DB::table('store_orders')->leftJoin('products', 'store_orders.productId', '=', 'products.id')
@@ -154,4 +164,31 @@ class OrderController extends Controller
             ->get();
         return response()->JSON(compact('prods'));
     }
+=======
+    public function updateCustomerOrder(Request $request){
+        $data = $request->all();
+        $product = Order::firstOrCreate(['id' => $request->id]);
+        $dataAddOns = $data['addOns'];
+        $this->updateAddOns($dataAddOns, $product->id);
+        $product->quantity = $data['quantity'];
+        $product->size = $data['size'];
+        $product->sugarLevel = $data['sugarLevel'];
+        $product->cupType = $data['cupType'];
+        $product->choosenPrice = $data['choosenPrice'];
+        $product->subTotal = $data['subTotal'];
+        $product->save();
+    }
+
+    public function updateAddOns($dataParams, $id){
+        $Ons = AddOns::where('orderId', $id);
+        $Ons->delete();
+        foreach ($dataParams as $value) {
+            $addOns = new AddOns();
+            $addOns['orderId'] = $id;
+            $addOns['addOns'] = $value;
+            $addOns->save();
+        }
+    }
+
+>>>>>>> badadef1ccf12c8b359ac0e0e8b76a90f918593f
 }

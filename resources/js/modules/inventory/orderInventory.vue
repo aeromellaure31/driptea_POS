@@ -88,7 +88,6 @@
             </tbody>
           </div>
         </div>
-        <template></template>
       </v-simple-table>
       <!-- <table >
                        
@@ -177,7 +176,7 @@ export default {
       categoryData: [],
       oneProd: [],
       prod: [],
-      categoryName: "Classic",
+      categoryName: "",
       finalData: [],
       changeName: "lowDose"
     };
@@ -186,8 +185,8 @@ export default {
     loading
   },
   mounted() {
-    this.retrieveProducts();
     this.retrieveCategory();
+    this.retrieveProducts();
     this.retrieveCheckout();
   },
   methods: {
@@ -269,6 +268,7 @@ export default {
             AUTH.deauthenticate();
           }
           this.categoryData = res.data.addCategory;
+          this.categoryName = res.data.addCategory[0].productCategory
           this.loadingShow = false;
         });
     },

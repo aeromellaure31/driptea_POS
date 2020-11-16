@@ -1,7 +1,7 @@
 export default {
     routes: [
         {
-            path: '/',
+            path: '/landing',
             name: 'landing',
             component: resolve => require(['@/js/basic/landing'], resolve),
             meta: {
