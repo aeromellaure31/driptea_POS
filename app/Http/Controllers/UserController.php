@@ -36,7 +36,7 @@ class UserController extends Controller
     }
 
     public function userdata(Request $request){
-        $name = $request->only('uname');
+        // $name = $request->only('uname');
         $userdata = DB::table('users')->select('firstname as fname', 'lastname as lname', 'address as address', 
         'contactNumber as CN', 'email as email', 'name as username', 'password as pwd', 'image as img')
             ->where('id', $request->uname)
@@ -44,7 +44,7 @@ class UserController extends Controller
         return response()->json(compact('userdata'));
     }
     public function getUserName(Request $request){
-        $name = $request->only('uname');
+        // $name = $request->only('uname');
         $userdata = DB::table('users')->select('name as fullname')
             ->where('id', $request->uname)
             ->get();
