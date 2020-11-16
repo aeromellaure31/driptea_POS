@@ -113,7 +113,6 @@ class OrderController extends Controller
             ->get();
         return response()->JSON(compact('prods'));
     }
-<<<<<<< HEAD
 
     public function DailyProductSales(Request $request){
         $prods = DB::table('store_orders')->leftJoin('products', 'store_orders.productId', '=', 'products.id')
@@ -164,7 +163,6 @@ class OrderController extends Controller
             ->get();
         return response()->JSON(compact('prods'));
     }
-=======
     public function updateCustomerOrder(Request $request){
         $data = $request->all();
         $product = Order::firstOrCreate(['id' => $request->id]);
@@ -190,5 +188,4 @@ class OrderController extends Controller
         }
     }
 
->>>>>>> badadef1ccf12c8b359ac0e0e8b76a90f918593f
 }
