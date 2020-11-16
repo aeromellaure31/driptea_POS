@@ -183,6 +183,9 @@
 import swal from "sweetalert";
 
 import AUTH from '../../services/auth'
+import imageLogo from "../../../assets/logo.png";
+import profilePic from "../../../assets/profile.jpg";
+
 import ROUTER from '../../router'
 import $ from 'jquery'
 import config from '../../config.js'
@@ -191,6 +194,7 @@ import loading from '../../basic/loading.vue';
 export default {
     data(){
         return{
+            imageLogo:imageLogo,
             config: config,
             data: null,
             productData: null,
@@ -216,7 +220,8 @@ export default {
             priceShown: 0,
             count: 0,
             loadingShow:false,
-            loading:false
+            loading:false,
+            profilePic:profilePic
         }
     },
     components:{
@@ -402,7 +407,14 @@ export default {
             this.description = item.description
             this.itemId = item.id
             this.getSizePrice()
-        }
+        },
+        viewProfile(){
+     let id = localStorage.getItem("customerId")
+      ROUTER.push('/personalInfo/'+ id).catch(()=>{})
+   },
+    home() {
+     ROUTER.push("/onlineDashboard").catch(() => {});
+   },
     }
 }
 </script>

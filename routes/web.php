@@ -34,6 +34,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('retrieveAllProductAscending','App\Http\Controllers\ProductController@retrieveAllProductAscending');
     Route::post('updateStatusProduct','App\Http\Controllers\ProductController@updateStatusProduct');
     Route::post('deleteProduct','App\Http\Controllers\ProductController@deleteProduct');
+    Route::post('getProducts','App\Http\Controllers\ProductController@retrieveAllProductAscending');
     Route::post('RetrieveWithDelete','App\Http\Controllers\ProductController@RetrieveWithDelete');
 
     Route::post('addCategory','App\Http\Controllers\AddCategoryController@addCategory');
@@ -57,6 +58,11 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('retrieveOnlineOrder','App\Http\Controllers\OrderController@retrieveOnlineOrder');
     Route::post('retrieveWholeOrder','App\Http\Controllers\OrderController@retrieveWholeOrder');
     Route::post('getOrder','App\Http\Controllers\OrderController@getOrder');
+    Route::post('getDailyProductSales','App\Http\Controllers\OrderController@DailyProductSales');
+    Route::post('getMonthlyProductSales','App\Http\Controllers\OrderController@MonthlyProductSales');
+    Route::post('getQuarterlyProductSales','App\Http\Controllers\OrderController@QuarterlyProductSales');
+    Route::post('getSemiProductSales','App\Http\Controllers\OrderController@SemiProductSales');
+    Route::post('getAnnualProductSales','App\Http\Controllers\OrderController@AnnualProductSales');
     Route::post('retrieveSalesReportPerCategory','App\Http\Controllers\OrderController@retrieveSalesReportPerCategory');
     Route::post('retrievePendingOrders','App\Http\Controllers\OrderController@retrieveOnlineOrder');
     Route::post('retrieveCustomersOrdersForEdit','App\Http\Controllers\OrderController@retrieveCustomersOrdersForEdit');

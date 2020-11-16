@@ -65,41 +65,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _basic_loading_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../basic/loading.vue */ "./resources/js/basic/loading.vue");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_5__);
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -277,20 +242,49 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       basePrice: null,
       sizeName: null,
       orderDate: null,
-      deliveryFee: null
+      deliveryFee: null,
+      showOrderData: null,
+      addOnsData: null,
+      cupData: null
     };
   },
   mounted: function mounted() {
     this.retrievePending();
     this.retrieve();
+    this.retrieveAddOns();
+    this.retrieveCupType();
   },
   components: {
     empty: _basic_empty_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
     loading: _basic_loading_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
-  methods: _defineProperty({
+  methods: {
+    getCup: function getCup(item) {
+      var cup = "";
+      this.cupData.forEach(function (el) {
+        if (item === el.cupTypeName) {
+          if (parseInt(el.inputCupOnlinePrice) === 0) {
+            cup = item;
+          } else {
+            cup = item + "(+" + el.inputCupOnlinePrice + ".00)";
+          }
+        }
+      });
+      return cup;
+    },
+    retrieveCupType: function retrieveCupType() {
+      var _this = this;
+
+      this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "retrieveCupType", {}, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
+        if (response.data.status) {
+          _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
+        }
+
+        _this.cupData = response.data.cupType;
+      });
+    },
     getDate: function getDate(item) {
-      return moment__WEBPACK_IMPORTED_MODULE_5___default()(item.updated_at).format('MM/DD/YYYY');
+      return moment__WEBPACK_IMPORTED_MODULE_5___default()(item.updated_at).format("MM/DD/YYYY");
     },
     getTotal: function getTotal(item) {
       var total = 0;
@@ -317,107 +311,88 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return product;
     },
     getSizePrice: function getSizePrice() {
-      if (this.size === 'highDose') {
+      if (this.size === "highDose") {
         this.sizeName = "High Dose";
         this.basePrice = this.highPrice;
-      } else if (this.size === 'overDose') {
+      } else if (this.size === "overDose") {
         this.sizeName = "Over Dose";
         this.basePrice = this.overPrice;
-      } else if (this.size === 'lowDose') {
+      } else if (this.size === "lowDose") {
         this.sizeName = "Low Dose";
         this.basePrice = this.price;
       }
     },
     retrieve: function retrieve() {
-      var _this = this;
+      var _this2 = this;
 
       this.loadingShow = true;
       var parameter = {
-        id: localStorage.getItem('customerId')
+        id: localStorage.getItem("customerId")
       };
-      this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + 'retrieveOnlineCheckouts', parameter, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
+      this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "retrieveOnlineCheckouts", parameter, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
         if (response.data.status) {
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this.loadingShow = false;
+        _this2.loadingShow = false;
         Object.keys(response.data.storeOrder).forEach(function (element) {
-          _this.tableData.push(response.data.storeOrder[element]);
+          _this2.tableData.push(response.data.storeOrder[element]);
         });
-        _this.tableDataCompleteOrder = true;
+        _this2.tableDataCompleteOrder = true;
       });
     },
     retrievePending: function retrievePending() {
-      var _this2 = this;
+      var _this3 = this;
 
+      this.tableDataPending = [];
+      this.loadingShow = true;
       var parameter = {
-        id: localStorage.getItem('customerId')
+        id: localStorage.getItem("customerId")
       };
-      this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + 'retrievePendingOrders', parameter, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
+      this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "retrievePendingOrders", parameter, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
         if (response.data.status) {
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this2.loadingShow = false; // this.tableDataPending = response.data.order
-
+        _this3.loadingShow = false;
         Object.keys(response.data.order).forEach(function (element) {
-          _this2.tableDataPending.push(response.data.order[element]);
+          _this3.tableDataPending.push(response.data.order[element]);
         });
       });
     },
+    retrieveAddOns: function retrieveAddOns() {
+      var _this4 = this;
+
+      this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "retrievingAddOns", {}, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
+        if (response.data.status) {
+          _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
+        }
+
+        _this4.addOnsData = response.data.addons;
+      });
+    },
     getAddOns: function getAddOns(item) {
+      var _this5 = this;
+
       var storeAddOns = "";
       var index = item.length;
       item.forEach(function (el) {
-        if (item.indexOf(el) >= index - 1) {
-          storeAddOns += el.addOns;
-        } else {
-          storeAddOns += el.addOns + ", ";
-        }
+        _this5.addOnsData.forEach(function (e) {
+          if (el.addOns === e.addons_name) {
+            if (item.indexOf(el) >= index - 1) {
+              storeAddOns += el.addOns + " (+" + e.onlineAddOnsPrice + ".00)";
+            } else {
+              storeAddOns += el.addOns + " (+" + e.onlineAddOnsPrice + ".00), ";
+            }
+          }
+        });
       });
       return storeAddOns;
     },
-    viewOrderPending: function viewOrderPending(item) {
-      this.size = item[0].size;
-      this.sugarLevel = item[0].sugarLevel;
-      this.cupType = item[0].cupType;
-      this.addOns = item[0].same_order[0].addOns;
-      this.quantity = item[0].quantity;
-      this.priceShown = item[0].subTotal;
-      this.orderDate = item[0].created_at; // this.cupTypePrice = 0
-
-      this.price = item[0].order_product[0].onlinelowPrice;
-      this.highPrice = item[0].order_product[0].onlinehighPrice;
-      this.overPrice = item[0].order_product[0].onlineoverPrice;
-      this.productName = item[0].order_product[0].productName;
-      this.image = item[0].order_product[0].image;
-      this.description = item[0].order_product[0].description; // this.itemId = item.id
-
-      this.getSizePrice(); //  });
-    },
-    viewOrderComplete: function viewOrderComplete(item) {
-      this.size = item[0].size;
-      this.sugarLevel = item[0].sugarLevel;
-      this.cupType = item[0].cupType;
-      this.addOns = item[0].same_order[0].addOns;
-      this.quantity = item[0].quantity; // this.priceShown = item[0].subTotal
-
-      this.orderDate = item[0].get_checkouts[0].created_at; // this.cupTypePrice = 0
-
-      this.price = item[0].order_product[0].onlinelowPrice;
-      this.highPrice = item[0].order_product[0].onlinehighPrice;
-      this.overPrice = item[0].order_product[0].onlineoverPrice;
-      this.productName = item[0].order_product[0].productName;
-      this.image = item[0].order_product[0].image;
-      this.description = item[0].order_product[0].description;
-      this.deliveryFee = item[0].get_checkouts[0].deliveryFee;
-      this.priceShown = item[0].get_checkouts[0].total; // this.itemId = item.id
-
-      this.getSizePrice(); //  });
+    viewOrder: function viewOrder(item) {
+      this.showOrderData = itemindex;
     }
-  }, "getDate", function getDate(date) {
-    return moment__WEBPACK_IMPORTED_MODULE_5___default()(date).format('MM/DD/YYYY');
-  })
+  }
 });
 
 /***/ }),
@@ -453,7 +428,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.table[data-v-0f3ac740] {\r\n   width: 70%;\r\n   margin-left:5%\n}\n.imageSize2[data-v-0f3ac740]{\r\n    height: 300px;\r\n    width: 300px;\r\n    margin-top: 2%;\n}\r\n", ""]);
+exports.push([module.i, "\n.table[data-v-0f3ac740] {\r\n  width: 70%;\r\n  margin-left: 5%;\n}\n.imageSize2[data-v-0f3ac740] {\r\n  height: 300px;\r\n  width: 300px;\r\n  margin-top: 2%;\n}\r\n", ""]);
 
 // exports
 
@@ -691,7 +666,7 @@ var render = function() {
                                   },
                                   on: {
                                     click: function($event) {
-                                      return _vm.viewOrderComplete(item)
+                                      return _vm.viewOrder(item)
                                     }
                                   }
                                 },
@@ -783,7 +758,7 @@ var render = function() {
                                   },
                                   on: {
                                     click: function($event) {
-                                      return _vm.viewOrderPending(items)
+                                      return _vm.viewOrder(items)
                                     }
                                   }
                                 },
@@ -815,169 +790,117 @@ var render = function() {
             _c("div", { staticClass: "modal-content" }, [
               _vm._m(0),
               _vm._v(" "),
-              _c("div", { staticClass: "modal-body" }, [
-                _c("div", { staticClass: "row" }, [
+              _c(
+                "div",
+                { staticClass: "modal-body" },
+                [
                   _c(
-                    "div",
-                    { staticClass: "col-md-6" },
+                    "v-simple-table",
+                    {
+                      staticClass: "elevation-3",
+                      attrs: { "items-per-page": 5 },
+                      scopedSlots: _vm._u([
+                        {
+                          key: "top",
+                          fn: function() {
+                            return [
+                              _c(
+                                "center",
+                                [
+                                  _c(
+                                    "v-toolbar",
+                                    {
+                                      staticClass: "mb-2",
+                                      attrs: {
+                                        color: "#ff5b04",
+                                        dark: "",
+                                        flat: ""
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "v-toolbar-title",
+                                        {
+                                          staticClass:
+                                            "col pa-3 py-4 white--text"
+                                        },
+                                        [_vm._v("Completed Order")]
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ]
+                          },
+                          proxy: true
+                        }
+                      ])
+                    },
                     [
-                      _c("center", [
-                        _c("img", {
-                          staticClass: "imageSize2",
-                          attrs: { src: _vm.image }
-                        }),
-                        _vm._v(" "),
-                        _c("div", [
-                          _c("br"),
+                      _vm._v(" "),
+                      _c("thead", [
+                        _c("tr", [
+                          _c("th", [_vm._v("Product Name")]),
                           _vm._v(" "),
-                          _c("h3", [
-                            _vm._v(
-                              "Base Price (₱" + _vm._s(_vm.basePrice) + ")"
-                            )
-                          ]),
+                          _c("th", [_vm._v("Add Ons")]),
                           _vm._v(" "),
-                          _c("h3", [_vm._v(_vm._s(_vm.productName))]),
+                          _c("th", [_vm._v("Cup Type")]),
                           _vm._v(" "),
-                          _c("p", { staticClass: "productDescription" }, [
-                            _vm._v(_vm._s(_vm.description))
-                          ])
+                          _c("th", [_vm._v("Unit Price")]),
+                          _vm._v(" "),
+                          _c("th", [_vm._v("Quantity")]),
+                          _vm._v(" "),
+                          _c("th", [_vm._v("Total")])
                         ])
-                      ])
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "tbody",
+                        _vm._l(_vm.showOrderData, function(item, index) {
+                          return _c("tr", { key: index }, [
+                            _c("td", [
+                              _vm._v(
+                                _vm._s(
+                                  item.order_product
+                                    ? item.order_product[0].productName
+                                    : ""
+                                )
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _vm._v(
+                                _vm._s(
+                                  item.same_order
+                                    ? _vm.getAddOns(item.same_order)
+                                    : ""
+                                )
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _vm._v(_vm._s(_vm.getCup(item.cupType)))
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(item.choosenPrice))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(item.quantity))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(item.subTotal))])
+                          ])
+                        }),
+                        0
+                      ),
+                      _vm._v(" "),
+                      void 0
                     ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-md-6" }, [
-                    _c("div", { staticClass: "modalDiv" }, [
-                      _c("div", { staticStyle: { float: "left" } }, [
-                        _c(
-                          "label",
-                          {
-                            staticStyle: {
-                              "font-size": "15px",
-                              "font-weight": "bold"
-                            },
-                            attrs: { for: "sizdatee" }
-                          },
-                          [_vm._v("Date :")]
-                        ),
-                        _vm._v(" "),
-                        _c("p", [_vm._v(_vm._s(_vm.getDate(_vm.orderDate)))]),
-                        _vm._v(" "),
-                        _c(
-                          "label",
-                          {
-                            staticStyle: {
-                              "font-size": "15px",
-                              "font-weight": "bold"
-                            },
-                            attrs: { for: "size" }
-                          },
-                          [_vm._v("Cup Size:")]
-                        ),
-                        _vm._v(" "),
-                        _c("p", [_vm._v(_vm._s(_vm.sizeName))]),
-                        _vm._v(" "),
-                        _c(
-                          "label",
-                          {
-                            staticStyle: {
-                              "font-size": "15px",
-                              "font-weight": "bold"
-                            },
-                            attrs: { for: "cupType" }
-                          },
-                          [_vm._v("Cup Type :")]
-                        ),
-                        _vm._v(" "),
-                        _c("p", [_vm._v(_vm._s(_vm.cupType))]),
-                        _vm._v(" "),
-                        _c(
-                          "label",
-                          {
-                            staticStyle: {
-                              "font-size": "15px",
-                              "font-weight": "bold"
-                            },
-                            attrs: { for: "sugarLevel" }
-                          },
-                          [_vm._v("Sugar Level:")]
-                        ),
-                        _vm._v(" "),
-                        _c("p", [_vm._v(_vm._s(_vm.sugarLevel))]),
-                        _vm._v(" "),
-                        _c(
-                          "label",
-                          {
-                            staticStyle: {
-                              "font-size": "15px",
-                              "font-weight": "bold"
-                            },
-                            attrs: { for: "size" }
-                          },
-                          [_vm._v("Add Ons(Optional):")]
-                        ),
-                        _c("br"),
-                        _vm._v(" "),
-                        _c("p", [_vm._v(_vm._s(_vm.addOns))]),
-                        _vm._v(" "),
-                        _c(
-                          "label",
-                          {
-                            staticStyle: {
-                              "font-size": "15px",
-                              "font-weight": "bold",
-                              display: "inline"
-                            },
-                            attrs: { for: "quantity" }
-                          },
-                          [_vm._v("Quantity:")]
-                        ),
-                        _vm._v(" "),
-                        _c("p", [_vm._v(_vm._s(_vm.quantity))]),
-                        _vm._v(" "),
-                        _vm.tableDataCompleteOrder
-                          ? _c(
-                              "label",
-                              {
-                                staticStyle: {
-                                  "font-size": "15px",
-                                  "font-weight": "bold",
-                                  display: "inline"
-                                },
-                                attrs: { for: "delivery" }
-                              },
-                              [_vm._v("Delivery Fee:")]
-                            )
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _vm.tableDataCompleteOrder
-                          ? _c("p", [_vm._v(_vm._s(_vm.deliveryFee))])
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _c(
-                          "p",
-                          {
-                            staticStyle: {
-                              float: "right",
-                              "margin-right": "5%",
-                              "font-size": "20px"
-                            }
-                          },
-                          [
-                            _vm._v("TOTAL: "),
-                            _c("b", [
-                              _vm._v(" ₱" + _vm._s(_vm.priceShown) + ".00")
-                            ])
-                          ]
-                        )
-                      ])
-                    ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("br")
-              ]),
+                    2
+                  )
+                ],
+                1
+              ),
               _vm._v(" "),
               _vm._m(1)
             ])

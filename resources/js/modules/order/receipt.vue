@@ -5,9 +5,9 @@
             <img style="width: 80px" src="@/assets/logo.png">
             <h6><b>Driptea</b></h6>
             <h6>A.C. Cortes Avenue Across UCLM, Mandaue City, 6014 Cebu</h6>
-           <div id="app" style="font-size:12px" class="float-right">
+           <div id="app" style="font-size:12px" class="float-right"><b>
                {{ datetime }}
-            </div>
+            </b></div>
         </center>
         <table class="table table-responsive" id="myTable">
             <tr>
@@ -18,21 +18,21 @@
                 <th style="font-size:12px">Total</th>
             </tr>
             <tr v-for="(item, i) in showData" :key="i">
-                <td style="font-size:12px">{{item.order_product ? item.order_product[0].productName : ''}}</td>
-                <td style="font-size:12px">{{item.same_order ? getAddOns(item.same_order) : ''}}</td>
-                <td style="font-size:12px">{{item.choosenPrice ? item.choosenPrice : ''}}</td>
-                <td style="font-size:12px">{{item.quantity ? item.quantity : ''}}</td>
-                <td style="font-size:12px">{{item.subTotal ? item.subTotal : ''}}</td>
+                <td style="font-size:12px"><b>{{item.order_product ? item.order_product[0].productName : ''}}</b></td>
+                <td style="font-size:12px"><b>{{item.same_order ? getAddOns(item.same_order) : ''}}</b></td>
+                <td style="font-size:12px"><b>{{item.choosenPrice ? item.choosenPrice : ''}}</b></td>
+                <td style="font-size:12px"><b>{{item.quantity ? item.quantity : ''}}</b></td>
+                <td style="font-size:12px"><b>{{item.subTotal ? item.subTotal : ''}}</b></td>
             </tr>
         </table>
         <div class="col-md-6" id="summary"></div>
 
-        <div style="font-size:12px;">
-            <p v-if="customerType === 'fb'">Subtotal: {{Subtotal}}</p>
-            <p v-if="customerType === 'fb'">Delivery Fee: {{Delivery_Fee}}</p>
-            <p>Total: {{Total}}</p>
-            <p v-if="customerType !== 'fb'">Amount: {{Amount}}</p>
-            <p v-if="customerType !== 'fb'">Change: {{Change}}</p>
+        <div style="font-size:12px;" class="text-end  display:block">
+            <p v-if="customerType === 'fb'"><b>Subtotal: {{Subtotal}}</b></p>
+            <p v-if="customerType === 'fb'"><b>Delivery Fee: {{Delivery_Fee}}</b></p>
+            <p><b>Total: {{Total}}</b></p>
+            <p v-if="customerType !== 'fb'"><b>Amount: {{Amount}}</b></p>
+            <p v-if="customerType !== 'fb'"><b>Change: {{Change}}</b></p>
         </div>
         <button type="button" class="btn btn-primary float-right" @click="hide()">OK</button>
 

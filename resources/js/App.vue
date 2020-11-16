@@ -130,18 +130,6 @@
                 <v-icon medium color="black" right>mdi-arrow-down-drop-circle</v-icon>
               </v-btn>
             </template>
-            <!-- <v-list
-              style="max-height: 300px; max-width: 300px"
-              class="overflow-y-auto notifDropdown"
-            >
-              <v-list-item
-                v-for="(item, index) in account"
-                :key="index"
-                @click="redirect(item.route+cashier)"
-              >
-                <v-list-item-title>{{ item[0].get_customer[0].customerName }} has order</v-list-item-title>
-              </v-list-item>
-            </v-list> -->
           </v-menu>
         </div>
       </v-app-bar-items>
@@ -151,7 +139,7 @@
     </v-app-bar>
 
  <!-- online -->
-     <v-app-bar class="onlineNav" color="#ff5b04" v-if="online !== null" dense fixed app>
+     <v-app-bar class="onlineNav" color="#ff5b04" v-if="online !== null" fixed app>
       <a>
         <v-img max-height="64" max-width="42" :src="image" @click="redirect('/onlineDashboard')"></v-img>
       </a>
@@ -188,9 +176,6 @@
             </v-list>
           </v-menu>
         </div>
-      <!-- <v-app-bar-items>
-        <button class="btn" @click="logout()">Logout</button>
-      </v-app-bar-items> -->
     </v-app-bar>
     <v-main>
       <router-view></router-view>
