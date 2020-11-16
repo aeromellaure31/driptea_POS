@@ -14,13 +14,11 @@ use Illuminate\Support\Facades\Storage;
 class UserController extends Controller
 {
     public function updateImage(Request $request){
-        // if($request->hasFile('profile_image')) {
-            $filenamewithextension = $request->image->getClientOriginalName();
-            $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
-            $extension = $request->image->getClientOriginalExtension();
-            $filenametostore = $filename.'_'.time().'.'.$extension;
-            Storage::disk('s3')->put($filenametostore, $request->image, 'public');
-        // }
+        // $this->validate($request,[
+        //     'image'=>'required|mimes:jpeg,bmp,jpg,png|between:1, 6000',
+        // ]);
+        $image_name = $request->image->getRealPath();;
+        Cloudder::upload($image_name, null);
 
         $user = User::firstOrCreate(['id' => $request->id]);
         $imageName = time().'.'.$request->image->getClientOriginalExtension();
