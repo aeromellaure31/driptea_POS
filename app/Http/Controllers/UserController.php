@@ -19,7 +19,7 @@ class UserController extends Controller
             $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
             $extension = $request->image->getClientOriginalExtension();
             $filenametostore = $filename.'_'.time().'.'.$extension;
-            Storage::disk('s3')->put($filenametostore, $request->image, 'public');
+            Storage::disk('s3')->put($filenametostore, $request->image);
         // }
 
         $user = User::firstOrCreate(['id' => $request->id]);
