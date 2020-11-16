@@ -2,7 +2,7 @@ import axios from 'axios'
 import ROUTER from '../../router'
 export default {
     // url: 'http://localhost:8000/',
-    url: 'https://driptea.herokuapp.com/',
+    url: 'https://driptea.herokuapp.com/' ? 'https://driptea.herokuapp.com/' : 'http://driptea.herokuapp.com/',
     currentPath: false,
     productName: '',
     productPrice: null,
