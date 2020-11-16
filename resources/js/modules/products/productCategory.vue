@@ -21,17 +21,17 @@
                             <img v-if="customerType === 'fb'" style="width: 70px; height: 50px;" src="@/assets/fb1.png"><br>
                             <img v-if="customerType === 'online'" style="width: 70px; height: 50px;" src="@/assets/logo.png"><br>
                             <span v-if="error" style="color: red; font-style: italic">All data are required!</span>
-                            <table class="table table-responsive table-bordered overline" id="myTable">
-                                <tr>
+                            <table class="table table-responsive table-bordered " id="myTable">
+                                <tr class="overline">
                                     <th style="width: 45%;">Product Name</th>
                                     <th>Add-ons</th>
                                     <th>Cup Type</th>
                                     <th>Unit Price</th>
                                     <th>Quantity</th>
                                     <th>Total</th>
-                                    <th style="width: 15px;">❌</th>
+                                    <th style="width: 15px;" >❌</th>
                                 </tr>
-                                <tbody>
+                                <tbody class="Caption">
                                     <tr v-for="(item, index) in tableData" :key="index">
                                         <td>{{item.order_product[0].productName}}</td>
                                         <td>{{getAddOns(item.same_order)}}</td>
