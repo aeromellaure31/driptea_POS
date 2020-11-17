@@ -465,7 +465,7 @@
                 <v-dialog v-model="dialogForCupSize" persistent max-width="600px">
                     <v-card>
                         <v-card-title>
-                        <span class="headline">ADD CUP SIZE</span>
+                        <span class="headline">ADD CUP QUANTITY</span>
                         </v-card-title>
                         <v-card-text>
                         NOTE: <span class="text-danger text-center">All fields are required</span>
@@ -1148,6 +1148,9 @@ export default {
         this.lowDoseCup !== null &&
         this.highDoseCup !== null &&
         this.overDoseCup !== null && 
+        this.lowDoseCup !== "" &&
+        this.highDoseCup !== "" &&
+        this.overDoseCup !== "" && 
         this.errorMessage6 === null
       ) {
         let param = {

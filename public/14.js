@@ -1225,7 +1225,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.loadingShow = true;
 
-      if (this.lowDoseCup !== null && this.highDoseCup !== null && this.overDoseCup !== null && this.errorMessage6 === null) {
+      if (this.lowDoseCup !== null && this.highDoseCup !== null && this.overDoseCup !== null && this.lowDoseCup !== "" && this.highDoseCup !== "" && this.overDoseCup !== "" && this.errorMessage6 === null) {
         var param = {
           incomingLowDose: this.lowDoseCup,
           incomingHighDose: this.highDoseCup,
@@ -4001,7 +4001,7 @@ var render = function() {
                   [
                     _c("v-card-title", [
                       _c("span", { staticClass: "headline" }, [
-                        _vm._v("ADD CUP SIZE")
+                        _vm._v("ADD CUP QUANTITY")
                       ])
                     ]),
                     _vm._v(" "),
