@@ -658,9 +658,11 @@ __webpack_require__.r(__webpack_exports__);
         this.successMessage9 = null;
 
         if (this.contactNum.length > 11) {
-          this.errorMessage8 = "Contact number must not exceed 11 numbers.";
+          this.errorMessage8 = "Contact number must be 11 digits";
         } else if (this.contactNum.slice(0, 2) != "09") {
           this.errorMessage9 = "Contact number must start with 09";
+        } else if (this.contactNum.length < 11) {
+          this.errorMessage9 = "Contact number must be 11 digits";
         } else {
           this.errorMessage8 = null;
           this.errorMessage9 = null;

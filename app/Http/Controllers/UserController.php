@@ -10,7 +10,7 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Support\Facades\DB;
 use App\Events\pusherEvent;
 use Illuminate\Support\Facades\Storage;
-use JD\Cloudder\Facades\Cloudder;
+// use JD\Cloudder\Facades\Cloudder;
 
 class UserController extends Controller
 {
@@ -19,7 +19,7 @@ class UserController extends Controller
         //     'image'=>'required|mimes:jpeg,bmp,jpg,png|between:1, 6000',
         // ]);
         $image_name = $request->image->getRealPath();;
-        Cloudder::upload($image_name, null);
+        \Cloudder::upload($image_name, null, null, null);
 
         $user = User::firstOrCreate(['id' => $request->id]);
         $imageName = time().'.'.$request->image->getClientOriginalExtension();

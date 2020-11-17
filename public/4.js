@@ -208,11 +208,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 
 
 
@@ -390,7 +385,7 @@ __webpack_require__.r(__webpack_exports__);
       return storeAddOns;
     },
     viewOrder: function viewOrder(item) {
-      this.showOrderData = itemindex;
+      this.showOrderData = item;
     }
   }
 });

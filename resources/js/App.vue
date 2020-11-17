@@ -316,7 +316,6 @@ export default {
     let channel = pusher.subscribe("driptea-channel");
     let obj = this;
     channel.bind("driptea-data", data => {
-      console.log('nisulod dnhi sa pusher')
       if (data.order === "pendingCustomer") {
         // this.playSound('file://resources/audio/notify.mp3')
         this.playSound(
@@ -325,7 +324,6 @@ export default {
         this.retrieve();
       }
       if (data.order.image) {
-        console.log('nisulod dnhi sa image')
         this.retrieveImage();
       }
       if (data.order.status === "incart") {

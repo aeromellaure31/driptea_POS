@@ -8,8 +8,6 @@
                 >
                 <v-tab @click="tableDataCompleteOrder=true,tableDataPendingOrders=false">Completed Orders</v-tab>
                 <v-tab @click="tableDataCompleteOrder=false,tableDataPendingOrders=true">Pending Orders</v-tab>
-
-              
                 </v-tabs>
             </v-card>
  
@@ -41,11 +39,8 @@
                            </td>
                        </tr>
                    </tbody>
-           
                <template>
-                 
                </template>
-             
                </v-simple-table>
                </div>
                
@@ -318,7 +313,7 @@ export default {
       return storeAddOns;
     },
     viewOrder(item) {
-        this.showOrderData = itemindex
+        this.showOrderData = item
     },
   }
 };

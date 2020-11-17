@@ -63,9 +63,9 @@ class QuantityCupsController extends Controller
         $quantityCups->usedCupsLowDose = ($data['usedCupsLowDose'] + $quantity[0]['usedCupsLowDose']);
         $quantityCups->usedCupsHighDose = ($data['usedCupsHighDose'] + $quantity[0]['usedCupsHighDose']);
         $quantityCups->usedCupsOverDose = ($data['usedCupsOverDose'] + $quantity[0]['usedCupsOverDose']);
-        $quantityCups->remainingLowDose = ($quantity[0]['onRockLowDose'] - $data['usedCupsLowDose']);
-        $quantityCups->remainingHighDose = ($quantity[0]['onRockHighDose'] - $data['usedCupsHighDose']);
-        $quantityCups->remainingOverDose = ($quantity[0]['onRockOverDose'] - $data['usedCupsOverDose']);
+        $quantityCups->remainingLowDose = ($quantity[0]['onRockLowDose'] - $quantityCups->usedCupsLowDose);
+        $quantityCups->remainingHighDose = ($quantity[0]['onRockHighDose'] - $quantityCups->usedCupsHighDose);
+        $quantityCups->remainingOverDose = ($quantity[0]['onRockOverDose'] - $quantityCups->usedCupsOverDose);
         $quantityCups->save();
         return response()->json(compact('quantityCups'));
     }

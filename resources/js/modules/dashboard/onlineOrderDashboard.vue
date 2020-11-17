@@ -66,6 +66,12 @@
                                 <div class="modalDiv">
                                     <form>
                                         <div class="form-group">
+                                            <i>
+                                                <span
+                                                    v-if="errorMessage !== null"
+                                                    class="text-danger text-center"
+                                                >{{errorMessage}}</span>
+                                            </i><br>
                                             <label for="size" style="font-size: 15px; font-weight: bold">Size :</label>
                                             <select class="form-control" v-model="size" @change="getSizePrice()">
                                                 <option value="lowDose" selected>Low Dose</option>
@@ -74,12 +80,24 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
+                                            <i>
+                                                <span
+                                                    v-if="errorMessage1 !== null"
+                                                    class="text-danger text-center"
+                                                >{{errorMessage1}}</span>
+                                            </i><br>
                                             <label for="cupType" style="font-size: 15px; font-weight: bold">Cup Type :</label>
                                             <select class="form-control" v-model="cupType" @change="getCupPrice()">
                                                 <option v-for="(item, index) in cupData" :key="index" :value="item.cupTypeName">{{item.cupTypeName}} (+ ₱{{item.inputCupOnlinePrice}})</option>
                                             </select>
                                         </div>
                                         <div class="form-group">
+                                            <i>
+                                                <span
+                                                    v-if="errorMessage2 !== null"
+                                                    class="text-danger text-center"
+                                                >{{errorMessage2}}</span>
+                                            </i><br>
                                             <label for="sugarLevel" style="font-size: 15px; font-weight: bold">Sugar Level:</label>
                                             <select class="form-control" v-model="sugarLevel">
                                                 <option value="extra">100%(Normal Sugar)</option>
@@ -104,6 +122,12 @@
                         </div>
                         <center>
                             <div style="text-align: center;">
+                                <i>
+                                    <span
+                                        v-if="errorMessage3 !== null"
+                                        class="text-danger text-center"
+                                    >{{errorMessage3}}</span>
+                                </i><br>
                                 <label for="quantity" style="font-size: 15px; font-weight: bold; display: inline;">Quantity:</label>
                                 <input v-model="quantity" type="number" min="1" style="width:100px; display: inline;" class="form-control" @change="getQuantity()">
                             </div>
@@ -123,6 +147,9 @@
     </div>
 </template>
 <style scoped>
+span{
+    font-size: 13px;
+}
 .sudlanan{
     padding: 5%;
 }
@@ -177,24 +204,17 @@
         width: 50%;
     }
 }
-
 </style>
 <script>
 import swal from "sweetalert";
-
 import AUTH from '../../services/auth'
-import imageLogo from "../../../assets/logo.png";
-import profilePic from "../../../assets/profile.jpg";
-
 import ROUTER from '../../router'
 import $ from 'jquery'
 import config from '../../config.js'
 import loading from '../../basic/loading.vue';
-
 export default {
     data(){
         return{
-            imageLogo:imageLogo,
             config: config,
             data: null,
             productData: null,
@@ -221,7 +241,10 @@ export default {
             count: 0,
             loadingShow:false,
             loading:false,
-            profilePic:profilePic
+            errorMessage: null,
+            errorMessage1: null,
+            errorMessage2: null,
+            errorMessage3: null,
         }
     },
     components:{
@@ -316,15 +339,23 @@ export default {
         addToCart(){
             if(this.quantity <= 0){
                 this.errorMessage3 = 'quantity must be greater than 0!'
+            }else{
+                this.errorMessage3 = null
             }
             if(this.size === null){
                 this.errorMessage = 'cup size is required!'
+            }else{
+                this.errorMessage = null
             }
             if(this.sugarLevel === null){
                 this.errorMessage2 = 'sugar level is required!'
+            }else{
+                this.errorMessage2 = null
             }
             if(this.cupType === null){
                 this.errorMessage1 = 'cup type is required!'
+            }else{
+                this.errorMessage1 = null
             }
             if(this.quantity > 0 && this.size !== null && this.sugarLevel !== null && this.cupType !== null){
                 if(localStorage.getItem('customerOnlineId') === null){
@@ -362,7 +393,6 @@ export default {
                         })
                     })
                 }else{
-
                     let parameter = {
                         customerId: localStorage.getItem('customerOnlineId'),
                         onlineId: localStorage.getItem('customerId'),
@@ -382,7 +412,6 @@ export default {
                             AUTH.deauthenticate()
                         }
                         $('#viewDetails').modal('hide')
-
                     })
                 }
             }
@@ -407,14 +436,7 @@ export default {
             this.description = item.description
             this.itemId = item.id
             this.getSizePrice()
-        },
-        viewProfile(){
-     let id = localStorage.getItem("customerId")
-      ROUTER.push('/personalInfo/'+ id).catch(()=>{})
-   },
-    home() {
-     ROUTER.push("/onlineDashboard").catch(() => {});
-   },
+        }
     }
 }
 </script>
