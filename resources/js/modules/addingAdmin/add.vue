@@ -244,17 +244,15 @@
       <template v-slot:item.created_at="{ item }"><span>{{getDate(item.created_at)}}</span> </template>  
     </v-data-table>
 
-    <!-- MODALS -->
-
         <!-- Dialog for Category -->
-   
         <template>
             <v-row justify="center">
                 <v-dialog v-model="dialogForCategory" persistent max-width="600px">
                     <v-card>
-                        <v-card-title>
-                        <span class="headline">ADD CATEGORY</span>
-                        </v-card-title>
+                        <div class="modal-header">
+                          <span class="headline">ADD CATEGORY</span>
+                          <button type="button" class="close" @click="dialogForCategory = false">&times;</button><br>
+                        </div>
                         <v-card-text>
                           NOTE: <span class="text-danger text-center">All fields are required</span>
                           <v-form @submit="formSubmit" enctype="multipart/form-data" action>
@@ -270,10 +268,6 @@
                                     <input type="file" class="fileStyle" v-on:change="onImageChange" required><br>
                                   </center>
                                 </div>
-                                <!-- <center>
-                                    <v-img class="addOnsImage" :src="imageURL"></v-img><br>
-                                    <input type="file" class="fileStyle" v-on:change="onImageChange" required><br>
-                                </center> -->
                                 </v-row>  
                             </v-container>
                             <v-card-actions>
@@ -294,9 +288,10 @@
             <v-row justify="center">
                 <v-dialog v-model="dialogForProduct" persistent max-width="600px">
                     <v-card>
-                        <v-card-title>
-                        <span class="headline">PRODUCT</span>
-                        </v-card-title>
+                        <div class="modal-header">
+                          <span class="headline">PRODUCT</span>
+                          <button type="button" class="close" @click="dialogForProduct = false">&times;</button><br>
+                        </div>
                         <v-card-text>
                         NOTE: <span class="text-danger text-center">All fields are required</span>
                         <v-form @submit="formSubmitProduct" enctype="multipart/form-data" action>
@@ -388,9 +383,10 @@
             <v-row justify="center">
                 <v-dialog v-model="dialogForAddOns" persistent max-width="600px">
                     <v-card>
-                        <v-card-title>
-                        <span class="headline">ADD ADD ONS</span>
-                        </v-card-title>
+                        <div class="modal-header">
+                          <span class="headline">ADD ADD ONS</span>
+                          <button type="button" class="close" @click="dialogForAddOns = false">&times;</button><br>
+                        </div>
                         <v-card-text>
                         NOTE: <span class="text-danger text-center">All fields are required</span>
                         <v-form>
@@ -426,9 +422,10 @@
             <v-row justify="center">
                 <v-dialog v-model="dialogForCupType" persistent max-width="600px">
                     <v-card>
-                        <v-card-title>
-                        <span class="headline">ADD CUP TYPE</span>
-                        </v-card-title>
+                        <div class="modal-header">
+                          <span class="headline">ADD CUP TYPE</span>
+                          <button type="button" class="close" @click="dialogForCupType = false">&times;</button><br>
+                        </div>
                         <v-card-text>
                         NOTE: <span class="text-danger text-center">All fields are required</span>
                         <v-form>
@@ -464,9 +461,10 @@
             <v-row justify="center">
                 <v-dialog v-model="dialogForCupSize" persistent max-width="600px">
                     <v-card>
-                        <v-card-title>
-                        <span class="headline">ADD CUP QUANTITY</span>
-                        </v-card-title>
+                        <div class="modal-header">
+                          <span class="headline">ADD CUP QUANTITY</span>
+                          <button type="button" class="close" @click="dialogForCupSize = false">&times;</button><br>
+                        </div>
                         <v-card-text>
                         NOTE: <span class="text-danger text-center">All fields are required</span>
                         <v-form>
@@ -498,9 +496,10 @@
             <v-row justify="center">
                 <v-dialog v-model="dialogConfirmation" persistent max-width="600px">
                     <v-card>
-                        <v-card-title>
-                        <span class="headline">Confirmation</span>
-                        </v-card-title>
+                        <div class="modal-header">
+                          <span class="headline">Confirmation</span>
+                          <button type="button" class="close" @click="dialogConfirmation = false">&times;</button><br>
+                        </div>
                         <v-card-text>
                           Are you sure you want to delete?
                         </v-card-text>
@@ -1151,6 +1150,9 @@ export default {
         this.lowDoseCup !== "" &&
         this.highDoseCup !== "" &&
         this.overDoseCup !== "" && 
+        this.lowDoseCup >= 0  &&
+        this.highDoseCup >= 0  &&
+        this.overDoseCup >= 0  && 
         this.errorMessage6 === null
       ) {
         let param = {
@@ -1171,6 +1173,13 @@ export default {
           this.retrieveCupSize();
           this.hide();
         });
+      } else if(
+        this.lowDoseCup < 0  &&
+        this.highDoseCup < 0  &&
+        this.overDoseCup < 0
+      ){
+        this.loadingShow = false
+        this.errorMessage = "Fields must be atleast 0";
       } else {
         this.loadingShow = false
         this.errorMessage = "Please fill up all fields";

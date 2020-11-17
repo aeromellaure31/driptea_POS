@@ -29,9 +29,10 @@
             <v-row justify="center">
                 <v-dialog v-model="showModal" persistent max-width="600px">
                     <v-card>
-                        <v-card-title>
-                        <span class="headline">ADD USER</span>
-                        </v-card-title>
+                        <div class="modal-header">
+                          <span class="headline">ADD USER</span>
+                          <button type="button" class="close" @click="showModal = false">&times;</button><br>
+                        </div>
                         <v-card-text>
                         NOTE: <span class="text-danger text-center">All fields are required</span>
                         <div class="row">
@@ -282,6 +283,10 @@
                           >Register</v-btn>
                         </v-form>
                         </v-card-text>
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn color="blue darken-1" text @click="showModal = false"> Close</v-btn>
+                        </v-card-actions>
                     </v-card>
                 </v-dialog>
             </v-row>

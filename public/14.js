@@ -704,7 +704,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
 
 
 
@@ -1225,7 +1224,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.loadingShow = true;
 
-      if (this.lowDoseCup !== null && this.highDoseCup !== null && this.overDoseCup !== null && this.lowDoseCup !== "" && this.highDoseCup !== "" && this.overDoseCup !== "" && this.errorMessage6 === null) {
+      if (this.lowDoseCup !== null && this.highDoseCup !== null && this.overDoseCup !== null && this.lowDoseCup !== "" && this.highDoseCup !== "" && this.overDoseCup !== "" && this.lowDoseCup >= 0 && this.highDoseCup >= 0 && this.overDoseCup >= 0 && this.errorMessage6 === null) {
         var param = {
           incomingLowDose: this.lowDoseCup,
           incomingHighDose: this.highDoseCup,
@@ -1247,6 +1246,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
           _this10.hide();
         });
+      } else if (this.lowDoseCup < 0 && this.highDoseCup < 0 && this.overDoseCup < 0) {
+        this.loadingShow = false;
+        this.errorMessage = "Fields must be atleast 0";
       } else {
         this.loadingShow = false;
         this.errorMessage = "Please fill up all fields";
@@ -2824,10 +2826,25 @@ var render = function() {
                 _c(
                   "v-card",
                   [
-                    _c("v-card-title", [
+                    _c("div", { staticClass: "modal-header" }, [
                       _c("span", { staticClass: "headline" }, [
                         _vm._v("ADD CATEGORY")
-                      ])
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "close",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              _vm.dialogForCategory = false
+                            }
+                          }
+                        },
+                        [_vm._v("×")]
+                      ),
+                      _c("br")
                     ]),
                     _vm._v(" "),
                     _c(
@@ -3002,10 +3019,25 @@ var render = function() {
                 _c(
                   "v-card",
                   [
-                    _c("v-card-title", [
+                    _c("div", { staticClass: "modal-header" }, [
                       _c("span", { staticClass: "headline" }, [
                         _vm._v("PRODUCT")
-                      ])
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "close",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              _vm.dialogForProduct = false
+                            }
+                          }
+                        },
+                        [_vm._v("×")]
+                      ),
+                      _c("br")
                     ]),
                     _vm._v(" "),
                     _c(
@@ -3558,10 +3590,25 @@ var render = function() {
                 _c(
                   "v-card",
                   [
-                    _c("v-card-title", [
+                    _c("div", { staticClass: "modal-header" }, [
                       _c("span", { staticClass: "headline" }, [
                         _vm._v("ADD ADD ONS")
-                      ])
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "close",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              _vm.dialogForAddOns = false
+                            }
+                          }
+                        },
+                        [_vm._v("×")]
+                      ),
+                      _c("br")
                     ]),
                     _vm._v(" "),
                     _c(
@@ -3778,10 +3825,25 @@ var render = function() {
                 _c(
                   "v-card",
                   [
-                    _c("v-card-title", [
+                    _c("div", { staticClass: "modal-header" }, [
                       _c("span", { staticClass: "headline" }, [
                         _vm._v("ADD CUP TYPE")
-                      ])
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "close",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              _vm.dialogForCupType = false
+                            }
+                          }
+                        },
+                        [_vm._v("×")]
+                      ),
+                      _c("br")
                     ]),
                     _vm._v(" "),
                     _c(
@@ -3999,10 +4061,25 @@ var render = function() {
                 _c(
                   "v-card",
                   [
-                    _c("v-card-title", [
+                    _c("div", { staticClass: "modal-header" }, [
                       _c("span", { staticClass: "headline" }, [
                         _vm._v("ADD CUP QUANTITY")
-                      ])
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "close",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              _vm.dialogForCupSize = false
+                            }
+                          }
+                        },
+                        [_vm._v("×")]
+                      ),
+                      _c("br")
                     ]),
                     _vm._v(" "),
                     _c(
@@ -4194,10 +4271,25 @@ var render = function() {
                 _c(
                   "v-card",
                   [
-                    _c("v-card-title", [
+                    _c("div", { staticClass: "modal-header" }, [
                       _c("span", { staticClass: "headline" }, [
                         _vm._v("Confirmation")
-                      ])
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "close",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              _vm.dialogConfirmation = false
+                            }
+                          }
+                        },
+                        [_vm._v("×")]
+                      ),
+                      _c("br")
                     ]),
                     _vm._v(" "),
                     _c("v-card-text", [
