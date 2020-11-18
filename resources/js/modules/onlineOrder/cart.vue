@@ -259,7 +259,6 @@
 </style>
 <script>
 import $ from "jquery";
-
 import swal from "sweetalert";
 import loading from "../../basic/loading.vue";
 import AUTH from "../../services/auth";

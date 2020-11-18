@@ -318,7 +318,7 @@ export default {
       return storeAddOns;
     },
     viewOrder(item) {
-        this.showOrderData = itemindex
+      this.showOrderData = itemindex
     },
   }
 };

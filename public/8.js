@@ -495,7 +495,8 @@ __webpack_require__.r(__webpack_exports__);
       var PRODUCT = "";
       var forSeries = [];
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(_services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].url + "getDailyProductSales", params, _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].config).then(function (response) {
-        // console.log("heloooooooo ", response);
+        console.log("heloooooooo ", response);
+
         if (response.data.status) {
           _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].deauthenticate();
         }
