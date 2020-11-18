@@ -714,6 +714,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var _ref;
 
     return _ref = {
+      toSaveImage: null,
+      toSaveImage2: null,
       auth: _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"],
       dialogConfirmation: false,
       editCat: false,
@@ -1317,8 +1319,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.priceEvent = event.target;
     },
     onImgChange: function onImgChange(e) {
+      var _this12 = this;
+
       this.img = e.target.files[0];
       this.imgURL = URL.createObjectURL(e.target.files[0]);
+      this.loadingShow = true;
+      var data = new FormData();
+      data.append('file', this.img);
+      this.$axios.post('http://ec2-34-205-139-231.compute-1.amazonaws.com:3232/api/file/upload', data).then(function (res) {
+        _this12.toSaveImage = res.data.result.body.file_url;
+        _this12.loadingShow = false;
+      });
     },
     formSubmitProduct: function formSubmitProduct(e) {
       e.preventDefault();
@@ -1333,7 +1344,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           }
         };
         var formData = new FormData();
-        formData.append('image', this.img);
+        formData.append('image', this.toSaveImage);
         formData.append('productCategory', this.prodType);
         formData.append('productName', this.productName);
         formData.append('description', this.description);
@@ -1374,7 +1385,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.productName = item.productName;
       this.description = item.description;
       this.prodType = item.productCategory;
-      this.img = item.image;
+      this.toSaveImage = item.image;
       this.lowPrice = item.lowPrice;
       this.highPrice = item.highPrice;
       this.overPrice = item.overPrice;
@@ -1401,7 +1412,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         };
         var formData = new FormData();
         formData.append('id', this.prodId);
-        formData.append('image', this.img);
+        formData.append('image', this.toSaveImage);
         formData.append('status', this.status);
         formData.append('productCategory', this.prodType);
         formData.append('productName', this.productName);
@@ -1437,7 +1448,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     productStatusUpdate: function productStatusUpdate(id) {
-      var _this12 = this;
+      var _this13 = this;
 
       this.loadingShow = true;
       var param = {
@@ -1449,13 +1460,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this12.retrieveProducts();
+        _this13.retrieveProducts();
 
-        _this12.loadingShow = false;
+        _this13.loadingShow = false;
       });
     },
     productStatusAvailable: function productStatusAvailable(id) {
-      var _this13 = this;
+      var _this14 = this;
 
       this.loadingShow = true;
       var param = {
@@ -1467,20 +1478,29 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this13.retrieveProducts();
+        _this14.retrieveProducts();
 
-        _this13.loadingShow = false;
+        _this14.loadingShow = false;
       });
     },
     onImageChange: function onImageChange(e) {
+      var _this15 = this;
+
       this.image = e.target.files[0];
       this.imageURL = URL.createObjectURL(e.target.files[0]);
+      this.loadingShow = true;
+      var data = new FormData();
+      data.append('file', this.image);
+      this.$axios.post('http://ec2-34-205-139-231.compute-1.amazonaws.com:3232/api/file/upload', data).then(function (res) {
+        _this15.toSaveImage2 = res.data.result.body.file_url;
+        _this15.loadingShow = false;
+      });
     },
     editCategories: function editCategories(item) {
       this.errorMessage = null;
       this.dialogForCategory = true;
       this.editCat = true;
-      this.image = item.image;
+      this.toSaveImage2 = item.image;
       this.imageURL = item.image;
       this.productType = item.productCategory;
       this.catId = item.id;
@@ -1499,7 +1519,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         };
         var formData = new FormData();
         formData.append("id", this.catId);
-        formData.append("image", this.image);
+        formData.append("image", this.toSaveImage2);
         formData.append("productCategory", this.productType);
         axios.post("/updateCategory", formData, config).then(function (response) {
           if (response.data.status) {
@@ -1538,7 +1558,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           }
         };
         var formData = new FormData();
-        formData.append("image", this.image);
+        formData.append("image", this.toSaveImage2);
         formData.append("productCategory", this.productType);
         axios.post("/addCategory", formData, config).then(function (response) {
           if (response.data.status) {
@@ -1755,7 +1775,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       _router__WEBPACK_IMPORTED_MODULE_1__["default"].push(route)["catch"](function () {});
     },
     addAddOns: function addAddOns() {
-      var _this14 = this;
+      var _this16 = this;
 
       this.loadingShow = true;
 
@@ -1771,16 +1791,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
           }
 
-          _this14.loadingShow = false;
+          _this16.loadingShow = false;
           sweetalert__WEBPACK_IMPORTED_MODULE_3___default()({
             title: "Congrats!",
             text: "You have successfully added an add-ons!",
             icon: "success"
           });
 
-          _this14.retrieveAddOns();
+          _this16.retrieveAddOns();
 
-          _this14.dialogForAddOns = false;
+          _this16.dialogForAddOns = false;
         });
       } else {
         this.errorMessage = "Please fill up all fields";
@@ -1788,7 +1808,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     retrieveAddOns: function retrieveAddOns() {
-      var _this15 = this;
+      var _this17 = this;
 
       this.loadingShow = true;
       this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "retrieveAllAddOns", {}, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
@@ -1796,8 +1816,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this15.datas = response.data.addons;
-        _this15.loadingShow = false;
+        _this17.datas = response.data.addons;
+        _this17.loadingShow = false;
       });
     },
     editAddOns: function editAddOns(item) {
@@ -1813,7 +1833,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.idAddOns = item.id;
     },
     editAddOnsData: function editAddOnsData() {
-      var _this16 = this;
+      var _this18 = this;
 
       this.loadingShow = true;
 
@@ -1830,16 +1850,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
           }
 
-          _this16.loadingShow = false;
+          _this18.loadingShow = false;
           sweetalert__WEBPACK_IMPORTED_MODULE_3___default()({
             title: "Congrats!",
             text: "You have successfully updated the add-ons!",
             icon: "success"
           });
 
-          _this16.retrieveAddOns();
+          _this18.retrieveAddOns();
 
-          _this16.hide();
+          _this18.hide();
         });
       } else {
         this.errorMessage = "Please fill up all fields";
@@ -1847,7 +1867,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     NAStatusUpdate: function NAStatusUpdate(id) {
-      var _this17 = this;
+      var _this19 = this;
 
       this.loadingShow = true;
       var param = {
@@ -1859,13 +1879,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this17.loadingShow = false;
+        _this19.loadingShow = false;
 
-        _this17.retrieveAddOns();
+        _this19.retrieveAddOns();
       });
     },
     availableStatusUpdate: function availableStatusUpdate(id) {
-      var _this18 = this;
+      var _this20 = this;
 
       this.loadingShow = true;
       var param = {
@@ -1877,13 +1897,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this18.loadingShow = false;
+        _this20.loadingShow = false;
 
-        _this18.retrieveAddOns();
+        _this20.retrieveAddOns();
       });
     },
     retrieveProducts: function retrieveProducts() {
-      var _this19 = this;
+      var _this21 = this;
 
       this.loadingShow = true;
       this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "retrieveAllProduct", {}, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
@@ -1891,12 +1911,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this19.loadingShow = false;
-        _this19.productData = response.data.product;
+        _this21.loadingShow = false;
+        _this21.productData = response.data.product;
       });
     },
     retrieveCategories: function retrieveCategories() {
-      var _this20 = this;
+      var _this22 = this;
 
       this.loadingShow = true;
       this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "retrieveCategory", {}, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
@@ -1904,10 +1924,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this20.loadingShow = false;
-        _this20.categoryData = response.data.addCategory;
+        _this22.loadingShow = false;
+        _this22.categoryData = response.data.addCategory;
         response.data.addCategory.forEach(function (element) {
-          _this20.categoryName.push(element.productCategory);
+          _this22.categoryName.push(element.productCategory);
         });
       });
     }

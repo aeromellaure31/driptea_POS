@@ -1,82 +1,97 @@
 <template>
   <v-img
     :src="require('@/assets/landing1.jpg')"
-    class="pr-16 pt-16"
-    height="100vh"
+    style="width: 100%; height: 100%;"
   >
-    <v-card class="float-right mr-16 pa-5 mt-16" width="400">
-      <center>
-        <img class="logo" :src="image" />
-        <br />
-      </center>
-      <i>
-        <span v-if="errorMessage !== null" class="text-danger text-center">{{
-          errorMessage
-        }}</span>
-      </i>
-      <i>
-        <span v-if="errorMessage2 !== null" class="text-danger text-center">{{
-          errorMessage2
-        }}</span>
-      </i>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-7"></div>
+        <div class="col-md-5">
+          <v-card width="400" class="design">
+            <center>
+              <img class="logo" :src="image" />
+            </center>
+            <div style="padding-left: 10%; padding-right: 10%; padding-top: 2%; padding-bottom: 2%;">
+              <i>
+                <span v-if="errorMessage !== null" class="text-danger text-center">{{
+                  errorMessage
+                }}</span>
+              </i>
+              <i>
+                <span v-if="errorMessage2 !== null" class="text-danger text-center">{{
+                  errorMessage2
+                }}</span>
+              </i>
 
-      <v-form ref="form" lazy-validation class="mx-auto">
-        <v-text-field
-          color="orange"
-          label="Username*"
-          outlined
-          v-model="userName"
-          v-on:keyup="validate('userName')"
-          type="text"
-          id="userName"
-          required
-        ></v-text-field>
+              <v-form ref="form" lazy-validation class="mx-auto">
+                <v-text-field
+                  color="orange"
+                  label="Username*"
+                  outlined
+                  v-model="userName"
+                  v-on:keyup="validate('userName')"
+                  type="text"
+                  id="userName"
+                  required
+                ></v-text-field>
 
-        <i>
-          <span v-if="errorMessage3 !== null" class="text-danger text-center">{{
-            errorMessage3
-          }}</span>
-        </i>
+                <i>
+                  <span v-if="errorMessage3 !== null" class="text-danger text-center">{{
+                    errorMessage3
+                  }}</span>
+                </i>
 
-        <v-text-field
-          color="orange"
-          label="Password*"
-          outlined
-          v-model="password"
-          v-on:keyup="validate('password')"
-          :append-icon="show3 ? 'visibility' : 'visibility_off'"
-          :type="show3 ? 'text' : 'password'"
-          id="password"
-          required
-          @click:append="show3 = !show3"
-        ></v-text-field>
-        <a href class="FP">Forgot Password</a><br />
-        <center>
-          <v-btn
-            type="button"
-            class="btn btnRegister ml-12"
-            @click="login"
-            color="orange"
-            >Login</v-btn
-          >
-        </center>
+                <v-text-field
+                  color="orange"
+                  label="Password*"
+                  outlined
+                  v-model="password"
+                  v-on:keyup="validate('password')"
+                  :append-icon="show3 ? 'visibility' : 'visibility_off'"
+                  :type="show3 ? 'text' : 'password'"
+                  id="password"
+                  required
+                  @click:append="show3 = !show3"
+                ></v-text-field>
+                <a href class="FP">Forgot Password</a><br />
+                <center>
+                  <v-btn
+                    type="button"
+                    class="ma-2"
+                    @click="login"
+                    color="orange"
+                    >Login</v-btn
+                  >
+                </center>
 
-        <hr />
-        <center>
-          <v-btn
-            type="button"
-            class="ma-2"
-            outlined
-            color="orange"
-            @click="redirect('/register')"
-            >Create New Account</v-btn
-          >
-        </center>
-      </v-form>
-    </v-card>
+                <hr />
+                <center>
+                  <v-btn
+                    type="button"
+                    class="ma-2"
+                    outlined
+                    color="orange"
+                    @click="redirect('/register')"
+                    >Create New Account</v-btn
+                  >
+                </center>
+              </v-form>
+            </div>
+          </v-card>
+        </div>
+      </div>
+    </div>
   </v-img>
 </template>
-
+<style scoped>
+.logo{
+  height: 150px;
+  width: 150px;
+}
+.design{
+  margin-top: 20%;
+}
+</style>
 
 <script>
 import image from "../../assets/logo.png";
@@ -166,5 +181,3 @@ export default {
   },
 };
 </script>
-<style>
-</style>

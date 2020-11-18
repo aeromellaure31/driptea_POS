@@ -693,6 +693,8 @@ import moment from 'moment'
 export default {
   data() {
     return {
+      toSaveImage: null,
+      toSaveImage2: null,
       auth: AUTH,
       dialogConfirmation: false,
       editCat: false,
@@ -1102,7 +1104,6 @@ export default {
             
         response.data.quantityCupsInDB.forEach(element => {
             
-          
         });
 
         let totalCup = response.data.quantityCupsInDB.incomingOverDose;
@@ -1241,6 +1242,13 @@ export default {
     onImgChange(e) {
         this.img = e.target.files[0]
         this.imgURL = URL.createObjectURL(e.target.files[0])
+        this.loadingShow = true
+        let data = new FormData()
+        data.append('file', this.img)
+        this.$axios.post('http://ec2-34-205-139-231.compute-1.amazonaws.com:3232/api/file/upload', data).then(res => {
+          this.toSaveImage = res.data.result.body.file_url
+          this.loadingShow = false
+        })
     },
     formSubmitProduct(e) {
       e.preventDefault();
@@ -1258,7 +1266,7 @@ export default {
               }
           }
           let formData = new FormData();
-          formData.append('image', this.img)
+          formData.append('image', this.toSaveImage)
           formData.append('productCategory', this.prodType)
           formData.append('productName', this.productName)
           formData.append('description', this.description)
@@ -1299,7 +1307,7 @@ export default {
         this.productName = item.productName
         this.description = item.description
         this.prodType = item.productCategory
-        this.img = item.image
+        this.toSaveImage = item.image
         this.lowPrice = item.lowPrice
         this.highPrice = item.highPrice
         this.overPrice = item.overPrice
@@ -1328,7 +1336,7 @@ export default {
           }
           let formData = new FormData();
           formData.append('id', this.prodId)
-          formData.append('image', this.img)
+          formData.append('image', this.toSaveImage)
           formData.append('status', this.status)
           formData.append('productCategory', this.prodType)
           formData.append('productName', this.productName)
@@ -1399,12 +1407,20 @@ export default {
     onImageChange(e) {
       this.image = e.target.files[0];
       this.imageURL = URL.createObjectURL(e.target.files[0]);
+      this.loadingShow = true
+      let data = new FormData()
+      data.append('file', this.image)
+      this.$axios.post('http://ec2-34-205-139-231.compute-1.amazonaws.com:3232/api/file/upload', data).then(res => {
+        this.toSaveImage2 = res.data.result.body.file_url
+        this.loadingShow = false
+      })
+      
     },
     editCategories(item){
       this.errorMessage = null;
       this.dialogForCategory = true;
       this.editCat = true;
-      this.image = item.image
+      this.toSaveImage2 = item.image
       this.imageURL = item.image;
       this.productType = item.productCategory;
       this.catId = item.id
@@ -1423,7 +1439,7 @@ export default {
         }
         let formData = new FormData();
         formData.append("id", this.catId);
-        formData.append("image", this.image);
+        formData.append("image", this.toSaveImage2);
         formData.append("productCategory", this.productType);
         axios
           .post("/updateCategory", formData, config)
@@ -1464,7 +1480,7 @@ export default {
             }
         }
         let formData = new FormData();
-        formData.append("image", this.image);
+        formData.append("image", this.toSaveImage2);
         formData.append("productCategory", this.productType);
         axios
           .post("/addCategory", formData, config)
