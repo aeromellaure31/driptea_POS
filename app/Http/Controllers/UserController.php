@@ -14,25 +14,19 @@ use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
-    // public function getImage(Request $request){
-    //     $url = 'http://ec2-34-205-139-231.compute-1.amazonaws.com:3232/api/file/upload';
-    //     $req = curl_init();
-    //     curl_setopt($req, CURLOPT_URL, $url);
-    //     $data = $request['file'];
-    //     curl_setopt($req, CURLOPT_POSTFIELDS, $data);
-    //     curl_setopt($req, CURLOPT_RETURNTRANSFER, 1);
-    //     curl_setopt($req, CURLOPT_FOLLOWLOCATION, 1);
-    //     curl_setopt($req, CURLOPT_HTTPHEADER, ["Content-Type: application/json"]);
-    //     curl_setopt($req, CURLOPT_SSL_VERIFYPEER, false);
-    //     $result = curl_exec($req);
-    //     curl_close($req);
-    //     $response = json_decode($result, true);
-    //     return $response;
+    // public function updateImage(Request $request){
+    //     $user = User::firstOrCreate(['id' => $request->id]);
+    //     $user->image = $request->image;
+    //     $user->save();
+    //     event(new pusherEvent($user));
+    //     return response()->json(compact('user')); 
     // }
 
     public function updateImage(Request $request){
         $user = User::firstOrCreate(['id' => $request->id]);
-        $user->image = $request->image;
+        $imageName = time().'.'.$request->image->getClientOriginalExtension();
+        $request->image->move(public_path('images'), $imageName);
+        $user->image = 'images/'.$imageName;
         $user->save();
         event(new pusherEvent($user));
         return response()->json(compact('user')); 

@@ -698,7 +698,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       };
       var formData = new FormData();
       formData.append('id', this.userID);
-      formData.append('image', this.toSaveImage);
+      formData.append('image', this.img); // formData.append('image', this.toSaveImage)
+
       this.$axios.post('/updateImage', formData, config).then(function (response) {
         currentObj.loadingShow = false;
         currentObj.show = false;
@@ -718,76 +719,72 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     onImgChange: function onImgChange(e) {
-      var _this = this;
-
       this.show = true;
       this.img = e.target.files[0];
-      this.imgURL = URL.createObjectURL(e.target.files[0]);
-      this.loadingShow = true;
-      var data = new FormData();
-      data.append('file', e.target.files[0]);
-      this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_3__["default"].url + "getImage", data, _services_auth__WEBPACK_IMPORTED_MODULE_3__["default"].config).then(function (res) {
-        console.log(res); // this.toSaveImage = res.data.result.body.file_url
-
-        _this.loadingShow = false;
-      });
+      this.imgURL = URL.createObjectURL(e.target.files[0]); // this.loadingShow = true
+      // let data = new FormData()
+      // data.append('file', e.target.files[0])
+      // this.$axios.post('http://ec2-34-205-139-231.compute-1.amazonaws.com:3232/api/file/upload', data).then(res => {
+      //   this.toSaveImage = res.data.result.body.file_url
+      //   this.loadingShow = false
+      // })
     },
     retrieveUserDatas: function retrieveUserDatas(id) {
-      var _this2 = this;
+      var _this = this;
 
       this.loadingShow = true;
       var params = {
         uname: id
       };
       axios__WEBPACK_IMPORTED_MODULE_4___default.a.post(_services_auth__WEBPACK_IMPORTED_MODULE_3__["default"].url + "getUserData", params, _services_auth__WEBPACK_IMPORTED_MODULE_3__["default"].config).then(function (response) {
-        _this2.loadingShow = false;
+        _this.loadingShow = false;
 
         if (response.data.status) {
           _services_auth__WEBPACK_IMPORTED_MODULE_3__["default"].deauthenticate();
         }
 
-        _this2.imgURL = response.data.userdata[0].img;
+        _this.imgURL = response.data.userdata[0].img;
 
         if (response.data.userdata[0].email == null) {
-          _this2.emailAdd = "No email registered.";
+          _this.emailAdd = "No email registered.";
         } else {
-          _this2.emailAdd = response.data.userdata[0].email;
+          _this.emailAdd = response.data.userdata[0].email;
         }
 
         if (response.data.userdata[0].CN === null) {
-          _this2.contactnum = "No registered contact number available.";
+          _this.contactnum = "No registered contact number available.";
         } else {
-          _this2.contactnum = response.data.userdata[0].CN;
+          _this.contactnum = response.data.userdata[0].CN;
         }
 
         if (response.data.userdata[0].address === null) {
-          _this2.address = "No registered address available.";
+          _this.address = "No registered address available.";
         } else {
-          _this2.address = response.data.userdata[0].address;
+          _this.address = response.data.userdata[0].address;
         }
 
         if (response.data.userdata[0].fname === null) {
-          _this2.firstname = "No registered firstname available.";
+          _this.firstname = "No registered firstname available.";
         } else {
-          _this2.firstname = response.data.userdata[0].fname;
+          _this.firstname = response.data.userdata[0].fname;
         }
 
         if (response.data.userdata[0].lname === null) {
-          _this2.lastname = "No registered lastname available.";
+          _this.lastname = "No registered lastname available.";
         } else {
-          _this2.lastname = response.data.userdata[0].lname;
+          _this.lastname = response.data.userdata[0].lname;
         }
 
         if (response.data.userdata[0].username === null) {
-          _this2.username = "No registered username available.";
+          _this.username = "No registered username available.";
         } else {
-          _this2.username = response.data.userdata[0].username;
+          _this.username = response.data.userdata[0].username;
         }
 
         if (response.data.userdata[0].pwd === null) {
-          _this2.password = "No registered Password available.";
+          _this.password = "No registered Password available.";
         } else {
-          _this2.password = "********";
+          _this.password = "********";
         }
       });
     },
@@ -802,7 +799,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.Cpassword = null;
     },
     Save: function Save(data, colname, modalID) {
-      var _this3 = this;
+      var _this2 = this;
 
       this.loadingShow = true;
 
@@ -830,7 +827,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           col: colname
         };
         axios__WEBPACK_IMPORTED_MODULE_4___default.a.post(_services_auth__WEBPACK_IMPORTED_MODULE_3__["default"].url + "SaveNEWdata", params, _services_auth__WEBPACK_IMPORTED_MODULE_3__["default"].config).then(function (response) {
-          _this3.loadingShow = false;
+          _this2.loadingShow = false;
 
           if (response.data.status) {
             _services_auth__WEBPACK_IMPORTED_MODULE_3__["default"].deauthenticate();
@@ -842,27 +839,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             icon: "success"
           });
 
-          _this3.retrieveUserDatas(_this3.userID);
+          _this2.retrieveUserDatas(_this2.userID);
 
-          _this3.newpassword = null;
-          _this3.newemailAdd = null;
-          _this3.newcontactnum = null;
-          _this3.newaddress = null;
-          _this3.newfirstname = null;
-          _this3.newlastname = null;
-          _this3.newusername = null;
-          _this3.Cpassword = null;
+          _this2.newpassword = null;
+          _this2.newemailAdd = null;
+          _this2.newcontactnum = null;
+          _this2.newaddress = null;
+          _this2.newfirstname = null;
+          _this2.newlastname = null;
+          _this2.newusername = null;
+          _this2.Cpassword = null;
           jquery__WEBPACK_IMPORTED_MODULE_5___default()("#" + modalID).modal("hide");
         })["catch"](function (error) {
           if (error.response.status === 300) {
-            _this3.errorMessage14 = "Username already exist";
+            _this2.errorMessage14 = "Username already exist";
           }
 
           if (error.response.status === 301) {
-            _this3.errorMessage3 = "Email already exist";
+            _this2.errorMessage3 = "Email already exist";
           }
 
-          _this3.loadingShow = false;
+          _this2.loadingShow = false;
         });
       }
     },
@@ -2471,7 +2468,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_personalInfo_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./personalInfo.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/modules/profile/personalInfo.vue?vue&type=style&index=0&lang=css&");
 /* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_personalInfo_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_personalInfo_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_personalInfo_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_personalInfo_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_personalInfo_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
