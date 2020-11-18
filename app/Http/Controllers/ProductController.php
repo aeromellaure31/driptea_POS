@@ -19,8 +19,6 @@ class ProductController extends Controller
         if($validator->fails()){
             return response()->json($validator->errors()->toJson(), 400);
         }
-        $imageName = time().'.'.$request->image->getClientOriginalExtension();
-        $request->image->move(public_path('images'), $imageName);
         $data = $request->all();
         $product = new Product();
         $product->lowPrice = $data['lowPrice'];
@@ -33,7 +31,7 @@ class ProductController extends Controller
         $product->description = $data['description'];
         $product->productName = $data['productName'];
         $product->status = 'Available';
-        $product->image = 'images/'.$imageName;
+        $product->image = $data['image'];
         $product->save();
         
     	return response()->json(['success'=>'You have successfully upload image.']);
@@ -42,13 +40,7 @@ class ProductController extends Controller
     public function updateProduct(Request $request){
         $data = $request->all();
         $product = Product::firstOrCreate(['id' => $request->id]);
-        if($product->image === $data['image']){
-            $product->image = $data['image'];
-        }else{
-            $imageName = time().'.'.$request->image->getClientOriginalExtension();
-            $request->image->move(public_path('images'), $imageName);
-            $product->image = 'images/'.$imageName;
-        }
+        $product->image = $data['image'];
         $product->lowPrice = $data['lowPrice'];
         $product->highPrice = $data['highPrice'];
         $product->overPrice = $data['overPrice'];

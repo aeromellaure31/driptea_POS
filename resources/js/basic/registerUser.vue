@@ -524,7 +524,9 @@ export default {
         this.errorMessage8 = null;
         this.successMessage9 = null;
         if (this.contactNum.length > 11) {
-          this.errorMessage8 = "Contact number must not exceed 11 numbers.";
+          this.errorMessage8 = "Cell number must be 11 digits";
+        } else if (this.contactNum.length < 11) {
+          this.errorMessage9 = "Contact number must be 11 digits";
         } else if (this.contactNum.slice(0, 2) != "09") {
           this.errorMessage9 = "Contact number must start with 09";
         } else {

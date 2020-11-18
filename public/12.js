@@ -410,6 +410,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -658,9 +663,11 @@ __webpack_require__.r(__webpack_exports__);
         this.successMessage9 = null;
 
         if (this.contactNum.length > 11) {
-          this.errorMessage8 = "Contact number must not exceed 11 numbers.";
+          this.errorMessage8 = "Contact number must be 11 digits";
         } else if (this.contactNum.slice(0, 2) != "09") {
           this.errorMessage9 = "Contact number must start with 09";
+        } else if (this.contactNum.length < 11) {
+          this.errorMessage9 = "Contact number must be 11 digits";
         } else {
           this.errorMessage8 = null;
           this.errorMessage9 = null;
@@ -851,10 +858,25 @@ var render = function() {
                       _c(
                         "v-card",
                         [
-                          _c("v-card-title", [
+                          _c("div", { staticClass: "modal-header" }, [
                             _c("span", { staticClass: "headline" }, [
                               _vm._v("ADD USER")
-                            ])
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass: "close",
+                                attrs: { type: "button" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.showModal = false
+                                  }
+                                }
+                              },
+                              [_vm._v("×")]
+                            ),
+                            _c("br")
                           ]),
                           _vm._v(" "),
                           _c(
@@ -1652,6 +1674,27 @@ var render = function() {
                                   )
                                 ],
                                 1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-card-actions",
+                            [
+                              _c("v-spacer"),
+                              _vm._v(" "),
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: { color: "blue darken-1", text: "" },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.showModal = false
+                                    }
+                                  }
+                                },
+                                [_vm._v(" Close")]
                               )
                             ],
                             1

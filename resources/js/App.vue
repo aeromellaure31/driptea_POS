@@ -177,6 +177,19 @@
           </v-menu>
         </div>
     </v-app-bar>
+
+    <!-- Basic Header -->
+    <v-app-bar class="onlineNav" color="#ff5b04" v-if="online === null && admin === null && cashier === null" fixed app>
+      <a>
+        <v-img max-height="64" max-width="42" :src="image" @click="redirect('/onlineDashboard')"></v-img>
+      </a>
+      <v-app-bar-title app name="thetitle">DRIPTEA</v-app-bar-title>
+      <v-spacer></v-spacer>
+         <div class="col-6 text-right">
+          <v-btn icon style="margin-right: 3%;" @click="redirect('/login')">Login</v-btn>
+          <v-btn icon @click="redirect('/register')" style="margin-right: 2%;">Register</v-btn>
+        </div>
+    </v-app-bar>
     <v-main>
       <router-view></router-view>
     </v-main>
@@ -358,6 +371,8 @@ export default {
           ROUTER.push(route).catch(() => {});
         }
       } else if (this.online != null) {
+        ROUTER.push(route).catch(() => {});
+      }else{
         ROUTER.push(route).catch(() => {});
       }
     },

@@ -16,13 +16,10 @@ class AddCategoryController extends Controller
         if($validator->fails()){
             return response()->json($validator->errors()->toJson(), 400);
         }
-
-        $imageName = time().'.'.$request->image->getClientOriginalExtension();
-        $request->image->move(public_path('images'), $imageName);
         $data = $request->all();
         $addCategory = new AddCategory();
-        $addCategory->productCategory = $request['productCategory'];
-        $addCategory->image = 'images/'.$imageName;
+        $addCategory->productCategory = $data['productCategory'];
+        $addCategory->image = $data['image'];
         $addCategory->save();
         
     	return response()->json(['success'=>'You have successfully upload image.']);
@@ -30,13 +27,7 @@ class AddCategoryController extends Controller
 
     public function updateCategory(Request $request){
         $addCategory = AddCategory::firstOrCreate(['id' => $request->id]);
-        if($addCategory->image === $request->image){
-            $addCategory->image = $request->image;
-        }else{
-            $imageName = time().'.'.$request->image->getClientOriginalExtension();
-            $request->image->move(public_path('images'), $imageName);
-            $addCategory->image = 'images/'.$imageName;
-        }
+        $addCategory->image = $request->image;
         $addCategory->productCategory = $request['productCategory'];
         $addCategory->save();
         return response()->json(compact('addCategory'));

@@ -9,17 +9,17 @@ use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Support\Facades\DB;
 use App\Events\pusherEvent;
+use Illuminate\Support\Facades\Storage;
+// use JD\Cloudder\Facades\Cloudder;
 
 class UserController extends Controller
 {
     public function updateImage(Request $request){
         $user = User::firstOrCreate(['id' => $request->id]);
-        $imageName = time().'.'.$request->image->getClientOriginalExtension();
-        $request->image->move(public_path('images'), $imageName);
-        $user->image = 'images/'.$imageName;
+        $user->image = $request->image;
         $user->save();
         event(new pusherEvent($user));
-        return response()->json(compact('user'));
+        return response()->json(compact('user')); 
     }
 
     public function authenticate(Request $request)
