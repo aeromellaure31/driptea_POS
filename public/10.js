@@ -726,8 +726,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.loadingShow = true;
       var data = new FormData();
       data.append('file', e.target.files[0]);
-      this.$axios.post('http://ec2-34-205-139-231.compute-1.amazonaws.com:3232/api/file/upload', data).then(function (res) {
-        _this.toSaveImage = res.data.result.body.file_url;
+      this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_3__["default"].url + "getImage", data, _services_auth__WEBPACK_IMPORTED_MODULE_3__["default"].config).then(function (res) {
+        console.log(res); // this.toSaveImage = res.data.result.body.file_url
+
         _this.loadingShow = false;
       });
     },

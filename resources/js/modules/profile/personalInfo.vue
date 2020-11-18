@@ -700,8 +700,9 @@ export default {
       this.loadingShow = true
       let data = new FormData()
       data.append('file', e.target.files[0])
-      this.$axios.post('http://ec2-34-205-139-231.compute-1.amazonaws.com:3232/api/file/upload', data).then(res => {
-        this.toSaveImage = res.data.result.body.file_url
+      this.$axios.post(AUTH.url + "getImage", data, AUTH.config).then(res => {
+        console.log(res)
+        // this.toSaveImage = res.data.result.body.file_url
         this.loadingShow = false
       })
     },
