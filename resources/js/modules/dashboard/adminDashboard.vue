@@ -432,7 +432,6 @@ export default {
     this.MonthLabel2 = this.mnths[month - 1];
     this.yrvalue = new Date().getFullYear();
     this.yrvalueS = new Date().getFullYear();
-
     this.getYears();
     this.getDate();
     this.xvalues();
@@ -489,7 +488,7 @@ export default {
 
       Axios.post(AUTH.url + "getDailyProductSales", params, AUTH.config).then(
         response => {
-          // console.log("heloooooooo ", response);
+          console.log("heloooooooo ", response);
           if (response.data.status) {
             AUTH.deauthenticate();
           }
