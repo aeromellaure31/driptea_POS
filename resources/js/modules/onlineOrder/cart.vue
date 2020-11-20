@@ -1,6 +1,6 @@
 <template>
- <div>
-     <v-card mb="20px">
+  <div class="container">
+     <v-card mb="20px" class="mt-10">
        <v-container fluid>
             <center>
          <div v-if="tableData !== null && tableData.length > 0">
@@ -56,27 +56,17 @@
            </v-simple-table>
          </div>
           <div v-if="tableData !== null && tableData.length > 0">
-             <table class="table table-responsive" id="myTable"></table>
              <div class="row">
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-                <span style="color:red" v-if="error !== null">{{error}}</span>
-               
-                  <v-select :items="payments" label="Mode of Payment" dense outlined v-model="payment"></v-select>
-                  <v-select :items="availability" label="If not availabe" dense outlined v-model="available"></v-select>
-
-                </v-col>
-               
-            <v-col  cols="12"
-                  md="8">
-               <p>Subtotal: ₱{{getSubTotal()}}</p>
-                 <p>Delivery Fee: ₱{{getDeliveryFee()}}</p>
-                 <h5>Total: ₱{{getTotal()}}</h5>
-            </v-col>
-                
-            
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                  <span style="color:red" v-if="error !== null">{{error}}</span>
+                  <v-select class="selectWidth" :items="payments" label="Mode of Payment" dense outlined v-model="payment" @change="modePayment()"></v-select>
+                  <v-select class="selectWidth" :items="availability" label="If not availabe" dense outlined v-model="available"></v-select>
+                  <p>Subtotal: ₱{{getSubTotal()}}</p>
+                  <p>Delivery Fee: ₱{{getDeliveryFee()}}</p>
+                  <h5>Total: ₱{{getTotal()}}</h5>
+                </div>
+                <div class="col-md-4"></div>
              </div>
              <button type="button" class="btn btn-success" @click="orderNow()">Order Now</button>
             
@@ -196,6 +186,9 @@
         </div>
 </template>
 <style scoped>
+.selectWidth {
+  width: 70%;
+}
 .table {
   width: 170%;
 }
@@ -240,8 +233,8 @@ export default {
       deliveryFee: 0,
       processModal: false,
       loadingShow: false,
-      payment: null,
-      available: null,
+      payment: "Cash on Delivery",
+      available: 'Cancel Order',
       error: "",
       idForProduct: null,
       tableDataForEdit: [],
@@ -266,6 +259,19 @@ export default {
     this.retrieveAddOns();
   },
   methods: {
+    modePayment(){
+      if(this.payment === 'G-cash'){
+        // swal("Oops!", "G-cash not available this time", "warning");
+        swal({
+          title: "Oops!",
+          text: "G-cash not available this time",
+          icon: "warning",
+          dangerMode: true
+        }).then(willDelete => {
+          this.payment = 'Cash on Delivery'
+        })
+      }
+    },
     getCup(item) {
       let cup = "";
       this.cupData.forEach(el => {
@@ -503,6 +509,8 @@ export default {
       if (this.payment !== null) {
         let params = {
           id: localStorage.getItem("customerId"),
+          ifNotAvailable: this.available,
+          modeOfPayment: this.payment,
           status: "pendingCustomer"
         };
         this.$axios

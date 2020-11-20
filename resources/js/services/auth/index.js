@@ -1,10 +1,8 @@
 import axios from 'axios'
 import ROUTER from '../../router'
 export default {
+    // url: 'http://ec2-34-229-81-230.compute-1.amazonaws.com/',
     url: 'http://localhost:8000/',
-    // url: 'https://driptea.herokuapp.com/' ? 'https://driptea.herokuapp.com/' : 'http://driptea.herokuapp.com/',
-    currentPath: false,
-    productName: '',
     productPrice: null,
     imageSelected: null,
     token: null,

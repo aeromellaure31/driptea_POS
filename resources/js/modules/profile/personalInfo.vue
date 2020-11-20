@@ -589,7 +589,7 @@
 </style>
 
 <script>
-import ProfilePic from "../../../assets/profile.jpg";
+import ProfilePic from "../../../assets/empty.png";
 import imageLogo from "../../../assets/logo.png";
 import ROUTER from '../../router'
 import AUTH from "../../services/auth";
@@ -675,6 +675,7 @@ export default {
       }
       let formData = new FormData();
       formData.append('id', this.userID)
+      // formData.append('image', this.img)
       formData.append('image', this.toSaveImage)
       this.$axios.post('/updateImage', formData, config).then(function (response) {
         currentObj.loadingShow = false

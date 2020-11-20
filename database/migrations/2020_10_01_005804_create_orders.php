@@ -25,6 +25,8 @@ class CreateOrders extends Migration
             $table->string('sugarLevel');
             $table->double('choosenPrice');
             $table->double('subTotal');
+            $table->string('modeOfPayment')->nullable();
+            $table->string('ifNotAvailable')->nullable();
             $table->string('status');
             $table->timestamps();
             $table->softDeletes();

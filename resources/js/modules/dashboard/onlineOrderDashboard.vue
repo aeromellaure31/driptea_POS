@@ -412,6 +412,7 @@ export default {
                             AUTH.deauthenticate()
                         }
                         $('#viewDetails').modal('hide')
+                        swal("Order added to cart", "Successfully", "success")
                     })
                 }
             }

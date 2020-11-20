@@ -160,7 +160,7 @@ export default {
           if(res.data.status){
               AUTH.deauthenticate()
           }
-          localStorage.setItem("customerId", res.data.customerDetails.id);
+          localStorage.setItem("customer", res.data.customerDetails.id);
           localStorage.setItem(
             "customerType", res.data.customerDetails.customerType
           );
@@ -181,7 +181,7 @@ export default {
         if(response.data.status){
             AUTH.deauthenticate()
         }
-        localStorage.setItem("customerId", response.data.customerDetails.id);
+        localStorage.setItem("customer", response.data.customerDetails.id);
         localStorage.setItem(
           "customerType",
           response.data.customerDetails.customerType

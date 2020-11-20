@@ -465,6 +465,7 @@ __webpack_require__.r(__webpack_exports__);
             }
 
             jquery__WEBPACK_IMPORTED_MODULE_3___default()('#viewDetails').modal('hide');
+            sweetalert__WEBPACK_IMPORTED_MODULE_0___default()("Order added to cart", "Successfully", "success");
           });
         }
       }

@@ -125,6 +125,25 @@
       <v-app-bar-items>
         <div>
           <v-menu offset-y>
+            <v-list
+              style="max-height: 300px; max-width: 300px"
+              class="overflow-y-auto notifDropdown"
+            >
+              <!-- ang Click kay wala pay nay method -->
+              <!-- <product ref="product"></product> -->
+              <v-list-item
+                v-for="(item, index) in account"
+                :key="index"
+                @click="redirect(item.route+ (admin ? admin : cashier))"
+              >
+                <v-list-item-icon>
+                  <v-icon color="black darken-2">{{ item.icon }}</v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title>{{ item.text }}</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list>
             <template v-slot:activator="{ on, attrs }">
               <v-btn v-bind="attrs" v-on="on" icon>
                 <v-icon medium color="black" right>mdi-arrow-down-drop-circle</v-icon>
@@ -133,9 +152,9 @@
           </v-menu>
         </div>
       </v-app-bar-items>
-      <v-app-bar-items>
+      <!-- <v-app-bar-items>
         <button class="btn" @click="logout()">Logout</button>
-      </v-app-bar-items>
+      </v-app-bar-items> -->
     </v-app-bar>
 
  <!-- online -->
@@ -145,7 +164,6 @@
       </a>
       <v-app-bar-title app name="thetitle">DRIPTEA</v-app-bar-title>
       <v-spacer></v-spacer>
-         <div class="col-6 text-right">
           <v-btn icon style="margin-right: 3%;" @click="redirect('/onlineDashboard')">
               <v-icon>mdi-home</v-icon>
           </v-btn>
@@ -175,7 +193,6 @@
                 </v-list-item>
             </v-list>
           </v-menu>
-        </div>
     </v-app-bar>
 
     <!-- Basic Header -->
@@ -268,7 +285,7 @@ export default {
       }
     ],
     account: [
-      { icon: "mdi-account", text: "My Account", route: "/myprofile/" },
+      { icon: "mdi-account", text: "My Account", route: "/personalInfo/" },
       { icon: "mdi-logout", text: "Logout", route: "/logout/" }
     ],
     employee: [
@@ -342,6 +359,9 @@ export default {
       if (data.order.status === "incart") {
         this.onlineCount++;
       }
+      if (data.order === "complete") {
+        this.retrieve();
+      }
     });
   },
   components: {
@@ -377,8 +397,7 @@ export default {
       }
     },
     getOrder(item, event) {
-      event.target.classList.add("color");
-      localStorage.setItem("customerId", item[0].customerId);
+      localStorage.setItem("customer", item[0].customerId);
       localStorage.setItem("customerType", "online");
       ROUTER.push("/productCategory/online").catch(() => {});
     },
