@@ -305,19 +305,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -578,7 +565,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".register[data-v-5b3af0cd] {\n  width: 100%;\n}\n.container[data-v-5b3af0cd] {\n  border: orange solid 1px;\n  margin-bottom: 2%;\n  margin-top: 2%;\n  width: 70%;\n}\nspan[data-v-5b3af0cd] {\n  font-size: 12px;\n}\n.termsCondition[data-v-5b3af0cd] {\n  margin-top: 6%;\n  font-size: 15px;\n  text-align: center;\n}\n.form-control[data-v-5b3af0cd] {\n  border: 1px solid #17d817;\n  border-radius: 5px;\n}\n.bRegister[data-v-5b3af0cd] {\n  color: orange;\n  cursor: pointer;\n}\np[data-v-5b3af0cd] {\n  font-size: 20px;\n}\n.btnRegister[data-v-5b3af0cd] {\n  margin-top: 2%;\n  margin-bottom: 2%;\n  background-color: #17d817;\n  font-weight: bold;\n  width: 100%;\n}\n.containerWidth[data-v-5b3af0cd] {\n  text-align: left;\n  width: 50%;\n}", ""]);
+exports.push([module.i, ".register[data-v-5b3af0cd] {\n  width: 50%;\n}\n.container[data-v-5b3af0cd] {\n  border: orange solid 1px;\n  margin-bottom: 2%;\n  margin-top: 2%;\n  width: 70%;\n  background-color: white;\n}\nspan[data-v-5b3af0cd] {\n  font-size: 12px;\n}\n.termsCondition[data-v-5b3af0cd] {\n  margin-top: 6%;\n  font-size: 15px;\n  text-align: center;\n}\n.form-control[data-v-5b3af0cd] {\n  border: 1px solid #17d817;\n  border-radius: 5px;\n}\n.bRegister[data-v-5b3af0cd] {\n  color: orange;\n  cursor: pointer;\n}\np[data-v-5b3af0cd] {\n  font-size: 20px;\n}\n.btnRegister[data-v-5b3af0cd] {\n  margin-top: 2%;\n  margin-bottom: 2%;\n  background-color: #17d817;\n  font-weight: bold;\n  width: 100%;\n}\n.containerWidth[data-v-5b3af0cd] {\n  text-align: left;\n  width: 50%;\n}", ""]);
 
 // exports
 
@@ -631,616 +618,570 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "div",
-    { staticClass: "container" },
+    "v-img",
+    {
+      staticStyle: { width: "100%", height: "100%" },
+      attrs: { src: __webpack_require__(/*! @/assets/landing1.jpg */ "./resources/assets/landing1.jpg") }
+    },
     [
-      _c("center", [
-        _c("img", {
-          staticStyle: { height: "150px", "margin-top": "1%" },
-          attrs: { src: _vm.image },
-          on: {
-            click: function($event) {
-              return _vm.redirect("/")
-            }
-          }
-        }),
-        _vm._v(" "),
-        _c("p", [
-          _vm._v("\n      Register to\n      "),
-          _c(
-            "b",
-            {
-              staticClass: "bRegister",
+      _c(
+        "div",
+        { staticClass: "container" },
+        [
+          _c("center", [
+            _c("img", {
+              staticStyle: { height: "150px", "margin-top": "1%" },
+              attrs: { src: _vm.image },
               on: {
                 click: function($event) {
                   return _vm.redirect("/")
                 }
               }
-            },
-            [_vm._v("Driptea")]
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", [
-          _c("i", [
-            _vm.errorMessage7 !== null
-              ? _c("span", { staticClass: "text-danger text-center" }, [
-                  _vm._v(_vm._s(_vm.errorMessage7))
-                ])
-              : _vm._e()
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("center", [
-        _c(
-          "div",
-          { staticClass: "containerWidth" },
-          [
+            }),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v("\n        Register to\n        "),
+              _c(
+                "b",
+                {
+                  staticClass: "bRegister",
+                  on: {
+                    click: function($event) {
+                      return _vm.redirect("/")
+                    }
+                  }
+                },
+                [_vm._v("Driptea")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", [
+              _c("i", [
+                _vm.errorMessage7 !== null
+                  ? _c("span", { staticClass: "text-danger text-center" }, [
+                      _vm._v(_vm._s(_vm.errorMessage7))
+                    ])
+                  : _vm._e()
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("center", [
             _c(
-              "v-form",
+              "div",
+              { staticClass: "containerWidth" },
               [
-                _c("div", { staticClass: "row" }, [
-                  _c(
-                    "div",
-                    { staticClass: "col-sm-6" },
-                    [
-                      _c(
-                        "center",
-                        [
-                          _c("i", [
-                            _vm.errorMessage1 !== null
-                              ? _c(
-                                  "span",
-                                  { staticClass: "text-danger text-center" },
-                                  [_vm._v(_vm._s(_vm.errorMessage1))]
-                                )
-                              : _vm._e()
-                          ]),
-                          _vm._v(" "),
-                          _c("i", [
-                            _vm.errorMessage2 !== null
-                              ? _c(
-                                  "span",
-                                  { staticClass: "text-danger text-center" },
-                                  [_vm._v(_vm._s(_vm.errorMessage2))]
-                                )
-                              : _vm._e()
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "v-row",
-                            [
-                              _c(
-                                "v-flex",
-                                { attrs: { xs12: "", sm11: "" } },
-                                [
-                                  _c("v-text-field", {
-                                    attrs: {
-                                      color: "orange",
-                                      label: "firstname",
-                                      outlined: "",
-                                      type: "text",
-                                      id: "firstname",
-                                      required: ""
-                                    },
-                                    on: {
-                                      keyup: function($event) {
-                                        return _vm.validate("firstname")
-                                      }
-                                    },
-                                    model: {
-                                      value: _vm.firstname,
-                                      callback: function($$v) {
-                                        _vm.firstname = $$v
-                                      },
-                                      expression: "firstname"
-                                    }
-                                  })
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c("i", [
-                            _vm.errorMessage12 !== null
-                              ? _c(
-                                  "span",
-                                  { staticClass: "text-danger text-center" },
-                                  [_vm._v(_vm._s(_vm.errorMessage12))]
-                                )
-                              : _vm._e()
-                          ]),
-                          _vm._v(" "),
-                          _c("i", [
-                            _vm.errorMessage13 !== null
-                              ? _c(
-                                  "span",
-                                  { staticClass: "text-danger text-center" },
-                                  [_vm._v(_vm._s(_vm.errorMessage13))]
-                                )
-                              : _vm._e()
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "v-row",
-                            [
-                              _c(
-                                "v-flex",
-                                { attrs: { xs12: "", sm11: "" } },
-                                [
-                                  _c("v-text-field", {
-                                    attrs: {
-                                      color: "orange",
-                                      label: "lastname",
-                                      outlined: "",
-                                      type: "text",
-                                      id: "lastname",
-                                      required: ""
-                                    },
-                                    on: {
-                                      keyup: function($event) {
-                                        return _vm.validate("lastname")
-                                      }
-                                    },
-                                    model: {
-                                      value: _vm.lastname,
-                                      callback: function($$v) {
-                                        _vm.lastname = $$v
-                                      },
-                                      expression: "lastname"
-                                    }
-                                  })
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c("i", [
-                            _vm.errorMessage10 !== null
-                              ? _c(
-                                  "span",
-                                  { staticClass: "text-danger text-center" },
-                                  [_vm._v(_vm._s(_vm.errorMessage10))]
-                                )
-                              : _vm._e()
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "v-row",
-                            [
-                              _c(
-                                "v-flex",
-                                { attrs: { xs12: "", sm11: "" } },
-                                [
-                                  _c("v-text-field", {
-                                    attrs: {
-                                      color: "orange",
-                                      label: "Address",
-                                      outlined: "",
-                                      type: "text",
-                                      id: "address",
-                                      required: ""
-                                    },
-                                    on: {
-                                      keyup: function($event) {
-                                        return _vm.validate("address")
-                                      }
-                                    },
-                                    model: {
-                                      value: _vm.address,
-                                      callback: function($$v) {
-                                        _vm.address = $$v
-                                      },
-                                      expression: "address"
-                                    }
-                                  })
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c("i", [
-                            _vm.errorMessage8 !== null
-                              ? _c(
-                                  "span",
-                                  { staticClass: "text-danger text-center" },
-                                  [_vm._v(_vm._s(_vm.errorMessage8))]
-                                )
-                              : _vm._e()
-                          ]),
-                          _vm._v(" "),
-                          _c("i", [
-                            _vm.errorMessage9 !== null
-                              ? _c(
-                                  "span",
-                                  { staticClass: "text-danger text-center" },
-                                  [_vm._v(_vm._s(_vm.errorMessage9))]
-                                )
-                              : _vm._e()
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "v-row",
-                            [
-                              _c(
-                                "v-flex",
-                                { attrs: { xs12: "", sm11: "" } },
-                                [
-                                  _c("v-text-field", {
-                                    attrs: {
-                                      color: "orange",
-                                      label: "Contact Number",
-                                      outlined: "",
-                                      type: "number",
-                                      id: "contactNum",
-                                      required: ""
-                                    },
-                                    on: {
-                                      keyup: function($event) {
-                                        return _vm.validate("contact")
-                                      }
-                                    },
-                                    model: {
-                                      value: _vm.contactNum,
-                                      callback: function($$v) {
-                                        _vm.contactNum = $$v
-                                      },
-                                      expression: "contactNum"
-                                    }
-                                  })
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "col-sm-6" },
-                    [
-                      _c(
-                        "center",
-                        [
-                          _c("i", [
-                            _vm.errorMessage14 !== null
-                              ? _c(
-                                  "span",
-                                  { staticClass: "text-danger text-center" },
-                                  [_vm._v(_vm._s(_vm.errorMessage14))]
-                                )
-                              : _vm._e()
-                          ]),
-                          _vm._v(" "),
-                          _c("i", [
-                            _vm.errorMessage15 !== null
-                              ? _c(
-                                  "span",
-                                  { staticClass: "text-danger text-center" },
-                                  [_vm._v(_vm._s(_vm.errorMessage15))]
-                                )
-                              : _vm._e()
-                          ]),
-                          _vm._v(" "),
-                          _c("i", [
-                            _vm.errorMessage16 !== null
-                              ? _c(
-                                  "span",
-                                  { staticClass: "text-danger text-center" },
-                                  [_vm._v(_vm._s(_vm.errorMessage16))]
-                                )
-                              : _vm._e()
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "v-row",
-                            [
-                              _c(
-                                "v-flex",
-                                { attrs: { xs12: "", sm11: "" } },
-                                [
-                                  _c("v-text-field", {
-                                    attrs: {
-                                      color: "orange",
-                                      label: "username",
-                                      outlined: "",
-                                      type: "text",
-                                      id: "username",
-                                      required: ""
-                                    },
-                                    on: {
-                                      keyup: function($event) {
-                                        return _vm.validate("username")
-                                      }
-                                    },
-                                    model: {
-                                      value: _vm.username,
-                                      callback: function($$v) {
-                                        _vm.username = $$v
-                                      },
-                                      expression: "username"
-                                    }
-                                  })
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c("i", [
-                            _vm.errorMessage3 !== null
-                              ? _c(
-                                  "span",
-                                  { staticClass: "text-danger text-center" },
-                                  [_vm._v(_vm._s(_vm.errorMessage3))]
-                                )
-                              : _vm._e()
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "v-row",
-                            [
-                              _c(
-                                "v-flex",
-                                { attrs: { xs12: "", sm11: "" } },
-                                [
-                                  _c("v-text-field", {
-                                    attrs: {
-                                      color: "orange",
-                                      label: "email",
-                                      outlined: "",
-                                      type: "email",
-                                      id: "email",
-                                      required: ""
-                                    },
-                                    on: {
-                                      keyup: function($event) {
-                                        return _vm.validate("email")
-                                      }
-                                    },
-                                    model: {
-                                      value: _vm.email,
-                                      callback: function($$v) {
-                                        _vm.email = $$v
-                                      },
-                                      expression: "email"
-                                    }
-                                  })
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _vm.successMessage !== null
+                _c(
+                  "v-form",
+                  [
+                    _c(
+                      "center",
+                      [
+                        _c("i", [
+                          _vm.errorMessage1 !== null
                             ? _c(
                                 "span",
-                                { staticClass: "text-success text-center" },
-                                [_vm._v(_vm._s(_vm.successMessage))]
+                                { staticClass: "text-danger text-center" },
+                                [_vm._v(_vm._s(_vm.errorMessage1))]
                               )
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _c("i", [
-                            _vm.errorMessage4 !== null
-                              ? _c(
-                                  "span",
-                                  { staticClass: "text-danger text-center" },
-                                  [_vm._v(_vm._s(_vm.errorMessage4))]
-                                )
-                              : _vm._e()
-                          ]),
-                          _vm._v(" "),
-                          _c("i", [
-                            _vm.errorMessage5 !== null
-                              ? _c(
-                                  "span",
-                                  { staticClass: "text-danger text-center" },
-                                  [_vm._v(_vm._s(_vm.errorMessage5))]
-                                )
-                              : _vm._e()
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "v-row",
-                            [
-                              _c(
-                                "v-flex",
-                                { attrs: { xs12: "", sm11: "" } },
-                                [
-                                  _c("v-text-field", {
-                                    attrs: {
-                                      color: "orange",
-                                      "append-icon": _vm.show3
-                                        ? "visibility"
-                                        : "visibility_off",
-                                      type: _vm.show3 ? "text" : "password",
-                                      label: "Password",
-                                      outlined: "",
-                                      id: "password",
-                                      required: ""
-                                    },
-                                    on: {
-                                      keyup: function($event) {
-                                        return _vm.validate("password")
-                                      },
-                                      "click:append": function($event) {
-                                        _vm.show3 = !_vm.show3
-                                      }
-                                    },
-                                    model: {
-                                      value: _vm.password,
-                                      callback: function($$v) {
-                                        _vm.password = $$v
-                                      },
-                                      expression: "password"
-                                    }
-                                  })
-                                ],
-                                1
+                            : _vm._e()
+                        ]),
+                        _vm._v(" "),
+                        _c("i", [
+                          _vm.errorMessage2 !== null
+                            ? _c(
+                                "span",
+                                { staticClass: "text-danger text-center" },
+                                [_vm._v(_vm._s(_vm.errorMessage2))]
                               )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c("i", [
-                            _vm.errorMessage6 !== null
-                              ? _c(
-                                  "span",
-                                  { staticClass: "text-danger text-center" },
-                                  [_vm._v(_vm._s(_vm.errorMessage6))]
-                                )
-                              : _vm._e()
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "v-row",
-                            [
-                              _c(
-                                "v-flex",
-                                { attrs: { xs12: "", sm11: "" } },
-                                [
-                                  _c("v-text-field", {
-                                    attrs: {
-                                      color: "orange",
-                                      label: "Confirm Password",
-                                      outlined: "",
-                                      "append-icon": _vm.show4
-                                        ? "visibility"
-                                        : "visibility_off",
-                                      type: _vm.show4 ? "text" : "password",
-                                      id: "confirmPassword",
-                                      required: ""
-                                    },
-                                    on: {
-                                      keyup: function($event) {
-                                        return _vm.validate("confirmPass")
-                                      },
-                                      "click:append": function($event) {
-                                        _vm.show4 = !_vm.show4
-                                      }
-                                    },
-                                    model: {
-                                      value: _vm.confirmPass,
-                                      callback: function($$v) {
-                                        _vm.confirmPass = $$v
-                                      },
-                                      expression: "confirmPass"
-                                    }
-                                  })
-                                ],
-                                1
+                            : _vm._e()
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "v-flex",
+                          { attrs: { xs12: "", sm11: "" } },
+                          [
+                            _c("v-text-field", {
+                              attrs: {
+                                color: "orange",
+                                label: "firstname",
+                                outlined: "",
+                                type: "text",
+                                id: "firstname",
+                                required: ""
+                              },
+                              on: {
+                                keyup: function($event) {
+                                  return _vm.validate("firstname")
+                                }
+                              },
+                              model: {
+                                value: _vm.firstname,
+                                callback: function($$v) {
+                                  _vm.firstname = $$v
+                                },
+                                expression: "firstname"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c("i", [
+                          _vm.errorMessage12 !== null
+                            ? _c(
+                                "span",
+                                { staticClass: "text-danger text-center" },
+                                [_vm._v(_vm._s(_vm.errorMessage12))]
                               )
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ]),
+                            : _vm._e()
+                        ]),
+                        _vm._v(" "),
+                        _c("i", [
+                          _vm.errorMessage13 !== null
+                            ? _c(
+                                "span",
+                                { staticClass: "text-danger text-center" },
+                                [_vm._v(_vm._s(_vm.errorMessage13))]
+                              )
+                            : _vm._e()
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "v-flex",
+                          { attrs: { xs12: "", sm11: "" } },
+                          [
+                            _c("v-text-field", {
+                              attrs: {
+                                color: "orange",
+                                label: "lastname",
+                                outlined: "",
+                                type: "text",
+                                id: "lastname",
+                                required: ""
+                              },
+                              on: {
+                                keyup: function($event) {
+                                  return _vm.validate("lastname")
+                                }
+                              },
+                              model: {
+                                value: _vm.lastname,
+                                callback: function($$v) {
+                                  _vm.lastname = $$v
+                                },
+                                expression: "lastname"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c("i", [
+                          _vm.errorMessage10 !== null
+                            ? _c(
+                                "span",
+                                { staticClass: "text-danger text-center" },
+                                [_vm._v(_vm._s(_vm.errorMessage10))]
+                              )
+                            : _vm._e()
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "v-flex",
+                          { attrs: { xs12: "", sm11: "" } },
+                          [
+                            _c("v-text-field", {
+                              attrs: {
+                                color: "orange",
+                                label: "Address",
+                                outlined: "",
+                                type: "text",
+                                id: "address",
+                                required: ""
+                              },
+                              on: {
+                                keyup: function($event) {
+                                  return _vm.validate("address")
+                                }
+                              },
+                              model: {
+                                value: _vm.address,
+                                callback: function($$v) {
+                                  _vm.address = $$v
+                                },
+                                expression: "address"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c("i", [
+                          _vm.errorMessage8 !== null
+                            ? _c(
+                                "span",
+                                { staticClass: "text-danger text-center" },
+                                [_vm._v(_vm._s(_vm.errorMessage8))]
+                              )
+                            : _vm._e()
+                        ]),
+                        _vm._v(" "),
+                        _c("i", [
+                          _vm.errorMessage9 !== null
+                            ? _c(
+                                "span",
+                                { staticClass: "text-danger text-center" },
+                                [_vm._v(_vm._s(_vm.errorMessage9))]
+                              )
+                            : _vm._e()
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "v-flex",
+                          { attrs: { xs12: "", sm11: "" } },
+                          [
+                            _c("v-text-field", {
+                              attrs: {
+                                color: "orange",
+                                label: "Contact Number",
+                                outlined: "",
+                                type: "number",
+                                id: "contactNum",
+                                required: ""
+                              },
+                              on: {
+                                keyup: function($event) {
+                                  return _vm.validate("contact")
+                                }
+                              },
+                              model: {
+                                value: _vm.contactNum,
+                                callback: function($$v) {
+                                  _vm.contactNum = $$v
+                                },
+                                expression: "contactNum"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c("i", [
+                          _vm.errorMessage14 !== null
+                            ? _c(
+                                "span",
+                                { staticClass: "text-danger text-center" },
+                                [_vm._v(_vm._s(_vm.errorMessage14))]
+                              )
+                            : _vm._e()
+                        ]),
+                        _vm._v(" "),
+                        _c("i", [
+                          _vm.errorMessage15 !== null
+                            ? _c(
+                                "span",
+                                { staticClass: "text-danger text-center" },
+                                [_vm._v(_vm._s(_vm.errorMessage15))]
+                              )
+                            : _vm._e()
+                        ]),
+                        _vm._v(" "),
+                        _c("i", [
+                          _vm.errorMessage16 !== null
+                            ? _c(
+                                "span",
+                                { staticClass: "text-danger text-center" },
+                                [_vm._v(_vm._s(_vm.errorMessage16))]
+                              )
+                            : _vm._e()
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "v-flex",
+                          { attrs: { xs12: "", sm11: "" } },
+                          [
+                            _c("v-text-field", {
+                              attrs: {
+                                color: "orange",
+                                label: "username",
+                                outlined: "",
+                                type: "text",
+                                id: "username",
+                                required: ""
+                              },
+                              on: {
+                                keyup: function($event) {
+                                  return _vm.validate("username")
+                                }
+                              },
+                              model: {
+                                value: _vm.username,
+                                callback: function($$v) {
+                                  _vm.username = $$v
+                                },
+                                expression: "username"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c("i", [
+                          _vm.errorMessage3 !== null
+                            ? _c(
+                                "span",
+                                { staticClass: "text-danger text-center" },
+                                [_vm._v(_vm._s(_vm.errorMessage3))]
+                              )
+                            : _vm._e()
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "v-flex",
+                          { attrs: { xs12: "", sm11: "" } },
+                          [
+                            _c("v-text-field", {
+                              attrs: {
+                                color: "orange",
+                                label: "email",
+                                outlined: "",
+                                type: "email",
+                                id: "email",
+                                required: ""
+                              },
+                              on: {
+                                keyup: function($event) {
+                                  return _vm.validate("email")
+                                }
+                              },
+                              model: {
+                                value: _vm.email,
+                                callback: function($$v) {
+                                  _vm.email = $$v
+                                },
+                                expression: "email"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _vm.successMessage !== null
+                          ? _c(
+                              "span",
+                              { staticClass: "text-success text-center" },
+                              [_vm._v(_vm._s(_vm.successMessage))]
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _c("i", [
+                          _vm.errorMessage4 !== null
+                            ? _c(
+                                "span",
+                                { staticClass: "text-danger text-center" },
+                                [_vm._v(_vm._s(_vm.errorMessage4))]
+                              )
+                            : _vm._e()
+                        ]),
+                        _vm._v(" "),
+                        _c("i", [
+                          _vm.errorMessage5 !== null
+                            ? _c(
+                                "span",
+                                { staticClass: "text-danger text-center" },
+                                [_vm._v(_vm._s(_vm.errorMessage5))]
+                              )
+                            : _vm._e()
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "v-flex",
+                          { attrs: { xs12: "", sm11: "" } },
+                          [
+                            _c("v-text-field", {
+                              attrs: {
+                                color: "orange",
+                                "append-icon": _vm.show3
+                                  ? "visibility"
+                                  : "visibility_off",
+                                type: _vm.show3 ? "text" : "password",
+                                label: "Password",
+                                outlined: "",
+                                id: "password",
+                                required: ""
+                              },
+                              on: {
+                                keyup: function($event) {
+                                  return _vm.validate("password")
+                                },
+                                "click:append": function($event) {
+                                  _vm.show3 = !_vm.show3
+                                }
+                              },
+                              model: {
+                                value: _vm.password,
+                                callback: function($$v) {
+                                  _vm.password = $$v
+                                },
+                                expression: "password"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c("i", [
+                          _vm.errorMessage6 !== null
+                            ? _c(
+                                "span",
+                                { staticClass: "text-danger text-center" },
+                                [_vm._v(_vm._s(_vm.errorMessage6))]
+                              )
+                            : _vm._e()
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "v-flex",
+                          { attrs: { xs12: "", sm11: "" } },
+                          [
+                            _c("v-text-field", {
+                              attrs: {
+                                color: "orange",
+                                label: "Confirm Password",
+                                outlined: "",
+                                "append-icon": _vm.show4
+                                  ? "visibility"
+                                  : "visibility_off",
+                                type: _vm.show4 ? "text" : "password",
+                                id: "confirmPassword",
+                                required: ""
+                              },
+                              on: {
+                                keyup: function($event) {
+                                  return _vm.validate("confirmPass")
+                                },
+                                "click:append": function($event) {
+                                  _vm.show4 = !_vm.show4
+                                }
+                              },
+                              model: {
+                                value: _vm.confirmPass,
+                                callback: function($$v) {
+                                  _vm.confirmPass = $$v
+                                },
+                                expression: "confirmPass"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "v-btn",
+                          {
+                            staticClass: "btn register",
+                            attrs: {
+                              type: "button",
+                              outlined: "",
+                              color: "orange"
+                            },
+                            on: { click: _vm.register }
+                          },
+                          [_vm._v("Register")]
+                        )
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                ),
                 _vm._v(" "),
                 _c(
-                  "v-btn",
-                  {
-                    staticClass: "btn register",
-                    attrs: { type: "button", outlined: "", color: "orange" },
-                    on: { click: _vm.register }
-                  },
-                  [_vm._v("Register")]
+                  "div",
+                  [
+                    _c("center", [
+                      _c("label", { staticClass: "termsCondition" }, [
+                        _vm._v(
+                          "\n              By signing up, you agree to our\n              "
+                        ),
+                        _c(
+                          "b",
+                          {
+                            staticClass: "bRegister",
+                            on: {
+                              click: function($event) {
+                                return _vm.redirect("/")
+                              }
+                            }
+                          },
+                          [_vm._v("Terms")]
+                        ),
+                        _vm._v(" and\n              "),
+                        _c(
+                          "b",
+                          {
+                            staticClass: "bRegister",
+                            on: {
+                              click: function($event) {
+                                return _vm.redirect("/")
+                              }
+                            }
+                          },
+                          [_vm._v("Conditions")]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("hr"),
+                      _vm._v(" "),
+                      _c("label", { staticClass: "termsCondition" }, [
+                        _vm._v(
+                          "\n              Already have an account?\n              "
+                        ),
+                        _c(
+                          "b",
+                          {
+                            staticClass: "bRegister",
+                            on: {
+                              click: function($event) {
+                                return _vm.redirect("/login")
+                              }
+                            }
+                          },
+                          [_vm._v("Login")]
+                        )
+                      ])
+                    ])
+                  ],
+                  1
                 )
               ],
               1
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              [
-                _c("center", [
-                  _c("label", { staticClass: "termsCondition" }, [
-                    _vm._v(
-                      "\n            By signing up, you agree to our\n            "
-                    ),
-                    _c(
-                      "b",
-                      {
-                        staticClass: "bRegister",
-                        on: {
-                          click: function($event) {
-                            return _vm.redirect("/")
-                          }
-                        }
-                      },
-                      [_vm._v("Terms")]
-                    ),
-                    _vm._v(" and\n            "),
-                    _c(
-                      "b",
-                      {
-                        staticClass: "bRegister",
-                        on: {
-                          click: function($event) {
-                            return _vm.redirect("/")
-                          }
-                        }
-                      },
-                      [_vm._v("Conditions")]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("hr"),
-                  _vm._v(" "),
-                  _c("label", { staticClass: "termsCondition" }, [
-                    _vm._v(
-                      "\n            Already have an account?\n            "
-                    ),
-                    _c(
-                      "b",
-                      {
-                        staticClass: "bRegister",
-                        on: {
-                          click: function($event) {
-                            return _vm.redirect("/login")
-                          }
-                        }
-                      },
-                      [_vm._v("Login")]
-                    )
-                  ])
-                ])
-              ],
-              1
             )
-          ],
-          1
-        )
-      ]),
-      _vm._v(" "),
-      _vm.loadingShow ? _c("loading") : _vm._e()
-    ],
-    1
+          ]),
+          _vm._v(" "),
+          _vm.loadingShow ? _c("loading") : _vm._e()
+        ],
+        1
+      )
+    ]
   )
 }
 var staticRenderFns = []
 render._withStripped = true
 
 
+
+/***/ }),
+
+/***/ "./resources/assets/landing1.jpg":
+/*!***************************************!*\
+  !*** ./resources/assets/landing1.jpg ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/landing1.jpg?a0e09369cbf15672a2f2914033ce9f0b";
 
 /***/ }),
 

@@ -300,25 +300,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -487,11 +468,7 @@ __webpack_require__.r(__webpack_exports__);
         year: this.theYear
       };
       var i;
-      var dateFrmDBarr = [];
-      var totalfrmDB = []; // let xs = this.xlabels;
-
       var ldate = this.lastDate;
-      var namesfromDB = [];
       var PRODUCT = "";
       var forSeries = [];
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(_services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].url + "getDailyProductSales", params, _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].config).then(function (response) {
@@ -502,70 +479,43 @@ __webpack_require__.r(__webpack_exports__);
         }
 
         _this2.loadingShow = false;
-        response.data.prods.forEach(function (element) {
-          namesfromDB.push(element.ProductName);
-          var d = element.date;
-          var tots = element.quan;
-          dateFrmDBarr.push(d);
-          totalfrmDB.push(tots);
-        });
+        console.log("nag length sa prod name bruh ..", ldate);
 
         _this2.productName.forEach(function (name) {
-          if (namesfromDB.includes(name)) {
-            response.data.prods.forEach(function (prod) {
-              if (prod.ProductName === name) {
-                PRODUCT = name;
+          var color = _this2.getRandomColor();
 
-                for (i = 1; i < ldate + 1; i++) {
-                  if (prod.date === i) {
-                    _this2.secondpoints.push(prod.quan);
-                  } else {
-                    _this2.secondpoints.push(0);
-                  }
-                }
+          _this2.options2.colors.push(color);
 
-                forSeries.push({
-                  name: PRODUCT,
-                  data: _this2.secondpoints
-                });
-
-                var color = _this2.getRandomColor();
-
-                _this2.options2.colors.push(color); // console.log("secondpoints ===", this.secondpoints);
-
-
-                PRODUCT = "";
-                _this2.secondpoints = [];
-              }
-            });
-          } else {
-            PRODUCT = name;
-
-            for (i = 1; i < ldate + 1; i++) {
-              _this2.secondpoints.push(0);
-            }
-
-            forSeries.push({
-              name: PRODUCT,
-              data: _this2.secondpoints
-            });
-
-            var color = _this2.getRandomColor();
-
-            _this2.options2.colors.push(color);
-
-            PRODUCT = "";
-            _this2.secondpoints = [];
+          for (i = 1; i < ldate + 1; i++) {
+            _this2.secondpoints.push(0);
           }
+
+          forSeries.push({
+            name: name,
+            data: _this2.secondpoints
+          });
+          _this2.secondpoints = [];
+        });
+
+        forSeries.forEach(function (obj) {
+          response.data.prods.forEach(function (prod) {
+            if (prod.ProductName === obj.name) {
+              var index = prod.date - 1;
+              obj.data.splice(index, 1, parseInt(prod.quan));
+            }
+          });
         });
 
         if (response.data.prods.length > 0) {
-          _this2.series2 = forSeries; // console.log("ang series 2", this.series2);
+          _this2.series2 = forSeries;
         } else {
           _this2.series2 = [];
         }
+
+        console.log("forseries array bruh ", forSeries);
       });
       this.secondpoints = [];
+      this.options2.colors = [];
     },
     MonthlyProductSale: function MonthlyProductSale(yyyy) {
       var _this3 = this;
@@ -577,8 +527,7 @@ __webpack_require__.r(__webpack_exports__);
       };
       var monthsfrmDB = [];
       var i;
-      var totalfrmDB = []; // let xs = this.xlabels;
-
+      var totalfrmDB = [];
       var ldate = this.lastDate;
       var namesfromDB = [];
       var PRODUCT = "";
@@ -606,7 +555,7 @@ __webpack_require__.r(__webpack_exports__);
 
                 for (i = 1; i < _this3.mnths.length + 1; i++) {
                   if (prod.month === i) {
-                    _this3.secondpoints.push(prod.quan);
+                    _this3.secondpoints.push(parseInt(prod.quan));
                   } else {
                     _this3.secondpoints.push(0);
                   }
@@ -653,6 +602,8 @@ __webpack_require__.r(__webpack_exports__);
           _this3.series2 = [];
         }
       });
+      this.secondpoints = [];
+      this.options2.colors = [];
     },
     QuarterlyProductSale: function QuarterlyProductSale(yyyy) {
       var _this4 = this;
@@ -693,7 +644,7 @@ __webpack_require__.r(__webpack_exports__);
 
                 for (i = 1; i < _this4.mnths.length + 1; i++) {
                   if (prod.month === i) {
-                    _this4.secondpoints.push(prod.quan);
+                    _this4.secondpoints.push(parseInt(prod.quan));
                   } else {
                     _this4.secondpoints.push(0);
                   }
@@ -838,6 +789,7 @@ __webpack_require__.r(__webpack_exports__);
       this.thirdQ = [];
       this.forthQ = [];
       this.QauterData = [];
+      this.options2.colors = [];
     },
     SemiProductSale: function SemiProductSale(yyyy) {
       var _this5 = this;
@@ -878,7 +830,7 @@ __webpack_require__.r(__webpack_exports__);
 
                 for (i = 1; i < _this5.mnths.length + 1; i++) {
                   if (prod.month === i) {
-                    _this5.secondpoints.push(prod.quan);
+                    _this5.secondpoints.push(parseInt(prod.quan));
                   } else {
                     _this5.secondpoints.push(0);
                   }
@@ -926,12 +878,7 @@ __webpack_require__.r(__webpack_exports__);
                 forSeries.push({
                   name: PRODUCT,
                   data: _this5.secondpoints
-                });
-
-                var color = _this5.getRandomColor();
-
-                _this5.options2.colors.push(color); // console.log("secondpoints ===", this.secondpoints);
-
+                }); // console.log("secondpoints ===", this.secondpoints);
 
                 PRODUCT = "";
                 _this5.secondpoints = [];
@@ -1022,83 +969,37 @@ __webpack_require__.r(__webpack_exports__);
       this.forthQ = [];
       this.QauterData = [];
       this.semi_Data = [];
+      this.options2.colors = [];
     },
     onFilter2: function onFilter2() {
       if (this.thefilter2 == "Daily") {
+        this.options2.xaxis.categories = [];
         this.MonthLabel2 = this.mnths[this.theMonth - 1];
-        this.options2 = {
-          colors: ["#ff5b04"],
-          chart: {
-            id: "sales-summary2"
-          },
-          xaxis: {
-            categories: this.xlabels
-          },
-          stroke: {
-            width: 2,
-            curve: "smooth"
-          }
-        };
+        this.options2.xaxis.categories = this.xlabels;
         this.dailyProductSale();
         this.ok = true;
         this.ok2 = false;
         this.ok3 = false;
-        this.options2.xaxis.categories = [];
       } else if (this.thefilter2 == "Weekly") {} else if (this.thefilter2 == "Monthly") {
-        // console.log("ang year value ", this.yrvalueS);
-        this.MonthlyProductSale(this.yrvalueS);
+        console.log("ang colors bruh ", this.options2.colors); // console.log("ang year value ", this.yrvalueS);
+
         this.MonthLabel2 = new Date(this.thedate2).getFullYear();
-        this.options2 = {
-          colors: ["#ff5b04"],
-          chart: {
-            id: "sales-summary2"
-          },
-          xaxis: {
-            categories: this.mnths
-          },
-          stroke: {
-            width: 2,
-            curve: "smooth"
-          }
-        };
+        this.options2.xaxis.categories = this.mnths;
         this.ok = false;
         this.ok2 = true;
         this.ok3 = false;
+        this.MonthlyProductSale(this.yrvalueS); // console.log("ang colors bruh ", this.options2.colors);
       } else if (this.thefilter2 == "Quarterly") {
         this.MonthLabel2 = new Date(this.thedate2).getFullYear();
+        this.options2.xaxis.categories = this.quarter;
         this.QuarterlyProductSale(this.yrvalueS);
-        this.options2 = {
-          colors: ["#ff5b04"],
-          chart: {
-            id: "sales-summary2"
-          },
-          xaxis: {
-            categories: this.quarter
-          },
-          stroke: {
-            width: 2,
-            curve: "smooth"
-          }
-        };
         this.ok = false;
         this.ok2 = true;
         this.ok3 = false;
       } else if (this.thefilter2 == "Semi-Annual") {
         this.MonthLabel2 = new Date(this.thedate2).getFullYear();
+        this.options2.xaxis.categories = this.semi;
         this.SemiProductSale(this.yrvalueS);
-        this.options2 = {
-          colors: ["#ff5b04"],
-          chart: {
-            id: "sales-summary2"
-          },
-          xaxis: {
-            categories: this.semi
-          },
-          stroke: {
-            width: 2,
-            curve: "smooth"
-          }
-        };
         this.ok = false;
         this.ok2 = true;
         this.ok3 = false;
@@ -1631,10 +1532,10 @@ __webpack_require__.r(__webpack_exports__);
               name: response.data.prods[i].pName
             });
           } else {
-            console.log("sa else ni sulod");
+            // console.log("sa else ni sulod");
             top3.push({
               img: _this12.tempimg,
-              name: "pisti na ni "
+              name: ""
             });
           } // console.log("----------------------------- ", top3[0].name);
           // console.log("================ ", this.tempimg);
@@ -1662,7 +1563,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.prodNAme[data-v-124112e6]{\r\n  color: #ff5b04;\n}\n.welcome[data-v-124112e6] {\r\n  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,\r\n    Helvetica Neue, Arial, sans-serif;\r\n  font-size: 25px;\r\n  margin-bottom: 10px;\r\n  margin-left: 4%;\r\n  font-weight: bold;\r\n  margin-top: 5%;\n}\n.insideToolbar[data-v-124112e6] {\r\n  margin-top: 25px;\n}\n.GraphLabel[data-v-124112e6] {\r\n  margin-left: 45%;\r\n  font-weight: bold;\n}\n.annualDateCal1[data-v-124112e6],\r\n.annualDateCal2[data-v-124112e6],\r\n.yearMenu[data-v-124112e6],\r\n.graphTitle[data-v-124112e6] {\r\n  color: black;\n}\n.graphTitle[data-v-124112e6],\r\n.text1[data-v-124112e6] {\r\n  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,\r\n    Helvetica Neue, Arial, sans-serif;\r\n  font-size: 1rem;\r\n  font-weight: bold;\n}\n.YRcal[data-v-124112e6] {\r\n  color: black;\n}\n.Cname[data-v-124112e6],\r\n.GraphLabel[data-v-124112e6] {\r\n  color: #ff5b04;\n}\n.text1[data-v-124112e6] {\r\n  margin-left: 10%;\r\n  text-align: center;\r\n  color: #ff5b04;\n}\n.TB3[data-v-124112e6] {\r\n  margin-bottom: 20px;\r\n  justify-content: center;\r\n  border-radius: 1%;\n}\n.theimageCard[data-v-124112e6]{\r\n  align-content: center;\r\n  border: 1px solid #999999;\r\n  border-radius: 1%;\n}\n.prods[data-v-124112e6] {\r\n  border: 1px solid #999999;\r\n  border-radius: 1%;\n}\n.subhead[data-v-124112e6] {\r\n  margin-bottom: 20px;\n}\r\n/* .chart {\r\n  width: 50%;\r\n} */\n.body[data-v-124112e6] {\r\n  margin-left: 3%;\r\n  margin-right: 3%;\r\n  height: 100%;\r\n  margin-bottom: 5%;\n}\n.top3[data-v-124112e6] {\r\n  width: 20%;\r\n  height: 50%;\r\n  border: 1px solid #999999;\r\n  border-radius: 1%;\n}\n.thetop3[data-v-124112e6] {\r\n  height: 180px;\r\n  width: 90%;\n}\n.theimage[data-v-124112e6] { \r\n  margin: 2%;\r\n  height: 200px;\r\n  width: 100%;\n}\n.Prod_name[data-v-124112e6] {\r\n  color: black;\n}\r\n", ""]);
+exports.push([module.i, "\n.prodNAme[data-v-124112e6] {\r\n  color: #ff5b04;\n}\n.welcome[data-v-124112e6] {\r\n  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,\r\n    Helvetica Neue, Arial, sans-serif;\r\n  font-size: 25px;\r\n  margin-bottom: 10px;\r\n  margin-left: 4%;\r\n  font-weight: bold;\r\n  margin-top: 5%;\n}\n.insideToolbar[data-v-124112e6] {\r\n  margin-top: 25px;\n}\n.GraphLabel[data-v-124112e6] {\r\n  margin-left: 45%;\r\n  font-weight: bold;\n}\n.annualDateCal1[data-v-124112e6],\r\n.annualDateCal2[data-v-124112e6],\r\n.yearMenu[data-v-124112e6],\r\n.graphTitle[data-v-124112e6] {\r\n  color: black;\n}\n.graphTitle[data-v-124112e6],\r\n.text1[data-v-124112e6] {\r\n  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,\r\n    Helvetica Neue, Arial, sans-serif;\r\n  font-size: 1rem;\r\n  font-weight: bold;\n}\n.YRcal[data-v-124112e6] {\r\n  color: black;\n}\n.Cname[data-v-124112e6],\r\n.GraphLabel[data-v-124112e6] {\r\n  color: #ff5b04;\n}\n.text1[data-v-124112e6] {\r\n  margin-left: 10%;\r\n  text-align: center;\r\n  color:black;\n}\n.TB3[data-v-124112e6] {\r\n  margin-bottom: 20px;\r\n  justify-content: center;\r\n  border-radius: 1%;\n}\n.theimageCard[data-v-124112e6] {\r\n  align-content: center;\r\n  border: 1px solid #999999;\r\n  border-radius: 1%;\n}\n.prods[data-v-124112e6] {\r\n  border: 1px solid #999999;\r\n  border-radius: 1%;\n}\n.subhead[data-v-124112e6] {\r\n  margin-bottom: 20px;\n}\r\n/* .chart {\r\n  width: 50%;\r\n} */\n.body[data-v-124112e6] {\r\n  margin-left: 3%;\r\n  margin-right: 3%;\r\n  height: 100%;\r\n  margin-bottom: 5%;\n}\n.top3[data-v-124112e6] {\r\n  width: 20%;\r\n  height: 50%;\r\n  border: 1px solid #999999;\r\n  border-radius: 1%;\n}\n.thetop3[data-v-124112e6] {\r\n  height: 200px;\r\n  width: 90%;\n}\n.theimage[data-v-124112e6] {\r\n  margin: 2%;\r\n  height: 210px;\r\n  width: 100%;\n}\n.Prod_name[data-v-124112e6] {\r\n  color: black;\n}\r\n", ""]);
 
 // exports
 
@@ -2191,7 +2092,7 @@ var render = function() {
                                         ? $$selectedVal
                                         : $$selectedVal[0]
                                     },
-                                    _vm.onChangeYear
+                                    _vm.onChangeYear2
                                   ]
                                 }
                               },
