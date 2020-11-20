@@ -60,7 +60,12 @@ class OrderController extends Controller
     }
 
     public function retrieveOnlineOrder(Request $request){
-        $order = Order::with('getCustomer')->with('orderProduct')->with('sameOrder')->where('status', 'pendingCustomer')->where('deleted_at', null)->orderBy('id','DESC')->get()->groupBy('customerId');
+        $order = Order::with('getCustomer')->with('orderProduct')->with('sameOrder')->where('status', 'pendingCustomer')->where('deleted_at', null)->orderBy('id','ASC')->get()->groupBy('customerId');
+        return response()->json(compact('order'));
+    }
+
+    public function retrieveOneOnlineOrder(Request $request){
+        $order = Order::with('getCustomer')->with('orderProduct')->with('sameOrder')->where('onlineId', $request->id)->where('status', 'pendingCustomer')->where('deleted_at', null)->orderBy('id','DESC')->get()->groupBy('customerId');
         return response()->json(compact('order'));
     }
 
@@ -82,6 +87,8 @@ class OrderController extends Controller
         }
         foreach ($order as $value) {
             $ord = Order::firstOrCreate(['id' => $value->id]);
+            $ord->modeOfPayment = $request['modeOfPayment'];
+            $ord->ifNotAvailable = $request['ifNotAvailable'];
             $ord->status = $request['status'];
             $ord->save();
         }
@@ -186,6 +193,14 @@ class OrderController extends Controller
             $addOns['addOns'] = $value;
             $addOns->save();
         }
+    }
+
+    public function deleteManyOrder(Request $request){
+        foreach ($request->id as $val) {
+            $order = Order::find($val);
+            $order->delete();
+        }
+        return response()->json(['success' => 'successfully deleted!']);
     }
 
 }

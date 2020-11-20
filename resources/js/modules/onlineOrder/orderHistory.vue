@@ -18,7 +18,7 @@
                >
                  <thead >
                    <tr v-if="tableData !== null && tableData.length > 0">
-                       <th style="width: 30%;">Date</th>
+                       <th>Date</th>
                        <th>Order #</th>
                        <th>Product&nbsp;Ordered</th>
                        <th>Total</th>
@@ -51,7 +51,7 @@
                >
                  <thead>
                    <tr v-if="tableDataPending !== null && tableDataPending.length > 0">
-                       <th scope="2">Date</th>
+                       <th>Date</th>
                        <th>Order #</th>
                        <th>Product&nbsp;Ordered</th>
                        <th>Total</th>
@@ -64,7 +64,7 @@
                    </thead>
                    <tbody>
                        <tr v-for="(items, index) in tableDataPending" :key="index">
-                           <td scope="2">{{getDate(items[0])}}</td>
+                           <td>{{getDate(items[0])}}</td>
                            <td>{{items[0].id}}</td>
                            <td>{{getProduct(items)}}</td>
  
@@ -76,10 +76,6 @@
                            </td>
                        </tr>
                    </tbody>
-               <template>
-                 
-               </template>
-             
                </v-simple-table>
                </div>
        </center>
@@ -275,7 +271,7 @@ export default {
         id: localStorage.getItem("customerId")
       };
       this.$axios
-        .post(AUTH.url + "retrievePendingOrders", parameter, AUTH.config)
+        .post(AUTH.url + "retrieveOneOnlineOrder", parameter, AUTH.config)
         .then(response => {
           if (response.data.status) {
             AUTH.deauthenticate();

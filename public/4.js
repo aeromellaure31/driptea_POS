@@ -204,10 +204,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 
 
 
@@ -344,7 +340,7 @@ __webpack_require__.r(__webpack_exports__);
       var parameter = {
         id: localStorage.getItem("customerId")
       };
-      this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "retrievePendingOrders", parameter, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
+      this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "retrieveOneOnlineOrder", parameter, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
         if (response.data.status) {
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
@@ -605,9 +601,7 @@ var render = function() {
                       _c("thead", [
                         _vm.tableData !== null && _vm.tableData.length > 0
                           ? _c("tr", [
-                              _c("th", { staticStyle: { width: "30%" } }, [
-                                _vm._v("Date")
-                              ]),
+                              _c("th", [_vm._v("Date")]),
                               _vm._v(" "),
                               _c("th", [_vm._v("Order #")]),
                               _vm._v(" "),
@@ -699,9 +693,7 @@ var render = function() {
                         _vm.tableDataPending !== null &&
                         _vm.tableDataPending.length > 0
                           ? _c("tr", [
-                              _c("th", { attrs: { scope: "2" } }, [
-                                _vm._v("Date")
-                              ]),
+                              _c("th", [_vm._v("Date")]),
                               _vm._v(" "),
                               _c("th", [_vm._v("Order #")]),
                               _vm._v(" "),
@@ -730,9 +722,7 @@ var render = function() {
                         "tbody",
                         _vm._l(_vm.tableDataPending, function(items, index) {
                           return _c("tr", { key: index }, [
-                            _c("td", { attrs: { scope: "2" } }, [
-                              _vm._v(_vm._s(_vm.getDate(items[0])))
-                            ]),
+                            _c("td", [_vm._v(_vm._s(_vm.getDate(items[0])))]),
                             _vm._v(" "),
                             _c("td", [_vm._v(_vm._s(items[0].id))]),
                             _vm._v(" "),
@@ -765,11 +755,8 @@ var render = function() {
                           ])
                         }),
                         0
-                      ),
-                      _vm._v(" "),
-                      void 0
-                    ],
-                    2
+                      )
+                    ]
                   )
                 ],
                 1

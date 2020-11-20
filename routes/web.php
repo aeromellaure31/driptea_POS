@@ -66,9 +66,9 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('getAnnualProductSales','App\Http\Controllers\OrderController@AnnualProductSales');
     Route::post('retrieveSalesReportPerCategory','App\Http\Controllers\OrderController@retrieveSalesReportPerCategory');
     Route::post('retrievePendingOrders','App\Http\Controllers\OrderController@retrieveOnlineOrder');
+    Route::post('retrieveOneOnlineOrder','App\Http\Controllers\OrderController@retrieveOneOnlineOrder');
     Route::post('retrieveCustomersOrdersForEdit','App\Http\Controllers\OrderController@retrieveCustomersOrdersForEdit');
-
-
+    Route::post('deleteManyOrder','App\Http\Controllers\OrderController@deleteManyOrder');
 
     Route::post('addingAddOns','App\Http\Controllers\AddAddOnsController@addAddons');
     Route::post('retrievingAddOns','App\Http\Controllers\AddAddOnsController@retrieveAddOns');
@@ -102,10 +102,12 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('getyears','App\Http\Controllers\StoreCheckoutsController@retrieveYears');
     Route::post('retrieveYear','App\Http\Controllers\StoreCheckoutsController@retrieveYear');
     Route::post('retrieveDailySales','App\Http\Controllers\StoreCheckoutsController@retrieveDailySales');
+    Route::post('deleteCheckout','App\Http\Controllers\StoreCheckoutsController@deleteCheckout');
     
     Route::post('getTopProd','App\Http\Controllers\OrderController@retrieveTopProducts');
     Route::post('addIncomingCups','App\Http\Controllers\QuantityCupsController@addIncomingCups');
     Route::post('updateRemainingCups','App\Http\Controllers\QuantityCupsController@updateRemainingCups');
+    Route::post('updateDeletedCups','App\Http\Controllers\QuantityCupsController@updateDeletedCups');
     Route::post('retrieveCupSize','App\Http\Controllers\QuantityCupsController@retrieveCupSize');
     Route::post('retrieveCupForInventory','App\Http\Controllers\QuantityCupsController@retrieveCupSize');
 });

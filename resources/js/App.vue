@@ -301,6 +301,11 @@ export default {
         route: "/orderInventory"
       },
       {
+        icon: "mdi-calendar-account",
+        text: "Customers' Orders",
+        route: "/allOrder"
+      },
+      {
         icon: "mdi-cup",
         text: "Cups Inventory",
         route: "/cupsInventory"

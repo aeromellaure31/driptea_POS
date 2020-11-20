@@ -105,9 +105,9 @@ export default {
             }
         },
         {
-            path: '/salesReport',
-            name: 'salesReport',
-            component: resolve => require(['@/js/modules/inventory/salesReport'], resolve),
+            path: '/allOrder',
+            name: 'allOrder',
+            component: resolve => require(['@/js/modules/inventory/allOrder'], resolve),
             meta: {
                 tokenRequired: true
             }

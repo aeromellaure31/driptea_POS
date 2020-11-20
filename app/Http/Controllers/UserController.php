@@ -14,14 +14,6 @@ use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
-    // public function updateImage(Request $request){
-    //     $user = User::firstOrCreate(['id' => $request->id]);
-    //     $user->image = $request->image;
-    //     $user->save();
-    //     event(new pusherEvent($user));
-    //     return response()->json(compact('user')); 
-    // }
-
     public function updateImage(Request $request){
         $user = User::firstOrCreate(['id' => $request->id]);
         // $imageName = time().'.'.$request->image->getClientOriginalExtension();
