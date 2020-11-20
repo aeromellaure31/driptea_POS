@@ -204,6 +204,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -553,7 +554,13 @@ var render = function() {
             [
               _c(
                 "v-tabs",
-                { attrs: { color: "deep-orange accent-4", right: "" } },
+                {
+                  attrs: {
+                    "background-color": "deep-orange",
+                    color: "white accent-4",
+                    right: ""
+                  }
+                },
                 [
                   _c(
                     "v-tab",

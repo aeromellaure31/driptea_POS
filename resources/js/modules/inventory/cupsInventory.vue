@@ -39,7 +39,7 @@
           ></v-text-field>
           <v-divider class="mx-4" vertical></v-divider>
            <VueJsonToCsv
-              :json-data="dataInDB"
+              :json-data="toCsv"
               :csv-title="'myCups'"
             >
               <v-btn color="success" class="mr-6">
@@ -66,11 +66,13 @@ export default {
       search:null,
       cupName:null,
       headersForCup:[],
-      loadingShow: false
+      loadingShow: false,
+      toCsv:[],
     }
   },
   components: {
     VueJsonToCsv,
+    
     loading
   },
   mounted(){
@@ -98,6 +100,29 @@ export default {
               AUTH.deauthenticate()
           }
           this.dataInDB = response.data.quantityCupsInDB.reverse()
+          response.data.quantityCupsInDB.forEach( element => {
+            let thisDate = this.getDate(element.created_at)
+            this.toCsv.push({
+              "Date": thisDate,
+              "Incoming Low Dose": element.incomingLowDose,
+              "Incoming High Dose": element.incomingHighDose,
+              "Incoming Over Dose": element.incomingOverDose,
+              "Total Incoming Cups": element.incomingLowDose + element.incomingHighDose + element.incomingOverDose,
+              "Cups Onrack Low Dose": element.onRockLowDose,
+              "Cups Onrack High Dose": element.onRockHighDose,
+              "Cups Onrack Over Dose": element.onRockOverDose,
+              "Total Cups Onrack": element.onRockLowDose + element.onRockHighDose + element.onRockOverDose,
+              "Used Cups Low Dose": element.usedCupsLowDose,
+              "Used Cups High Dose": element.usedCupsHighDose,
+              "Used Cups Over Dose": element.usedCupsOverDose,
+              "Total Used Cups": element.usedCupsLowDose + element.usedCupsHighDose + element.usedCupsOverDose,
+              "Remaining Cups Low Dose": element.incomingLowDose,
+              "Remaining Cups High Dose": element.incomingHighDose,
+              "Remaining Cups Over Dose": element.incomingOverDose,
+              "Total Remaining Cups": element.incomingLowDose + element.incomingHighDose + element.incomingOverDose,
+              })
+          })
+          console.log("thi is my bam",this.toCsv)
           this.headersForCup = [
             {text: "Date" ,value:"created_at"},
             {text: "Low Dose (LD)" ,value:"incomingLowDose"},
@@ -108,7 +133,6 @@ export default {
           this.cupName = "Upcoming Cups"
           this.loadingShow = false
         })
-
     },
     tableForCupsOnrack(){
       this.loadingShow = true
@@ -127,7 +151,7 @@ export default {
           this.cupName = "Cups Onrack"
           this.loadingShow = false
         })
-
+        console.log(this.dataInDB)
     },
     tableForUsedCups(){
       this.loadingShow = true
@@ -164,7 +188,6 @@ export default {
         this.cupName = "Remaining Cups"
         this.loadingShow = false
       })
-
     }
   },
 }

@@ -82,7 +82,8 @@ __webpack_require__.r(__webpack_exports__);
       search: null,
       cupName: null,
       headersForCup: [],
-      loadingShow: false
+      loadingShow: false,
+      toCsv: []
     };
   },
   components: {
@@ -117,6 +118,30 @@ __webpack_require__.r(__webpack_exports__);
         }
 
         _this.dataInDB = response.data.quantityCupsInDB.reverse();
+        response.data.quantityCupsInDB.forEach(function (element) {
+          var thisDate = _this.getDate(element.created_at);
+
+          _this.toCsv.push({
+            "Date": thisDate,
+            "Incoming Low Dose": element.incomingLowDose,
+            "Incoming High Dose": element.incomingHighDose,
+            "Incoming Over Dose": element.incomingOverDose,
+            "Total Incoming Cups": element.incomingLowDose + element.incomingHighDose + element.incomingOverDose,
+            "Cups Onrack Low Dose": element.onRockLowDose,
+            "Cups Onrack High Dose": element.onRockHighDose,
+            "Cups Onrack Over Dose": element.onRockOverDose,
+            "Total Cups Onrack": element.onRockLowDose + element.onRockHighDose + element.onRockOverDose,
+            "Used Cups Low Dose": element.usedCupsLowDose,
+            "Used Cups High Dose": element.usedCupsHighDose,
+            "Used Cups Over Dose": element.usedCupsOverDose,
+            "Total Used Cups": element.usedCupsLowDose + element.usedCupsHighDose + element.usedCupsOverDose,
+            "Remaining Cups Low Dose": element.incomingLowDose,
+            "Remaining Cups High Dose": element.incomingHighDose,
+            "Remaining Cups Over Dose": element.incomingOverDose,
+            "Total Remaining Cups": element.incomingLowDose + element.incomingHighDose + element.incomingOverDose
+          });
+        });
+        console.log("thi is my bam", _this.toCsv);
         _this.headersForCup = [{
           text: "Date",
           value: "created_at"
@@ -166,6 +191,7 @@ __webpack_require__.r(__webpack_exports__);
         _this2.cupName = "Cups Onrack";
         _this2.loadingShow = false;
       });
+      console.log(this.dataInDB);
     },
     tableForUsedCups: function tableForUsedCups() {
       var _this3 = this;
@@ -395,10 +421,7 @@ var render = function() {
                     _c(
                       "VueJsonToCsv",
                       {
-                        attrs: {
-                          "json-data": _vm.dataInDB,
-                          "csv-title": "myCups"
-                        }
+                        attrs: { "json-data": _vm.toCsv, "csv-title": "myCups" }
                       },
                       [
                         _c(

@@ -3,11 +3,12 @@
        <center>
             <v-card class="mt-10">
                 <v-tabs
-                color="deep-orange accent-4"
+                background-color="deep-orange"
+                color="white accent-4"
                 right
                 >
-                <v-tab @click="tableDataCompleteOrder=true,tableDataPendingOrders=false">Completed Orders</v-tab>
-                <v-tab @click="tableDataCompleteOrder=false,tableDataPendingOrders=true">Pending Orders</v-tab>
+                  <v-tab @click="tableDataCompleteOrder=true,tableDataPendingOrders=false">Completed Orders</v-tab>
+                  <v-tab @click="tableDataCompleteOrder=false,tableDataPendingOrders=true">Pending Orders</v-tab>
                 </v-tabs>
             </v-card>
  
