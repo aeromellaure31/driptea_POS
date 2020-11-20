@@ -46,11 +46,7 @@
                   </div>
                   <div class="form-group secondOpt" v-show="ok2">
                     <select class="form-control" v-on:change="onChangeYear" v-model="yrvalue">
-                      <option
-                        v-for="year in years"
-                        v-bind:value="year"
-                        v-bind:key="year"
-                      >{{ year }}</option>
+                      <option v-for="year in years" v-bind:value="year" v-bind:key="year">{{ year }}</option>
                     </select>
                   </div>
                   <div v-show="ok3" class="forannualInput">
@@ -60,11 +56,7 @@
                       v-model="Multiyrvalue"
                       multiple
                     >
-                      <option
-                        v-for="year in years"
-                        v-bind:value="year"
-                        v-bind:key="year"
-                      >{{ year }}</option>
+                      <option v-for="year in years" v-bind:value="year" v-bind:key="year">{{ year }}</option>
                     </select>
                   </div>
                 </div>
@@ -123,12 +115,8 @@
                     >
                   </div>
                   <div class="form-group secondOpt" v-show="ok2">
-                    <select class="form-control" v-on:change="onChangeYear" v-model="yrvalueS">
-                      <option
-                        v-for="year in years"
-                        v-bind:value="year"
-                        v-bind:key="year"
-                      >{{ year }}</option>
+                    <select class="form-control" v-on:change="onChangeYear2" v-model="yrvalueS">
+                      <option v-for="year in years" v-bind:value="year" v-bind:key="year">{{ year }}</option>
                     </select>
                   </div>
                   <div v-show="ok3" class="forannualInput">
@@ -138,11 +126,7 @@
                       v-model="Multiyrvalue2"
                       multiple
                     >
-                      <option
-                        v-for="year in years"
-                        v-bind:value="year"
-                        v-bind:key="year"
-                      >{{ year }}</option>
+                      <option v-for="year in years" v-bind:value="year" v-bind:key="year">{{ year }}</option>
                     </select>
                   </div>
                 </div>
@@ -202,7 +186,7 @@
 </template>
 
 <style scoped>
-.prodNAme{
+.prodNAme {
   color: #ff5b04;
 }
 .welcome {
@@ -244,14 +228,14 @@
 .text1 {
   margin-left: 10%;
   text-align: center;
-  color: #ff5b04;
+  color:black;
 }
 .TB3 {
   margin-bottom: 20px;
   justify-content: center;
   border-radius: 1%;
 }
-.theimageCard{
+.theimageCard {
   align-content: center;
   border: 1px solid #999999;
   border-radius: 1%;
@@ -259,7 +243,6 @@
 .prods {
   border: 1px solid #999999;
   border-radius: 1%;
-  
 }
 .subhead {
   margin-bottom: 20px;
@@ -282,13 +265,11 @@
 .thetop3 {
   height: 180px;
   width: 90%;
- 
 }
-.theimage { 
+.theimage {
   margin: 2%;
   height: 200px;
   width: 100%;
-  
 }
 .Prod_name {
   color: black;
@@ -478,11 +459,7 @@ export default {
         year: this.theYear
       };
       let i;
-      let dateFrmDBarr = [];
-      let totalfrmDB = [];
-      // let xs = this.xlabels;
       let ldate = this.lastDate;
-      let namesfromDB = [];
       let PRODUCT = "";
       let forSeries = [];
 
@@ -493,63 +470,39 @@ export default {
             AUTH.deauthenticate();
           }
           this.loadingShow = false;
-          response.data.prods.forEach(element => {
-            namesfromDB.push(element.ProductName);
-
-            let d = element.date;
-            let tots = element.quan;
-            dateFrmDBarr.push(d);
-            totalfrmDB.push(tots);
+          console.log("nag length sa prod name bruh ..", ldate);
+          this.productName.forEach(name => {
+            let color = this.getRandomColor();
+            this.options2.colors.push(color);
+            for (i = 1; i < ldate + 1; i++) {
+              this.secondpoints.push(0);
+            }
+            forSeries.push({
+              name: name,
+              data: this.secondpoints
+            });
+            this.secondpoints = [];
           });
 
-          this.productName.forEach(name => {
-            if (namesfromDB.includes(name)) {
-              response.data.prods.forEach(prod => {
-                if (prod.ProductName === name) {
-                  PRODUCT = name;
-                  for (i = 1; i < ldate + 1; i++) {
-                    if (prod.date === i) {
-                      this.secondpoints.push(prod.quan);
-                    } else {
-                      this.secondpoints.push(0);
-                    }
-                  }
-                  forSeries.push({
-                    name: PRODUCT,
-                    data: this.secondpoints
-                  });
-                  let color = this.getRandomColor();
-                  this.options2.colors.push(color)
-                  // console.log("secondpoints ===", this.secondpoints);
-                  PRODUCT = "";
-                  this.secondpoints = [];
-                }
-              });
-            } else {
-              PRODUCT = name;
-              for (i = 1; i < ldate + 1; i++) {
-                this.secondpoints.push(0);
+          forSeries.forEach(obj => {
+            response.data.prods.forEach(prod => {
+              if (prod.ProductName === obj.name) {
+                let index = prod.date - 1;
+                obj.data.splice(index, 1, parseInt(prod.quan));
               }
-              forSeries.push({
-                name: PRODUCT,
-                data: this.secondpoints
-              });
-              let color = this.getRandomColor();
-              this.options2.colors.push(color)
-              PRODUCT = "";
-              this.secondpoints = [];
-            }
+            });
           });
 
           if (response.data.prods.length > 0) {
             this.series2 = forSeries;
-            // console.log("ang series 2", this.series2);
           } else {
             this.series2 = [];
           }
+          console.log("forseries array bruh ", forSeries);
         }
       );
       this.secondpoints = [];
+      this.options2.colors=[];
     },
     MonthlyProductSale(yyyy) {
       this.loadingShow = true;
@@ -560,7 +513,6 @@ export default {
       let monthsfrmDB = [];
       let i;
       let totalfrmDB = [];
-      // let xs = this.xlabels;
       let ldate = this.lastDate;
       let namesfromDB = [];
       let PRODUCT = "";
@@ -588,7 +540,7 @@ export default {
                   PRODUCT = name;
                   for (i = 1; i < this.mnths.length + 1; i++) {
                     if (prod.month === i) {
-                      this.secondpoints.push(prod.quan);
+                      this.secondpoints.push(parseInt(prod.quan));
                     } else {
                       this.secondpoints.push(0);
                     }
@@ -598,7 +550,7 @@ export default {
                     data: this.secondpoints
                   });
                   let color = this.getRandomColor();
-                  this.options2.colors.push(color)
+                  this.options2.colors.push(color);
                   // console.log("secondpoints ===", this.secondpoints);
                   PRODUCT = "";
                   this.secondpoints = [];
@@ -614,7 +566,7 @@ export default {
                 data: this.secondpoints
               });
               let color = this.getRandomColor();
-              this.options2.colors.push(color)
+              this.options2.colors.push(color);
               PRODUCT = "";
               this.secondpoints = [];
             }
@@ -628,6 +580,8 @@ export default {
           }
         }
       );
+      this.secondpoints = [];
+      this.options2.colors=[];
     },
     QuarterlyProductSale(yyyy) {
       this.loadingShow = true;
@@ -669,7 +623,7 @@ export default {
                 PRODUCT = name;
                 for (i = 1; i < this.mnths.length + 1; i++) {
                   if (prod.month === i) {
-                    this.secondpoints.push(prod.quan);
+                    this.secondpoints.push(parseInt(prod.quan));
                   } else {
                     this.secondpoints.push(0);
                   }
@@ -711,7 +665,7 @@ export default {
                   data: this.secondpoints
                 });
                 let color = this.getRandomColor();
-                this.options2.colors.push(color)
+                this.options2.colors.push(color);
                 // console.log("secondpoints ===", this.secondpoints);
                 PRODUCT = "";
                 this.secondpoints = [];
@@ -761,7 +715,7 @@ export default {
               data: this.secondpoints
             });
             let color = this.getRandomColor();
-            this.options2.colors.push(color)
+            this.options2.colors.push(color);
             PRODUCT = "";
             this.secondpoints = [];
           }
@@ -784,6 +738,7 @@ export default {
       this.thirdQ = [];
       this.forthQ = [];
       this.QauterData = [];
+      this.options2.colors=[];
     },
     SemiProductSale(yyyy) {
       this.loadingShow = true;
@@ -822,7 +777,7 @@ export default {
                   PRODUCT = name;
                   for (i = 1; i < this.mnths.length + 1; i++) {
                     if (prod.month === i) {
-                      this.secondpoints.push(prod.quan);
+                      this.secondpoints.push(parseInt(prod.quan));
                     } else {
                       this.secondpoints.push(0);
                     }
@@ -861,8 +816,7 @@ export default {
                     name: PRODUCT,
                     data: this.secondpoints
                   });
-                  let color = this.getRandomColor();
-                  this.options2.colors.push(color)
+                  
                   // console.log("secondpoints ===", this.secondpoints);
                   PRODUCT = "";
                   this.secondpoints = [];
@@ -914,7 +868,7 @@ export default {
                 data: this.secondpoints
               });
               let color = this.getRandomColor();
-              this.options2.colors.push(color)
+              this.options2.colors.push(color);
               PRODUCT = "";
               this.secondpoints = [];
             }
@@ -940,84 +894,40 @@ export default {
       this.forthQ = [];
       this.QauterData = [];
       this.semi_Data = [];
+      this.options2.colors=[];
     },
     onFilter2() {
       if (this.thefilter2 == "Daily") {
+        this.options2.xaxis.categories = [];
         this.MonthLabel2 = this.mnths[this.theMonth - 1];
-        this.options2 = {
-          colors: ["#ff5b04"],
-          chart: {
-            id: "sales-summary2"
-          },
-          xaxis: {
-            categories: this.xlabels
-          },
-          stroke: {
-            width: 2,
-            curve: "smooth"
-          }
-        };
+        this.options2.xaxis.categories = this.xlabels;
         this.dailyProductSale();
         this.ok = true;
         this.ok2 = false;
         this.ok3 = false;
-        this.options2.xaxis.categories = [];
       } else if (this.thefilter2 == "Weekly") {
       } else if (this.thefilter2 == "Monthly") {
+        console.log("ang colors bruh ", this.options2.colors);
         // console.log("ang year value ", this.yrvalueS);
-        this.MonthlyProductSale(this.yrvalueS);
         this.MonthLabel2 = new Date(this.thedate2).getFullYear();
-        this.options2 = {
-          colors: ["#ff5b04"],
-          chart: {
-            id: "sales-summary2"
-          },
-          xaxis: {
-            categories: this.mnths
-          },
-          stroke: {
-            width: 2,
-            curve: "smooth"
-          }
-        };
+        this.options2.xaxis.categories = this.mnths;
         this.ok = false;
         this.ok2 = true;
         this.ok3 = false;
+        this.MonthlyProductSale(this.yrvalueS);
+        // console.log("ang colors bruh ", this.options2.colors);
+
       } else if (this.thefilter2 == "Quarterly") {
         this.MonthLabel2 = new Date(this.thedate2).getFullYear();
+        this.options2.xaxis.categories = this.quarter;
         this.QuarterlyProductSale(this.yrvalueS);
-        this.options2 = {
-          colors: ["#ff5b04"],
-          chart: {
-            id: "sales-summary2"
-          },
-          xaxis: {
-            categories: this.quarter
-          },
-          stroke: {
-            width: 2,
-            curve: "smooth"
-          }
-        };
         this.ok = false;
         this.ok2 = true;
         this.ok3 = false;
       } else if (this.thefilter2 == "Semi-Annual") {
         this.MonthLabel2 = new Date(this.thedate2).getFullYear();
+        this.options2.xaxis.categories = this.semi;
         this.SemiProductSale(this.yrvalueS);
-        this.options2 = {
-          colors: ["#ff5b04"],
-          chart: {
-            id: "sales-summary2"
-          },
-          xaxis: {
-            categories: this.semi
-          },
-          stroke: {
-            width: 2,
-            curve: "smooth"
-          }
-        };
         this.ok = false;
         this.ok2 = true;
         this.ok3 = false;
@@ -1266,18 +1176,17 @@ export default {
         this.loadingShow = false;
         // console.log("pre years array ",this.years)
         response.data.years.forEach(element => {
-          console.log("years bruh ",element)
-          let yr = element.year.substring(0,4);
-          if (this.years.includes(yr)){
-          }else{
+          console.log("years bruh ", element);
+          let yr = element.year.substring(0, 4);
+          if (this.years.includes(yr)) {
+          } else {
             this.years.push(yr);
           }
-          console.log("substring bruh ",yr)
+          console.log("substring bruh ", yr);
           // // this.years.push({ text: yr, value: yr });
         });
       });
-        console.log("years array ",this.years)
-
+      console.log("years array ", this.years);
     },
     getMonthlySummary(yyyy) {
       this.loadingShow = true;
