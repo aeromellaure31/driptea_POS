@@ -70,6 +70,21 @@ class QuantityCupsController extends Controller
         return response()->json(compact('quantityCups'));
     }
 
+    public function updateDeletedCups(Request $request){
+        $id = $this->getId();
+        $data = $request->all();
+        $quantity = QuantityCups::where('id', $id)->get();
+        $quantityCups = QuantityCups::firstOrCreate(['id' => $id]);
+        $quantityCups->usedCupsLowDose = ($quantity[0]['usedCupsLowDose'] - $data['usedCupsLowDose']);
+        $quantityCups->usedCupsHighDose = ($quantity[0]['usedCupsHighDose'] - $data['usedCupsHighDose']);
+        $quantityCups->usedCupsOverDose = ($quantity[0]['usedCupsOverDose'] - $data['usedCupsOverDose']);
+        $quantityCups->remainingLowDose = ($quantityCups->usedCupsLowDose + $quantity[0]['onRockLowDose']);
+        $quantityCups->remainingHighDose = ($quantityCups->usedCupsHighDose + $quantity[0]['onRockHighDose']);
+        $quantityCups->remainingOverDose = ($quantityCups->usedCupsOverDose + $quantity[0]['onRockOverDose']);
+        $quantityCups->save();
+        return response()->json(compact('quantityCups'));
+    }
+
     public function retrieveCupSize(Request $request){
         $quantityCupsInDB = QuantityCups::get();
         // dd($quantityCupsInDB);

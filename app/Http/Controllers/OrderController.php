@@ -60,7 +60,12 @@ class OrderController extends Controller
     }
 
     public function retrieveOnlineOrder(Request $request){
-        $order = Order::with('getCustomer')->with('orderProduct')->with('sameOrder')->where('status', 'pendingCustomer')->where('deleted_at', null)->orderBy('id','DESC')->get()->groupBy('customerId');
+        $order = Order::with('getCustomer')->with('orderProduct')->with('sameOrder')->where('status', 'pendingCustomer')->where('deleted_at', null)->orderBy('id','ASC')->get()->groupBy('customerId');
+        return response()->json(compact('order'));
+    }
+
+    public function retrieveOneOnlineOrder(Request $request){
+        $order = Order::with('getCustomer')->with('orderProduct')->with('sameOrder')->where('onlineId', $request->id)->where('status', 'pendingCustomer')->where('deleted_at', null)->orderBy('id','DESC')->get()->groupBy('customerId');
         return response()->json(compact('order'));
     }
 
@@ -82,6 +87,8 @@ class OrderController extends Controller
         }
         foreach ($order as $value) {
             $ord = Order::firstOrCreate(['id' => $value->id]);
+            $ord->modeOfPayment = $request['modeOfPayment'];
+            $ord->ifNotAvailable = $request['ifNotAvailable'];
             $ord->status = $request['status'];
             $ord->save();
         }
@@ -108,6 +115,7 @@ class OrderController extends Controller
     public function retrieveTopProducts(Request $request){
         $prods = DB::table('orders')->leftJoin('products', 'orders.productId', '=', 'products.id')
             ->select(DB::raw('products.image as img'),DB::raw('SUM(orders.quantity) as quan'),DB::raw('products.productName as pName'))
+            ->where('products.deleted_at', null)
             ->groupBy('img','pName')
             ->orderBy('quan', 'desc')
             ->get();
@@ -119,6 +127,7 @@ class OrderController extends Controller
             ->select(DB::raw('products.productName as ProductName'),DB::raw('SUM(store_orders.quantity) as quan'),DB::raw('extract(DAY from store_orders.created_at) as date'),DB::raw('extract(YEAR from store_orders.created_at) as year'),DB::raw('extract(MONTH from store_orders.created_at) as month'))
             ->whereMonth('store_orders.created_at', '=', $request->month)
             ->whereYear('store_orders.created_at', '=', $request->year)
+            ->where('products.deleted_at', null)
             ->groupBy('year','month','date','ProductName')
             // ->orderBy('quan', 'desc')
             ->get();
@@ -129,6 +138,7 @@ class OrderController extends Controller
         $prods = DB::table('store_orders')->leftJoin('products', 'store_orders.productId', '=', 'products.id')
             ->select(DB::raw('products.productName as ProductName'),DB::raw('SUM(store_orders.quantity) as quan'),DB::raw('extract(MONTH from store_orders.created_at) as month'))
             ->whereYear('store_orders.created_at', '=', $request->year)
+            ->where('products.deleted_at', null)
             ->groupBy('month','ProductName')
             // ->orderBy('quan', 'desc')
             ->get();
@@ -139,6 +149,7 @@ class OrderController extends Controller
         $prods = DB::table('store_orders')->leftJoin('products', 'store_orders.productId', '=', 'products.id')
             ->select(DB::raw('products.productName as ProductName'),DB::raw('SUM(store_orders.quantity) as quan'),DB::raw('extract(MONTH from store_orders.created_at) as month'))
             ->whereYear('store_orders.created_at', '=', $request->year)
+            ->where('products.deleted_at', null)
             ->groupBy('month','ProductName')
             // ->orderBy('quan', 'desc')
             ->get();
@@ -149,6 +160,7 @@ class OrderController extends Controller
         $prods = DB::table('store_orders')->leftJoin('products', 'store_orders.productId', '=', 'products.id')
             ->select(DB::raw('products.productName as ProductName'),DB::raw('SUM(store_orders.quantity) as quan'),DB::raw('extract(MONTH from store_orders.created_at) as month'))
             ->whereYear('store_orders.created_at', '=', $request->year)
+            ->where('products.deleted_at', null)
             ->groupBy('month','ProductName')
             // ->orderBy('quan', 'desc')
             ->get();
@@ -158,6 +170,7 @@ class OrderController extends Controller
     public function AnnualProductSales(Request $request){
         $prods = DB::table('store_orders')->leftJoin('products', 'store_orders.productId', '=', 'products.id')
             ->select(DB::raw('products.productName as ProductName'),DB::raw('SUM(store_orders.quantity) as quan'),DB::raw('products.id as ID'),DB::raw('extract(DAY from store_orders.created_at) as date'),DB::raw('extract(YEAR from store_orders.created_at) as year'),DB::raw('extract(MONTH  from store_orders.created_at) as month'))
+            ->where('products.deleted_at', null)
             ->groupBy('year','ID')
             // ->orderBy('quan', 'desc')
             ->get();
@@ -186,6 +199,14 @@ class OrderController extends Controller
             $addOns['addOns'] = $value;
             $addOns->save();
         }
+    }
+
+    public function deleteManyOrder(Request $request){
+        foreach ($request->id as $val) {
+            $order = Order::find($val);
+            $order->delete();
+        }
+        return response()->json(['success' => 'successfully deleted!']);
     }
 
 }

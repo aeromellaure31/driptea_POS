@@ -263,12 +263,12 @@
   border-radius: 1%;
 }
 .thetop3 {
-  height: 180px;
+  height: 200px;
   width: 90%;
 }
 .theimage {
   margin: 2%;
-  height: 200px;
+  height: 210px;
   width: 100%;
 }
 .Prod_name {
@@ -1447,10 +1447,10 @@ export default {
                 name: response.data.prods[i].pName
               });
             } else {
-              console.log("sa else ni sulod");
+              // console.log("sa else ni sulod");
               top3.push({
                 img: this.tempimg,
-                name: "pisti na ni "
+                name: ""
               });
             }
             // console.log("----------------------------- ", top3[0].name);
