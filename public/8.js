@@ -971,6 +971,55 @@ __webpack_require__.r(__webpack_exports__);
       this.semi_Data = [];
       this.options2.colors = [];
     },
+    getAnnualProductSales: function getAnnualProductSales(years) {// this.loadingShow = true;
+      // this.points = [];
+      // let startingYR = values[0];
+      // let endYear = values[1];
+      // let graphLabel = startingYR + " - " + endYear;
+      // this.MonthLabel = graphLabel;
+      // let gap = endYear - startingYR;
+      // let array = [];
+      // let labelsArr = [];
+      // let params = {
+      //   from: startingYR,
+      //   to: endYear
+      // };
+      // Axios.post(AUTH.url + "getAnnualProductSales", params, AUTH.config).then(
+      //   response => {
+      //     if (response.data.status) {
+      //       AUTH.deauthenticate();
+      //     }
+      //     this.loadingShow = false;
+      //     response.data.subtotal.forEach(element => {
+      //       if (element.year <= endYear && element.year == startingYR) {
+      //         array.push(element.sub);
+      //         labelsArr.push(startingYR);
+      //         startingYR++;
+      //       }
+      //     });
+      //     this.points = array;
+      //     this.annualLabels = labelsArr;
+      //     this.series = [
+      //       {
+      //         data: this.points
+      //       }
+      //     ];
+      //     this.options = {
+      //       colors: ["#ff5b04"],
+      //       chart: {
+      //         id: "sales-summary"
+      //       },
+      //       xaxis: {
+      //         categories: this.annualLabels
+      //       },
+      //       stroke: {
+      //         width: 2,
+      //         curve: "smooth"
+      //       }
+      //     };
+      //   }
+      // );
+    },
     onFilter2: function onFilter2() {
       if (this.thefilter2 == "Daily") {
         this.options2.xaxis.categories = [];
@@ -1216,7 +1265,7 @@ __webpack_require__.r(__webpack_exports__);
       } else if (this.thefilter == "Semi-Annual") {
         this.getSemi_AnnualSummary(this.yrvalue);
         this.MonthLabel = this.yrvalue;
-      } else if (this.thefilter == "Annual") {}
+      }
     },
     onChanging: function onChanging() {
       this.getAnnualSummary(this.Multiyrvalue);
@@ -2147,7 +2196,7 @@ var render = function() {
                                     ) {
                                       return null
                                     }
-                                    return _vm.onChanging($event)
+                                    return _vm.onChanging2($event)
                                   },
                                   change: function($event) {
                                     var $$selectedVal = Array.prototype.filter
