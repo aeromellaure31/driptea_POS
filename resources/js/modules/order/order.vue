@@ -322,7 +322,7 @@ export default {
             if(this.quantity > 0 && this.cupSize !== null && this.sugarLevel !== null && this.cupType !== null){
                 this.loadingShow = true
                 let parameter = {
-                    customerId: localStorage.getItem('customerId'),
+                    customerId: localStorage.getItem('customer'),
                     cashierId: localStorage.getItem('cashierId') ? localStorage.getItem('cashierId') : localStorage.getItem('adminId'),
                     productId: this.itemId,
                     customerType: this.customerType,

@@ -1,7 +1,7 @@
 <template>
-<div>
+    <div class="container">
        <center>
-            <v-card>
+            <v-card class="mt-10">
                 <v-tabs
                 color="deep-orange accent-4"
                 right

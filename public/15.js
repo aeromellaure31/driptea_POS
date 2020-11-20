@@ -176,7 +176,7 @@ __webpack_require__.r(__webpack_exports__);
             _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
           }
 
-          localStorage.setItem("customerId", res.data.customerDetails.id);
+          localStorage.setItem("customer", res.data.customerDetails.id);
           localStorage.setItem("customerType", res.data.customerDetails.customerType);
           _this.loadingShow = false;
           _router__WEBPACK_IMPORTED_MODULE_1__["default"].push("/productCategory/" + res.data.customerDetails.customerType)["catch"](function () {});
@@ -198,7 +198,7 @@ __webpack_require__.r(__webpack_exports__);
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        localStorage.setItem("customerId", response.data.customerDetails.id);
+        localStorage.setItem("customer", response.data.customerDetails.id);
         localStorage.setItem("customerType", response.data.customerDetails.customerType);
         _this2.loadingShow = false;
         _router__WEBPACK_IMPORTED_MODULE_1__["default"].push("/productCategory/fb")["catch"](function () {});

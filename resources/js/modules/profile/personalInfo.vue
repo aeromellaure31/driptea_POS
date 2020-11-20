@@ -589,7 +589,7 @@
 </style>
 
 <script>
-import ProfilePic from "../../../assets/profile.jpg";
+import ProfilePic from "../../../assets/empty.png";
 import imageLogo from "../../../assets/logo.png";
 import ROUTER from '../../router'
 import AUTH from "../../services/auth";

@@ -546,12 +546,14 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
+    { staticClass: "container" },
     [
       _c(
         "center",
         [
           _c(
             "v-card",
+            { staticClass: "mt-10" },
             [
               _c(
                 "v-tabs",

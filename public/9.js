@@ -380,7 +380,7 @@ __webpack_require__.r(__webpack_exports__);
       if (this.quantity > 0 && this.cupSize !== null && this.sugarLevel !== null && this.cupType !== null) {
         this.loadingShow = true;
         var parameter = {
-          customerId: localStorage.getItem('customerId'),
+          customerId: localStorage.getItem('customer'),
           cashierId: localStorage.getItem('cashierId') ? localStorage.getItem('cashierId') : localStorage.getItem('adminId'),
           productId: this.itemId,
           customerType: this.customerType,

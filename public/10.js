@@ -9,8 +9,8 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _assets_profile_jpg__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../assets/profile.jpg */ "./resources/assets/profile.jpg");
-/* harmony import */ var _assets_profile_jpg__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_assets_profile_jpg__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _assets_empty_png__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../assets/empty.png */ "./resources/assets/empty.png");
+/* harmony import */ var _assets_empty_png__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_assets_empty_png__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _assets_logo_png__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../assets/logo.png */ "./resources/assets/logo.png");
 /* harmony import */ var _assets_logo_png__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_assets_logo_png__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../router */ "./resources/js/router/index.js");
@@ -645,7 +645,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       errorMessage15: null,
       errorMessage16: null,
       modalShow: true,
-      profilepic: _assets_profile_jpg__WEBPACK_IMPORTED_MODULE_0___default.a,
+      profilepic: _assets_empty_png__WEBPACK_IMPORTED_MODULE_0___default.a,
       firstname: null,
       lastname: null,
       username: null,
@@ -2392,17 +2392,6 @@ var staticRenderFns = [
 render._withStripped = true
 
 
-
-/***/ }),
-
-/***/ "./resources/assets/profile.jpg":
-/*!**************************************!*\
-  !*** ./resources/assets/profile.jpg ***!
-  \**************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "/images/profile.jpg?d1ba46d2eede0a422fe963b840360759";
 
 /***/ }),
 

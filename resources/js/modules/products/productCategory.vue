@@ -10,10 +10,10 @@
                 <center>
                     <v-card class="ml-10">
                         <center>
-                            <div v-if="customerType === 'online' || customerType === 'fb'">
-                                <p style="text-align: left; margin-left: 5%;">Name: {{name}}</p><br>
-                                <p style="text-align: right; margin-right: 5%;">Contact#: {{contact}}</p><br><br>
-                                <p style="text-align: left; margin-left: 5%; margin-bottom: -5%;">Address: {{address}}</p>
+                            <div v-if="customerType === 'online' || customerType === 'fb'" >
+                                <p>Name: {{name}}</p><br>
+                                <p>Contact#: {{contact}}</p><br>
+                                <p>Address: {{address}}</p>
                             </div>
                             <img v-if="customerType === 'walkin'" style="width: 70px; height: 50px; border: solid 1px black" src="@/assets/walkin.jpg">
                             <img v-if="customerType === 'foodpanda'" style="width: 70px; height: 50px;" src="@/assets/foodpanda1.png">
@@ -281,7 +281,7 @@ export default {
             this.loadingShow = true
             if(this.customerType === 'online'){
                 let params = {
-                    id: localStorage.getItem('customerId')
+                    id: localStorage.getItem('customer')
                 }
                 this.$axios.post(AUTH.url + 'getOrder', params, AUTH.config).then(res => {
                     if(res.data.status){
@@ -292,7 +292,7 @@ export default {
                 })
             }else{
                 let params = {
-                    id: localStorage.getItem('customerId')
+                    id: localStorage.getItem('customer')
                 }
                 this.$axios.post(AUTH.url + 'retrieveOrder', params, AUTH.config).then(res => {
                     if(res.data.status){
@@ -303,7 +303,7 @@ export default {
             }
             if(this.customerType === 'online' || this.customerType === 'fb'){
                 let param = {
-                    id: localStorage.getItem('customerId')
+                    id: localStorage.getItem('customer')
                 }
                 this.$axios.post(AUTH.url + 'retrieveCustomer', param, AUTH.config).then(res => {
                     if(res.data.status){
@@ -366,7 +366,7 @@ export default {
         checkoutMethod(){
             this.loadingShow = true
             let params = {
-                id: localStorage.getItem('customerId'),
+                id: localStorage.getItem('customer'),
                 status: 'complete'
             }
             this.$axios.post(AUTH.url + 'updateStatus', params, AUTH.config).then(res => {
@@ -374,7 +374,7 @@ export default {
                     AUTH.deauthenticate()
                 }
                 let params = {
-                    customerId: localStorage.getItem('customerId'),
+                    customerId: localStorage.getItem('customer'),
                     cashierId: localStorage.getItem('cashierId') ? localStorage.getItem('cashierId') : localStorage.getItem('adminId'),
                     subTotal: parseInt(this.getSubTotal()),
                     deliveryFee: this.fee,

@@ -113,14 +113,6 @@ export default {
             }
         },
         {
-            path: '/myprofile/:id',
-            name: 'profile',
-            component: resolve => require(['@/js/modules/profile/myAccounts'], resolve),
-            meta: {
-                tokenRequired: true
-            }
-        },
-        {
             path: '/personalInfo/:id',
             name: 'personalInfo',
             component: resolve => require(['@/js/modules/profile/personalInfo'], resolve),
