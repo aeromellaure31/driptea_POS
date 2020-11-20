@@ -11,7 +11,7 @@ export default {
         {
             path: '/login',
             name: 'login',
-            component: resolve => require(['@/js/basic/login'], resolve),
+            component: resolve => require(['@/js/basic/landing'], resolve),
             meta: {
                 tokenRequired: false
             }
