@@ -6,7 +6,7 @@
           <v-avatar class="mb-10" size="100">
             <img :src="emptyImage">
           </v-avatar>
-          <div style="color:white; margin-top:-10%;">Aeromel Laure</div>
+          <div style="color:white; margin-top:-10%;">{{username}}</div>
         </v-sheet>
       </center>
       <v-divider></v-divider>
@@ -343,6 +343,14 @@ export default {
     if (this.admin || this.cashier || this.online) {
       this.retrieveImage();
       this.retrieve();
+      this.loadingShow = true
+      let params = {
+        uname: this.admin ? this.admin : this.cashier ? this.cashier : this.online
+      };
+      this.$axios.post(AUTH.url + "getUserData", params, AUTH.config).then(response => {
+        this.loadingShow = false
+        this.username = response.data.userdata[0].fname + ' ' + response.data.userdata[0].lname;
+      })
     }
     let pusher = new Pusher(this.config.PUSHER_APP_KEY, {
       cluster: this.config.PUSHER_APP_CLUSTER,

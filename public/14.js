@@ -82,7 +82,8 @@ __webpack_require__.r(__webpack_exports__);
       search: null,
       cupName: null,
       headersForCup: [],
-      loadingShow: false
+      loadingShow: false,
+      toCsv: []
     };
   },
   components: {
@@ -117,6 +118,30 @@ __webpack_require__.r(__webpack_exports__);
         }
 
         _this.dataInDB = response.data.quantityCupsInDB.reverse();
+        response.data.quantityCupsInDB.forEach(function (element) {
+          var thisDate = _this.getDate(element.created_at);
+
+          _this.toCsv.push({
+            "Date": thisDate,
+            "Incoming Low Dose": element.incomingLowDose,
+            "Incoming High Dose": element.incomingHighDose,
+            "Incoming Over Dose": element.incomingOverDose,
+            "Total Incoming Cups": element.incomingLowDose + element.incomingHighDose + element.incomingOverDose,
+            "Cups Onrack Low Dose": element.onRockLowDose,
+            "Cups Onrack High Dose": element.onRockHighDose,
+            "Cups Onrack Over Dose": element.onRockOverDose,
+            "Total Cups Onrack": element.onRockLowDose + element.onRockHighDose + element.onRockOverDose,
+            "Used Cups Low Dose": element.usedCupsLowDose,
+            "Used Cups High Dose": element.usedCupsHighDose,
+            "Used Cups Over Dose": element.usedCupsOverDose,
+            "Total Used Cups": element.usedCupsLowDose + element.usedCupsHighDose + element.usedCupsOverDose,
+            "Remaining Cups Low Dose": element.incomingLowDose,
+            "Remaining Cups High Dose": element.incomingHighDose,
+            "Remaining Cups Over Dose": element.incomingOverDose,
+            "Total Remaining Cups": element.incomingLowDose + element.incomingHighDose + element.incomingOverDose
+          });
+        });
+        console.log("thi is my bam", _this.toCsv);
         _this.headersForCup = [{
           text: "Date",
           value: "created_at"
@@ -166,6 +191,7 @@ __webpack_require__.r(__webpack_exports__);
         _this2.cupName = "Cups Onrack";
         _this2.loadingShow = false;
       });
+      console.log(this.dataInDB);
     },
     tableForUsedCups: function tableForUsedCups() {
       var _this3 = this;
@@ -395,10 +421,7 @@ var render = function() {
                     _c(
                       "VueJsonToCsv",
                       {
-                        attrs: {
-                          "json-data": _vm.dataInDB,
-                          "csv-title": "myCups"
-                        }
+                        attrs: { "json-data": _vm.toCsv, "csv-title": "myCups" }
                       },
                       [
                         _c(
@@ -518,7 +541,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_cupsInventory_vue_vue_type_style_index_0_id_2d64b2de_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./cupsInventory.vue?vue&type=style&index=0&id=2d64b2de&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/modules/inventory/cupsInventory.vue?vue&type=style&index=0&id=2d64b2de&scoped=true&lang=css&");
 /* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_cupsInventory_vue_vue_type_style_index_0_id_2d64b2de_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_cupsInventory_vue_vue_type_style_index_0_id_2d64b2de_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_cupsInventory_vue_vue_type_style_index_0_id_2d64b2de_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_cupsInventory_vue_vue_type_style_index_0_id_2d64b2de_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_cupsInventory_vue_vue_type_style_index_0_id_2d64b2de_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
