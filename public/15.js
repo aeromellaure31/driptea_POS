@@ -202,8 +202,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.retrieveCategory();
-    this.retrieveProducts();
     this.retrieveCheckout();
+    this.retrieveProducts();
   },
   methods: {
     getAllValue: function getAllValue(item, items, index) {

@@ -354,7 +354,7 @@ export default {
     }
     let pusher = new Pusher(this.config.PUSHER_APP_KEY, {
       cluster: this.config.PUSHER_APP_CLUSTER,
-      encrypted: true
+      encrypted: false
     });
     let channel = pusher.subscribe("driptea-channel");
     let obj = this;
