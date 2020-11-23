@@ -1566,7 +1566,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         formData.append("image", this.toSaveImage2);
         formData.append("productCategory", this.productType);
-        axios.post("/addCategory", formData, config).then(function (response) {
+        axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "addCategory", formData, config).then(function (response) {
           if (response.data.status) {
             _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
           }

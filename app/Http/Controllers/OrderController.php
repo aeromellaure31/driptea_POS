@@ -113,8 +113,8 @@ class OrderController extends Controller
     }
 
     public function retrieveTopProducts(Request $request){
-        $prods = DB::table('store_orders')->leftJoin('products', 'orders.productId', '=', 'products.id')
-            ->select(DB::raw('products.image as img'),DB::raw('SUM(orders.quantity) as quan'),DB::raw('products.productName as pName'))
+        $prods = DB::table('store_orders')->leftJoin('products', 'store_orders.productId', '=', 'products.id')
+            ->select(DB::raw('products.image as img'),DB::raw('SUM(store_orders.quantity) as quan'),DB::raw('products.productName as pName'))
             ->where('store_orders.deleted_at', null)
             ->groupBy('img','pName')
             ->orderBy('quan', 'desc')
