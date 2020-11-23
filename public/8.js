@@ -411,7 +411,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {},
   mounted: function mounted() {
-    // console.log("-------------- ",nodataImg);
     var date = new Date();
     var month = date.getMonth() + 1 > 9 ? date.getMonth() + 1 : "0" + (date.getMonth() + 1);
     this.thedate = date.getFullYear() + "-" + month;
@@ -439,8 +438,7 @@ __webpack_require__.r(__webpack_exports__);
 
       for (var i = 0; i < 6; i++) {
         color += letters[Math.floor(Math.random() * 16)];
-      } // console.log("ang color", color)
-
+      }
 
       return color;
     },
@@ -451,10 +449,9 @@ __webpack_require__.r(__webpack_exports__);
         month: null
       };
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(_services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].url + "getProducts", params, _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].config).then(function (response) {
-        // console.log("jsakjfkfksaf ", response);
         response.data.product.forEach(function (element) {
           _this.productName.push(element.productName);
-        }); // console.log("jsakjfkfksaf --------- ", this.productName);
+        });
       });
     },
     //...................  for Product sales graph ....................
@@ -472,14 +469,11 @@ __webpack_require__.r(__webpack_exports__);
       var PRODUCT = "";
       var forSeries = [];
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(_services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].url + "getDailyProductSales", params, _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].config).then(function (response) {
-        console.log("heloooooooo ", response);
-
         if (response.data.status) {
           _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].deauthenticate();
         }
 
         _this2.loadingShow = false;
-        console.log("nag length sa prod name bruh ..", ldate);
 
         _this2.productName.forEach(function (name) {
           var color = _this2.getRandomColor();
@@ -511,8 +505,6 @@ __webpack_require__.r(__webpack_exports__);
         } else {
           _this2.series2 = [];
         }
-
-        console.log("forseries array bruh ", forSeries);
       });
       this.secondpoints = [];
       this.options2.colors = [];
@@ -533,7 +525,6 @@ __webpack_require__.r(__webpack_exports__);
       var PRODUCT = "";
       var forSeries = [];
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(_services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].url + "getMonthlyProductSales", params, _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].config).then(function (response) {
-        // console.log("heloooooooo ", response);
         if (response.data.status) {
           _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].deauthenticate();
         }
@@ -568,8 +559,7 @@ __webpack_require__.r(__webpack_exports__);
 
                 var color = _this3.getRandomColor();
 
-                _this3.options2.colors.push(color); // console.log("secondpoints ===", this.secondpoints);
-
+                _this3.options2.colors.push(color);
 
                 PRODUCT = "";
                 _this3.secondpoints = [];
@@ -597,7 +587,7 @@ __webpack_require__.r(__webpack_exports__);
         });
 
         if (response.data.prods.length > 0) {
-          _this3.series2 = forSeries; // console.log("ang series 2", this.series2);
+          _this3.series2 = forSeries;
         } else {
           _this3.series2 = [];
         }
@@ -622,7 +612,6 @@ __webpack_require__.r(__webpack_exports__);
       var PRODUCT = "";
       var forSeries = [];
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(_services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].url + "getQuarterlyProductSales", params, _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].config).then(function (response) {
-        // console.log("heloooooooo ", response);
         if (response.data.status) {
           _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].deauthenticate();
         }
@@ -650,8 +639,6 @@ __webpack_require__.r(__webpack_exports__);
                   }
                 }
 
-                console.log("Quarter data bruh ", _this4.secondpoints);
-
                 for (var i = 0; i < _this4.secondpoints.length; i++) {
                   if (i == 0 || i == 1 || i == 2) {
                     _this4.firstQ.push(_this4.secondpoints[i]);
@@ -671,8 +658,6 @@ __webpack_require__.r(__webpack_exports__);
                 });
 
                 _this4.QauterData.push(one);
-
-                console.log("Quarter data bruh ", _this4.QauterData);
 
                 var two = _this4.secondQ.reduce(function (total, num) {
                   return total + num;
@@ -700,8 +685,7 @@ __webpack_require__.r(__webpack_exports__);
 
                 var color = _this4.getRandomColor();
 
-                _this4.options2.colors.push(color); // console.log("secondpoints ===", this.secondpoints);
-
+                _this4.options2.colors.push(color);
 
                 PRODUCT = "";
                 _this4.secondpoints = [];
@@ -779,7 +763,7 @@ __webpack_require__.r(__webpack_exports__);
         });
 
         if (response.data.prods.length > 0) {
-          _this4.series2 = forSeries; // console.log("ang series 2", this.series2);
+          _this4.series2 = forSeries;
         } else {
           _this4.series2 = [];
         }
@@ -808,7 +792,6 @@ __webpack_require__.r(__webpack_exports__);
       var PRODUCT = "";
       var forSeries = [];
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(_services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].url + "getSemiProductSales", params, _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].config).then(function (response) {
-        // console.log("heloooooooo ", response);
         if (response.data.status) {
           _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].deauthenticate();
         }
@@ -878,8 +861,7 @@ __webpack_require__.r(__webpack_exports__);
                 forSeries.push({
                   name: PRODUCT,
                   data: _this5.secondpoints
-                }); // console.log("secondpoints ===", this.secondpoints);
-
+                });
                 PRODUCT = "";
                 _this5.secondpoints = [];
               }
@@ -958,7 +940,7 @@ __webpack_require__.r(__webpack_exports__);
         });
 
         if (response.data.prods.length > 0) {
-          _this5.series2 = forSeries; // console.log("ang series 2", this.series2);
+          _this5.series2 = forSeries;
         } else {
           _this5.series2 = [];
         }
@@ -981,14 +963,12 @@ __webpack_require__.r(__webpack_exports__);
         this.ok2 = false;
         this.ok3 = false;
       } else if (this.thefilter2 == "Weekly") {} else if (this.thefilter2 == "Monthly") {
-        console.log("ang colors bruh ", this.options2.colors); // console.log("ang year value ", this.yrvalueS);
-
         this.MonthLabel2 = new Date(this.thedate2).getFullYear();
         this.options2.xaxis.categories = this.mnths;
         this.ok = false;
         this.ok2 = true;
         this.ok3 = false;
-        this.MonthlyProductSale(this.yrvalueS); // console.log("ang colors bruh ", this.options2.colors);
+        this.MonthlyProductSale(this.yrvalueS);
       } else if (this.thefilter2 == "Quarterly") {
         this.MonthLabel2 = new Date(this.thedate2).getFullYear();
         this.options2.xaxis.categories = this.quarter;
@@ -1236,20 +1216,15 @@ __webpack_require__.r(__webpack_exports__);
           _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].deauthenticate();
         }
 
-        _this7.loadingShow = false; // console.log("pre years array ",this.years)
-
+        _this7.loadingShow = false;
         response.data.years.forEach(function (element) {
-          console.log("years bruh ", element);
           var yr = element.year.substring(0, 4);
 
           if (_this7.years.includes(yr)) {} else {
             _this7.years.push(yr);
           }
-
-          console.log("substring bruh ", yr); // // this.years.push({ text: yr, value: yr });
         });
       });
-      console.log("years array ", this.years);
     },
     getMonthlySummary: function getMonthlySummary(yyyy) {
       var _this8 = this;
@@ -1532,14 +1507,11 @@ __webpack_require__.r(__webpack_exports__);
               name: response.data.prods[i].pName
             });
           } else {
-            // console.log("sa else ni sulod");
             top3.push({
               img: _this12.tempimg,
               name: ""
             });
-          } // console.log("----------------------------- ", top3[0].name);
-          // console.log("================ ", this.tempimg);
-
+          }
         }
 
         _this12.loadingShow = false;

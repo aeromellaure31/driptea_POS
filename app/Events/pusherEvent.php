@@ -24,6 +24,7 @@ class pusherEvent implements ShouldBroadcast
     public function __construct($order)
     {
         $this->order = $order;
+        \Log::info($order);
     }
 
     /**

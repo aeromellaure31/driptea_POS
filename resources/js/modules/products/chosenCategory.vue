@@ -109,8 +109,6 @@ export default {
         },
         previous(){
             let type = localStorage.getItem("customerType");
-            console.log(type);
-
             ROUTER.push('/productCategory/' + type).catch(() => {})
         }
     }

@@ -401,7 +401,6 @@ export default {
   },
   computed: {},
   mounted() {
-    // console.log("-------------- ",nodataImg);
     let date = new Date();
     let month =
       date.getMonth() + 1 > 9
@@ -432,7 +431,6 @@ export default {
       for (var i = 0; i < 6; i++) {
         color += letters[Math.floor(Math.random() * 16)];
       }
-      // console.log("ang color", color)
       return color;
     },
     getProductNames() {
@@ -441,11 +439,9 @@ export default {
       };
       Axios.post(AUTH.url + "getProducts", params, AUTH.config).then(
         response => {
-          // console.log("jsakjfkfksaf ", response);
           response.data.product.forEach(element => {
             this.productName.push(element.productName);
           });
-          // console.log("jsakjfkfksaf --------- ", this.productName);
         }
       );
     },
@@ -465,12 +461,10 @@ export default {
 
       Axios.post(AUTH.url + "getDailyProductSales", params, AUTH.config).then(
         response => {
-          console.log("heloooooooo ", response);
           if (response.data.status) {
             AUTH.deauthenticate();
           }
           this.loadingShow = false;
-          console.log("nag length sa prod name bruh ..", ldate);
           this.productName.forEach(name => {
             let color = this.getRandomColor();
             this.options2.colors.push(color);
@@ -498,7 +492,6 @@ export default {
           } else {
             this.series2 = [];
           }
-          console.log("forseries array bruh ", forSeries);
         }
       );
       this.secondpoints = [];
@@ -520,7 +513,6 @@ export default {
 
       Axios.post(AUTH.url + "getMonthlyProductSales", params, AUTH.config).then(
         response => {
-          // console.log("heloooooooo ", response);
           if (response.data.status) {
             AUTH.deauthenticate();
           }
@@ -551,7 +543,6 @@ export default {
                   });
                   let color = this.getRandomColor();
                   this.options2.colors.push(color);
-                  // console.log("secondpoints ===", this.secondpoints);
                   PRODUCT = "";
                   this.secondpoints = [];
                 }
@@ -574,7 +565,6 @@ export default {
 
           if (response.data.prods.length > 0) {
             this.series2 = forSeries;
-            // console.log("ang series 2", this.series2);
           } else {
             this.series2 = [];
           }
@@ -603,7 +593,6 @@ export default {
         params,
         AUTH.config
       ).then(response => {
-        // console.log("heloooooooo ", response);
         if (response.data.status) {
           AUTH.deauthenticate();
         }
@@ -628,7 +617,6 @@ export default {
                     this.secondpoints.push(0);
                   }
                 }
-                console.log("Quarter data bruh ", this.secondpoints);
                 for (var i = 0; i < this.secondpoints.length; i++) {
                   if (i == 0 || i == 1 || i == 2) {
                     this.firstQ.push(this.secondpoints[i]);
@@ -646,7 +634,6 @@ export default {
                 });
 
                 this.QauterData.push(one);
-                console.log("Quarter data bruh ", this.QauterData);
                 let two = this.secondQ.reduce((total, num) => {
                   return total + num;
                 });
@@ -666,7 +653,6 @@ export default {
                 });
                 let color = this.getRandomColor();
                 this.options2.colors.push(color);
-                // console.log("secondpoints ===", this.secondpoints);
                 PRODUCT = "";
                 this.secondpoints = [];
               }
@@ -728,7 +714,6 @@ export default {
 
         if (response.data.prods.length > 0) {
           this.series2 = forSeries;
-          // console.log("ang series 2", this.series2);
         } else {
           this.series2 = [];
         }
@@ -757,7 +742,6 @@ export default {
 
       Axios.post(AUTH.url + "getSemiProductSales", params, AUTH.config).then(
         response => {
-          // console.log("heloooooooo ", response);
           if (response.data.status) {
             AUTH.deauthenticate();
           }
@@ -816,8 +800,6 @@ export default {
                     name: PRODUCT,
                     data: this.secondpoints
                   });
-                  
-                  // console.log("secondpoints ===", this.secondpoints);
                   PRODUCT = "";
                   this.secondpoints = [];
                 }
@@ -882,7 +864,6 @@ export default {
 
           if (response.data.prods.length > 0) {
             this.series2 = forSeries;
-            // console.log("ang series 2", this.series2);
           } else {
             this.series2 = [];
           }
@@ -907,16 +888,12 @@ export default {
         this.ok3 = false;
       } else if (this.thefilter2 == "Weekly") {
       } else if (this.thefilter2 == "Monthly") {
-        console.log("ang colors bruh ", this.options2.colors);
-        // console.log("ang year value ", this.yrvalueS);
         this.MonthLabel2 = new Date(this.thedate2).getFullYear();
         this.options2.xaxis.categories = this.mnths;
         this.ok = false;
         this.ok2 = true;
         this.ok3 = false;
         this.MonthlyProductSale(this.yrvalueS);
-        // console.log("ang colors bruh ", this.options2.colors);
-
       } else if (this.thefilter2 == "Quarterly") {
         this.MonthLabel2 = new Date(this.thedate2).getFullYear();
         this.options2.xaxis.categories = this.quarter;
@@ -1174,19 +1151,14 @@ export default {
           AUTH.deauthenticate();
         }
         this.loadingShow = false;
-        // console.log("pre years array ",this.years)
         response.data.years.forEach(element => {
-          console.log("years bruh ", element);
           let yr = element.year.substring(0, 4);
           if (this.years.includes(yr)) {
           } else {
             this.years.push(yr);
           }
-          console.log("substring bruh ", yr);
-          // // this.years.push({ text: yr, value: yr });
         });
       });
-      console.log("years array ", this.years);
     },
     getMonthlySummary(yyyy) {
       this.loadingShow = true;
@@ -1447,14 +1419,11 @@ export default {
                 name: response.data.prods[i].pName
               });
             } else {
-              // console.log("sa else ni sulod");
               top3.push({
                 img: this.tempimg,
                 name: ""
               });
             }
-            // console.log("----------------------------- ", top3[0].name);
-            // console.log("================ ", this.tempimg);
           }
           this.loadingShow = false;
         }

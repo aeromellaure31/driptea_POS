@@ -54,7 +54,7 @@
                 :key="index"
                 @click="getOrder(item, $event)"
               >
-                <v-list-item-title>{{ item[0].get_customer[0].customerName }} has order</v-list-item-title>
+                <v-list-item-title>{{notif(item)}}</v-list-item-title>
               </v-list-item>
             </v-list>
           </v-menu>
@@ -116,7 +116,7 @@
                 :key="index"
                 @click="getOrder(item, $event)"
               >
-                <v-list-item-title>{{ item[0].get_customer[0].customerName }} has order</v-list-item-title>
+                <v-list-item-title>{{notif(item)}}</v-list-item-title>
               </v-list-item>
             </v-list>
           </v-menu>
@@ -242,6 +242,7 @@ import { mdiAccount } from "@mdi/js";
 import { App } from "@/js/App.vue";
 import config from "./config.js";
 import product from "./modules/products/productCategory.vue";
+import moment from 'moment'
 export default {
   data: () => ({
     username: null,
@@ -326,12 +327,7 @@ export default {
         route: "/registerAccount"
       }
     ],
-    items: [
-      { title: "Click Me" },
-      { title: "Click Me" },
-      { title: "Click Me" },
-      { title: "Click Me 2...................." }
-    ],
+    items: [],
     count: 0,
     onlineCount: 0
   }),
@@ -362,7 +358,6 @@ export default {
     pusher.logToConsole = true;
 
     channel.bind("driptea-data", data => {
-      console.log('hahaha', data)
       if (data.order === "pendingCustomer") {
         // this.playSound('file://resources/audio/notify.mp3')
         this.playSound(
@@ -385,6 +380,10 @@ export default {
     product
   },
   methods: {
+    notif(item){
+      let date = moment(item.created_at).format('MM/DD/YYYY HH:mm');
+      return item[0].get_customer[0].customerName + ' ' + date
+    },
     playSound(sound) {
       if (sound) {
         var audio = new Audio(sound);

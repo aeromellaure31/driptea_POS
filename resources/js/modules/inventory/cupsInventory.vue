@@ -122,7 +122,6 @@ export default {
               "Total Remaining Cups": element.incomingLowDose + element.incomingHighDose + element.incomingOverDose,
               })
           })
-          console.log("thi is my bam",this.toCsv)
           this.headersForCup = [
             {text: "Date" ,value:"created_at"},
             {text: "Low Dose (LD)" ,value:"incomingLowDose"},
@@ -151,7 +150,6 @@ export default {
           this.cupName = "Cups Onrack"
           this.loadingShow = false
         })
-        console.log(this.dataInDB)
     },
     tableForUsedCups(){
       this.loadingShow = true
