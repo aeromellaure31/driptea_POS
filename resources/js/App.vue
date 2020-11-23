@@ -354,10 +354,13 @@ export default {
     }
     let pusher = new Pusher(this.config.PUSHER_APP_KEY, {
       cluster: this.config.PUSHER_APP_CLUSTER,
+      secret: this.config.PUSHER_APP_SECRET,
       encrypted: false
     });
     let channel = pusher.subscribe("driptea-channel");
     let obj = this;
+    pusher.logToConsole = true;
+
     channel.bind("driptea-data", data => {
       if (data.order === "pendingCustomer") {
         // this.playSound('file://resources/audio/notify.mp3')
