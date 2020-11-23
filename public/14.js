@@ -141,7 +141,6 @@ __webpack_require__.r(__webpack_exports__);
             "Total Remaining Cups": element.incomingLowDose + element.incomingHighDose + element.incomingOverDose
           });
         });
-        console.log("thi is my bam", _this.toCsv);
         _this.headersForCup = [{
           text: "Date",
           value: "created_at"
@@ -191,7 +190,6 @@ __webpack_require__.r(__webpack_exports__);
         _this2.cupName = "Cups Onrack";
         _this2.loadingShow = false;
       });
-      console.log(this.dataInDB);
     },
     tableForUsedCups: function tableForUsedCups() {
       var _this3 = this;

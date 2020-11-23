@@ -284,7 +284,7 @@
 }
 .thetop3 {
   height: 260px;
-  width: 100%;
+  width: 95%;
 }
 .theimage {
   margin: 2%;
@@ -322,7 +322,7 @@ export default {
       options2: {
         colors: [],
         chart: {
-          id: "sales-summary"
+          id: "product-summary"
         },
         xaxis: {
           categories: []
@@ -421,7 +421,6 @@ export default {
   },
   computed: {},
   mounted() {
-    // console.log("-------------- ",nodataImg);
     let date = new Date();
     let month =
       date.getMonth() + 1 > 9
@@ -452,22 +451,19 @@ export default {
       for (var i = 0; i < 6; i++) {
         color += letters[Math.floor(Math.random() * 16)];
       }
-      // console.log("ang color", color)
       return color;
     },
     getProductNames() {
       let params = {
         month: null
       };
-      Axios.post(AUTH.url + "getProducts", params, AUTH.config).then(
-        response => {
-          // console.log("jsakjfkfksaf ", response);
+      Axios.post(AUTH.url + "getProducts", params, AUTH.config)
+        .then(response => {
           response.data.product.forEach(element => {
             this.productName.push(element.productName);
           });
-          // console.log("jsakjfkfksaf --------- ", this.productName);
-        }
-      );
+        })
+        .catch(error => {});
     },
 
     //...................  for Product sales graph ....................
@@ -483,14 +479,13 @@ export default {
       let PRODUCT = "";
       let forSeries = [];
 
-      Axios.post(AUTH.url + "getDailyProductSales", params, AUTH.config).then(
-        response => {
+      Axios.post(AUTH.url + "getDailyProductSales", params, AUTH.config)
+        .then(response => {
           // console.log("heloooooooo ", response);
           if (response.data.status) {
             AUTH.deauthenticate();
           }
           this.loadingShow = false;
-          console.log("nag length sa prod name bruh ..", ldate);
           this.productName.forEach(name => {
             let color = this.getRandomColor();
             this.options2.colors.push(color);
@@ -515,14 +510,36 @@ export default {
 
           if (response.data.prods.length > 0) {
             this.series2 = forSeries;
+            this.options2 = {
+              chart: {
+                id: "product-summary"
+              },
+              xaxis: {
+                categories: this.xlabels
+              },
+              stroke: {
+                width: 2,
+                curve: "smooth"
+              }
+            };
+            // this.options2.xaxis.categories = this.xlabels;
           } else {
             this.series2 = [];
+            this.options2 = {
+              chart: {
+                id: "product-summary"
+              },
+              xaxis: {
+                categories: this.xlabels
+              },
+              stroke: {
+                width: 2,
+                curve: "smooth"
+              }
+            };
           }
-          console.log("forseries array bruh ", forSeries);
-        }
-      ).catch(error => {
-
-      });
+        })
+        .catch(error => {});
       this.secondpoints = [];
       this.options2.colors = [];
     },
@@ -540,9 +557,8 @@ export default {
       let PRODUCT = "";
       let forSeries = [];
 
-      Axios.post(AUTH.url + "getMonthlyProductSales", params, AUTH.config).then(
-        response => {
-          // console.log("heloooooooo ", response);
+      Axios.post(AUTH.url + "getMonthlyProductSales", params, AUTH.config)
+        .then(response => {
           if (response.data.status) {
             AUTH.deauthenticate();
           }
@@ -573,7 +589,6 @@ export default {
                   });
                   let color = this.getRandomColor();
                   this.options2.colors.push(color);
-                  // console.log("secondpoints ===", this.secondpoints);
                   PRODUCT = "";
                   this.secondpoints = [];
                 }
@@ -589,6 +604,7 @@ export default {
               });
               let color = this.getRandomColor();
               this.options2.colors.push(color);
+              this.options2.xaxis.categories = this.mnths;
               PRODUCT = "";
               this.secondpoints = [];
             }
@@ -596,14 +612,35 @@ export default {
 
           if (response.data.prods.length > 0) {
             this.series2 = forSeries;
-            // console.log("ang series 2", this.series2);
+            this.options2 = {
+              chart: {
+                id: "product-summary"
+              },
+              xaxis: {
+                categories: this.mnths
+              },
+              stroke: {
+                width: 2,
+                curve: "smooth"
+              }
+            };
           } else {
             this.series2 = [];
+            this.options2 = {
+              chart: {
+                id: "product-summary"
+              },
+              xaxis: {
+                categories: this.mnths
+              },
+              stroke: {
+                width: 2,
+                curve: "smooth"
+              }
+            };
           }
-        }
-      ).catch(error => {
-        
-      });;
+        })
+        .catch(error => {});
       this.secondpoints = [];
       this.options2.colors = [];
     },
@@ -622,143 +659,158 @@ export default {
       let PRODUCT = "";
       let forSeries = [];
 
-      Axios.post(
-        AUTH.url + "getQuarterlyProductSales",
-        params,
-        AUTH.config
-      ).then(response => {
-        // console.log("heloooooooo ", response);
-        if (response.data.status) {
-          AUTH.deauthenticate();
-        }
-        this.loadingShow = false;
-        response.data.prods.forEach(element => {
-          namesfromDB.push(element.ProductName);
-          let d = element.month;
-          let tots = element.quan;
-          monthsfrmDB.push(d);
-          totalfrmDB.push(tots);
-        });
+      Axios.post(AUTH.url + "getQuarterlyProductSales", params, AUTH.config)
+        .then(response => {
+          if (response.data.status) {
+            AUTH.deauthenticate();
+          }
+          this.loadingShow = false;
+          response.data.prods.forEach(element => {
+            namesfromDB.push(element.ProductName);
+            let d = element.month;
+            let tots = element.quan;
+            monthsfrmDB.push(d);
+            totalfrmDB.push(tots);
+          });
 
-        this.productName.forEach(name => {
-          if (namesfromDB.includes(name)) {
-            response.data.prods.forEach(prod => {
-              if (prod.ProductName === name) {
-                PRODUCT = name;
-                for (i = 1; i < this.mnths.length + 1; i++) {
-                  if (prod.month === i) {
-                    this.secondpoints.push(parseInt(prod.quan));
-                  } else {
-                    this.secondpoints.push(0);
+          this.productName.forEach(name => {
+            if (namesfromDB.includes(name)) {
+              response.data.prods.forEach(prod => {
+                if (prod.ProductName === name) {
+                  PRODUCT = name;
+                  for (i = 1; i < this.mnths.length + 1; i++) {
+                    if (prod.month === i) {
+                      this.secondpoints.push(parseInt(prod.quan));
+                    } else {
+                      this.secondpoints.push(0);
+                    }
                   }
-                }
-                console.log("Quarter data bruh ", this.secondpoints);
-                for (var i = 0; i < this.secondpoints.length; i++) {
-                  if (i == 0 || i == 1 || i == 2) {
-                    this.firstQ.push(this.secondpoints[i]);
-                  } else if (i == 3 || i == 4 || i == 5) {
-                    this.secondQ.push(this.secondpoints[i]);
-                  } else if (i == 6 || i == 7 || i == 8) {
-                    this.thirdQ.push(this.secondpoints[i]);
-                  } else if (i == 9 || i == 10 || i == 11) {
-                    this.forthQ.push(this.secondpoints[i]);
+                  for (var i = 0; i < this.secondpoints.length; i++) {
+                    if (i == 0 || i == 1 || i == 2) {
+                      this.firstQ.push(this.secondpoints[i]);
+                    } else if (i == 3 || i == 4 || i == 5) {
+                      this.secondQ.push(this.secondpoints[i]);
+                    } else if (i == 6 || i == 7 || i == 8) {
+                      this.thirdQ.push(this.secondpoints[i]);
+                    } else if (i == 9 || i == 10 || i == 11) {
+                      this.forthQ.push(this.secondpoints[i]);
+                    }
                   }
-                }
-                this.QauterData = [];
-                let one = this.firstQ.reduce((total, num) => {
-                  return total + num;
-                });
+                  this.QauterData = [];
+                  let one = this.firstQ.reduce((total, num) => {
+                    return total + num;
+                  });
 
-                this.QauterData.push(one);
-                console.log("Quarter data bruh ", this.QauterData);
-                let two = this.secondQ.reduce((total, num) => {
-                  return total + num;
-                });
-                this.QauterData.push(two);
-                let three = this.thirdQ.reduce((total, num) => {
-                  return total + num;
-                });
-                this.QauterData.push(three);
-                let four = this.forthQ.reduce((total, num) => {
-                  return total + num;
-                });
-                this.QauterData.push(four);
-                this.secondpoints = this.QauterData;
-                forSeries.push({
-                  name: PRODUCT,
-                  data: this.secondpoints
-                });
-                let color = this.getRandomColor();
-                this.options2.colors.push(color);
-                // console.log("secondpoints ===", this.secondpoints);
-                PRODUCT = "";
-                this.secondpoints = [];
+                  this.QauterData.push(one);
+                  let two = this.secondQ.reduce((total, num) => {
+                    return total + num;
+                  });
+                  this.QauterData.push(two);
+                  let three = this.thirdQ.reduce((total, num) => {
+                    return total + num;
+                  });
+                  this.QauterData.push(three);
+                  let four = this.forthQ.reduce((total, num) => {
+                    return total + num;
+                  });
+                  this.QauterData.push(four);
+                  this.secondpoints = this.QauterData;
+                  forSeries.push({
+                    name: PRODUCT,
+                    data: this.secondpoints
+                  });
+                  let color = this.getRandomColor();
+                  this.options2.colors.push(color);
+                  PRODUCT = "";
+                  this.secondpoints = [];
+                }
+              });
+              this.firstQ = [];
+              this.secondQ = [];
+              this.thirdQ = [];
+              this.forthQ = [];
+              this.QauterData = [];
+            } else {
+              PRODUCT = name;
+              for (i = 1; i < this.mnths.length + 1; i++) {
+                this.secondpoints.push(0);
               }
-            });
+              for (var i = 0; i < this.secondpoints.length; i++) {
+                if (i == 0 || i == 1 || i == 2) {
+                  this.firstQ.push(this.secondpoints[i]);
+                } else if (i == 3 || i == 4 || i == 5) {
+                  this.secondQ.push(this.secondpoints[i]);
+                } else if (i == 6 || i == 7 || i == 8) {
+                  this.thirdQ.push(this.secondpoints[i]);
+                } else if (i == 9 || i == 10 || i == 11) {
+                  this.forthQ.push(this.secondpoints[i]);
+                }
+              }
+              this.QauterData = [];
+              let one = this.firstQ.reduce((total, num) => {
+                return total + num;
+              });
+              this.QauterData.push(one);
+              let two = this.secondQ.reduce((total, num) => {
+                return total + num;
+              });
+              this.QauterData.push(two);
+              let three = this.thirdQ.reduce((total, num) => {
+                return total + num;
+              });
+              this.QauterData.push(three);
+              let four = this.forthQ.reduce((total, num) => {
+                return total + num;
+              });
+              this.QauterData.push(four);
+              this.secondpoints = this.QauterData;
+              forSeries.push({
+                name: PRODUCT,
+                data: this.secondpoints
+              });
+              let color = this.getRandomColor();
+              this.options2.colors.push(color);
+              PRODUCT = "";
+              this.secondpoints = [];
+            }
             this.firstQ = [];
             this.secondQ = [];
             this.thirdQ = [];
             this.forthQ = [];
             this.QauterData = [];
-          } else {
-            PRODUCT = name;
-            for (i = 1; i < this.mnths.length + 1; i++) {
-              this.secondpoints.push(0);
-            }
-            for (var i = 0; i < this.secondpoints.length; i++) {
-              if (i == 0 || i == 1 || i == 2) {
-                this.firstQ.push(this.secondpoints[i]);
-              } else if (i == 3 || i == 4 || i == 5) {
-                this.secondQ.push(this.secondpoints[i]);
-              } else if (i == 6 || i == 7 || i == 8) {
-                this.thirdQ.push(this.secondpoints[i]);
-              } else if (i == 9 || i == 10 || i == 11) {
-                this.forthQ.push(this.secondpoints[i]);
-              }
-            }
-            this.QauterData = [];
-            let one = this.firstQ.reduce((total, num) => {
-              return total + num;
-            });
-            this.QauterData.push(one);
-            let two = this.secondQ.reduce((total, num) => {
-              return total + num;
-            });
-            this.QauterData.push(two);
-            let three = this.thirdQ.reduce((total, num) => {
-              return total + num;
-            });
-            this.QauterData.push(three);
-            let four = this.forthQ.reduce((total, num) => {
-              return total + num;
-            });
-            this.QauterData.push(four);
-            this.secondpoints = this.QauterData;
-            forSeries.push({
-              name: PRODUCT,
-              data: this.secondpoints
-            });
-            let color = this.getRandomColor();
-            this.options2.colors.push(color);
-            PRODUCT = "";
-            this.secondpoints = [];
-          }
-          this.firstQ = [];
-          this.secondQ = [];
-          this.thirdQ = [];
-          this.forthQ = [];
-          this.QauterData = [];
-        });
+          });
 
-        if (response.data.prods.length > 0) {
-          this.series2 = forSeries;
-          // console.log("ang series 2", this.series2);
-        } else {
-          this.series2 = [];
-        }
-      }).catch(error => {
-        
-      });;
+          if (response.data.prods.length > 0) {
+            this.series2 = forSeries;
+            this.options2 = {
+              chart: {
+                id: "product-summary"
+              },
+              xaxis: {
+                categories: this.quarter
+              },
+              stroke: {
+                width: 2,
+                curve: "smooth"
+              }
+            };
+          } else {
+            this.series2 = [];
+            this.options2 = {
+              chart: {
+                id: "product-summary"
+              },
+              xaxis: {
+                categories: this.quarter
+              },
+              stroke: {
+                width: 2,
+                curve: "smooth"
+              }
+            };
+          }
+        })
+        .catch(error => {});
       this.firstQ = [];
       this.secondQ = [];
       this.thirdQ = [];
@@ -781,9 +833,8 @@ export default {
       let PRODUCT = "";
       let forSeries = [];
 
-      Axios.post(AUTH.url + "getSemiProductSales", params, AUTH.config).then(
-        response => {
-          // console.log("heloooooooo ", response);
+      Axios.post(AUTH.url + "getSemiProductSales", params, AUTH.config)
+        .then(response => {
           if (response.data.status) {
             AUTH.deauthenticate();
           }
@@ -908,14 +959,35 @@ export default {
 
           if (response.data.prods.length > 0) {
             this.series2 = forSeries;
-            // console.log("ang series 2", this.series2);
+            this.options2 = {
+              chart: {
+                id: "product-summary"
+              },
+              xaxis: {
+                categories: this.semi
+              },
+              stroke: {
+                width: 2,
+                curve: "smooth"
+              }
+            };
           } else {
             this.series2 = [];
+            this.options2 = {
+              chart: {
+                id: "product-summary"
+              },
+              xaxis: {
+                categories: this.semi
+              },
+              stroke: {
+                width: 2,
+                curve: "smooth"
+              }
+            };
           }
-        }
-      ).catch(error => {
-        
-      });;
+        })
+        .catch(error => {});
       this.firstQ = [];
       this.secondQ = [];
       this.thirdQ = [];
@@ -978,17 +1050,15 @@ export default {
       if (this.thefilter2 == "Daily") {
         this.options2.xaxis.categories = [];
         this.MonthLabel2 = this.mnths[this.theMonth - 1];
-        this.options2.xaxis.categories = this.xlabels;
+        // this.options2.xaxis.categories = this.xlabels;
         this.dailyProductSale();
         this.ok = true;
         this.ok2 = false;
         this.ok3 = false;
       } else if (this.thefilter2 == "Weekly") {
       } else if (this.thefilter2 == "Monthly") {
-        console.log("ang colors bruh ", this.options2.colors);
-        // console.log("ang year value ", this.yrvalueS);
         this.MonthLabel2 = new Date(this.thedate2).getFullYear();
-        this.options2.xaxis.categories = this.mnths;
+        // this.options2.xaxis.categories = this.mnths;
         this.ok = false;
         this.ok2 = true;
         this.ok3 = false;
@@ -996,14 +1066,14 @@ export default {
         // console.log("ang colors bruh ", this.options2.colors);
       } else if (this.thefilter2 == "Quarterly") {
         this.MonthLabel2 = new Date(this.thedate2).getFullYear();
-        this.options2.xaxis.categories = this.quarter;
+        // this.options2.xaxis.categories = this.quarter;
         this.QuarterlyProductSale(this.yrvalueS);
         this.ok = false;
         this.ok2 = true;
         this.ok3 = false;
       } else if (this.thefilter2 == "Semi-Annual") {
         this.MonthLabel2 = new Date(this.thedate2).getFullYear();
-        this.options2.xaxis.categories = this.semi;
+        // this.options2.xaxis.categories = this.semi;
         this.SemiProductSale(this.yrvalueS);
         this.ok = false;
         this.ok2 = true;
@@ -1049,8 +1119,8 @@ export default {
       // let xs = this.xlabels;
       let ldate = this.lastDate;
 
-      Axios.post(AUTH.url + "getDailySales", params, AUTH.config).then(
-        response => {
+      Axios.post(AUTH.url + "getDailySales", params, AUTH.config)
+        .then(response => {
           if (response.data.status) {
             AUTH.deauthenticate();
           }
@@ -1082,10 +1152,8 @@ export default {
           } else {
             this.series = [];
           }
-        }
-      ).catch(error => {
-        
-      });
+        })
+        .catch(error => {});
       this.points = [];
     },
 
@@ -1247,26 +1315,21 @@ export default {
       let params = {
         year: this.yrvalue
       };
-      Axios.post(AUTH.url + "getyears", params, AUTH.config).then(response => {
-        if (response.data.status) {
-          AUTH.deauthenticate();
-        }
-        this.loadingShow = false;
-        // console.log("pre years array ",this.years)
-        response.data.years.forEach(element => {
-          console.log("years bruh ", element);
-          let yr = element.year.substring(0, 4);
-          if (this.years.includes(yr)) {
-          } else {
-            this.years.push(yr);
+      Axios.post(AUTH.url + "getyears", params, AUTH.config)
+        .then(response => {
+          if (response.data.status) {
+            AUTH.deauthenticate();
           }
-          console.log("substring bruh ", yr);
-          // // this.years.push({ text: yr, value: yr });
-        });
-      }).catch(error => {
-        
-      });
-      console.log("years array ", this.years);
+          this.loadingShow = false;
+          response.data.years.forEach(element => {
+            let yr = element.year.substring(0, 4);
+            if (this.years.includes(yr)) {
+            } else {
+              this.years.push(yr);
+            }
+          });
+        })
+        .catch(error => {});
     },
     getMonthlySummary(yyyy) {
       this.loadingShow = true;
@@ -1276,8 +1339,8 @@ export default {
       let params = {
         year: yyyy
       };
-      Axios.post(AUTH.url + "getmonthlySales", params, AUTH.config).then(
-        response => {
+      Axios.post(AUTH.url + "getmonthlySales", params, AUTH.config)
+        .then(response => {
           if (response.data.status) {
             AUTH.deauthenticate();
           }
@@ -1303,10 +1366,8 @@ export default {
               data: this.points
             }
           ];
-        }
-      ).catch(error => {
-        
-      });
+        })
+        .catch(error => {});
     },
     getQuarterlySummary(yyyy) {
       this.loadingShow = true;
@@ -1316,8 +1377,8 @@ export default {
       let params = {
         year: yyyy
       };
-      Axios.post(AUTH.url + "getQuarterlySales", params, AUTH.config).then(
-        response => {
+      Axios.post(AUTH.url + "getQuarterlySales", params, AUTH.config)
+        .then(response => {
           if (response.data.status) {
             AUTH.deauthenticate();
           }
@@ -1372,10 +1433,8 @@ export default {
               data: this.points
             }
           ];
-        }
-      ).catch(error => {
-        
-      });
+        })
+        .catch(error => {});
       this.firstQ = [];
       this.secondQ = [];
       this.thirdQ = [];
@@ -1391,8 +1450,8 @@ export default {
       let params = {
         year: yyyy
       };
-      Axios.post(AUTH.url + "getSemi-AnnualSales", params, AUTH.config).then(
-        response => {
+      Axios.post(AUTH.url + "getSemi-AnnualSales", params, AUTH.config)
+        .then(response => {
           if (response.data.status) {
             AUTH.deauthenticate();
           }
@@ -1447,10 +1506,8 @@ export default {
               data: this.points
             }
           ];
-        }
-      ).catch(error => {
-        
-      });
+        })
+        .catch(error => {});
       this.firstQ = [];
       this.secondQ = [];
       this.thirdQ = [];
@@ -1473,8 +1530,8 @@ export default {
         from: startingYR,
         to: endYear
       };
-      Axios.post(AUTH.url + "getAnnualSales", params, AUTH.config).then(
-        response => {
+      Axios.post(AUTH.url + "getAnnualSales", params, AUTH.config)
+        .then(response => {
           if (response.data.status) {
             AUTH.deauthenticate();
           }
@@ -1506,10 +1563,8 @@ export default {
               curve: "smooth"
             }
           };
-        }
-      ).catch(error => {
-        
-      });
+        })
+        .catch(error => {});
     },
     getTop3() {
       this.loadingShow = true;
@@ -1518,8 +1573,8 @@ export default {
       };
       let top3 = [];
       let indexes = [];
-      Axios.post(AUTH.url + "getTopProd", params, AUTH.config).then(
-        response => {
+      Axios.post(AUTH.url + "getTopProd", params, AUTH.config)
+        .then(response => {
           if (response.data.status) {
             AUTH.deauthenticate();
           }
@@ -1535,20 +1590,15 @@ export default {
                 name: response.data.prods[i].pName
               });
             } else {
-              // console.log("sa else ni sulod");
               top3.push({
                 img: this.tempimg,
                 name: ""
               });
             }
-            // console.log("----------------------------- ", top3[0].name);
-            // console.log("================ ", this.tempimg);
           }
           this.loadingShow = false;
-        }
-      ).catch(error => {
-        
-      });
+        })
+        .catch(error => {});
       this.topprodarr = top3;
     }
   }

@@ -175,7 +175,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     previous: function previous() {
       var type = localStorage.getItem("customerType");
-      console.log(type);
       _router__WEBPACK_IMPORTED_MODULE_1__["default"].push('/productCategory/' + type)["catch"](function () {});
     }
   }

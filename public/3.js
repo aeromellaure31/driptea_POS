@@ -270,7 +270,6 @@ __webpack_require__.r(__webpack_exports__);
     deleteOrder: function deleteOrder(item, param) {
       var _this = this;
 
-      console.log(item);
       var id = [];
       var low = 0;
       var high = 0;

@@ -200,7 +200,6 @@ export default {
   },
   methods: {
     deleteOrder(item, param){
-        console.log(item)
         let id = []
         let low = 0
         let high = 0

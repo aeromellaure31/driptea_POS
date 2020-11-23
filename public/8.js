@@ -343,7 +343,7 @@ __webpack_require__.r(__webpack_exports__);
       options2: {
         colors: [],
         chart: {
-          id: "sales-summary"
+          id: "product-summary"
         },
         xaxis: {
           categories: []
@@ -431,7 +431,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {},
   mounted: function mounted() {
-    // console.log("-------------- ",nodataImg);
     var date = new Date();
     var month = date.getMonth() + 1 > 9 ? date.getMonth() + 1 : "0" + (date.getMonth() + 1);
     this.thedate = date.getFullYear() + "-" + month;
@@ -459,8 +458,7 @@ __webpack_require__.r(__webpack_exports__);
 
       for (var i = 0; i < 6; i++) {
         color += letters[Math.floor(Math.random() * 16)];
-      } // console.log("ang color", color)
-
+      }
 
       return color;
     },
@@ -471,11 +469,10 @@ __webpack_require__.r(__webpack_exports__);
         month: null
       };
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(_services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].url + "getProducts", params, _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].config).then(function (response) {
-        // console.log("jsakjfkfksaf ", response);
         response.data.product.forEach(function (element) {
           _this.productName.push(element.productName);
-        }); // console.log("jsakjfkfksaf --------- ", this.productName);
-      });
+        });
+      })["catch"](function (error) {});
     },
     //...................  for Product sales graph ....................
     dailyProductSale: function dailyProductSale() {
@@ -498,7 +495,6 @@ __webpack_require__.r(__webpack_exports__);
         }
 
         _this2.loadingShow = false;
-        console.log("nag length sa prod name bruh ..", ldate);
 
         _this2.productName.forEach(function (name) {
           var color = _this2.getRandomColor();
@@ -527,11 +523,33 @@ __webpack_require__.r(__webpack_exports__);
 
         if (response.data.prods.length > 0) {
           _this2.series2 = forSeries;
+          _this2.options2 = {
+            chart: {
+              id: "product-summary"
+            },
+            xaxis: {
+              categories: _this2.xlabels
+            },
+            stroke: {
+              width: 2,
+              curve: "smooth"
+            }
+          }; // this.options2.xaxis.categories = this.xlabels;
         } else {
           _this2.series2 = [];
+          _this2.options2 = {
+            chart: {
+              id: "product-summary"
+            },
+            xaxis: {
+              categories: _this2.xlabels
+            },
+            stroke: {
+              width: 2,
+              curve: "smooth"
+            }
+          };
         }
-
-        console.log("forseries array bruh ", forSeries);
       })["catch"](function (error) {});
       this.secondpoints = [];
       this.options2.colors = [];
@@ -552,7 +570,6 @@ __webpack_require__.r(__webpack_exports__);
       var PRODUCT = "";
       var forSeries = [];
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(_services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].url + "getMonthlyProductSales", params, _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].config).then(function (response) {
-        // console.log("heloooooooo ", response);
         if (response.data.status) {
           _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].deauthenticate();
         }
@@ -587,8 +604,7 @@ __webpack_require__.r(__webpack_exports__);
 
                 var color = _this3.getRandomColor();
 
-                _this3.options2.colors.push(color); // console.log("secondpoints ===", this.secondpoints);
-
+                _this3.options2.colors.push(color);
 
                 PRODUCT = "";
                 _this3.secondpoints = [];
@@ -610,18 +626,42 @@ __webpack_require__.r(__webpack_exports__);
 
             _this3.options2.colors.push(color);
 
+            _this3.options2.xaxis.categories = _this3.mnths;
             PRODUCT = "";
             _this3.secondpoints = [];
           }
         });
 
         if (response.data.prods.length > 0) {
-          _this3.series2 = forSeries; // console.log("ang series 2", this.series2);
+          _this3.series2 = forSeries;
+          _this3.options2 = {
+            chart: {
+              id: "product-summary"
+            },
+            xaxis: {
+              categories: _this3.mnths
+            },
+            stroke: {
+              width: 2,
+              curve: "smooth"
+            }
+          };
         } else {
           _this3.series2 = [];
+          _this3.options2 = {
+            chart: {
+              id: "product-summary"
+            },
+            xaxis: {
+              categories: _this3.mnths
+            },
+            stroke: {
+              width: 2,
+              curve: "smooth"
+            }
+          };
         }
       })["catch"](function (error) {});
-      ;
       this.secondpoints = [];
       this.options2.colors = [];
     },
@@ -642,7 +682,6 @@ __webpack_require__.r(__webpack_exports__);
       var PRODUCT = "";
       var forSeries = [];
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(_services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].url + "getQuarterlyProductSales", params, _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].config).then(function (response) {
-        // console.log("heloooooooo ", response);
         if (response.data.status) {
           _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].deauthenticate();
         }
@@ -670,8 +709,6 @@ __webpack_require__.r(__webpack_exports__);
                   }
                 }
 
-                console.log("Quarter data bruh ", _this4.secondpoints);
-
                 for (var i = 0; i < _this4.secondpoints.length; i++) {
                   if (i == 0 || i == 1 || i == 2) {
                     _this4.firstQ.push(_this4.secondpoints[i]);
@@ -691,8 +728,6 @@ __webpack_require__.r(__webpack_exports__);
                 });
 
                 _this4.QauterData.push(one);
-
-                console.log("Quarter data bruh ", _this4.QauterData);
 
                 var two = _this4.secondQ.reduce(function (total, num) {
                   return total + num;
@@ -720,8 +755,7 @@ __webpack_require__.r(__webpack_exports__);
 
                 var color = _this4.getRandomColor();
 
-                _this4.options2.colors.push(color); // console.log("secondpoints ===", this.secondpoints);
-
+                _this4.options2.colors.push(color);
 
                 PRODUCT = "";
                 _this4.secondpoints = [];
@@ -799,12 +833,35 @@ __webpack_require__.r(__webpack_exports__);
         });
 
         if (response.data.prods.length > 0) {
-          _this4.series2 = forSeries; // console.log("ang series 2", this.series2);
+          _this4.series2 = forSeries;
+          _this4.options2 = {
+            chart: {
+              id: "product-summary"
+            },
+            xaxis: {
+              categories: _this4.quarter
+            },
+            stroke: {
+              width: 2,
+              curve: "smooth"
+            }
+          };
         } else {
           _this4.series2 = [];
+          _this4.options2 = {
+            chart: {
+              id: "product-summary"
+            },
+            xaxis: {
+              categories: _this4.quarter
+            },
+            stroke: {
+              width: 2,
+              curve: "smooth"
+            }
+          };
         }
       })["catch"](function (error) {});
-      ;
       this.firstQ = [];
       this.secondQ = [];
       this.thirdQ = [];
@@ -829,7 +886,6 @@ __webpack_require__.r(__webpack_exports__);
       var PRODUCT = "";
       var forSeries = [];
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(_services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].url + "getSemiProductSales", params, _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].config).then(function (response) {
-        // console.log("heloooooooo ", response);
         if (response.data.status) {
           _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].deauthenticate();
         }
@@ -979,12 +1035,35 @@ __webpack_require__.r(__webpack_exports__);
         });
 
         if (response.data.prods.length > 0) {
-          _this5.series2 = forSeries; // console.log("ang series 2", this.series2);
+          _this5.series2 = forSeries;
+          _this5.options2 = {
+            chart: {
+              id: "product-summary"
+            },
+            xaxis: {
+              categories: _this5.semi
+            },
+            stroke: {
+              width: 2,
+              curve: "smooth"
+            }
+          };
         } else {
           _this5.series2 = [];
+          _this5.options2 = {
+            chart: {
+              id: "product-summary"
+            },
+            xaxis: {
+              categories: _this5.semi
+            },
+            stroke: {
+              width: 2,
+              curve: "smooth"
+            }
+          };
         }
       })["catch"](function (error) {});
-      ;
       this.firstQ = [];
       this.secondQ = [];
       this.thirdQ = [];
@@ -1045,31 +1124,29 @@ __webpack_require__.r(__webpack_exports__);
     onFilter2: function onFilter2() {
       if (this.thefilter2 == "Daily") {
         this.options2.xaxis.categories = [];
-        this.MonthLabel2 = this.mnths[this.theMonth - 1];
-        this.options2.xaxis.categories = this.xlabels;
+        this.MonthLabel2 = this.mnths[this.theMonth - 1]; // this.options2.xaxis.categories = this.xlabels;
+
         this.dailyProductSale();
         this.ok = true;
         this.ok2 = false;
         this.ok3 = false;
       } else if (this.thefilter2 == "Weekly") {} else if (this.thefilter2 == "Monthly") {
-        console.log("ang colors bruh ", this.options2.colors); // console.log("ang year value ", this.yrvalueS);
+        this.MonthLabel2 = new Date(this.thedate2).getFullYear(); // this.options2.xaxis.categories = this.mnths;
 
-        this.MonthLabel2 = new Date(this.thedate2).getFullYear();
-        this.options2.xaxis.categories = this.mnths;
         this.ok = false;
         this.ok2 = true;
         this.ok3 = false;
         this.MonthlyProductSale(this.yrvalueS); // console.log("ang colors bruh ", this.options2.colors);
       } else if (this.thefilter2 == "Quarterly") {
-        this.MonthLabel2 = new Date(this.thedate2).getFullYear();
-        this.options2.xaxis.categories = this.quarter;
+        this.MonthLabel2 = new Date(this.thedate2).getFullYear(); // this.options2.xaxis.categories = this.quarter;
+
         this.QuarterlyProductSale(this.yrvalueS);
         this.ok = false;
         this.ok2 = true;
         this.ok3 = false;
       } else if (this.thefilter2 == "Semi-Annual") {
-        this.MonthLabel2 = new Date(this.thedate2).getFullYear();
-        this.options2.xaxis.categories = this.semi;
+        this.MonthLabel2 = new Date(this.thedate2).getFullYear(); // this.options2.xaxis.categories = this.semi;
+
         this.SemiProductSale(this.yrvalueS);
         this.ok = false;
         this.ok2 = true;
@@ -1307,20 +1384,15 @@ __webpack_require__.r(__webpack_exports__);
           _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].deauthenticate();
         }
 
-        _this7.loadingShow = false; // console.log("pre years array ",this.years)
-
+        _this7.loadingShow = false;
         response.data.years.forEach(function (element) {
-          console.log("years bruh ", element);
           var yr = element.year.substring(0, 4);
 
           if (_this7.years.includes(yr)) {} else {
             _this7.years.push(yr);
           }
-
-          console.log("substring bruh ", yr); // // this.years.push({ text: yr, value: yr });
         });
       })["catch"](function (error) {});
-      console.log("years array ", this.years);
     },
     getMonthlySummary: function getMonthlySummary(yyyy) {
       var _this8 = this;
@@ -1603,14 +1675,11 @@ __webpack_require__.r(__webpack_exports__);
               name: response.data.prods[i].pName
             });
           } else {
-            // console.log("sa else ni sulod");
             top3.push({
               img: _this12.tempimg,
               name: ""
             });
-          } // console.log("----------------------------- ", top3[0].name);
-          // console.log("================ ", this.tempimg);
-
+          }
         }
 
         _this12.loadingShow = false;
@@ -1634,7 +1703,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.prodNAme[data-v-124112e6] {\r\n  color: #ff5b04;\n}\n.welcome[data-v-124112e6] {\r\n  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,\r\n    Helvetica Neue, Arial, sans-serif;\r\n  font-size: 25px;\r\n  margin-bottom: 10px;\r\n  margin-left: 4%;\r\n  font-weight: bold;\r\n  margin-top: 5%;\n}\n.insideToolbar[data-v-124112e6] {\r\n  margin-top: 25px;\n}\n.GraphLabel[data-v-124112e6] {\r\n  margin-left: 45%;\r\n  font-weight: bold;\n}\n.annualDateCal1[data-v-124112e6],\r\n.annualDateCal2[data-v-124112e6],\r\n.yearMenu[data-v-124112e6],\r\n.graphTitle[data-v-124112e6] {\r\n  color: black;\n}\n.graphTitle[data-v-124112e6],\r\n.text1[data-v-124112e6] {\r\n  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,\r\n    Helvetica Neue, Arial, sans-serif;\r\n  font-size: 1rem;\r\n  font-weight: bold;\n}\n.YRcal[data-v-124112e6] {\r\n  color: black;\n}\n.Cname[data-v-124112e6],\r\n.GraphLabel[data-v-124112e6] {\r\n  color: #ff5b04;\n}\n.text1[data-v-124112e6] {\r\n  margin-left: 10%;\r\n  text-align: center;\r\n  color: black;\n}\n.TB3[data-v-124112e6] {\r\n  margin-bottom: 20px;\r\n  justify-content: center;\r\n  border-radius: 1%;\n}\r\n/* .theimageCard {\r\n  align-content: center;\r\n  border: 1px solid #999999;\r\n  border-radius: 1%;\r\n} */\n.prods[data-v-124112e6] {\r\n  border: 1px solid #999999;\r\n  border-radius: 1%;\n}\n.subhead[data-v-124112e6] {\r\n  margin-bottom: 20px;\n}\r\n/* .chart {\r\n  width: 50%;\r\n} */\n.body[data-v-124112e6] {\r\n  margin-left: 3%;\r\n  margin-right: 3%;\r\n  height: 100%;\r\n  margin-bottom: 5%;\n}\n.top3[data-v-124112e6] {\r\n  width: 370px;\r\n  height: 1000px;\r\n  border: 1px solid #999999;\r\n  border-radius: 1%;\n}\n.thetop3[data-v-124112e6] {\r\n  height: 260px;\r\n  width: 100%;\n}\n.theimage[data-v-124112e6] {\r\n  margin: 2%;\r\n  height: 280px;\r\n  width: 100%;\n}\n.Prod_name[data-v-124112e6] {\r\n  color: black;\n}\r\n", ""]);
+exports.push([module.i, "\n.prodNAme[data-v-124112e6] {\r\n  color: #ff5b04;\n}\n.welcome[data-v-124112e6] {\r\n  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,\r\n    Helvetica Neue, Arial, sans-serif;\r\n  font-size: 25px;\r\n  margin-bottom: 10px;\r\n  margin-left: 4%;\r\n  font-weight: bold;\r\n  margin-top: 5%;\n}\n.insideToolbar[data-v-124112e6] {\r\n  margin-top: 25px;\n}\n.GraphLabel[data-v-124112e6] {\r\n  margin-left: 45%;\r\n  font-weight: bold;\n}\n.annualDateCal1[data-v-124112e6],\r\n.annualDateCal2[data-v-124112e6],\r\n.yearMenu[data-v-124112e6],\r\n.graphTitle[data-v-124112e6] {\r\n  color: black;\n}\n.graphTitle[data-v-124112e6],\r\n.text1[data-v-124112e6] {\r\n  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,\r\n    Helvetica Neue, Arial, sans-serif;\r\n  font-size: 1rem;\r\n  font-weight: bold;\n}\n.YRcal[data-v-124112e6] {\r\n  color: black;\n}\n.Cname[data-v-124112e6],\r\n.GraphLabel[data-v-124112e6] {\r\n  color: #ff5b04;\n}\n.text1[data-v-124112e6] {\r\n  margin-left: 10%;\r\n  text-align: center;\r\n  color: black;\n}\n.TB3[data-v-124112e6] {\r\n  margin-bottom: 20px;\r\n  justify-content: center;\r\n  border-radius: 1%;\n}\r\n/* .theimageCard {\r\n  align-content: center;\r\n  border: 1px solid #999999;\r\n  border-radius: 1%;\r\n} */\n.prods[data-v-124112e6] {\r\n  border: 1px solid #999999;\r\n  border-radius: 1%;\n}\n.subhead[data-v-124112e6] {\r\n  margin-bottom: 20px;\n}\r\n/* .chart {\r\n  width: 50%;\r\n} */\n.body[data-v-124112e6] {\r\n  margin-left: 3%;\r\n  margin-right: 3%;\r\n  height: 100%;\r\n  margin-bottom: 5%;\n}\n.top3[data-v-124112e6] {\r\n  width: 370px;\r\n  height: 1000px;\r\n  border: 1px solid #999999;\r\n  border-radius: 1%;\n}\n.thetop3[data-v-124112e6] {\r\n  height: 260px;\r\n  width: 95%;\n}\n.theimage[data-v-124112e6] {\r\n  margin: 2%;\r\n  height: 280px;\r\n  width: 100%;\n}\n.Prod_name[data-v-124112e6] {\r\n  color: black;\n}\r\n", ""]);
 
 // exports
 

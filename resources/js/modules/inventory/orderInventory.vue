@@ -186,8 +186,8 @@ export default {
   },
   mounted() {
     this.retrieveCategory();
-    this.retrieveProducts();
     this.retrieveCheckout();
+    this.retrieveProducts();
   },
   methods: {
     getAllValue(item, items, index) {
