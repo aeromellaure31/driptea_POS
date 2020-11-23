@@ -358,6 +358,7 @@ export default {
     pusher.logToConsole = true;
 
     channel.bind("driptea-data", data => {
+      console.log('bolbol ate jess', data)
       if (data.order === "pendingCustomer") {
         // this.playSound('file://resources/audio/notify.mp3')
         this.playSound(
