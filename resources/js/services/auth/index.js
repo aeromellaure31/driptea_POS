@@ -3,7 +3,7 @@ import ROUTER from '../../router'
 export default {
     // url: 'http://ec2-34-229-81-230.compute-1.amazonaws.com/',
     // url: 'http://localhost:8000/',
-    url: 'http://driptea.herokuapp.com/',
+    url: 'https://driptea.herokuapp.com/',
     productPrice: null,
     imageSelected: null,
     token: null,
