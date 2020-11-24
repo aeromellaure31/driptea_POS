@@ -1488,7 +1488,7 @@ export default {
         formData.append("image", this.toSaveImage2);
         formData.append("productCategory", this.productType);
         axios
-          .post("/addCategory", formData, config)
+          .post(AUTH.url + "addCategory", formData, config)
           .then(function(response) {
             if(response.data.status){
               AUTH.deauthenticate()

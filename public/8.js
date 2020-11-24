@@ -300,6 +300,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -323,7 +343,7 @@ __webpack_require__.r(__webpack_exports__);
       options2: {
         colors: [],
         chart: {
-          id: "sales-summary"
+          id: "product-summary"
         },
         xaxis: {
           categories: []
@@ -452,7 +472,7 @@ __webpack_require__.r(__webpack_exports__);
         response.data.product.forEach(function (element) {
           _this.productName.push(element.productName);
         });
-      });
+      })["catch"](function (error) {});
     },
     //...................  for Product sales graph ....................
     dailyProductSale: function dailyProductSale() {
@@ -469,6 +489,7 @@ __webpack_require__.r(__webpack_exports__);
       var PRODUCT = "";
       var forSeries = [];
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(_services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].url + "getDailyProductSales", params, _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].config).then(function (response) {
+        // console.log("heloooooooo ", response);
         if (response.data.status) {
           _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].deauthenticate();
         }
@@ -502,10 +523,34 @@ __webpack_require__.r(__webpack_exports__);
 
         if (response.data.prods.length > 0) {
           _this2.series2 = forSeries;
+          _this2.options2 = {
+            chart: {
+              id: "product-summary"
+            },
+            xaxis: {
+              categories: _this2.xlabels
+            },
+            stroke: {
+              width: 2,
+              curve: "smooth"
+            }
+          }; // this.options2.xaxis.categories = this.xlabels;
         } else {
           _this2.series2 = [];
+          _this2.options2 = {
+            chart: {
+              id: "product-summary"
+            },
+            xaxis: {
+              categories: _this2.xlabels
+            },
+            stroke: {
+              width: 2,
+              curve: "smooth"
+            }
+          };
         }
-      });
+      })["catch"](function (error) {});
       this.secondpoints = [];
       this.options2.colors = [];
     },
@@ -581,6 +626,7 @@ __webpack_require__.r(__webpack_exports__);
 
             _this3.options2.colors.push(color);
 
+            _this3.options2.xaxis.categories = _this3.mnths;
             PRODUCT = "";
             _this3.secondpoints = [];
           }
@@ -588,10 +634,34 @@ __webpack_require__.r(__webpack_exports__);
 
         if (response.data.prods.length > 0) {
           _this3.series2 = forSeries;
+          _this3.options2 = {
+            chart: {
+              id: "product-summary"
+            },
+            xaxis: {
+              categories: _this3.mnths
+            },
+            stroke: {
+              width: 2,
+              curve: "smooth"
+            }
+          };
         } else {
           _this3.series2 = [];
+          _this3.options2 = {
+            chart: {
+              id: "product-summary"
+            },
+            xaxis: {
+              categories: _this3.mnths
+            },
+            stroke: {
+              width: 2,
+              curve: "smooth"
+            }
+          };
         }
-      });
+      })["catch"](function (error) {});
       this.secondpoints = [];
       this.options2.colors = [];
     },
@@ -764,10 +834,34 @@ __webpack_require__.r(__webpack_exports__);
 
         if (response.data.prods.length > 0) {
           _this4.series2 = forSeries;
+          _this4.options2 = {
+            chart: {
+              id: "product-summary"
+            },
+            xaxis: {
+              categories: _this4.quarter
+            },
+            stroke: {
+              width: 2,
+              curve: "smooth"
+            }
+          };
         } else {
           _this4.series2 = [];
+          _this4.options2 = {
+            chart: {
+              id: "product-summary"
+            },
+            xaxis: {
+              categories: _this4.quarter
+            },
+            stroke: {
+              width: 2,
+              curve: "smooth"
+            }
+          };
         }
-      });
+      })["catch"](function (error) {});
       this.firstQ = [];
       this.secondQ = [];
       this.thirdQ = [];
@@ -861,7 +955,8 @@ __webpack_require__.r(__webpack_exports__);
                 forSeries.push({
                   name: PRODUCT,
                   data: _this5.secondpoints
-                });
+                }); // console.log("secondpoints ===", this.secondpoints);
+
                 PRODUCT = "";
                 _this5.secondpoints = [];
               }
@@ -941,10 +1036,34 @@ __webpack_require__.r(__webpack_exports__);
 
         if (response.data.prods.length > 0) {
           _this5.series2 = forSeries;
+          _this5.options2 = {
+            chart: {
+              id: "product-summary"
+            },
+            xaxis: {
+              categories: _this5.semi
+            },
+            stroke: {
+              width: 2,
+              curve: "smooth"
+            }
+          };
         } else {
           _this5.series2 = [];
+          _this5.options2 = {
+            chart: {
+              id: "product-summary"
+            },
+            xaxis: {
+              categories: _this5.semi
+            },
+            stroke: {
+              width: 2,
+              curve: "smooth"
+            }
+          };
         }
-      });
+      })["catch"](function (error) {});
       this.firstQ = [];
       this.secondQ = [];
       this.thirdQ = [];
@@ -953,32 +1072,81 @@ __webpack_require__.r(__webpack_exports__);
       this.semi_Data = [];
       this.options2.colors = [];
     },
+    getAnnualProductSales: function getAnnualProductSales(years) {// this.loadingShow = true;
+      // this.points = [];
+      // let startingYR = values[0];
+      // let endYear = values[1];
+      // let graphLabel = startingYR + " - " + endYear;
+      // this.MonthLabel = graphLabel;
+      // let gap = endYear - startingYR;
+      // let array = [];
+      // let labelsArr = [];
+      // let params = {
+      //   from: startingYR,
+      //   to: endYear
+      // };
+      // Axios.post(AUTH.url + "getAnnualProductSales", params, AUTH.config).then(
+      //   response => {
+      //     if (response.data.status) {
+      //       AUTH.deauthenticate();
+      //     }
+      //     this.loadingShow = false;
+      //     response.data.subtotal.forEach(element => {
+      //       if (element.year <= endYear && element.year == startingYR) {
+      //         array.push(element.sub);
+      //         labelsArr.push(startingYR);
+      //         startingYR++;
+      //       }
+      //     });
+      //     this.points = array;
+      //     this.annualLabels = labelsArr;
+      //     this.series = [
+      //       {
+      //         data: this.points
+      //       }
+      //     ];
+      //     this.options = {
+      //       colors: ["#ff5b04"],
+      //       chart: {
+      //         id: "sales-summary"
+      //       },
+      //       xaxis: {
+      //         categories: this.annualLabels
+      //       },
+      //       stroke: {
+      //         width: 2,
+      //         curve: "smooth"
+      //       }
+      //     };
+      //   }
+      // );
+    },
     onFilter2: function onFilter2() {
       if (this.thefilter2 == "Daily") {
         this.options2.xaxis.categories = [];
-        this.MonthLabel2 = this.mnths[this.theMonth - 1];
-        this.options2.xaxis.categories = this.xlabels;
+        this.MonthLabel2 = this.mnths[this.theMonth - 1]; // this.options2.xaxis.categories = this.xlabels;
+
         this.dailyProductSale();
         this.ok = true;
         this.ok2 = false;
         this.ok3 = false;
       } else if (this.thefilter2 == "Weekly") {} else if (this.thefilter2 == "Monthly") {
-        this.MonthLabel2 = new Date(this.thedate2).getFullYear();
-        this.options2.xaxis.categories = this.mnths;
+        this.MonthLabel2 = new Date(this.thedate2).getFullYear(); // this.options2.xaxis.categories = this.mnths;
+
         this.ok = false;
         this.ok2 = true;
         this.ok3 = false;
-        this.MonthlyProductSale(this.yrvalueS);
+        this.MonthlyProductSale(this.yrvalueS); // console.log("ang colors bruh ", this.options2.colors);
       } else if (this.thefilter2 == "Quarterly") {
-        this.MonthLabel2 = new Date(this.thedate2).getFullYear();
-        this.options2.xaxis.categories = this.quarter;
+        this.MonthLabel2 = new Date(this.thedate2).getFullYear(); // this.options2.xaxis.categories = this.quarter;
+
         this.QuarterlyProductSale(this.yrvalueS);
         this.ok = false;
         this.ok2 = true;
         this.ok3 = false;
       } else if (this.thefilter2 == "Semi-Annual") {
-        this.MonthLabel2 = new Date(this.thedate2).getFullYear();
-        this.options2.xaxis.categories = this.semi;
+        this.MonthLabel2 = new Date(this.thedate2).getFullYear(); // this.options2.xaxis.categories = this.semi;
+
         this.SemiProductSale(this.yrvalueS);
         this.ok = false;
         this.ok2 = true;
@@ -1054,7 +1222,7 @@ __webpack_require__.r(__webpack_exports__);
         } else {
           _this6.series = [];
         }
-      });
+      })["catch"](function (error) {});
       this.points = [];
     },
     getDate: function getDate() {
@@ -1196,7 +1364,7 @@ __webpack_require__.r(__webpack_exports__);
       } else if (this.thefilter == "Semi-Annual") {
         this.getSemi_AnnualSummary(this.yrvalue);
         this.MonthLabel = this.yrvalue;
-      } else if (this.thefilter == "Annual") {}
+      }
     },
     onChanging: function onChanging() {
       this.getAnnualSummary(this.Multiyrvalue);
@@ -1224,7 +1392,7 @@ __webpack_require__.r(__webpack_exports__);
             _this7.years.push(yr);
           }
         });
-      });
+      })["catch"](function (error) {});
     },
     getMonthlySummary: function getMonthlySummary(yyyy) {
       var _this8 = this;
@@ -1263,7 +1431,7 @@ __webpack_require__.r(__webpack_exports__);
         _this8.series = [{
           data: _this8.points
         }];
-      });
+      })["catch"](function (error) {});
     },
     getQuarterlySummary: function getQuarterlySummary(yyyy) {
       var _this9 = this;
@@ -1341,7 +1509,7 @@ __webpack_require__.r(__webpack_exports__);
         _this9.series = [{
           data: _this9.points
         }];
-      });
+      })["catch"](function (error) {});
       this.firstQ = [];
       this.secondQ = [];
       this.thirdQ = [];
@@ -1424,7 +1592,7 @@ __webpack_require__.r(__webpack_exports__);
         _this10.series = [{
           data: _this10.points
         }];
-      });
+      })["catch"](function (error) {});
       this.firstQ = [];
       this.secondQ = [];
       this.thirdQ = [];
@@ -1479,7 +1647,7 @@ __webpack_require__.r(__webpack_exports__);
             curve: "smooth"
           }
         };
-      });
+      })["catch"](function (error) {});
     },
     getTop3: function getTop3() {
       var _this12 = this;
@@ -1515,7 +1683,7 @@ __webpack_require__.r(__webpack_exports__);
         }
 
         _this12.loadingShow = false;
-      });
+      })["catch"](function (error) {});
       this.topprodarr = top3;
     }
   }
@@ -1535,7 +1703,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.prodNAme[data-v-124112e6] {\r\n  color: #ff5b04;\n}\n.welcome[data-v-124112e6] {\r\n  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,\r\n    Helvetica Neue, Arial, sans-serif;\r\n  font-size: 25px;\r\n  margin-bottom: 10px;\r\n  margin-left: 4%;\r\n  font-weight: bold;\r\n  margin-top: 5%;\n}\n.insideToolbar[data-v-124112e6] {\r\n  margin-top: 25px;\n}\n.GraphLabel[data-v-124112e6] {\r\n  margin-left: 45%;\r\n  font-weight: bold;\n}\n.annualDateCal1[data-v-124112e6],\r\n.annualDateCal2[data-v-124112e6],\r\n.yearMenu[data-v-124112e6],\r\n.graphTitle[data-v-124112e6] {\r\n  color: black;\n}\n.graphTitle[data-v-124112e6],\r\n.text1[data-v-124112e6] {\r\n  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,\r\n    Helvetica Neue, Arial, sans-serif;\r\n  font-size: 1rem;\r\n  font-weight: bold;\n}\n.YRcal[data-v-124112e6] {\r\n  color: black;\n}\n.Cname[data-v-124112e6],\r\n.GraphLabel[data-v-124112e6] {\r\n  color: #ff5b04;\n}\n.text1[data-v-124112e6] {\r\n  margin-left: 10%;\r\n  text-align: center;\r\n  color:black;\n}\n.TB3[data-v-124112e6] {\r\n  margin-bottom: 20px;\r\n  justify-content: center;\r\n  border-radius: 1%;\n}\n.theimageCard[data-v-124112e6] {\r\n  align-content: center;\r\n  border: 1px solid #999999;\r\n  border-radius: 1%;\n}\n.prods[data-v-124112e6] {\r\n  border: 1px solid #999999;\r\n  border-radius: 1%;\n}\n.subhead[data-v-124112e6] {\r\n  margin-bottom: 20px;\n}\r\n/* .chart {\r\n  width: 50%;\r\n} */\n.body[data-v-124112e6] {\r\n  margin-left: 3%;\r\n  margin-right: 3%;\r\n  height: 100%;\r\n  margin-bottom: 5%;\n}\n.top3[data-v-124112e6] {\r\n  width: 20%;\r\n  height: 50%;\r\n  border: 1px solid #999999;\r\n  border-radius: 1%;\n}\n.thetop3[data-v-124112e6] {\r\n  height: 200px;\r\n  width: 90%;\n}\n.theimage[data-v-124112e6] {\r\n  margin: 2%;\r\n  height: 210px;\r\n  width: 100%;\n}\n.Prod_name[data-v-124112e6] {\r\n  color: black;\n}\r\n", ""]);
+exports.push([module.i, "\n.prodNAme[data-v-124112e6] {\r\n  color: #ff5b04;\n}\n.welcome[data-v-124112e6] {\r\n  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,\r\n    Helvetica Neue, Arial, sans-serif;\r\n  font-size: 25px;\r\n  margin-bottom: 10px;\r\n  margin-left: 4%;\r\n  font-weight: bold;\r\n  margin-top: 5%;\n}\n.insideToolbar[data-v-124112e6] {\r\n  margin-top: 25px;\n}\n.GraphLabel[data-v-124112e6] {\r\n  margin-left: 45%;\r\n  font-weight: bold;\n}\n.annualDateCal1[data-v-124112e6],\r\n.annualDateCal2[data-v-124112e6],\r\n.yearMenu[data-v-124112e6],\r\n.graphTitle[data-v-124112e6] {\r\n  color: black;\n}\n.graphTitle[data-v-124112e6],\r\n.text1[data-v-124112e6] {\r\n  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,\r\n    Helvetica Neue, Arial, sans-serif;\r\n  font-size: 1rem;\r\n  font-weight: bold;\n}\n.YRcal[data-v-124112e6] {\r\n  color: black;\n}\n.Cname[data-v-124112e6],\r\n.GraphLabel[data-v-124112e6] {\r\n  color: #ff5b04;\n}\n.text1[data-v-124112e6] {\r\n  margin-left: 10%;\r\n  text-align: center;\r\n  color: black;\n}\n.TB3[data-v-124112e6] {\r\n  margin-bottom: 20px;\r\n  justify-content: center;\r\n  border-radius: 1%;\n}\r\n/* .theimageCard {\r\n  align-content: center;\r\n  border: 1px solid #999999;\r\n  border-radius: 1%;\r\n} */\n.prods[data-v-124112e6] {\r\n  border: 1px solid #999999;\r\n  border-radius: 1%;\n}\n.subhead[data-v-124112e6] {\r\n  margin-bottom: 20px;\n}\r\n/* .chart {\r\n  width: 50%;\r\n} */\n.body[data-v-124112e6] {\r\n  margin-left: 3%;\r\n  margin-right: 3%;\r\n  height: 100%;\r\n  margin-bottom: 5%;\n}\n.top3[data-v-124112e6] {\r\n  width: 370px;\r\n  height: 1000px;\r\n  border: 1px solid #999999;\r\n  border-radius: 1%;\n}\n.thetop3[data-v-124112e6] {\r\n  height: 260px;\r\n  width: 95%;\n}\n.theimage[data-v-124112e6] {\r\n  margin: 2%;\r\n  height: 280px;\r\n  width: 100%;\n}\n.Prod_name[data-v-124112e6] {\r\n  color: black;\n}\r\n", ""]);
 
 // exports
 
@@ -1595,142 +1763,31 @@ var render = function() {
       { staticClass: "row body" },
       [
         _c("div", { staticClass: "col-sm-7" }, [
-          _c(
-            "div",
-            [
-              _c(
-                "v-card",
-                { staticClass: "subhead" },
-                [
-                  _c("v-toolbar", { attrs: { color: "#f2f2f2", dark: "" } }, [
-                    _c("div", { staticClass: "row insideToolbar" }, [
-                      _c(
-                        "div",
-                        { staticClass: "col-sm-4" },
-                        [
-                          _c("v-toolbar-title", { staticClass: "graphTitle" }, [
-                            _vm._v("Summary of Sales")
-                          ])
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-sm-4" }, [
-                        _c("div", { staticClass: "form-group filter" }, [
-                          _c(
-                            "select",
-                            {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.thefilter,
-                                  expression: "thefilter"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              attrs: { name: "filter", id: "filters" },
-                              on: {
-                                change: [
-                                  function($event) {
-                                    var $$selectedVal = Array.prototype.filter
-                                      .call($event.target.options, function(o) {
-                                        return o.selected
-                                      })
-                                      .map(function(o) {
-                                        var val =
-                                          "_value" in o ? o._value : o.value
-                                        return val
-                                      })
-                                    _vm.thefilter = $event.target.multiple
-                                      ? $$selectedVal
-                                      : $$selectedVal[0]
-                                  },
-                                  _vm.onFilter
-                                ]
-                              }
-                            },
-                            [
-                              _c("option", { attrs: { value: "Daily" } }, [
-                                _vm._v("Daily")
-                              ]),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "Monthly" } }, [
-                                _vm._v("Monthly")
-                              ]),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "Quarterly" } }, [
-                                _vm._v("Quarterly")
-                              ]),
-                              _vm._v(" "),
-                              _c(
-                                "option",
-                                { attrs: { value: "Semi-Annual" } },
-                                [_vm._v("Semi-Annual")]
-                              ),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "Annual" } }, [
-                                _vm._v("Annual")
-                              ])
-                            ]
-                          )
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-sm-4" }, [
+          _c("div", [
+            _c(
+              "div",
+              [
+                _c(
+                  "v-card",
+                  { staticClass: "subhead" },
+                  [
+                    _c("v-toolbar", { attrs: { color: "#f2f2f2", dark: "" } }, [
+                      _c("div", { staticClass: "row insideToolbar" }, [
                         _c(
                           "div",
-                          {
-                            directives: [
-                              {
-                                name: "show",
-                                rawName: "v-show",
-                                value: _vm.ok,
-                                expression: "ok"
-                              }
-                            ],
-                            staticClass: "form-group firstOpt"
-                          },
+                          { staticClass: "col-sm-4" },
                           [
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.thedate,
-                                  expression: "thedate"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              attrs: { type: "month", id: "calendar" },
-                              domProps: { value: _vm.thedate },
-                              on: {
-                                change: _vm.onChangeDate,
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.thedate = $event.target.value
-                                }
-                              }
-                            })
-                          ]
+                            _c(
+                              "v-toolbar-title",
+                              { staticClass: "graphTitle" },
+                              [_vm._v("Summary of Sales")]
+                            )
+                          ],
+                          1
                         ),
                         _vm._v(" "),
-                        _c(
-                          "div",
-                          {
-                            directives: [
-                              {
-                                name: "show",
-                                rawName: "v-show",
-                                value: _vm.ok2,
-                                expression: "ok2"
-                              }
-                            ],
-                            staticClass: "form-group secondOpt"
-                          },
-                          [
+                        _c("div", { staticClass: "col-sm-4" }, [
+                          _c("div", { staticClass: "form-group filter" }, [
                             _c(
                               "select",
                               {
@@ -1738,11 +1795,12 @@ var render = function() {
                                   {
                                     name: "model",
                                     rawName: "v-model",
-                                    value: _vm.yrvalue,
-                                    expression: "yrvalue"
+                                    value: _vm.thefilter,
+                                    expression: "thefilter"
                                   }
                                 ],
                                 staticClass: "form-control",
+                                attrs: { name: "filter", id: "filters" },
                                 on: {
                                   change: [
                                     function($event) {
@@ -1757,283 +1815,292 @@ var render = function() {
                                             "_value" in o ? o._value : o.value
                                           return val
                                         })
-                                      _vm.yrvalue = $event.target.multiple
+                                      _vm.thefilter = $event.target.multiple
                                         ? $$selectedVal
                                         : $$selectedVal[0]
                                     },
-                                    _vm.onChangeYear
+                                    _vm.onFilter
                                   ]
                                 }
                               },
-                              _vm._l(_vm.years, function(year) {
-                                return _c(
+                              [
+                                _c("option", { attrs: { value: "Daily" } }, [
+                                  _vm._v("Daily")
+                                ]),
+                                _vm._v(" "),
+                                _c("option", { attrs: { value: "Monthly" } }, [
+                                  _vm._v("Monthly")
+                                ]),
+                                _vm._v(" "),
+                                _c(
                                   "option",
-                                  { key: year, domProps: { value: year } },
-                                  [_vm._v(_vm._s(year))]
-                                )
-                              }),
-                              0
+                                  { attrs: { value: "Quarterly" } },
+                                  [_vm._v("Quarterly")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "option",
+                                  { attrs: { value: "Semi-Annual" } },
+                                  [_vm._v("Semi-Annual")]
+                                ),
+                                _vm._v(" "),
+                                _c("option", { attrs: { value: "Annual" } }, [
+                                  _vm._v("Annual")
+                                ])
+                              ]
                             )
-                          ]
-                        ),
+                          ])
+                        ]),
                         _vm._v(" "),
-                        _c(
-                          "div",
-                          {
-                            directives: [
-                              {
-                                name: "show",
-                                rawName: "v-show",
-                                value: _vm.ok3,
-                                expression: "ok3"
-                              }
-                            ],
-                            staticClass: "forannualInput"
-                          },
-                          [
-                            _c(
-                              "select",
-                              {
+                        _c("div", { staticClass: "col-sm-4" }, [
+                          _c(
+                            "div",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.ok,
+                                  expression: "ok"
+                                }
+                              ],
+                              staticClass: "form-group firstOpt"
+                            },
+                            [
+                              _c("input", {
                                 directives: [
                                   {
                                     name: "model",
                                     rawName: "v-model",
-                                    value: _vm.Multiyrvalue,
-                                    expression: "Multiyrvalue"
+                                    value: _vm.thedate,
+                                    expression: "thedate"
                                   }
                                 ],
                                 staticClass: "form-control",
-                                attrs: { multiple: "" },
+                                attrs: { type: "month", id: "calendar" },
+                                domProps: { value: _vm.thedate },
                                 on: {
-                                  click: function($event) {
-                                    if (!$event.ctrlKey) {
-                                      return null
+                                  change: _vm.onChangeDate,
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
                                     }
-                                    if (
-                                      $event.shiftKey ||
-                                      $event.altKey ||
-                                      $event.metaKey
-                                    ) {
-                                      return null
-                                    }
-                                    return _vm.onChanging($event)
-                                  },
-                                  change: function($event) {
-                                    var $$selectedVal = Array.prototype.filter
-                                      .call($event.target.options, function(o) {
-                                        return o.selected
-                                      })
-                                      .map(function(o) {
-                                        var val =
-                                          "_value" in o ? o._value : o.value
-                                        return val
-                                      })
-                                    _vm.Multiyrvalue = $event.target.multiple
-                                      ? $$selectedVal
-                                      : $$selectedVal[0]
+                                    _vm.thedate = $event.target.value
                                   }
                                 }
-                              },
-                              _vm._l(_vm.years, function(year) {
-                                return _c(
-                                  "option",
-                                  { key: year, domProps: { value: year } },
-                                  [_vm._v(_vm._s(year))]
-                                )
-                              }),
-                              0
-                            )
-                          ]
-                        )
-                      ])
-                    ])
-                  ])
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                [
-                  _c("salesChart", {
-                    ref: "realtimeChart",
-                    attrs: {
-                      height: "300px",
-                      type: "line",
-                      options: _vm.options,
-                      series: _vm.series
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "title" },
-                    [
-                      _c(
-                        "v-toolbar",
-                        { attrs: { color: "#f2f2f2" } },
-                        [
+                              })
+                            ]
+                          ),
+                          _vm._v(" "),
                           _c(
-                            "v-toolbar-title",
-                            {
-                              staticClass: "GraphLabel",
-                              attrs: { name: "theTitle" }
-                            },
-                            [_vm._v(_vm._s(_vm.MonthLabel))]
-                          )
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _c(
-            "div",
-            [
-              _c(
-                "v-card",
-                { staticClass: "subhead" },
-                [
-                  _c("v-toolbar", { attrs: { color: "#f2f2f2", dark: "" } }, [
-                    _c("div", { staticClass: "row insideToolbar" }, [
-                      _c(
-                        "div",
-                        { staticClass: "col-sm-4" },
-                        [
-                          _c("v-toolbar-title", { staticClass: "graphTitle" }, [
-                            _vm._v("Product Sales")
-                          ])
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-sm-4" }, [
-                        _c("div", { staticClass: "form-group filter" }, [
-                          _c(
-                            "select",
+                            "div",
                             {
                               directives: [
                                 {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.thefilter2,
-                                  expression: "thefilter2"
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.ok2,
+                                  expression: "ok2"
                                 }
                               ],
-                              staticClass: "form-control",
-                              attrs: { name: "filter", id: "filters" },
-                              on: {
-                                change: [
-                                  function($event) {
-                                    var $$selectedVal = Array.prototype.filter
-                                      .call($event.target.options, function(o) {
-                                        return o.selected
-                                      })
-                                      .map(function(o) {
-                                        var val =
-                                          "_value" in o ? o._value : o.value
-                                        return val
-                                      })
-                                    _vm.thefilter2 = $event.target.multiple
-                                      ? $$selectedVal
-                                      : $$selectedVal[0]
-                                  },
-                                  _vm.onFilter2
-                                ]
-                              }
+                              staticClass: "form-group secondOpt"
                             },
                             [
-                              _c("option", { attrs: { value: "Daily" } }, [
-                                _vm._v("Daily")
-                              ]),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "Monthly" } }, [
-                                _vm._v("Monthly")
-                              ]),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "Quarterly" } }, [
-                                _vm._v("Quarterly")
-                              ]),
-                              _vm._v(" "),
                               _c(
-                                "option",
-                                { attrs: { value: "Semi-Annual" } },
-                                [_vm._v("Semi-Annual")]
-                              ),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "Annual" } }, [
-                                _vm._v("Annual")
-                              ])
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.yrvalue,
+                                      expression: "yrvalue"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  on: {
+                                    change: [
+                                      function($event) {
+                                        var $$selectedVal = Array.prototype.filter
+                                          .call($event.target.options, function(
+                                            o
+                                          ) {
+                                            return o.selected
+                                          })
+                                          .map(function(o) {
+                                            var val =
+                                              "_value" in o ? o._value : o.value
+                                            return val
+                                          })
+                                        _vm.yrvalue = $event.target.multiple
+                                          ? $$selectedVal
+                                          : $$selectedVal[0]
+                                      },
+                                      _vm.onChangeYear
+                                    ]
+                                  }
+                                },
+                                _vm._l(_vm.years, function(year) {
+                                  return _c(
+                                    "option",
+                                    { key: year, domProps: { value: year } },
+                                    [_vm._v(_vm._s(year))]
+                                  )
+                                }),
+                                0
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.ok3,
+                                  expression: "ok3"
+                                }
+                              ],
+                              staticClass: "forannualInput"
+                            },
+                            [
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.Multiyrvalue,
+                                      expression: "Multiyrvalue"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: { multiple: "" },
+                                  on: {
+                                    click: function($event) {
+                                      if (!$event.ctrlKey) {
+                                        return null
+                                      }
+                                      if (
+                                        $event.shiftKey ||
+                                        $event.altKey ||
+                                        $event.metaKey
+                                      ) {
+                                        return null
+                                      }
+                                      return _vm.onChanging($event)
+                                    },
+                                    change: function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.Multiyrvalue = $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    }
+                                  }
+                                },
+                                _vm._l(_vm.years, function(year) {
+                                  return _c(
+                                    "option",
+                                    { key: year, domProps: { value: year } },
+                                    [_vm._v(_vm._s(year))]
+                                  )
+                                }),
+                                0
+                              )
                             ]
                           )
                         ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-sm-4" }, [
+                      ])
+                    ])
+                  ],
+                  1
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              [
+                _c("salesChart", {
+                  ref: "realtimeChart",
+                  attrs: {
+                    height: "300px",
+                    type: "line",
+                    options: _vm.options,
+                    series: _vm.series
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "title" },
+                  [
+                    _c(
+                      "v-toolbar",
+                      { attrs: { color: "#f2f2f2" } },
+                      [
+                        _c(
+                          "v-toolbar-title",
+                          {
+                            staticClass: "GraphLabel",
+                            attrs: { name: "theTitle" }
+                          },
+                          [_vm._v(_vm._s(_vm.MonthLabel))]
+                        )
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ],
+              1
+            )
+          ]),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c("div", [
+            _c(
+              "div",
+              [
+                _c(
+                  "v-card",
+                  { staticClass: "subhead" },
+                  [
+                    _c("v-toolbar", { attrs: { color: "#f2f2f2", dark: "" } }, [
+                      _c("div", { staticClass: "row insideToolbar" }, [
                         _c(
                           "div",
-                          {
-                            directives: [
-                              {
-                                name: "show",
-                                rawName: "v-show",
-                                value: _vm.ok,
-                                expression: "ok"
-                              }
-                            ],
-                            staticClass: "form-group firstOpt"
-                          },
+                          { staticClass: "col-sm-4" },
                           [
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.thedate2,
-                                  expression: "thedate2"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              attrs: { type: "month", id: "calendar" },
-                              domProps: { value: _vm.thedate2 },
-                              on: {
-                                change: _vm.onChangeDatePS,
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.thedate2 = $event.target.value
-                                }
-                              }
-                            })
-                          ]
+                            _c(
+                              "v-toolbar-title",
+                              { staticClass: "graphTitle" },
+                              [_vm._v("Product Sales")]
+                            )
+                          ],
+                          1
                         ),
                         _vm._v(" "),
-                        _c(
-                          "div",
-                          {
-                            directives: [
-                              {
-                                name: "show",
-                                rawName: "v-show",
-                                value: _vm.ok2,
-                                expression: "ok2"
-                              }
-                            ],
-                            staticClass: "form-group secondOpt"
-                          },
-                          [
+                        _c("div", { staticClass: "col-sm-4" }, [
+                          _c("div", { staticClass: "form-group filter" }, [
                             _c(
                               "select",
                               {
@@ -2041,11 +2108,12 @@ var render = function() {
                                   {
                                     name: "model",
                                     rawName: "v-model",
-                                    value: _vm.yrvalueS,
-                                    expression: "yrvalueS"
+                                    value: _vm.thefilter2,
+                                    expression: "thefilter2"
                                   }
                                 ],
                                 staticClass: "form-control",
+                                attrs: { name: "filter", id: "filters" },
                                 on: {
                                   change: [
                                     function($event) {
@@ -2060,142 +2128,262 @@ var render = function() {
                                             "_value" in o ? o._value : o.value
                                           return val
                                         })
-                                      _vm.yrvalueS = $event.target.multiple
+                                      _vm.thefilter2 = $event.target.multiple
                                         ? $$selectedVal
                                         : $$selectedVal[0]
                                     },
-                                    _vm.onChangeYear2
+                                    _vm.onFilter2
                                   ]
                                 }
                               },
-                              _vm._l(_vm.years, function(year) {
-                                return _c(
+                              [
+                                _c("option", { attrs: { value: "Daily" } }, [
+                                  _vm._v("Daily")
+                                ]),
+                                _vm._v(" "),
+                                _c("option", { attrs: { value: "Monthly" } }, [
+                                  _vm._v("Monthly")
+                                ]),
+                                _vm._v(" "),
+                                _c(
                                   "option",
-                                  { key: year, domProps: { value: year } },
-                                  [_vm._v(_vm._s(year))]
-                                )
-                              }),
-                              0
+                                  { attrs: { value: "Quarterly" } },
+                                  [_vm._v("Quarterly")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "option",
+                                  { attrs: { value: "Semi-Annual" } },
+                                  [_vm._v("Semi-Annual")]
+                                ),
+                                _vm._v(" "),
+                                _c("option", { attrs: { value: "Annual" } }, [
+                                  _vm._v("Annual")
+                                ])
+                              ]
                             )
-                          ]
-                        ),
+                          ])
+                        ]),
                         _vm._v(" "),
-                        _c(
-                          "div",
-                          {
-                            directives: [
-                              {
-                                name: "show",
-                                rawName: "v-show",
-                                value: _vm.ok3,
-                                expression: "ok3"
-                              }
-                            ],
-                            staticClass: "forannualInput"
-                          },
-                          [
-                            _c(
-                              "select",
-                              {
+                        _c("div", { staticClass: "col-sm-4" }, [
+                          _c(
+                            "div",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.ok,
+                                  expression: "ok"
+                                }
+                              ],
+                              staticClass: "form-group firstOpt"
+                            },
+                            [
+                              _c("input", {
                                 directives: [
                                   {
                                     name: "model",
                                     rawName: "v-model",
-                                    value: _vm.Multiyrvalue2,
-                                    expression: "Multiyrvalue2"
+                                    value: _vm.thedate2,
+                                    expression: "thedate2"
                                   }
                                 ],
                                 staticClass: "form-control",
-                                attrs: { multiple: "" },
+                                attrs: { type: "month", id: "calendar" },
+                                domProps: { value: _vm.thedate2 },
                                 on: {
-                                  click: function($event) {
-                                    if (!$event.ctrlKey) {
-                                      return null
+                                  change: _vm.onChangeDatePS,
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
                                     }
-                                    if (
-                                      $event.shiftKey ||
-                                      $event.altKey ||
-                                      $event.metaKey
-                                    ) {
-                                      return null
-                                    }
-                                    return _vm.onChanging($event)
-                                  },
-                                  change: function($event) {
-                                    var $$selectedVal = Array.prototype.filter
-                                      .call($event.target.options, function(o) {
-                                        return o.selected
-                                      })
-                                      .map(function(o) {
-                                        var val =
-                                          "_value" in o ? o._value : o.value
-                                        return val
-                                      })
-                                    _vm.Multiyrvalue2 = $event.target.multiple
-                                      ? $$selectedVal
-                                      : $$selectedVal[0]
+                                    _vm.thedate2 = $event.target.value
                                   }
                                 }
-                              },
-                              _vm._l(_vm.years, function(year) {
-                                return _c(
-                                  "option",
-                                  { key: year, domProps: { value: year } },
-                                  [_vm._v(_vm._s(year))]
-                                )
-                              }),
-                              0
-                            )
-                          ]
-                        )
+                              })
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.ok2,
+                                  expression: "ok2"
+                                }
+                              ],
+                              staticClass: "form-group secondOpt"
+                            },
+                            [
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.yrvalueS,
+                                      expression: "yrvalueS"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  on: {
+                                    change: [
+                                      function($event) {
+                                        var $$selectedVal = Array.prototype.filter
+                                          .call($event.target.options, function(
+                                            o
+                                          ) {
+                                            return o.selected
+                                          })
+                                          .map(function(o) {
+                                            var val =
+                                              "_value" in o ? o._value : o.value
+                                            return val
+                                          })
+                                        _vm.yrvalueS = $event.target.multiple
+                                          ? $$selectedVal
+                                          : $$selectedVal[0]
+                                      },
+                                      _vm.onChangeYear2
+                                    ]
+                                  }
+                                },
+                                _vm._l(_vm.years, function(year) {
+                                  return _c(
+                                    "option",
+                                    { key: year, domProps: { value: year } },
+                                    [_vm._v(_vm._s(year))]
+                                  )
+                                }),
+                                0
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.ok3,
+                                  expression: "ok3"
+                                }
+                              ],
+                              staticClass: "forannualInput"
+                            },
+                            [
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.Multiyrvalue2,
+                                      expression: "Multiyrvalue2"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: { multiple: "" },
+                                  on: {
+                                    click: function($event) {
+                                      if (!$event.ctrlKey) {
+                                        return null
+                                      }
+                                      if (
+                                        $event.shiftKey ||
+                                        $event.altKey ||
+                                        $event.metaKey
+                                      ) {
+                                        return null
+                                      }
+                                      return _vm.onChanging2($event)
+                                    },
+                                    change: function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.Multiyrvalue2 = $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    }
+                                  }
+                                },
+                                _vm._l(_vm.years, function(year) {
+                                  return _c(
+                                    "option",
+                                    { key: year, domProps: { value: year } },
+                                    [_vm._v(_vm._s(year))]
+                                  )
+                                }),
+                                0
+                              )
+                            ]
+                          )
+                        ])
                       ])
                     ])
-                  ])
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                [
-                  _c("salesChart", {
-                    ref: "realtimeChart",
-                    attrs: {
-                      height: "300px",
-                      type: "line",
-                      options: _vm.options2,
-                      series: _vm.series2
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "title" },
-                    [
-                      _c(
-                        "v-toolbar",
-                        { attrs: { color: "#f2f2f2" } },
-                        [
-                          _c(
-                            "v-toolbar-title",
-                            {
-                              staticClass: "GraphLabel",
-                              attrs: { name: "theTitle" }
-                            },
-                            [_vm._v(_vm._s(_vm.MonthLabel2))]
-                          )
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          )
+                  ],
+                  1
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              [
+                _c("salesChart", {
+                  ref: "realtimeChart",
+                  attrs: {
+                    height: "300px",
+                    type: "line",
+                    options: _vm.options2,
+                    series: _vm.series2
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "title" },
+                  [
+                    _c(
+                      "v-toolbar",
+                      { attrs: { color: "#f2f2f2" } },
+                      [
+                        _c(
+                          "v-toolbar-title",
+                          {
+                            staticClass: "GraphLabel",
+                            attrs: { name: "theTitle" }
+                          },
+                          [_vm._v(_vm._s(_vm.MonthLabel2))]
+                        )
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ],
+              1
+            )
+          ])
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "col-sm-1" }),
@@ -2399,7 +2587,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_adminDashboard_vue_vue_type_style_index_0_id_124112e6_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./adminDashboard.vue?vue&type=style&index=0&id=124112e6&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/modules/dashboard/adminDashboard.vue?vue&type=style&index=0&id=124112e6&scoped=true&lang=css&");
 /* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_adminDashboard_vue_vue_type_style_index_0_id_124112e6_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_adminDashboard_vue_vue_type_style_index_0_id_124112e6_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_adminDashboard_vue_vue_type_style_index_0_id_124112e6_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_adminDashboard_vue_vue_type_style_index_0_id_124112e6_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_adminDashboard_vue_vue_type_style_index_0_id_124112e6_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
 
 /***/ }),
 
