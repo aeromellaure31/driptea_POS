@@ -11,58 +11,68 @@
     <div class="row body">
       <div class="col-sm-7">
         <div>
-          <v-card class="subhead">
-            <v-toolbar color="#f2f2f2" dark>
-              <div class="row insideToolbar">
-                <div class="col-sm-4">
-                  <v-toolbar-title class="graphTitle">Summary of Sales</v-toolbar-title>
-                </div>
-                <div class="col-sm-4">
-                  <div class="form-group filter">
-                    <select
-                      class="form-control"
-                      v-model="thefilter"
-                      name="filter"
-                      id="filters"
-                      v-on:change="onFilter"
-                    >
-                      <option value="Daily">Daily</option>
-                      <option value="Monthly">Monthly</option>
-                      <option value="Quarterly">Quarterly</option>
-                      <option value="Semi-Annual">Semi-Annual</option>
-                      <option value="Annual">Annual</option>
-                    </select>
+          <div>
+            <v-card class="subhead">
+              <v-toolbar color="#f2f2f2" dark>
+                <div class="row insideToolbar">
+                  <div class="col-sm-4">
+                    <v-toolbar-title class="graphTitle">Summary of Sales</v-toolbar-title>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="form-group filter">
+                      <select
+                        class="form-control"
+                        v-model="thefilter"
+                        name="filter"
+                        id="filters"
+                        v-on:change="onFilter"
+                      >
+                        <option value="Daily">Daily</option>
+                        <option value="Monthly">Monthly</option>
+                        <option value="Quarterly">Quarterly</option>
+                        <option value="Semi-Annual">Semi-Annual</option>
+                        <option value="Annual">Annual</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="form-group firstOpt" v-show="ok">
+                      <input
+                        class="form-control"
+                        type="month"
+                        v-model="thedate"
+                        id="calendar"
+                        v-on:change="onChangeDate"
+                      >
+                    </div>
+                    <div class="form-group secondOpt" v-show="ok2">
+                      <select class="form-control" v-on:change="onChangeYear" v-model="yrvalue">
+                        <option
+                          v-for="year in years"
+                          v-bind:value="year"
+                          v-bind:key="year"
+                        >{{ year }}</option>
+                      </select>
+                    </div>
+                    <div v-show="ok3" class="forannualInput">
+                      <select
+                        class="form-control"
+                        v-on:click.ctrl.exact="onChanging"
+                        v-model="Multiyrvalue"
+                        multiple
+                      >
+                        <option
+                          v-for="year in years"
+                          v-bind:value="year"
+                          v-bind:key="year"
+                        >{{ year }}</option>
+                      </select>
+                    </div>
                   </div>
                 </div>
-                <div class="col-sm-4">
-                  <div class="form-group firstOpt" v-show="ok">
-                    <input
-                      class="form-control"
-                      type="month"
-                      v-model="thedate"
-                      id="calendar"
-                      v-on:change="onChangeDate"
-                    >
-                  </div>
-                  <div class="form-group secondOpt" v-show="ok2">
-                    <select class="form-control" v-on:change="onChangeYear" v-model="yrvalue">
-                      <option v-for="year in years" v-bind:value="year" v-bind:key="year">{{ year }}</option>
-                    </select>
-                  </div>
-                  <div v-show="ok3" class="forannualInput">
-                    <select
-                      class="form-control"
-                      v-on:click.ctrl.exact="onChanging"
-                      v-model="Multiyrvalue"
-                      multiple
-                    >
-                      <option v-for="year in years" v-bind:value="year" v-bind:key="year">{{ year }}</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </v-toolbar>
-          </v-card>
+              </v-toolbar>
+            </v-card>
+          </div>
           <div>
             <salesChart
               ref="realtimeChart"
@@ -81,58 +91,68 @@
         <br>
         <br>
         <div>
-          <v-card class="subhead">
-            <v-toolbar color="#f2f2f2" dark>
-              <div class="row insideToolbar">
-                <div class="col-sm-4">
-                  <v-toolbar-title class="graphTitle">Product Sales</v-toolbar-title>
-                </div>
-                <div class="col-sm-4">
-                  <div class="form-group filter">
-                    <select
-                      class="form-control"
-                      v-model="thefilter2"
-                      name="filter"
-                      id="filters"
-                      v-on:change="onFilter2"
-                    >
-                      <option value="Daily">Daily</option>
-                      <option value="Monthly">Monthly</option>
-                      <option value="Quarterly">Quarterly</option>
-                      <option value="Semi-Annual">Semi-Annual</option>
-                      <option value="Annual">Annual</option>
-                    </select>
+          <div>
+            <v-card class="subhead">
+              <v-toolbar color="#f2f2f2" dark>
+                <div class="row insideToolbar">
+                  <div class="col-sm-4">
+                    <v-toolbar-title class="graphTitle">Product Sales</v-toolbar-title>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="form-group filter">
+                      <select
+                        class="form-control"
+                        v-model="thefilter2"
+                        name="filter"
+                        id="filters"
+                        v-on:change="onFilter2"
+                      >
+                        <option value="Daily">Daily</option>
+                        <option value="Monthly">Monthly</option>
+                        <option value="Quarterly">Quarterly</option>
+                        <option value="Semi-Annual">Semi-Annual</option>
+                        <option value="Annual">Annual</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="form-group firstOpt" v-show="ok">
+                      <input
+                        class="form-control"
+                        type="month"
+                        v-model="thedate2"
+                        id="calendar"
+                        v-on:change="onChangeDatePS"
+                      >
+                    </div>
+                    <div class="form-group secondOpt" v-show="ok2">
+                      <select class="form-control" v-on:change="onChangeYear2" v-model="yrvalueS">
+                        <option
+                          v-for="year in years"
+                          v-bind:value="year"
+                          v-bind:key="year"
+                        >{{ year }}</option>
+                      </select>
+                    </div>
+                    <div v-show="ok3" class="forannualInput">
+                      <select
+                        class="form-control"
+                        v-on:click.ctrl.exact="onChanging2"
+                        v-model="Multiyrvalue2"
+                        multiple
+                      >
+                        <option
+                          v-for="year in years"
+                          v-bind:value="year"
+                          v-bind:key="year"
+                        >{{ year }}</option>
+                      </select>
+                    </div>
                   </div>
                 </div>
-                <div class="col-sm-4">
-                  <div class="form-group firstOpt" v-show="ok">
-                    <input
-                      class="form-control"
-                      type="month"
-                      v-model="thedate2"
-                      id="calendar"
-                      v-on:change="onChangeDatePS"
-                    >
-                  </div>
-                  <div class="form-group secondOpt" v-show="ok2">
-                    <select class="form-control" v-on:change="onChangeYear2" v-model="yrvalueS">
-                      <option v-for="year in years" v-bind:value="year" v-bind:key="year">{{ year }}</option>
-                    </select>
-                  </div>
-                  <div v-show="ok3" class="forannualInput">
-                    <select
-                      class="form-control"
-                      v-on:click.ctrl.exact="onChanging"
-                      v-model="Multiyrvalue2"
-                      multiple
-                    >
-                      <option v-for="year in years" v-bind:value="year" v-bind:key="year">{{ year }}</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </v-toolbar>
-          </v-card>
+              </v-toolbar>
+            </v-card>
+          </div>
           <div>
             <salesChart
               ref="realtimeChart"
@@ -228,18 +248,18 @@
 .text1 {
   margin-left: 10%;
   text-align: center;
-  color:black;
+  color: black;
 }
 .TB3 {
   margin-bottom: 20px;
   justify-content: center;
   border-radius: 1%;
 }
-.theimageCard {
+/* .theimageCard {
   align-content: center;
   border: 1px solid #999999;
   border-radius: 1%;
-}
+} */
 .prods {
   border: 1px solid #999999;
   border-radius: 1%;
@@ -257,18 +277,18 @@
   margin-bottom: 5%;
 }
 .top3 {
-  width: 20%;
-  height: 50%;
+  width: 370px;
+  height: 1000px;
   border: 1px solid #999999;
   border-radius: 1%;
 }
 .thetop3 {
-  height: 200px;
-  width: 90%;
+  height: 260px;
+  width: 95%;
 }
 .theimage {
   margin: 2%;
-  height: 210px;
+  height: 280px;
   width: 100%;
 }
 .Prod_name {
@@ -302,7 +322,7 @@ export default {
       options2: {
         colors: [],
         chart: {
-          id: "sales-summary"
+          id: "product-summary"
         },
         xaxis: {
           categories: []
@@ -437,13 +457,13 @@ export default {
       let params = {
         month: null
       };
-      Axios.post(AUTH.url + "getProducts", params, AUTH.config).then(
-        response => {
+      Axios.post(AUTH.url + "getProducts", params, AUTH.config)
+        .then(response => {
           response.data.product.forEach(element => {
             this.productName.push(element.productName);
           });
-        }
-      );
+        })
+        .catch(error => {});
     },
 
     //...................  for Product sales graph ....................
@@ -459,8 +479,9 @@ export default {
       let PRODUCT = "";
       let forSeries = [];
 
-      Axios.post(AUTH.url + "getDailyProductSales", params, AUTH.config).then(
-        response => {
+      Axios.post(AUTH.url + "getDailyProductSales", params, AUTH.config)
+        .then(response => {
+          // console.log("heloooooooo ", response);
           if (response.data.status) {
             AUTH.deauthenticate();
           }
@@ -489,13 +510,38 @@ export default {
 
           if (response.data.prods.length > 0) {
             this.series2 = forSeries;
+            this.options2 = {
+              chart: {
+                id: "product-summary"
+              },
+              xaxis: {
+                categories: this.xlabels
+              },
+              stroke: {
+                width: 2,
+                curve: "smooth"
+              }
+            };
+            // this.options2.xaxis.categories = this.xlabels;
           } else {
             this.series2 = [];
+            this.options2 = {
+              chart: {
+                id: "product-summary"
+              },
+              xaxis: {
+                categories: this.xlabels
+              },
+              stroke: {
+                width: 2,
+                curve: "smooth"
+              }
+            };
           }
-        }
-      );
+        })
+        .catch(error => {});
       this.secondpoints = [];
-      this.options2.colors=[];
+      this.options2.colors = [];
     },
     MonthlyProductSale(yyyy) {
       this.loadingShow = true;
@@ -511,8 +557,8 @@ export default {
       let PRODUCT = "";
       let forSeries = [];
 
-      Axios.post(AUTH.url + "getMonthlyProductSales", params, AUTH.config).then(
-        response => {
+      Axios.post(AUTH.url + "getMonthlyProductSales", params, AUTH.config)
+        .then(response => {
           if (response.data.status) {
             AUTH.deauthenticate();
           }
@@ -558,6 +604,7 @@ export default {
               });
               let color = this.getRandomColor();
               this.options2.colors.push(color);
+              this.options2.xaxis.categories = this.mnths;
               PRODUCT = "";
               this.secondpoints = [];
             }
@@ -565,13 +612,37 @@ export default {
 
           if (response.data.prods.length > 0) {
             this.series2 = forSeries;
+            this.options2 = {
+              chart: {
+                id: "product-summary"
+              },
+              xaxis: {
+                categories: this.mnths
+              },
+              stroke: {
+                width: 2,
+                curve: "smooth"
+              }
+            };
           } else {
             this.series2 = [];
+            this.options2 = {
+              chart: {
+                id: "product-summary"
+              },
+              xaxis: {
+                categories: this.mnths
+              },
+              stroke: {
+                width: 2,
+                curve: "smooth"
+              }
+            };
           }
-        }
-      );
+        })
+        .catch(error => {});
       this.secondpoints = [];
-      this.options2.colors=[];
+      this.options2.colors = [];
     },
     QuarterlyProductSale(yyyy) {
       this.loadingShow = true;
@@ -588,142 +659,164 @@ export default {
       let PRODUCT = "";
       let forSeries = [];
 
-      Axios.post(
-        AUTH.url + "getQuarterlyProductSales",
-        params,
-        AUTH.config
-      ).then(response => {
-        if (response.data.status) {
-          AUTH.deauthenticate();
-        }
-        this.loadingShow = false;
-        response.data.prods.forEach(element => {
-          namesfromDB.push(element.ProductName);
-          let d = element.month;
-          let tots = element.quan;
-          monthsfrmDB.push(d);
-          totalfrmDB.push(tots);
-        });
+      Axios.post(AUTH.url + "getQuarterlyProductSales", params, AUTH.config)
+        .then(response => {
+          if (response.data.status) {
+            AUTH.deauthenticate();
+          }
+          this.loadingShow = false;
+          response.data.prods.forEach(element => {
+            namesfromDB.push(element.ProductName);
+            let d = element.month;
+            let tots = element.quan;
+            monthsfrmDB.push(d);
+            totalfrmDB.push(tots);
+          });
 
-        this.productName.forEach(name => {
-          if (namesfromDB.includes(name)) {
-            response.data.prods.forEach(prod => {
-              if (prod.ProductName === name) {
-                PRODUCT = name;
-                for (i = 1; i < this.mnths.length + 1; i++) {
-                  if (prod.month === i) {
-                    this.secondpoints.push(parseInt(prod.quan));
-                  } else {
-                    this.secondpoints.push(0);
+          this.productName.forEach(name => {
+            if (namesfromDB.includes(name)) {
+              response.data.prods.forEach(prod => {
+                if (prod.ProductName === name) {
+                  PRODUCT = name;
+                  for (i = 1; i < this.mnths.length + 1; i++) {
+                    if (prod.month === i) {
+                      this.secondpoints.push(parseInt(prod.quan));
+                    } else {
+                      this.secondpoints.push(0);
+                    }
                   }
-                }
-                for (var i = 0; i < this.secondpoints.length; i++) {
-                  if (i == 0 || i == 1 || i == 2) {
-                    this.firstQ.push(this.secondpoints[i]);
-                  } else if (i == 3 || i == 4 || i == 5) {
-                    this.secondQ.push(this.secondpoints[i]);
-                  } else if (i == 6 || i == 7 || i == 8) {
-                    this.thirdQ.push(this.secondpoints[i]);
-                  } else if (i == 9 || i == 10 || i == 11) {
-                    this.forthQ.push(this.secondpoints[i]);
+                  for (var i = 0; i < this.secondpoints.length; i++) {
+                    if (i == 0 || i == 1 || i == 2) {
+                      this.firstQ.push(this.secondpoints[i]);
+                    } else if (i == 3 || i == 4 || i == 5) {
+                      this.secondQ.push(this.secondpoints[i]);
+                    } else if (i == 6 || i == 7 || i == 8) {
+                      this.thirdQ.push(this.secondpoints[i]);
+                    } else if (i == 9 || i == 10 || i == 11) {
+                      this.forthQ.push(this.secondpoints[i]);
+                    }
                   }
-                }
-                this.QauterData = [];
-                let one = this.firstQ.reduce((total, num) => {
-                  return total + num;
-                });
+                  this.QauterData = [];
+                  let one = this.firstQ.reduce((total, num) => {
+                    return total + num;
+                  });
 
-                this.QauterData.push(one);
-                let two = this.secondQ.reduce((total, num) => {
-                  return total + num;
-                });
-                this.QauterData.push(two);
-                let three = this.thirdQ.reduce((total, num) => {
-                  return total + num;
-                });
-                this.QauterData.push(three);
-                let four = this.forthQ.reduce((total, num) => {
-                  return total + num;
-                });
-                this.QauterData.push(four);
-                this.secondpoints = this.QauterData;
-                forSeries.push({
-                  name: PRODUCT,
-                  data: this.secondpoints
-                });
-                let color = this.getRandomColor();
-                this.options2.colors.push(color);
-                PRODUCT = "";
-                this.secondpoints = [];
+                  this.QauterData.push(one);
+                  let two = this.secondQ.reduce((total, num) => {
+                    return total + num;
+                  });
+                  this.QauterData.push(two);
+                  let three = this.thirdQ.reduce((total, num) => {
+                    return total + num;
+                  });
+                  this.QauterData.push(three);
+                  let four = this.forthQ.reduce((total, num) => {
+                    return total + num;
+                  });
+                  this.QauterData.push(four);
+                  this.secondpoints = this.QauterData;
+                  forSeries.push({
+                    name: PRODUCT,
+                    data: this.secondpoints
+                  });
+                  let color = this.getRandomColor();
+                  this.options2.colors.push(color);
+                  PRODUCT = "";
+                  this.secondpoints = [];
+                }
+              });
+              this.firstQ = [];
+              this.secondQ = [];
+              this.thirdQ = [];
+              this.forthQ = [];
+              this.QauterData = [];
+            } else {
+              PRODUCT = name;
+              for (i = 1; i < this.mnths.length + 1; i++) {
+                this.secondpoints.push(0);
               }
-            });
+              for (var i = 0; i < this.secondpoints.length; i++) {
+                if (i == 0 || i == 1 || i == 2) {
+                  this.firstQ.push(this.secondpoints[i]);
+                } else if (i == 3 || i == 4 || i == 5) {
+                  this.secondQ.push(this.secondpoints[i]);
+                } else if (i == 6 || i == 7 || i == 8) {
+                  this.thirdQ.push(this.secondpoints[i]);
+                } else if (i == 9 || i == 10 || i == 11) {
+                  this.forthQ.push(this.secondpoints[i]);
+                }
+              }
+              this.QauterData = [];
+              let one = this.firstQ.reduce((total, num) => {
+                return total + num;
+              });
+              this.QauterData.push(one);
+              let two = this.secondQ.reduce((total, num) => {
+                return total + num;
+              });
+              this.QauterData.push(two);
+              let three = this.thirdQ.reduce((total, num) => {
+                return total + num;
+              });
+              this.QauterData.push(three);
+              let four = this.forthQ.reduce((total, num) => {
+                return total + num;
+              });
+              this.QauterData.push(four);
+              this.secondpoints = this.QauterData;
+              forSeries.push({
+                name: PRODUCT,
+                data: this.secondpoints
+              });
+              let color = this.getRandomColor();
+              this.options2.colors.push(color);
+              PRODUCT = "";
+              this.secondpoints = [];
+            }
             this.firstQ = [];
             this.secondQ = [];
             this.thirdQ = [];
             this.forthQ = [];
             this.QauterData = [];
-          } else {
-            PRODUCT = name;
-            for (i = 1; i < this.mnths.length + 1; i++) {
-              this.secondpoints.push(0);
-            }
-            for (var i = 0; i < this.secondpoints.length; i++) {
-              if (i == 0 || i == 1 || i == 2) {
-                this.firstQ.push(this.secondpoints[i]);
-              } else if (i == 3 || i == 4 || i == 5) {
-                this.secondQ.push(this.secondpoints[i]);
-              } else if (i == 6 || i == 7 || i == 8) {
-                this.thirdQ.push(this.secondpoints[i]);
-              } else if (i == 9 || i == 10 || i == 11) {
-                this.forthQ.push(this.secondpoints[i]);
-              }
-            }
-            this.QauterData = [];
-            let one = this.firstQ.reduce((total, num) => {
-              return total + num;
-            });
-            this.QauterData.push(one);
-            let two = this.secondQ.reduce((total, num) => {
-              return total + num;
-            });
-            this.QauterData.push(two);
-            let three = this.thirdQ.reduce((total, num) => {
-              return total + num;
-            });
-            this.QauterData.push(three);
-            let four = this.forthQ.reduce((total, num) => {
-              return total + num;
-            });
-            this.QauterData.push(four);
-            this.secondpoints = this.QauterData;
-            forSeries.push({
-              name: PRODUCT,
-              data: this.secondpoints
-            });
-            let color = this.getRandomColor();
-            this.options2.colors.push(color);
-            PRODUCT = "";
-            this.secondpoints = [];
-          }
-          this.firstQ = [];
-          this.secondQ = [];
-          this.thirdQ = [];
-          this.forthQ = [];
-          this.QauterData = [];
-        });
+          });
 
-        if (response.data.prods.length > 0) {
-          this.series2 = forSeries;
-        } else {
-          this.series2 = [];
-        }
-      });
+          if (response.data.prods.length > 0) {
+            this.series2 = forSeries;
+            this.options2 = {
+              chart: {
+                id: "product-summary"
+              },
+              xaxis: {
+                categories: this.quarter
+              },
+              stroke: {
+                width: 2,
+                curve: "smooth"
+              }
+            };
+          } else {
+            this.series2 = [];
+            this.options2 = {
+              chart: {
+                id: "product-summary"
+              },
+              xaxis: {
+                categories: this.quarter
+              },
+              stroke: {
+                width: 2,
+                curve: "smooth"
+              }
+            };
+          }
+        })
+        .catch(error => {});
       this.firstQ = [];
       this.secondQ = [];
       this.thirdQ = [];
       this.forthQ = [];
       this.QauterData = [];
-      this.options2.colors=[];
+      this.options2.colors = [];
     },
     SemiProductSale(yyyy) {
       this.loadingShow = true;
@@ -740,8 +833,8 @@ export default {
       let PRODUCT = "";
       let forSeries = [];
 
-      Axios.post(AUTH.url + "getSemiProductSales", params, AUTH.config).then(
-        response => {
+      Axios.post(AUTH.url + "getSemiProductSales", params, AUTH.config)
+        .then(response => {
           if (response.data.status) {
             AUTH.deauthenticate();
           }
@@ -800,6 +893,8 @@ export default {
                     name: PRODUCT,
                     data: this.secondpoints
                   });
+
+                  // console.log("secondpoints ===", this.secondpoints);
                   PRODUCT = "";
                   this.secondpoints = [];
                 }
@@ -864,24 +959,98 @@ export default {
 
           if (response.data.prods.length > 0) {
             this.series2 = forSeries;
+            this.options2 = {
+              chart: {
+                id: "product-summary"
+              },
+              xaxis: {
+                categories: this.semi
+              },
+              stroke: {
+                width: 2,
+                curve: "smooth"
+              }
+            };
           } else {
             this.series2 = [];
+            this.options2 = {
+              chart: {
+                id: "product-summary"
+              },
+              xaxis: {
+                categories: this.semi
+              },
+              stroke: {
+                width: 2,
+                curve: "smooth"
+              }
+            };
           }
-        }
-      );
+        })
+        .catch(error => {});
       this.firstQ = [];
       this.secondQ = [];
       this.thirdQ = [];
       this.forthQ = [];
       this.QauterData = [];
       this.semi_Data = [];
-      this.options2.colors=[];
+      this.options2.colors = [];
+    },
+    getAnnualProductSales(years) {
+      // this.loadingShow = true;
+      // this.points = [];
+      // let startingYR = values[0];
+      // let endYear = values[1];
+      // let graphLabel = startingYR + " - " + endYear;
+      // this.MonthLabel = graphLabel;
+      // let gap = endYear - startingYR;
+      // let array = [];
+      // let labelsArr = [];
+      // let params = {
+      //   from: startingYR,
+      //   to: endYear
+      // };
+      // Axios.post(AUTH.url + "getAnnualProductSales", params, AUTH.config).then(
+      //   response => {
+      //     if (response.data.status) {
+      //       AUTH.deauthenticate();
+      //     }
+      //     this.loadingShow = false;
+      //     response.data.subtotal.forEach(element => {
+      //       if (element.year <= endYear && element.year == startingYR) {
+      //         array.push(element.sub);
+      //         labelsArr.push(startingYR);
+      //         startingYR++;
+      //       }
+      //     });
+      //     this.points = array;
+      //     this.annualLabels = labelsArr;
+      //     this.series = [
+      //       {
+      //         data: this.points
+      //       }
+      //     ];
+      //     this.options = {
+      //       colors: ["#ff5b04"],
+      //       chart: {
+      //         id: "sales-summary"
+      //       },
+      //       xaxis: {
+      //         categories: this.annualLabels
+      //       },
+      //       stroke: {
+      //         width: 2,
+      //         curve: "smooth"
+      //       }
+      //     };
+      //   }
+      // );
     },
     onFilter2() {
       if (this.thefilter2 == "Daily") {
         this.options2.xaxis.categories = [];
         this.MonthLabel2 = this.mnths[this.theMonth - 1];
-        this.options2.xaxis.categories = this.xlabels;
+        // this.options2.xaxis.categories = this.xlabels;
         this.dailyProductSale();
         this.ok = true;
         this.ok2 = false;
@@ -889,21 +1058,22 @@ export default {
       } else if (this.thefilter2 == "Weekly") {
       } else if (this.thefilter2 == "Monthly") {
         this.MonthLabel2 = new Date(this.thedate2).getFullYear();
-        this.options2.xaxis.categories = this.mnths;
+        // this.options2.xaxis.categories = this.mnths;
         this.ok = false;
         this.ok2 = true;
         this.ok3 = false;
         this.MonthlyProductSale(this.yrvalueS);
+        // console.log("ang colors bruh ", this.options2.colors);
       } else if (this.thefilter2 == "Quarterly") {
         this.MonthLabel2 = new Date(this.thedate2).getFullYear();
-        this.options2.xaxis.categories = this.quarter;
+        // this.options2.xaxis.categories = this.quarter;
         this.QuarterlyProductSale(this.yrvalueS);
         this.ok = false;
         this.ok2 = true;
         this.ok3 = false;
       } else if (this.thefilter2 == "Semi-Annual") {
         this.MonthLabel2 = new Date(this.thedate2).getFullYear();
-        this.options2.xaxis.categories = this.semi;
+        // this.options2.xaxis.categories = this.semi;
         this.SemiProductSale(this.yrvalueS);
         this.ok = false;
         this.ok2 = true;
@@ -949,8 +1119,8 @@ export default {
       // let xs = this.xlabels;
       let ldate = this.lastDate;
 
-      Axios.post(AUTH.url + "getDailySales", params, AUTH.config).then(
-        response => {
+      Axios.post(AUTH.url + "getDailySales", params, AUTH.config)
+        .then(response => {
           if (response.data.status) {
             AUTH.deauthenticate();
           }
@@ -982,8 +1152,8 @@ export default {
           } else {
             this.series = [];
           }
-        }
-      );
+        })
+        .catch(error => {});
       this.points = [];
     },
 
@@ -1131,7 +1301,6 @@ export default {
       } else if (this.thefilter == "Semi-Annual") {
         this.getSemi_AnnualSummary(this.yrvalue);
         this.MonthLabel = this.yrvalue;
-      } else if (this.thefilter == "Annual") {
       }
     },
 
@@ -1146,19 +1315,21 @@ export default {
       let params = {
         year: this.yrvalue
       };
-      Axios.post(AUTH.url + "getyears", params, AUTH.config).then(response => {
-        if (response.data.status) {
-          AUTH.deauthenticate();
-        }
-        this.loadingShow = false;
-        response.data.years.forEach(element => {
-          let yr = element.year.substring(0, 4);
-          if (this.years.includes(yr)) {
-          } else {
-            this.years.push(yr);
+      Axios.post(AUTH.url + "getyears", params, AUTH.config)
+        .then(response => {
+          if (response.data.status) {
+            AUTH.deauthenticate();
           }
-        });
-      });
+          this.loadingShow = false;
+          response.data.years.forEach(element => {
+            let yr = element.year.substring(0, 4);
+            if (this.years.includes(yr)) {
+            } else {
+              this.years.push(yr);
+            }
+          });
+        })
+        .catch(error => {});
     },
     getMonthlySummary(yyyy) {
       this.loadingShow = true;
@@ -1168,8 +1339,8 @@ export default {
       let params = {
         year: yyyy
       };
-      Axios.post(AUTH.url + "getmonthlySales", params, AUTH.config).then(
-        response => {
+      Axios.post(AUTH.url + "getmonthlySales", params, AUTH.config)
+        .then(response => {
           if (response.data.status) {
             AUTH.deauthenticate();
           }
@@ -1195,8 +1366,8 @@ export default {
               data: this.points
             }
           ];
-        }
-      );
+        })
+        .catch(error => {});
     },
     getQuarterlySummary(yyyy) {
       this.loadingShow = true;
@@ -1206,8 +1377,8 @@ export default {
       let params = {
         year: yyyy
       };
-      Axios.post(AUTH.url + "getQuarterlySales", params, AUTH.config).then(
-        response => {
+      Axios.post(AUTH.url + "getQuarterlySales", params, AUTH.config)
+        .then(response => {
           if (response.data.status) {
             AUTH.deauthenticate();
           }
@@ -1262,8 +1433,8 @@ export default {
               data: this.points
             }
           ];
-        }
-      );
+        })
+        .catch(error => {});
       this.firstQ = [];
       this.secondQ = [];
       this.thirdQ = [];
@@ -1279,8 +1450,8 @@ export default {
       let params = {
         year: yyyy
       };
-      Axios.post(AUTH.url + "getSemi-AnnualSales", params, AUTH.config).then(
-        response => {
+      Axios.post(AUTH.url + "getSemi-AnnualSales", params, AUTH.config)
+        .then(response => {
           if (response.data.status) {
             AUTH.deauthenticate();
           }
@@ -1335,8 +1506,8 @@ export default {
               data: this.points
             }
           ];
-        }
-      );
+        })
+        .catch(error => {});
       this.firstQ = [];
       this.secondQ = [];
       this.thirdQ = [];
@@ -1359,8 +1530,8 @@ export default {
         from: startingYR,
         to: endYear
       };
-      Axios.post(AUTH.url + "getAnnualSales", params, AUTH.config).then(
-        response => {
+      Axios.post(AUTH.url + "getAnnualSales", params, AUTH.config)
+        .then(response => {
           if (response.data.status) {
             AUTH.deauthenticate();
           }
@@ -1392,8 +1563,8 @@ export default {
               curve: "smooth"
             }
           };
-        }
-      );
+        })
+        .catch(error => {});
     },
     getTop3() {
       this.loadingShow = true;
@@ -1402,8 +1573,8 @@ export default {
       };
       let top3 = [];
       let indexes = [];
-      Axios.post(AUTH.url + "getTopProd", params, AUTH.config).then(
-        response => {
+      Axios.post(AUTH.url + "getTopProd", params, AUTH.config)
+        .then(response => {
           if (response.data.status) {
             AUTH.deauthenticate();
           }
@@ -1426,8 +1597,8 @@ export default {
             }
           }
           this.loadingShow = false;
-        }
-      );
+        })
+        .catch(error => {});
       this.topprodarr = top3;
     }
   }

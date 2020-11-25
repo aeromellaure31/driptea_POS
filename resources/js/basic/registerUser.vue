@@ -250,7 +250,7 @@
   border: orange solid 1px;
   margin-bottom: 2%;
   margin-top: 2%;
-  width: 70%;
+  width: 60%;
   background-color: white;
 }
 span {

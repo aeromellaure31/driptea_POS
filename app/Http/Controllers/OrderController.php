@@ -113,9 +113,9 @@ class OrderController extends Controller
     }
 
     public function retrieveTopProducts(Request $request){
-        $prods = DB::table('orders')->leftJoin('products', 'orders.productId', '=', 'products.id')
-            ->select(DB::raw('products.image as img'),DB::raw('SUM(orders.quantity) as quan'),DB::raw('products.productName as pName'))
-            ->where('products.deleted_at', null)
+        $prods = DB::table('store_orders')->leftJoin('products', 'store_orders.productId', '=', 'products.id')
+            ->select(DB::raw('products.image as img'),DB::raw('SUM(store_orders.quantity) as quan'),DB::raw('products.productName as pName'))
+            ->where('store_orders.deleted_at', null)
             ->groupBy('img','pName')
             ->orderBy('quan', 'desc')
             ->get();
@@ -127,7 +127,7 @@ class OrderController extends Controller
             ->select(DB::raw('products.productName as ProductName'),DB::raw('SUM(store_orders.quantity) as quan'),DB::raw('extract(DAY from store_orders.created_at) as date'),DB::raw('extract(YEAR from store_orders.created_at) as year'),DB::raw('extract(MONTH from store_orders.created_at) as month'))
             ->whereMonth('store_orders.created_at', '=', $request->month)
             ->whereYear('store_orders.created_at', '=', $request->year)
-            ->where('products.deleted_at', null)
+            ->where('store_orders.deleted_at', null)
             ->groupBy('year','month','date','ProductName')
             // ->orderBy('quan', 'desc')
             ->get();
@@ -138,7 +138,7 @@ class OrderController extends Controller
         $prods = DB::table('store_orders')->leftJoin('products', 'store_orders.productId', '=', 'products.id')
             ->select(DB::raw('products.productName as ProductName'),DB::raw('SUM(store_orders.quantity) as quan'),DB::raw('extract(MONTH from store_orders.created_at) as month'))
             ->whereYear('store_orders.created_at', '=', $request->year)
-            ->where('products.deleted_at', null)
+            ->where('store_orders.deleted_at', null)
             ->groupBy('month','ProductName')
             // ->orderBy('quan', 'desc')
             ->get();
@@ -149,7 +149,7 @@ class OrderController extends Controller
         $prods = DB::table('store_orders')->leftJoin('products', 'store_orders.productId', '=', 'products.id')
             ->select(DB::raw('products.productName as ProductName'),DB::raw('SUM(store_orders.quantity) as quan'),DB::raw('extract(MONTH from store_orders.created_at) as month'))
             ->whereYear('store_orders.created_at', '=', $request->year)
-            ->where('products.deleted_at', null)
+            ->where('store_orders.deleted_at', null)
             ->groupBy('month','ProductName')
             // ->orderBy('quan', 'desc')
             ->get();
@@ -160,7 +160,7 @@ class OrderController extends Controller
         $prods = DB::table('store_orders')->leftJoin('products', 'store_orders.productId', '=', 'products.id')
             ->select(DB::raw('products.productName as ProductName'),DB::raw('SUM(store_orders.quantity) as quan'),DB::raw('extract(MONTH from store_orders.created_at) as month'))
             ->whereYear('store_orders.created_at', '=', $request->year)
-            ->where('products.deleted_at', null)
+            ->where('store_orders.deleted_at', null)
             ->groupBy('month','ProductName')
             // ->orderBy('quan', 'desc')
             ->get();
@@ -170,7 +170,7 @@ class OrderController extends Controller
     public function AnnualProductSales(Request $request){
         $prods = DB::table('store_orders')->leftJoin('products', 'store_orders.productId', '=', 'products.id')
             ->select(DB::raw('products.productName as ProductName'),DB::raw('SUM(store_orders.quantity) as quan'),DB::raw('products.id as ID'),DB::raw('extract(DAY from store_orders.created_at) as date'),DB::raw('extract(YEAR from store_orders.created_at) as year'),DB::raw('extract(MONTH  from store_orders.created_at) as month'))
-            ->where('products.deleted_at', null)
+            ->where('store_orders.deleted_at', null)
             ->groupBy('year','ID')
             // ->orderBy('quan', 'desc')
             ->get();
