@@ -263,6 +263,7 @@
                                 </v-row>
                                 <v-row>
                                 <div class="form-group">
+                                  <i><span class="errorColor" v-if="errorMessage8 !== null">{{errorMessage8}}</span></i>
                                   <center>
                                     <img class="addOnsImage" :src="imageURL"><br>
                                     <input type="file" class="fileStyle" v-on:change="onImageChange" required><br>
@@ -359,6 +360,7 @@
                                 </v-row>
                             </div>
                             <div class="form-group">
+                                <i><span class="errorColor" v-if="errorMessage7 !== null">{{errorMessage7}}</span></i>
                                 <center>
                                     <img class="addOnsImage" :src="imgURL"><br>
                                     <input type="file" class="fileStyle" v-on:change="onImgChange" required><br>
@@ -689,10 +691,12 @@ import AUTH from "../../services/auth";
 import ROUTER from "../../router";
 import loading from '../../basic/loading.vue';
 import swal from "sweetalert";
+import noImage from '../../../assets/noImage.jpg'
 import moment from 'moment'
 export default {
   data() {
     return {
+      noImage: noImage,
       toSaveImage: null,
       toSaveImage2: null,
       auth: AUTH,
@@ -820,6 +824,8 @@ export default {
       errorMessage4: null,
       errorMessage5: null,
       errorMessage6: null,
+      errorMessage7: null,
+      errorMessage8: null,
       deleteID: null,
       deleteParam: null,
     };
@@ -1241,14 +1247,21 @@ export default {
     },
     onImgChange(e) {
         this.img = e.target.files[0]
-        this.imgURL = URL.createObjectURL(e.target.files[0])
-        this.loadingShow = true
-        let data = new FormData()
-        data.append('file', this.img)
-        this.$axios.post('http://ec2-34-205-139-231.compute-1.amazonaws.com:3232/api/file/upload', data).then(res => {
-          this.toSaveImage = res.data.result.body.file_url
-          this.loadingShow = false
-        })
+        if (this.img.size > 1024 * 1024) {
+          this.img = null
+          this.imgURL = this.noImage
+          this.errorMessage7 = 'Size too large. It must not exceed 1MB'
+        }else{
+          this.errorMessage7 = null
+          this.imgURL = URL.createObjectURL(e.target.files[0])
+          this.loadingShow = true
+          let data = new FormData()
+          data.append('file', this.img)
+          this.$axios.post('http://ec2-34-205-139-231.compute-1.amazonaws.com:3232/api/file/upload', data).then(res => {
+            this.toSaveImage = res.data.result.body.file_url
+            this.loadingShow = false
+          })
+        }
     },
     formSubmitProduct(e) {
       e.preventDefault();
@@ -1257,7 +1270,8 @@ export default {
        this.lowPrice !== null && this.highPrice !== null && this.overPrice !== null &&
        this.onlinelowPrice !== null && this.onlinehighPrice !== null & this.onlineoverPrice !== null &&
        this.lowPrice > 0 && this.highPrice > 0 && this.overPrice > 0 &&
-       this.onlinelowPrice > 0 && this.onlinehighPrice > 0 && this.onlineoverPrice > 0 && this.errorMessage1 === null){
+       this.onlinelowPrice > 0 && this.onlinehighPrice > 0 && this.onlineoverPrice > 0 && this.errorMessage1 === null &&
+       this.errorMessage7 === null && this.errorMessage8 === null){
           let currentObj = this;
           const config = {
               headers: {
@@ -1327,7 +1341,8 @@ export default {
       if (this.img !== null && this.prodType !== null && this.productName !== null && 
       this.lowPrice !== null && this.highPrice !== null && this.overPrice !== null && 
       this.onlinelowPrice !== null && this.onlinehighPrice !== null && 
-      this.onlineoverPrice !== null && this.errorMessage1 === null){
+      this.onlineoverPrice !== null && this.errorMessage1 === null &&
+      this.errorMessage7 === null && this.errorMessage8 === null){
           e.preventDefault();
           let currentObj = this;
           const config = {
@@ -1409,14 +1424,21 @@ export default {
     },
     onImageChange(e) {
       this.image = e.target.files[0];
-      this.imageURL = URL.createObjectURL(e.target.files[0]);
-      this.loadingShow = true
-      let data = new FormData()
-      data.append('file', this.image)
-      this.$axios.post('http://ec2-34-205-139-231.compute-1.amazonaws.com:3232/api/file/upload', data).then(res => {
-        this.toSaveImage2 = res.data.result.body.file_url
-        this.loadingShow = false
-      })
+      if (this.image.size > 1024 * 1024) {
+        this.image.name = ''
+        this.imageURL = this.noImage
+        this.errorMessage8 = 'Size too large. It must not exceed 1MB'
+      }else{
+        this.errorMessage8 = null
+        this.imageURL = URL.createObjectURL(e.target.files[0]);
+        this.loadingShow = true
+        let data = new FormData()
+        data.append('file', this.image)
+        this.$axios.post('http://ec2-34-205-139-231.compute-1.amazonaws.com:3232/api/file/upload', data).then(res => {
+          this.toSaveImage2 = res.data.result.body.file_url
+          this.loadingShow = false
+        })
+      }
     },
     editCategories(item){
       this.errorMessage = null;
@@ -1430,7 +1452,7 @@ export default {
     },
     updateCategory(e){
       this.loadingShow = true
-      if (this.image !== null && this.productType !== null) {
+      if (this.image !== null && this.productType !== null && this.errorMessage7 === null && this.errorMessage8 === null) {
         e.preventDefault();
         let currentObj = this;
 
@@ -1473,7 +1495,7 @@ export default {
     },
     formSubmit(e) {
       this.loadingShow = true
-      if (this.image !== null && this.productType !== null) {
+      if (this.image !== null && this.productType !== null && this.errorMessage7 === null && this.errorMessage8 === null) {
         e.preventDefault();
         let currentObj = this;
 
@@ -1631,7 +1653,7 @@ export default {
       this.onlinelowPrice = null;
       this.onlinehighPrice = null;
       this.onlineoverPrice = null;
-      this.imgURL = null;
+      this.imgURL = this.noImage;
       this.img = null;
     },
     showCategory() {
@@ -1639,7 +1661,7 @@ export default {
       this.image = null
       this.productType = null
       this.dialogForCategory = true;
-      this.imageURL = null;
+      this.imageURL = this.noImage;
       this.productType = null;
       this.errorMessage = null;
     },
