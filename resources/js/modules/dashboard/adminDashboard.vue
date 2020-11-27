@@ -15,10 +15,11 @@
             <v-card class="subhead">
               <v-toolbar color="#f2f2f2" dark>
                 <div class="row insideToolbar">
-                  <div class="col-sm-4">
+                  <div class="col-xs-2">
                     <v-toolbar-title class="graphTitle">Summary of Sales</v-toolbar-title>
                   </div>
-                  <div class="col-sm-4">
+                  <v-spacer></v-spacer>
+                  <div class="col-xs-2">
                     <div class="form-group filter">
                       <select
                         class="form-control"
@@ -35,10 +36,10 @@
                       </select>
                     </div>
                   </div>
-                  <div class="col-sm-4">
-                    <div class="form-group firstOpt" v-show="ok">
+                  <div class="col-xs-2">
+                    <div class="form-group" v-show="ok">
                       <input
-                        class="form-control"
+                        class="form-control firstOpt"
                         type="month"
                         v-model="thedate"
                         id="calendar"
@@ -95,10 +96,11 @@
             <v-card class="subhead">
               <v-toolbar color="#f2f2f2" dark>
                 <div class="row insideToolbar">
-                  <div class="col-sm-4">
+                  <div class="col-xs-2">
                     <v-toolbar-title class="graphTitle">Product Sales</v-toolbar-title>
                   </div>
-                  <div class="col-sm-4">
+                  <v-spacer></v-spacer>
+                  <div class="col-xs-2">
                     <div class="form-group filter">
                       <select
                         class="form-control"
@@ -115,10 +117,10 @@
                       </select>
                     </div>
                   </div>
-                  <div class="col-sm-4">
-                    <div class="form-group firstOpt" v-show="ok">
+                  <div class="col-xs-2 ccc">
+                    <div class="form-group" v-show="ok">
                       <input
-                        class="form-control"
+                        class="form-control firstOpt"
                         type="month"
                         v-model="thedate2"
                         id="calendar"
@@ -206,6 +208,17 @@
 </template>
 
 <style scoped>
+/* .filter{
+  width: 120px;
+} */
+.firstOpt{
+  margin-right: 5%;
+}
+.firstOpt,
+.filter {
+  width: 120px;
+  align-content: left;
+}
 .prodNAme {
   color: #ff5b04;
 }
@@ -237,6 +250,9 @@
     Helvetica Neue, Arial, sans-serif;
   font-size: 1rem;
   font-weight: bold;
+}
+.graphTitle{
+  margin-left: 5%;
 }
 .YRcal {
   color: black;

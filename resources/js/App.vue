@@ -184,7 +184,7 @@
       </a>
       <v-app-bar-title app name="thetitle">DRIPTEA</v-app-bar-title>
       <v-spacer></v-spacer>
-          <v-btn icon style="margin-right: 3%;" @click="redirect('/onlineDashboard')">
+          <v-btn icon style="margin-right: 2%;" @click="redirect('/onlineDashboard')">
               <v-icon>mdi-home</v-icon>
           </v-btn>
           <v-btn icon @click="redirect('/customerCart')" style="margin-right: 2%;">
@@ -192,13 +192,12 @@
               <span style="margin-left: -3%;">Cart</span>
               <span style="background-color: red; color: white; border-radius: 20%; font-size: 10px; margin-left: -10%; margin-top: -20%;">{{onlineCount > 0 ? 'New' : ''}}</span>
           </v-btn>
-          <v-avatar>
-            <v-img :src="emptyImage"></v-img>
-          </v-avatar>
           <v-menu offset-y>
-            <template v-slot:activator="{ on, attrs }">
+            <template v-slot:activator="{ on, attrs }" right style="margin-right:2%">
               <v-btn v-bind="attrs" v-on="on" icon>
-                <v-icon medium color="black" right>mdi-arrow-down-drop-circle</v-icon>
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" style="color:white;margin-right:10%" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <img :src="emptyImage" width="40" height="40" class="rounded-circle" style="margin-right: 2%;">
+                </a>
               </v-btn>
             </template>
             <v-list>
