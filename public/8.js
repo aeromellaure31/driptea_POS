@@ -320,6 +320,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -1703,7 +1719,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.prodNAme[data-v-124112e6] {\r\n  color: #ff5b04;\n}\n.welcome[data-v-124112e6] {\r\n  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,\r\n    Helvetica Neue, Arial, sans-serif;\r\n  font-size: 25px;\r\n  margin-bottom: 10px;\r\n  margin-left: 4%;\r\n  font-weight: bold;\r\n  margin-top: 5%;\n}\n.insideToolbar[data-v-124112e6] {\r\n  margin-top: 25px;\n}\n.GraphLabel[data-v-124112e6] {\r\n  margin-left: 45%;\r\n  font-weight: bold;\n}\n.annualDateCal1[data-v-124112e6],\r\n.annualDateCal2[data-v-124112e6],\r\n.yearMenu[data-v-124112e6],\r\n.graphTitle[data-v-124112e6] {\r\n  color: black;\n}\n.graphTitle[data-v-124112e6],\r\n.text1[data-v-124112e6] {\r\n  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,\r\n    Helvetica Neue, Arial, sans-serif;\r\n  font-size: 1rem;\r\n  font-weight: bold;\n}\n.YRcal[data-v-124112e6] {\r\n  color: black;\n}\n.Cname[data-v-124112e6],\r\n.GraphLabel[data-v-124112e6] {\r\n  color: #ff5b04;\n}\n.text1[data-v-124112e6] {\r\n  margin-left: 10%;\r\n  text-align: center;\r\n  color: black;\n}\n.TB3[data-v-124112e6] {\r\n  margin-bottom: 20px;\r\n  justify-content: center;\r\n  border-radius: 1%;\n}\r\n/* .theimageCard {\r\n  align-content: center;\r\n  border: 1px solid #999999;\r\n  border-radius: 1%;\r\n} */\n.prods[data-v-124112e6] {\r\n  border: 1px solid #999999;\r\n  border-radius: 1%;\n}\n.subhead[data-v-124112e6] {\r\n  margin-bottom: 20px;\n}\r\n/* .chart {\r\n  width: 50%;\r\n} */\n.body[data-v-124112e6] {\r\n  margin-left: 3%;\r\n  margin-right: 3%;\r\n  height: 100%;\r\n  margin-bottom: 5%;\n}\n.top3[data-v-124112e6] {\r\n  width: 370px;\r\n  height: 1000px;\r\n  border: 1px solid #999999;\r\n  border-radius: 1%;\n}\n.thetop3[data-v-124112e6] {\r\n  height: 260px;\r\n  width: 95%;\n}\n.theimage[data-v-124112e6] {\r\n  margin: 2%;\r\n  height: 280px;\r\n  width: 100%;\n}\n.Prod_name[data-v-124112e6] {\r\n  color: black;\n}\r\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* .filter{\r\n  width: 120px;\r\n} */\n.firstOpt[data-v-124112e6]{\r\n  margin-right: 5%;\n}\n.firstOpt[data-v-124112e6],\r\n.filter[data-v-124112e6] {\r\n  width: 120px;\r\n  align-content: left;\n}\n.prodNAme[data-v-124112e6] {\r\n  color: #ff5b04;\n}\n.welcome[data-v-124112e6] {\r\n  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,\r\n    Helvetica Neue, Arial, sans-serif;\r\n  font-size: 25px;\r\n  margin-bottom: 10px;\r\n  margin-left: 4%;\r\n  font-weight: bold;\r\n  margin-top: 5%;\n}\n.insideToolbar[data-v-124112e6] {\r\n  margin-top: 25px;\n}\n.GraphLabel[data-v-124112e6] {\r\n  margin-left: 45%;\r\n  font-weight: bold;\n}\n.annualDateCal1[data-v-124112e6],\r\n.annualDateCal2[data-v-124112e6],\r\n.yearMenu[data-v-124112e6],\r\n.graphTitle[data-v-124112e6] {\r\n  color: black;\n}\n.graphTitle[data-v-124112e6],\r\n.text1[data-v-124112e6] {\r\n  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,\r\n    Helvetica Neue, Arial, sans-serif;\r\n  font-size: 1rem;\r\n  font-weight: bold;\n}\n.graphTitle[data-v-124112e6]{\r\n  margin-left: 5%;\n}\n.YRcal[data-v-124112e6] {\r\n  color: black;\n}\n.Cname[data-v-124112e6],\r\n.GraphLabel[data-v-124112e6] {\r\n  color: #ff5b04;\n}\n.text1[data-v-124112e6] {\r\n  margin-left: 10%;\r\n  text-align: center;\r\n  color: black;\n}\n.TB3[data-v-124112e6] {\r\n  margin-bottom: 20px;\r\n  justify-content: center;\r\n  border-radius: 1%;\n}\r\n/* .theimageCard {\r\n  align-content: center;\r\n  border: 1px solid #999999;\r\n  border-radius: 1%;\r\n} */\n.prods[data-v-124112e6] {\r\n  border: 1px solid #999999;\r\n  border-radius: 1%;\n}\n.subhead[data-v-124112e6] {\r\n  margin-bottom: 20px;\n}\r\n/* .chart {\r\n  width: 50%;\r\n} */\n.body[data-v-124112e6] {\r\n  margin-left: 3%;\r\n  margin-right: 3%;\r\n  height: 100%;\r\n  margin-bottom: 5%;\n}\n.top3[data-v-124112e6] {\r\n  width: 370px;\r\n  height: 1000px;\r\n  border: 1px solid #999999;\r\n  border-radius: 1%;\n}\n.thetop3[data-v-124112e6] {\r\n  height: 260px;\r\n  width: 95%;\n}\n.theimage[data-v-124112e6] {\r\n  margin: 2%;\r\n  height: 280px;\r\n  width: 100%;\n}\n.Prod_name[data-v-124112e6] {\r\n  color: black;\n}\r\n", ""]);
 
 // exports
 
@@ -1772,140 +1788,27 @@ var render = function() {
                   { staticClass: "subhead" },
                   [
                     _c("v-toolbar", { attrs: { color: "#f2f2f2", dark: "" } }, [
-                      _c("div", { staticClass: "row insideToolbar" }, [
-                        _c(
-                          "div",
-                          { staticClass: "col-sm-4" },
-                          [
-                            _c(
-                              "v-toolbar-title",
-                              { staticClass: "graphTitle" },
-                              [_vm._v("Summary of Sales")]
-                            )
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-sm-4" }, [
-                          _c("div", { staticClass: "form-group filter" }, [
-                            _c(
-                              "select",
-                              {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.thefilter,
-                                    expression: "thefilter"
-                                  }
-                                ],
-                                staticClass: "form-control",
-                                attrs: { name: "filter", id: "filters" },
-                                on: {
-                                  change: [
-                                    function($event) {
-                                      var $$selectedVal = Array.prototype.filter
-                                        .call($event.target.options, function(
-                                          o
-                                        ) {
-                                          return o.selected
-                                        })
-                                        .map(function(o) {
-                                          var val =
-                                            "_value" in o ? o._value : o.value
-                                          return val
-                                        })
-                                      _vm.thefilter = $event.target.multiple
-                                        ? $$selectedVal
-                                        : $$selectedVal[0]
-                                    },
-                                    _vm.onFilter
-                                  ]
-                                }
-                              },
-                              [
-                                _c("option", { attrs: { value: "Daily" } }, [
-                                  _vm._v("Daily")
-                                ]),
-                                _vm._v(" "),
-                                _c("option", { attrs: { value: "Monthly" } }, [
-                                  _vm._v("Monthly")
-                                ]),
-                                _vm._v(" "),
-                                _c(
-                                  "option",
-                                  { attrs: { value: "Quarterly" } },
-                                  [_vm._v("Quarterly")]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "option",
-                                  { attrs: { value: "Semi-Annual" } },
-                                  [_vm._v("Semi-Annual")]
-                                ),
-                                _vm._v(" "),
-                                _c("option", { attrs: { value: "Annual" } }, [
-                                  _vm._v("Annual")
-                                ])
-                              ]
-                            )
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-sm-4" }, [
+                      _c(
+                        "div",
+                        { staticClass: "row insideToolbar" },
+                        [
                           _c(
                             "div",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: _vm.ok,
-                                  expression: "ok"
-                                }
-                              ],
-                              staticClass: "form-group firstOpt"
-                            },
+                            { staticClass: "col-xs-2" },
                             [
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.thedate,
-                                    expression: "thedate"
-                                  }
-                                ],
-                                staticClass: "form-control",
-                                attrs: { type: "month", id: "calendar" },
-                                domProps: { value: _vm.thedate },
-                                on: {
-                                  change: _vm.onChangeDate,
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.thedate = $event.target.value
-                                  }
-                                }
-                              })
-                            ]
+                              _c(
+                                "v-toolbar-title",
+                                { staticClass: "graphTitle" },
+                                [_vm._v("Summary of Sales")]
+                              )
+                            ],
+                            1
                           ),
                           _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: _vm.ok2,
-                                  expression: "ok2"
-                                }
-                              ],
-                              staticClass: "form-group secondOpt"
-                            },
-                            [
+                          _c("v-spacer"),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-xs-2" }, [
+                            _c("div", { staticClass: "form-group filter" }, [
                               _c(
                                 "select",
                                 {
@@ -1913,11 +1816,12 @@ var render = function() {
                                     {
                                       name: "model",
                                       rawName: "v-model",
-                                      value: _vm.yrvalue,
-                                      expression: "yrvalue"
+                                      value: _vm.thefilter,
+                                      expression: "thefilter"
                                     }
                                   ],
                                   staticClass: "form-control",
+                                  attrs: { name: "filter", id: "filters" },
                                   on: {
                                     change: [
                                       function($event) {
@@ -1932,98 +1836,223 @@ var render = function() {
                                               "_value" in o ? o._value : o.value
                                             return val
                                           })
-                                        _vm.yrvalue = $event.target.multiple
+                                        _vm.thefilter = $event.target.multiple
                                           ? $$selectedVal
                                           : $$selectedVal[0]
                                       },
-                                      _vm.onChangeYear
+                                      _vm.onFilter
                                     ]
                                   }
                                 },
-                                _vm._l(_vm.years, function(year) {
-                                  return _c(
+                                [
+                                  _c("option", { attrs: { value: "Daily" } }, [
+                                    _vm._v("Daily")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
                                     "option",
-                                    { key: year, domProps: { value: year } },
-                                    [_vm._v(_vm._s(year))]
-                                  )
-                                }),
-                                0
+                                    { attrs: { value: "Monthly" } },
+                                    [_vm._v("Monthly")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "option",
+                                    { attrs: { value: "Quarterly" } },
+                                    [_vm._v("Quarterly")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "option",
+                                    { attrs: { value: "Semi-Annual" } },
+                                    [_vm._v("Semi-Annual")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("option", { attrs: { value: "Annual" } }, [
+                                    _vm._v("Annual")
+                                  ])
+                                ]
                               )
-                            ]
-                          ),
+                            ])
+                          ]),
                           _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: _vm.ok3,
-                                  expression: "ok3"
-                                }
-                              ],
-                              staticClass: "forannualInput"
-                            },
-                            [
-                              _c(
-                                "select",
-                                {
+                          _c("div", { staticClass: "col-xs-2" }, [
+                            _c(
+                              "div",
+                              {
+                                directives: [
+                                  {
+                                    name: "show",
+                                    rawName: "v-show",
+                                    value: _vm.ok,
+                                    expression: "ok"
+                                  }
+                                ],
+                                staticClass: "form-group"
+                              },
+                              [
+                                _c("input", {
                                   directives: [
                                     {
                                       name: "model",
                                       rawName: "v-model",
-                                      value: _vm.Multiyrvalue,
-                                      expression: "Multiyrvalue"
+                                      value: _vm.thedate,
+                                      expression: "thedate"
                                     }
                                   ],
-                                  staticClass: "form-control",
-                                  attrs: { multiple: "" },
+                                  staticClass: "form-control firstOpt",
+                                  attrs: { type: "month", id: "calendar" },
+                                  domProps: { value: _vm.thedate },
                                   on: {
-                                    click: function($event) {
-                                      if (!$event.ctrlKey) {
-                                        return null
+                                    change: _vm.onChangeDate,
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
                                       }
-                                      if (
-                                        $event.shiftKey ||
-                                        $event.altKey ||
-                                        $event.metaKey
-                                      ) {
-                                        return null
-                                      }
-                                      return _vm.onChanging($event)
-                                    },
-                                    change: function($event) {
-                                      var $$selectedVal = Array.prototype.filter
-                                        .call($event.target.options, function(
-                                          o
-                                        ) {
-                                          return o.selected
-                                        })
-                                        .map(function(o) {
-                                          var val =
-                                            "_value" in o ? o._value : o.value
-                                          return val
-                                        })
-                                      _vm.Multiyrvalue = $event.target.multiple
-                                        ? $$selectedVal
-                                        : $$selectedVal[0]
+                                      _vm.thedate = $event.target.value
                                     }
                                   }
-                                },
-                                _vm._l(_vm.years, function(year) {
-                                  return _c(
-                                    "option",
-                                    { key: year, domProps: { value: year } },
-                                    [_vm._v(_vm._s(year))]
-                                  )
-                                }),
-                                0
-                              )
-                            ]
-                          )
-                        ])
-                      ])
+                                })
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                directives: [
+                                  {
+                                    name: "show",
+                                    rawName: "v-show",
+                                    value: _vm.ok2,
+                                    expression: "ok2"
+                                  }
+                                ],
+                                staticClass: "form-group secondOpt"
+                              },
+                              [
+                                _c(
+                                  "select",
+                                  {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.yrvalue,
+                                        expression: "yrvalue"
+                                      }
+                                    ],
+                                    staticClass: "form-control",
+                                    on: {
+                                      change: [
+                                        function($event) {
+                                          var $$selectedVal = Array.prototype.filter
+                                            .call(
+                                              $event.target.options,
+                                              function(o) {
+                                                return o.selected
+                                              }
+                                            )
+                                            .map(function(o) {
+                                              var val =
+                                                "_value" in o
+                                                  ? o._value
+                                                  : o.value
+                                              return val
+                                            })
+                                          _vm.yrvalue = $event.target.multiple
+                                            ? $$selectedVal
+                                            : $$selectedVal[0]
+                                        },
+                                        _vm.onChangeYear
+                                      ]
+                                    }
+                                  },
+                                  _vm._l(_vm.years, function(year) {
+                                    return _c(
+                                      "option",
+                                      { key: year, domProps: { value: year } },
+                                      [_vm._v(_vm._s(year))]
+                                    )
+                                  }),
+                                  0
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                directives: [
+                                  {
+                                    name: "show",
+                                    rawName: "v-show",
+                                    value: _vm.ok3,
+                                    expression: "ok3"
+                                  }
+                                ],
+                                staticClass: "forannualInput"
+                              },
+                              [
+                                _c(
+                                  "select",
+                                  {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.Multiyrvalue,
+                                        expression: "Multiyrvalue"
+                                      }
+                                    ],
+                                    staticClass: "form-control",
+                                    attrs: { multiple: "" },
+                                    on: {
+                                      click: function($event) {
+                                        if (!$event.ctrlKey) {
+                                          return null
+                                        }
+                                        if (
+                                          $event.shiftKey ||
+                                          $event.altKey ||
+                                          $event.metaKey
+                                        ) {
+                                          return null
+                                        }
+                                        return _vm.onChanging($event)
+                                      },
+                                      change: function($event) {
+                                        var $$selectedVal = Array.prototype.filter
+                                          .call($event.target.options, function(
+                                            o
+                                          ) {
+                                            return o.selected
+                                          })
+                                          .map(function(o) {
+                                            var val =
+                                              "_value" in o ? o._value : o.value
+                                            return val
+                                          })
+                                        _vm.Multiyrvalue = $event.target
+                                          .multiple
+                                          ? $$selectedVal
+                                          : $$selectedVal[0]
+                                      }
+                                    }
+                                  },
+                                  _vm._l(_vm.years, function(year) {
+                                    return _c(
+                                      "option",
+                                      { key: year, domProps: { value: year } },
+                                      [_vm._v(_vm._s(year))]
+                                    )
+                                  }),
+                                  0
+                                )
+                              ]
+                            )
+                          ])
+                        ],
+                        1
+                      )
                     ])
                   ],
                   1
@@ -2085,140 +2114,27 @@ var render = function() {
                   { staticClass: "subhead" },
                   [
                     _c("v-toolbar", { attrs: { color: "#f2f2f2", dark: "" } }, [
-                      _c("div", { staticClass: "row insideToolbar" }, [
-                        _c(
-                          "div",
-                          { staticClass: "col-sm-4" },
-                          [
-                            _c(
-                              "v-toolbar-title",
-                              { staticClass: "graphTitle" },
-                              [_vm._v("Product Sales")]
-                            )
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-sm-4" }, [
-                          _c("div", { staticClass: "form-group filter" }, [
-                            _c(
-                              "select",
-                              {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.thefilter2,
-                                    expression: "thefilter2"
-                                  }
-                                ],
-                                staticClass: "form-control",
-                                attrs: { name: "filter", id: "filters" },
-                                on: {
-                                  change: [
-                                    function($event) {
-                                      var $$selectedVal = Array.prototype.filter
-                                        .call($event.target.options, function(
-                                          o
-                                        ) {
-                                          return o.selected
-                                        })
-                                        .map(function(o) {
-                                          var val =
-                                            "_value" in o ? o._value : o.value
-                                          return val
-                                        })
-                                      _vm.thefilter2 = $event.target.multiple
-                                        ? $$selectedVal
-                                        : $$selectedVal[0]
-                                    },
-                                    _vm.onFilter2
-                                  ]
-                                }
-                              },
-                              [
-                                _c("option", { attrs: { value: "Daily" } }, [
-                                  _vm._v("Daily")
-                                ]),
-                                _vm._v(" "),
-                                _c("option", { attrs: { value: "Monthly" } }, [
-                                  _vm._v("Monthly")
-                                ]),
-                                _vm._v(" "),
-                                _c(
-                                  "option",
-                                  { attrs: { value: "Quarterly" } },
-                                  [_vm._v("Quarterly")]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "option",
-                                  { attrs: { value: "Semi-Annual" } },
-                                  [_vm._v("Semi-Annual")]
-                                ),
-                                _vm._v(" "),
-                                _c("option", { attrs: { value: "Annual" } }, [
-                                  _vm._v("Annual")
-                                ])
-                              ]
-                            )
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-sm-4" }, [
+                      _c(
+                        "div",
+                        { staticClass: "row insideToolbar" },
+                        [
                           _c(
                             "div",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: _vm.ok,
-                                  expression: "ok"
-                                }
-                              ],
-                              staticClass: "form-group firstOpt"
-                            },
+                            { staticClass: "col-xs-2" },
                             [
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.thedate2,
-                                    expression: "thedate2"
-                                  }
-                                ],
-                                staticClass: "form-control",
-                                attrs: { type: "month", id: "calendar" },
-                                domProps: { value: _vm.thedate2 },
-                                on: {
-                                  change: _vm.onChangeDatePS,
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.thedate2 = $event.target.value
-                                  }
-                                }
-                              })
-                            ]
+                              _c(
+                                "v-toolbar-title",
+                                { staticClass: "graphTitle" },
+                                [_vm._v("Product Sales")]
+                              )
+                            ],
+                            1
                           ),
                           _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: _vm.ok2,
-                                  expression: "ok2"
-                                }
-                              ],
-                              staticClass: "form-group secondOpt"
-                            },
-                            [
+                          _c("v-spacer"),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-xs-2" }, [
+                            _c("div", { staticClass: "form-group filter" }, [
                               _c(
                                 "select",
                                 {
@@ -2226,11 +2142,12 @@ var render = function() {
                                     {
                                       name: "model",
                                       rawName: "v-model",
-                                      value: _vm.yrvalueS,
-                                      expression: "yrvalueS"
+                                      value: _vm.thefilter2,
+                                      expression: "thefilter2"
                                     }
                                   ],
                                   staticClass: "form-control",
+                                  attrs: { name: "filter", id: "filters" },
                                   on: {
                                     change: [
                                       function($event) {
@@ -2245,98 +2162,223 @@ var render = function() {
                                               "_value" in o ? o._value : o.value
                                             return val
                                           })
-                                        _vm.yrvalueS = $event.target.multiple
+                                        _vm.thefilter2 = $event.target.multiple
                                           ? $$selectedVal
                                           : $$selectedVal[0]
                                       },
-                                      _vm.onChangeYear2
+                                      _vm.onFilter2
                                     ]
                                   }
                                 },
-                                _vm._l(_vm.years, function(year) {
-                                  return _c(
+                                [
+                                  _c("option", { attrs: { value: "Daily" } }, [
+                                    _vm._v("Daily")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
                                     "option",
-                                    { key: year, domProps: { value: year } },
-                                    [_vm._v(_vm._s(year))]
-                                  )
-                                }),
-                                0
+                                    { attrs: { value: "Monthly" } },
+                                    [_vm._v("Monthly")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "option",
+                                    { attrs: { value: "Quarterly" } },
+                                    [_vm._v("Quarterly")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "option",
+                                    { attrs: { value: "Semi-Annual" } },
+                                    [_vm._v("Semi-Annual")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("option", { attrs: { value: "Annual" } }, [
+                                    _vm._v("Annual")
+                                  ])
+                                ]
                               )
-                            ]
-                          ),
+                            ])
+                          ]),
                           _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: _vm.ok3,
-                                  expression: "ok3"
-                                }
-                              ],
-                              staticClass: "forannualInput"
-                            },
-                            [
-                              _c(
-                                "select",
-                                {
+                          _c("div", { staticClass: "col-xs-2 ccc" }, [
+                            _c(
+                              "div",
+                              {
+                                directives: [
+                                  {
+                                    name: "show",
+                                    rawName: "v-show",
+                                    value: _vm.ok,
+                                    expression: "ok"
+                                  }
+                                ],
+                                staticClass: "form-group"
+                              },
+                              [
+                                _c("input", {
                                   directives: [
                                     {
                                       name: "model",
                                       rawName: "v-model",
-                                      value: _vm.Multiyrvalue2,
-                                      expression: "Multiyrvalue2"
+                                      value: _vm.thedate2,
+                                      expression: "thedate2"
                                     }
                                   ],
-                                  staticClass: "form-control",
-                                  attrs: { multiple: "" },
+                                  staticClass: "form-control firstOpt",
+                                  attrs: { type: "month", id: "calendar" },
+                                  domProps: { value: _vm.thedate2 },
                                   on: {
-                                    click: function($event) {
-                                      if (!$event.ctrlKey) {
-                                        return null
+                                    change: _vm.onChangeDatePS,
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
                                       }
-                                      if (
-                                        $event.shiftKey ||
-                                        $event.altKey ||
-                                        $event.metaKey
-                                      ) {
-                                        return null
-                                      }
-                                      return _vm.onChanging2($event)
-                                    },
-                                    change: function($event) {
-                                      var $$selectedVal = Array.prototype.filter
-                                        .call($event.target.options, function(
-                                          o
-                                        ) {
-                                          return o.selected
-                                        })
-                                        .map(function(o) {
-                                          var val =
-                                            "_value" in o ? o._value : o.value
-                                          return val
-                                        })
-                                      _vm.Multiyrvalue2 = $event.target.multiple
-                                        ? $$selectedVal
-                                        : $$selectedVal[0]
+                                      _vm.thedate2 = $event.target.value
                                     }
                                   }
-                                },
-                                _vm._l(_vm.years, function(year) {
-                                  return _c(
-                                    "option",
-                                    { key: year, domProps: { value: year } },
-                                    [_vm._v(_vm._s(year))]
-                                  )
-                                }),
-                                0
-                              )
-                            ]
-                          )
-                        ])
-                      ])
+                                })
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                directives: [
+                                  {
+                                    name: "show",
+                                    rawName: "v-show",
+                                    value: _vm.ok2,
+                                    expression: "ok2"
+                                  }
+                                ],
+                                staticClass: "form-group secondOpt"
+                              },
+                              [
+                                _c(
+                                  "select",
+                                  {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.yrvalueS,
+                                        expression: "yrvalueS"
+                                      }
+                                    ],
+                                    staticClass: "form-control",
+                                    on: {
+                                      change: [
+                                        function($event) {
+                                          var $$selectedVal = Array.prototype.filter
+                                            .call(
+                                              $event.target.options,
+                                              function(o) {
+                                                return o.selected
+                                              }
+                                            )
+                                            .map(function(o) {
+                                              var val =
+                                                "_value" in o
+                                                  ? o._value
+                                                  : o.value
+                                              return val
+                                            })
+                                          _vm.yrvalueS = $event.target.multiple
+                                            ? $$selectedVal
+                                            : $$selectedVal[0]
+                                        },
+                                        _vm.onChangeYear2
+                                      ]
+                                    }
+                                  },
+                                  _vm._l(_vm.years, function(year) {
+                                    return _c(
+                                      "option",
+                                      { key: year, domProps: { value: year } },
+                                      [_vm._v(_vm._s(year))]
+                                    )
+                                  }),
+                                  0
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                directives: [
+                                  {
+                                    name: "show",
+                                    rawName: "v-show",
+                                    value: _vm.ok3,
+                                    expression: "ok3"
+                                  }
+                                ],
+                                staticClass: "forannualInput"
+                              },
+                              [
+                                _c(
+                                  "select",
+                                  {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.Multiyrvalue2,
+                                        expression: "Multiyrvalue2"
+                                      }
+                                    ],
+                                    staticClass: "form-control",
+                                    attrs: { multiple: "" },
+                                    on: {
+                                      click: function($event) {
+                                        if (!$event.ctrlKey) {
+                                          return null
+                                        }
+                                        if (
+                                          $event.shiftKey ||
+                                          $event.altKey ||
+                                          $event.metaKey
+                                        ) {
+                                          return null
+                                        }
+                                        return _vm.onChanging2($event)
+                                      },
+                                      change: function($event) {
+                                        var $$selectedVal = Array.prototype.filter
+                                          .call($event.target.options, function(
+                                            o
+                                          ) {
+                                            return o.selected
+                                          })
+                                          .map(function(o) {
+                                            var val =
+                                              "_value" in o ? o._value : o.value
+                                            return val
+                                          })
+                                        _vm.Multiyrvalue2 = $event.target
+                                          .multiple
+                                          ? $$selectedVal
+                                          : $$selectedVal[0]
+                                      }
+                                    }
+                                  },
+                                  _vm._l(_vm.years, function(year) {
+                                    return _c(
+                                      "option",
+                                      { key: year, domProps: { value: year } },
+                                      [_vm._v(_vm._s(year))]
+                                    )
+                                  }),
+                                  0
+                                )
+                              ]
+                            )
+                          ])
+                        ],
+                        1
+                      )
                     ])
                   ],
                   1
