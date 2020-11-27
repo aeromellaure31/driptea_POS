@@ -1,9 +1,9 @@
 export default {
     routes: [
         {
-            path: '/landing',
-            name: 'landing',
-            component: resolve => require(['@/js/basic/landing'], resolve),
+            path: '/forgotPass',
+            name: 'forgotPass',
+            component: resolve => require(['@/js/basic/login'], resolve),
             meta: {
                 tokenRequired: false
             }

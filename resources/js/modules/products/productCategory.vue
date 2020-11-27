@@ -1,19 +1,24 @@
 <template>
     <div class="sudlanan">
-         <div>
-         <v-btn icon style="margin-right: 1%;"  @click="previous()">
-            <v-icon >mdi-home</v-icon>
-        </v-btn>
-    </div>
+        <div>
+            <v-btn  style="margin-left: 3%;margin-top:10px" class= "warning" @click="previous()">
+                <v-icon >mdi-home</v-icon>&nbsp;&nbsp;Back
+            </v-btn>
+        </div>
         <div class="row firstRow">
             <div class="col-md-6">
                 <center>
                     <v-card class="ml-10">
                         <center>
-                            <div v-if="customerType === 'online' || customerType === 'fb'" >
-                                <p>Name: {{name}}</p><br>
-                                <p>Contact#: {{contact}}</p><br>
-                                <p>Address: {{address}}</p>
+                            <div class="row" style="margin-bottom: -10%" v-if="customerType === 'online' || customerType === 'fb'" >
+                                <div class="col-md-6" style="text-align: left">
+                                    <p style="margin-left: 2%; margin-top: 2%;">Name: {{name}}</p><br>
+                                    <p style="margin-left: 2%;">Address: {{address}}</p>
+                                </div>
+                                <div class="col-md-6" style="text-align: left">
+                                    <p style="margin-top: 2%;">Contact#: {{contact}}</p><br>
+                                    <p>Not Available: {{notAvailable}}</p>
+                                </div>
                             </div>
                             <img v-if="customerType === 'walkin'" style="width: 70px; height: 50px; border: solid 1px black" src="@/assets/walkin.jpg">
                             <img v-if="customerType === 'foodpanda'" style="width: 70px; height: 50px;" src="@/assets/foodpanda1.png">
@@ -49,10 +54,10 @@
                         <div class="row">
                             <div class="col-md-6"></div>
                             <div class="col-md-6 overline" style="text-align:left;">
-                                <p v-if="customerType === 'fb' || customerType === 'online'" style="display: inline;">Subtotal:&emsp;&emsp;&emsp;</p>
+                                <p v-if="customerType === 'fb' || customerType === 'online'" style="display: inline;">Subtotal:&emsp;&emsp;</p>
                                 <p v-if="customerType === 'fb' || customerType === 'online'" style="display: inline;">₱ {{getSubTotal()}}</p><br>
-                                <p v-if="customerType === 'fb' || customerType === 'online'" style="display: inline;">Delivery&nbsp;Fee:&emsp;</p>
-                                <input v-if="customerType === 'fb' || customerType === 'online'" style="display: inline;" type="number" placeholder="₱ 0.00" v-model="fee">
+                                <p v-if="customerType === 'fb' || customerType === 'online'" style="display: inline;">Del.&nbsp;Fee:&emsp;</p>
+                                <input disabled v-if="customerType === 'fb' || customerType === 'online'" style="display: inline;" type="text" placeholder="₱ 0.00" v-model="feeDeliver">
                                 <p style="display: inline;" class="pStyle">Total:&emsp;&emsp;&emsp;&emsp;</p>
                                 <p style="display: inline;" class="pStyle">₱ {{convertTotalPrice()}}</p><br>
                                 <p v-if="customerType !== 'fb'  && customerType !== 'online'" style="display: inline;" class="pStyle">Amount:&emsp;&emsp;&nbsp;&nbsp;&nbsp;</p>
@@ -175,7 +180,9 @@ export default {
             address: '',
             contact: '',
             addOnsData: [],
-            cupData: []
+            cupData: [],
+            notAvailable: null,
+            feeDeliver: 0
         }
     },
     components: {
@@ -287,8 +294,10 @@ export default {
                     if(res.data.status){
                         AUTH.deauthenticate()
                     }
+                    this.notAvailable = res.data.order[0].ifNotAvailable
                     this.tableData = res.data.order
                     this.fee = 50
+                    this.feeDeliver = "        ₱ " + parseInt(50).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
                 })
             }else{
                 let params = {

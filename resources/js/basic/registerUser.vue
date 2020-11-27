@@ -248,13 +248,13 @@
 .register {
   width: 50%;
 }
-// .container {
-//   border: orange solid 1px;
-//   margin-bottom: 2%;
-//   margin-top: 2%;
-//   width: 60%;
-//   background-color: white;
-// }
+.container {
+  border: orange solid 1px;
+  margin-bottom: 2%;
+  margin-top: 2%;
+  width: 60%;
+  background-color: white;
+}
 span {
   font-size: 12px;
 }

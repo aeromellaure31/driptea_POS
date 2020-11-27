@@ -2,20 +2,17 @@
   <v-card color="grey lighten-4" flat height="100%" max-width="100%">
     <center>
       <div class="row body">
+        <div class="col-sm-3"></div>
         <div class="col-sm-6">
           <center>
             <img class="logo" :src="image">
             <br>
-            <span class="quote">A better tea to share with everybody.</span>
+            <span class="quote">Your Daily Dose of Milktea.</span>
           </center>
-        </div>
-        <div class="col-sm-6">
-          <v-card class="mx-auto" max-width="400" height="450">
-            <div class="formGrp">
+          <v-card class="mx-auto" max-width="400">
               <center>
                 <div class="containerWidth">
                   <v-form ref="form" lazy-validation>
-                    <br>
                     <br>
                     <br>
                     <i>
@@ -63,7 +60,7 @@
                       ></v-text-field>
                     </v-row>
                     <v-btn type="button" class="btn btnRegister" @click="login" color="orange">Login</v-btn>
-                    <a href class="FP">Forgot Password</a>
+                    <i class="FP" @click="redirect()">Forgot Password</i>
                     <hr>
                     <center>
                       <v-btn
@@ -75,11 +72,11 @@
                       >Create New Account</v-btn>
                     </center>
                   </v-form>
-                </div>
+                </div><br>
               </center>
-            </div>
           </v-card>
         </div>
+        <div class="col-sm-3"></div>
       </div>
       <loading v-if="loadingShow"></loading>
     </center>
@@ -97,15 +94,15 @@
   font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 }
 .FP {
-  font-size: 13px;
+  font-style: italic;
+  font-size: 11px;
 }
 /* .whole {
   background-color: gray;
 } */
 .logo {
-  height: 60%;
-  width: 60%;
-  margin-top: 3%;
+  height: 30%;
+  width: 30%;
 }
 img {
   cursor: default;

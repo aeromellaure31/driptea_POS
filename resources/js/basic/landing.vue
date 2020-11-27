@@ -53,7 +53,7 @@
                   required
                   @click:append="show3 = !show3"
                 ></v-text-field>
-                <a href class="FP">Forgot Password</a><br />
+                <i><a class="FP" style="font-size: 13px" @click="redirect('/forgotPass')">Forgot Password</a></i><br />
                 <center>
                   <v-btn
                     type="button"

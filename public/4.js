@@ -267,6 +267,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -313,7 +329,10 @@ __webpack_require__.r(__webpack_exports__);
       errorMessage: null,
       errorMessage1: null,
       errorMessage2: null,
-      errorMessage3: null
+      errorMessage3: null,
+      name: null,
+      address: null,
+      contact: null
     };
   },
   components: {
@@ -325,10 +344,30 @@ __webpack_require__.r(__webpack_exports__);
     this.retrieveProduct();
     this.retrieveCupType();
     this.retrieveAddOns();
+    this.getDetails();
   },
   methods: {
-    modePayment: function modePayment() {
+    getDetails: function getDetails() {
       var _this = this;
+
+      this.loadingShow = true;
+      var params = {
+        uname: localStorage.getItem("customerId")
+      };
+      this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_3__["default"].url + "getUserData", params, _services_auth__WEBPACK_IMPORTED_MODULE_3__["default"].config).then(function (res) {
+        _this.loadingShow = false;
+
+        if (res.data.status) {
+          _services_auth__WEBPACK_IMPORTED_MODULE_3__["default"].deauthenticate();
+        }
+
+        _this.name = res.data.userdata[0].fname + ' ' + res.data.userdata[0].lname;
+        _this.contact = res.data.userdata[0].CN;
+        _this.address = res.data.userdata[0].address;
+      });
+    },
+    modePayment: function modePayment() {
+      var _this2 = this;
 
       if (this.payment === 'G-cash') {
         // swal("Oops!", "G-cash not available this time", "warning");
@@ -338,7 +377,7 @@ __webpack_require__.r(__webpack_exports__);
           icon: "warning",
           dangerMode: true
         }).then(function (willDelete) {
-          _this.payment = 'Cash on Delivery';
+          _this2.payment = 'Cash on Delivery';
         });
       }
     },
@@ -359,29 +398,29 @@ __webpack_require__.r(__webpack_exports__);
       _router__WEBPACK_IMPORTED_MODULE_4__["default"].push("/onlineDashboard")["catch"](function () {});
     },
     retrieveProduct: function retrieveProduct() {
-      var _this2 = this;
+      var _this3 = this;
 
       this.loadingShow = true;
       var params = {
         id: localStorage.getItem("customerId")
       };
       this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_3__["default"].url + "retrieveCustomerOrder", params, _services_auth__WEBPACK_IMPORTED_MODULE_3__["default"].config).then(function (res) {
-        _this2.loadingShow = false;
+        _this3.loadingShow = false;
 
         if (res.data.status) {
           _services_auth__WEBPACK_IMPORTED_MODULE_3__["default"].deauthenticate();
         }
 
-        _this2.tableData = res.data.order;
+        _this3.tableData = res.data.order;
       });
     },
     getAddOns: function getAddOns(item) {
-      var _this3 = this;
+      var _this4 = this;
 
       var storeAddOns = "";
       var index = item.length;
       item.forEach(function (el) {
-        _this3.addOnsData.forEach(function (e) {
+        _this4.addOnsData.forEach(function (e) {
           if (el.addOns === e.addons_name) {
             if (item.indexOf(el) >= index - 1) {
               storeAddOns += el.addOns + " (+" + e.onlineAddOnsPrice + ".00)";
@@ -394,7 +433,7 @@ __webpack_require__.r(__webpack_exports__);
       return storeAddOns;
     },
     deleteOrder: function deleteOrder(prodId) {
-      var _this4 = this;
+      var _this5 = this;
 
       sweetalert__WEBPACK_IMPORTED_MODULE_1___default()({
         title: "Are you sure you want to delete?",
@@ -404,19 +443,19 @@ __webpack_require__.r(__webpack_exports__);
         dangerMode: true
       }).then(function (willDelete) {
         if (willDelete) {
-          _this4.loadingShow = true;
+          _this5.loadingShow = true;
 
-          _this4.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_3__["default"].url + "deleteOrder", {
+          _this5.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_3__["default"].url + "deleteOrder", {
             id: prodId
           }, _services_auth__WEBPACK_IMPORTED_MODULE_3__["default"].config).then(function (res) {
-            _this4.loadingShow = false;
+            _this5.loadingShow = false;
 
             if (res.data.status) {
               _services_auth__WEBPACK_IMPORTED_MODULE_3__["default"].deauthenticate();
             }
           });
 
-          _this4.retrieveProduct();
+          _this5.retrieveProduct();
 
           sweetalert__WEBPACK_IMPORTED_MODULE_1___default()("Your order is succssfully deleted!", {
             icon: "success"
@@ -427,7 +466,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     updateCustomerOrder: function updateCustomerOrder() {
-      var _this5 = this;
+      var _this6 = this;
 
       if (this.quantity <= 0) {
         this.errorMessage3 = 'quantity must be greater than 0!';
@@ -466,13 +505,13 @@ __webpack_require__.r(__webpack_exports__);
           choosenPrice: this.basePrice
         };
         this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_3__["default"].url + "updateCustomerOrder", param, _services_auth__WEBPACK_IMPORTED_MODULE_3__["default"].config).then(function (res) {
-          _this5.loadingShow = false;
+          _this6.loadingShow = false;
 
           if (res.data.status) {
             _services_auth__WEBPACK_IMPORTED_MODULE_3__["default"].deauthenticate();
           }
 
-          _this5.retrieveProduct();
+          _this6.retrieveProduct();
 
           jquery__WEBPACK_IMPORTED_MODULE_0___default()("#myModal").modal("hide");
           sweetalert__WEBPACK_IMPORTED_MODULE_1___default()("Order Updated!", "Successfully", "success");
@@ -491,7 +530,7 @@ __webpack_require__.r(__webpack_exports__);
       this.priceShown = parseInt(this.quantity) * (parseInt(this.basePrice) + parseInt(this.totalAddOns) + parseInt(this.cupTypePrice));
     },
     getCupPrice: function getCupPrice() {
-      var _this6 = this;
+      var _this7 = this;
 
       this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_3__["default"].url + "retrieveOneCupType", {
         cupType: this.cupType
@@ -500,40 +539,40 @@ __webpack_require__.r(__webpack_exports__);
           _services_auth__WEBPACK_IMPORTED_MODULE_3__["default"].deauthenticate();
         }
 
-        _this6.cupTypePrice = parseInt(res.data.cupType[0].inputCupOnlinePrice);
-        _this6.priceShown = parseInt(_this6.quantity) * (parseInt(_this6.basePrice) + parseInt(_this6.totalAddOns) + parseInt(_this6.cupTypePrice));
+        _this7.cupTypePrice = parseInt(res.data.cupType[0].inputCupOnlinePrice);
+        _this7.priceShown = parseInt(_this7.quantity) * (parseInt(_this7.basePrice) + parseInt(_this7.totalAddOns) + parseInt(_this7.cupTypePrice));
       });
     },
     getQuantity: function getQuantity() {
       this.priceShown = parseInt(this.quantity) * (parseInt(this.basePrice) + parseInt(this.totalAddOns) + parseInt(this.cupTypePrice));
     },
     retrieveCupType: function retrieveCupType() {
-      var _this7 = this;
+      var _this8 = this;
 
       this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_3__["default"].url + "retrieveCupType", {}, _services_auth__WEBPACK_IMPORTED_MODULE_3__["default"].config).then(function (response) {
         if (response.data.status) {
           _services_auth__WEBPACK_IMPORTED_MODULE_3__["default"].deauthenticate();
         }
 
-        _this7.cupData = response.data.cupType;
+        _this8.cupData = response.data.cupType;
       });
     },
     retrieveAddOns: function retrieveAddOns() {
-      var _this8 = this;
+      var _this9 = this;
 
       this.loadingShow = true;
       this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_3__["default"].url + "retrievingAddOns", {}, _services_auth__WEBPACK_IMPORTED_MODULE_3__["default"].config).then(function (response) {
-        _this8.loadingShow = false;
+        _this9.loadingShow = false;
 
         if (response.data.status) {
           _services_auth__WEBPACK_IMPORTED_MODULE_3__["default"].deauthenticate();
         }
 
-        _this8.addOnsData = response.data.addons;
+        _this9.addOnsData = response.data.addons;
       });
     },
     retrieveCategory: function retrieveCategory() {
-      var _this9 = this;
+      var _this10 = this;
 
       this.loadingShow = true;
       this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_3__["default"].url + "retrieveCategoryAscending", {}, _services_auth__WEBPACK_IMPORTED_MODULE_3__["default"].config).then(function (res) {
@@ -541,15 +580,15 @@ __webpack_require__.r(__webpack_exports__);
           _services_auth__WEBPACK_IMPORTED_MODULE_3__["default"].deauthenticate();
         }
 
-        _this9.data = res.data.addCategory;
-        _this9.loadingShow = false;
+        _this10.data = res.data.addCategory;
+        _this10.loadingShow = false;
       });
     },
     redirect: function redirect(param) {
       _router__WEBPACK_IMPORTED_MODULE_4__["default"].push("/productOnline/" + param)["catch"](function () {});
     },
     addTotalPrice: function addTotalPrice(item, event) {
-      var _this10 = this;
+      var _this11 = this;
 
       this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_3__["default"].url + "retrieveOneAddOn", {
         id: item.id
@@ -558,19 +597,19 @@ __webpack_require__.r(__webpack_exports__);
           _services_auth__WEBPACK_IMPORTED_MODULE_3__["default"].deauthenticate();
         }
 
-        _this10.addOnsPrice = response.data.addons.onlineAddOnsPrice;
+        _this11.addOnsPrice = response.data.addons.onlineAddOnsPrice;
 
         if (event.target.checked) {
-          _this10.totalAddOns += parseInt(_this10.addOnsPrice);
+          _this11.totalAddOns += parseInt(_this11.addOnsPrice);
         } else {
-          _this10.totalAddOns -= parseInt(_this10.addOnsPrice);
+          _this11.totalAddOns -= parseInt(_this11.addOnsPrice);
         }
 
-        _this10.priceShown = parseInt(_this10.quantity) * (parseInt(_this10.basePrice) + parseInt(_this10.totalAddOns) + parseInt(_this10.cupTypePrice));
+        _this11.priceShown = parseInt(_this11.quantity) * (parseInt(_this11.basePrice) + parseInt(_this11.totalAddOns) + parseInt(_this11.cupTypePrice));
       });
     },
     showModal: function showModal(item) {
-      var _this11 = this;
+      var _this12 = this;
 
       this.totalAddOns = 0;
       this.size = item.size;
@@ -578,11 +617,11 @@ __webpack_require__.r(__webpack_exports__);
       this.cupType = item.cupType;
       this.addOns = [];
       item.same_order.forEach(function (el) {
-        _this11.addOns.push(el.addOns);
+        _this12.addOns.push(el.addOns);
 
-        _this11.addOnsData.forEach(function (e) {
+        _this12.addOnsData.forEach(function (e) {
           if (el.addOns === e.addons_name) {
-            _this11.totalAddOns += parseInt(e.onlineAddOnsPrice);
+            _this12.totalAddOns += parseInt(e.onlineAddOnsPrice);
           }
         });
       });
@@ -592,7 +631,7 @@ __webpack_require__.r(__webpack_exports__);
       this.cupTypePrice = 0;
       this.cupData.forEach(function (el) {
         if (el.cupTypeName === item.cupType) {
-          _this11.cupTypePrice = parseInt(el.inputCupOnlinePrice);
+          _this12.cupTypePrice = parseInt(el.inputCupOnlinePrice);
         }
       });
       this.price = parseInt(item.order_product[0].onlinelowPrice);
@@ -605,7 +644,7 @@ __webpack_require__.r(__webpack_exports__);
       this.getSizePrice();
     },
     orderNow: function orderNow() {
-      var _this12 = this;
+      var _this13 = this;
 
       if (this.payment !== null) {
         var params = {
@@ -621,7 +660,7 @@ __webpack_require__.r(__webpack_exports__);
 
           sweetalert__WEBPACK_IMPORTED_MODULE_1___default()("Order Successfully!", "Processing .........", "success");
 
-          _this12.retrieveProduct();
+          _this13.retrieveProduct();
 
           localStorage.removeItem("customerOnlineId");
         });
@@ -818,6 +857,62 @@ var render = function() {
             "v-container",
             { attrs: { fluid: "" } },
             [
+              _c("div", { staticClass: "row px-3" }, [
+                _c(
+                  "div",
+                  { staticClass: "col-md-4" },
+                  [
+                    _c(
+                      "center",
+                      [
+                        _c("v-icon", { attrs: { color: "black darken-2" } }, [
+                          _vm._v("mdi-account")
+                        ]),
+                        _c("p", [_vm._v("Name: " + _vm._s(_vm.name))])
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "col-md-4" },
+                  [
+                    _c(
+                      "center",
+                      [
+                        _c("v-icon", { attrs: { color: "black darken-2" } }, [
+                          _vm._v("mdi-google-maps")
+                        ]),
+                        _c("p", [_vm._v("Address: " + _vm._s(_vm.address))])
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "col-md-4" },
+                  [
+                    _c(
+                      "center",
+                      [
+                        _c("v-icon", { attrs: { color: "black darken-2" } }, [
+                          _vm._v("mdi-contacts")
+                        ]),
+                        _c("p", [_vm._v("Contact#: " + _vm._s(_vm.contact))])
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ]),
+              _vm._v(" "),
               _c("center", [
                 _vm.tableData !== null && _vm.tableData.length > 0
                   ? _c(
@@ -994,6 +1089,7 @@ var render = function() {
                       1
                     )
                   : _vm._e(),
+                _c("br"),
                 _vm._v(" "),
                 _vm.tableData !== null && _vm.tableData.length > 0
                   ? _c("div", [
@@ -1550,38 +1646,6 @@ var render = function() {
                       _c("b", [_vm._v(" ₱" + _vm._s(_vm.priceShown) + ".00")])
                     ]
                   )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "modal-footer" },
-                [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-danger",
-                      attrs: { type: "button", "data-dismiss": "modal" }
-                    },
-                    [_vm._v("Cancel")]
-                  ),
-                  _vm._v(" "),
-                  _c("center", [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-success btnRegister",
-                        attrs: { type: "submit" },
-                        on: {
-                          click: function($event) {
-                            return _vm.updateCustomerOrder()
-                          }
-                        }
-                      },
-                      [_vm._v("Save Change")]
-                    )
-                  ])
                 ],
                 1
               )

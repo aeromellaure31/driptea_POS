@@ -2,7 +2,24 @@
   <div class="container">
      <v-card mb="20px" class="mt-10">
        <v-container fluid>
-            <center>
+        <div class="row px-3">
+            <div class="col-md-4">
+              <center>
+                <v-icon color="black darken-2">mdi-account</v-icon><p>Name: {{name}}</p>
+              </center>
+            </div>
+            <div class="col-md-4">
+              <center>
+                <v-icon color="black darken-2">mdi-google-maps</v-icon><p>Address: {{address}}</p>
+              </center>
+            </div>
+            <div class="col-md-4">
+              <center>
+                <v-icon color="black darken-2">mdi-contacts</v-icon><p>Contact#: {{contact}}</p>
+              </center>
+            </div>
+        </div>
+        <center>
          <div v-if="tableData !== null && tableData.length > 0">
            <v-simple-table :items-per-page="5" class="elevation-3">
              <template v-slot:top>
@@ -54,7 +71,7 @@
              </tbody>
              <template></template>
            </v-simple-table>
-         </div>
+         </div><br>
           <div v-if="tableData !== null && tableData.length > 0">
              <div class="row">
                 <div class="col-md-4"></div>
@@ -172,13 +189,12 @@
                             </div>
                         </center>
                         <br>
-                           <p style="float:right;margin-right:5%">TOTAL: <b> ₱{{priceShown}}.00</b></p> 
-
+                           <p style="float:right;margin-right:5%">TOTAL: <b> ₱{{priceShown}}.00</b></p>
                     </div>
-                    <div class="modal-footer">
+                    <!-- <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal" >Cancel</button>
                         <center><button type="submit" class="btn btn-success btnRegister" @click="updateCustomerOrder()">Save Change</button></center>                        
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -246,6 +262,9 @@ export default {
       errorMessage1: null,
       errorMessage2: null,
       errorMessage3: null,
+      name: null,
+      address: null,
+      contact: null
     };
   },
   components: {
@@ -257,8 +276,26 @@ export default {
     this.retrieveProduct();
     this.retrieveCupType();
     this.retrieveAddOns();
+    this.getDetails();
   },
   methods: {
+    getDetails(){
+      this.loadingShow = true;
+      let params = {
+        uname: localStorage.getItem("customerId")
+      };
+      this.$axios
+        .post(AUTH.url + "getUserData", params, AUTH.config)
+        .then(res => {
+          this.loadingShow = false;
+          if (res.data.status) {
+            AUTH.deauthenticate();
+          }
+          this.name = res.data.userdata[0].fname + ' ' + res.data.userdata[0].lname
+          this.contact = res.data.userdata[0].CN
+          this.address = res.data.userdata[0].address
+        });
+    },
     modePayment(){
       if(this.payment === 'G-cash'){
         // swal("Oops!", "G-cash not available this time", "warning");

@@ -393,8 +393,20 @@ var render = function() {
                             }
                           }),
                           _vm._v(" "),
-                          _c("a", { staticClass: "FP", attrs: { href: "" } }, [
-                            _vm._v("Forgot Password")
+                          _c("i", [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "FP",
+                                staticStyle: { "font-size": "13px" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.redirect("/forgotPass")
+                                  }
+                                }
+                              },
+                              [_vm._v("Forgot Password")]
+                            )
                           ]),
                           _c("br"),
                           _vm._v(" "),

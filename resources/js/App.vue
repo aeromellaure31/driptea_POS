@@ -46,6 +46,7 @@
               </v-btn>
             </template>
             <v-list
+              v-if="storeOrder.length > 0"
               style="max-height: 300px; max-width: 300px"
               class="overflow-y-auto notifDropdown"
             >
@@ -55,6 +56,15 @@
                 @click="getOrder(item, $event)"
               >
                 <v-list-item-title>{{notif(item)}}</v-list-item-title>
+              </v-list-item>
+            </v-list>
+            <v-list
+              v-if="storeOrder.length <= 0"
+              style="max-height: 300px; max-width: 300px"
+              class="overflow-y-auto notifDropdown"
+            >
+              <v-list-item>
+                <v-list-item-title>- - - - No Order - - - -</v-list-item-title>
               </v-list-item>
             </v-list>
           </v-menu>
@@ -108,6 +118,7 @@
               </v-btn>
             </template>
             <v-list
+              v-if="storeOrder.length > 0"
               style="max-height: 300px; max-width: 300px"
               class="overflow-y-auto notifDropdown"
             >
@@ -117,6 +128,15 @@
                 @click="getOrder(item, $event)"
               >
                 <v-list-item-title>{{notif(item)}}</v-list-item-title>
+              </v-list-item>
+            </v-list>
+            <v-list
+              v-if="storeOrder.length <= 0"
+              style="max-height: 300px; max-width: 300px"
+              class="overflow-y-auto notifDropdown"
+            >
+              <v-list-item>
+                <v-list-item-title>- - - - No Order - - - -</v-list-item-title>
               </v-list-item>
             </v-list>
           </v-menu>
@@ -357,6 +377,7 @@ export default {
     pusher.logToConsole = true;
 
     channel.bind("driptea-data", data => {
+      console.log('bolbol ate jess', data)
       if (data.order === "pendingCustomer") {
         // this.playSound('file://resources/audio/notify.mp3')
         this.playSound(
