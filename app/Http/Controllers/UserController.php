@@ -10,10 +10,46 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Support\Facades\DB;
 use App\Events\pusherEvent;
 use Illuminate\Support\Facades\Storage;
-// use JD\Cloudder\Facades\Cloudder;
+use App\Mail\MailViewController;
+use Illuminate\Support\Facades\Mail;
+use Config;
+use Swift_SmtpTransport;
+use Swift_Mailer;
+use Swift_message;
+use App\ResetPassword;
 
 class UserController extends Controller
 {
+    public function sendCode(Request $request){
+        $data = null;
+        $account = User::where('email', $request->email)->get();
+        if(count($account) != 0) {
+            $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            $pin = mt_rand(1000000, 9999999)
+                . mt_rand(1000000, 9999999)
+                . $characters[rand(0, strlen($characters) - 1)];
+            $code = str_shuffle($pin);
+            $emailTo = $request->email;
+            $message = "Hi, ".$account[0]->firstname. " ".$account[0]->lastname.". Your code is ".$code.".";
+            $subject = 'Driptea Verification Code';
+
+            // $reset = new ResetPassword;
+            // $reset->email = $request->get('email');
+            // $reset->code = $code;
+            // $reset->save();
+            
+            $data['status'] =  "true";
+            // $data['id'] = $reset->id;
+            $data['email'] = $request->get('email');
+            $data['code'] = $code;
+            Mail::to($emailTo)
+                ->send(new MailViewController($message, $emailTo, $subject));
+            return response()->json(compact('data'));
+        } else {
+            return $data['status'] =  "false";
+        }
+    }
+
     public function updateImage(Request $request){
         $user = User::firstOrCreate(['id' => $request->id]);
         // $imageName = time().'.'.$request->image->getClientOriginalExtension();
@@ -68,11 +104,8 @@ class UserController extends Controller
             if ($validate->fails()) {
                 return response()->json($validate->errors()->toJson(), 301);
             }
-        }else {
-            $userdata = DB::table('users')->where('id', $request->ID)->update([$request->col => $request->data]);
         }
-        // return $this->userdata($request);
-        // $this.userdata();
+        $userdata = DB::table('users')->where('id', $request->ID)->update([$request->col => $request->data]);
     }
 
     public function retrieve(Request $request){

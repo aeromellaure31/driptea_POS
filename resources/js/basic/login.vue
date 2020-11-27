@@ -10,40 +10,89 @@
             <span class="quote">Your Daily Dose of Milktea.</span>
           </center>
           <v-card class="mx-auto" max-width="400">
+              <i>
+                <span
+                  v-if="errorMessage4 !== null"
+                  class="text-danger text-center"
+                >{{errorMessage4}}</span>
+              </i>
               <center>
-                <div class="containerWidth">
+                <div v-if="confirmEmail" class="containerWidth">
                   <v-form ref="form" lazy-validation>
-                    <br>
-                    <br>
+                    <br><br>
                     <i>
                       <span
                         v-if="errorMessage !== null"
                         class="text-danger text-center"
                       >{{errorMessage}}</span>
                     </i>
+                    <v-row>
+                      <v-text-field
+                        color="orange"
+                        label="Emai Address*"
+                        outlined
+                        v-model="email"
+                        v-on:keyup="validate('email')"
+                        type="text"
+                        required
+                      ></v-text-field>
+                    </v-row>
+                    <v-btn type="button" class="btn btnRegister" color="orange" @click="sendCode()">Continue</v-btn>
+                  </v-form>
+                </div>
+                <div v-if="verify" class="containerWidth">
+                  <v-form ref="form" lazy-validation>
+                    <br><br>
+                    <i>
+                      <span
+                        v-if="errorMessage5 !== null"
+                        class="text-danger text-center"
+                      >{{errorMessage5}}</span>
+                    </i>
+                    <v-row>
+                      <v-text-field
+                        color="orange"
+                        label="Verification Code*"
+                        outlined
+                        v-model="code"
+                        type="text"
+                        required
+                      ></v-text-field>
+                    </v-row>
+                    <v-btn type="button" class="btn btnRegister" color="orange" @click="VerifyCode()">Verify</v-btn>
+                  </v-form>
+                </div>
+                <div v-if="confirmShow" class="containerWidth">
+                  <v-form ref="form" lazy-validation>
+                    <br><br>
+                    <i>
+                      <span
+                        v-if="errorMessage !== null"
+                        class="text-danger text-center"
+                      >{{errorMessage}}</span>
+                    </i>
+                    <v-row>
+                      <v-text-field
+                        color="orange"
+                        label="Email Address*"
+                        outlined
+                        v-model="email"
+                        v-on:keyup="validate('email')"
+                        type="text"
+                        required
+                      ></v-text-field>
+                    </v-row>
                     <i>
                       <span
                         v-if="errorMessage2 !== null"
                         class="text-danger text-center"
                       >{{errorMessage2}}</span>
                     </i>
-                    <v-row>
-                      <v-text-field
-                        color="orange"
-                        label="Username*"
-                        outlined
-                        v-model="userName"
-                        v-on:keyup="validate('userName')"
-                        type="text"
-                        id="userName"
-                        required
-                      ></v-text-field>
-                    </v-row>
                     <i>
                       <span
-                        v-if="errorMessage3 !== null"
-                        class="text-danger text-center"
-                      >{{errorMessage3}}</span>
+                        v-if="successMessage !== null"
+                        class="text-success text-center"
+                      >{{successMessage}}</span>
                     </i>
                     <v-row>
                       <v-text-field
@@ -59,21 +108,31 @@
                         @click:append="show3 = !show3"
                       ></v-text-field>
                     </v-row>
-                    <v-btn type="button" class="btn btnRegister" @click="login" color="orange">Login</v-btn>
-                    <i class="FP" @click="redirect()">Forgot Password</i>
-                    <hr>
-                    <center>
-                      <v-btn
-                        type="button"
-                        class="ma-2"
-                        outlined
+                    <i>
+                      <span
+                        v-if="errorMessage3 !== null"
+                        class="text-danger text-center"
+                      >{{errorMessage3}}</span>
+                    </i>
+                    <v-row>
+                      <v-text-field
                         color="orange"
-                        @click="redirect('/register')"
-                      >Create New Account</v-btn>
-                    </center>
+                        label="Confirm password*"
+                        outlined
+                        v-model="confirmPass"
+                        v-on:keyup="validate('confirmPass')"
+                        :append-icon="show4 ? 'visibility' : 'visibility_off'"
+                        :type="show4 ? 'text' : 'password'"
+                        id="confirm_password"
+                        required
+                        @click:append="show4 = !show4"
+                      ></v-text-field>
+                    </v-row>
+                    <v-btn type="button" class="btn btnRegister" color="orange">Continue</v-btn>
                   </v-form>
-                </div><br>
-              </center>
+                </div>
+                <i v-if="verify"><a class="FP" @click="redirect('/login')">Resend Code</a></i>
+              </center><br>
           </v-card>
         </div>
         <div class="col-sm-3"></div>
@@ -95,7 +154,7 @@
 }
 .FP {
   font-style: italic;
-  font-size: 11px;
+  font-size: 15px;
 }
 /* .whole {
   background-color: gray;
@@ -159,13 +218,22 @@ export default {
   data() {
     return {
       show3: false,
+      show4: false,
       image: image,
       userName: "",
+      email: '',
       password: "",
+      confirmPass: "",
+      code: '',
       errorMessage: null,
       errorMessage2: null,
       errorMessage3: null,
-      loadingShow: false
+      errorMessage4: null,
+      successMessage: null,
+      loadingShow: false,
+      confirmShow: false,
+      confirmEmail: true,
+      verify: false,
     };
   },
   mounted() {},
@@ -176,62 +244,75 @@ export default {
     redirect(route) {
       ROUTER.push(route).catch(() => {});
     },
-    login(e) {
-      e.preventDefault()
-      this.loadingShow = true;
-      this.validate("userName");
-      this.validate("password");
-      let parameter = {
-        name: this.userName,
-        password: this.password
-      };
-      if (this.userName === "" && this.password === "") {
-        this.errorMessage = "Please fill in all required fields";
-        this.loadingShow = false
-      } else {
-        this.authenticate(this.userName, this.password);
-        this.loadingShow = false
-      }
-    },
-    authenticate(name, password) {
-      this.loadingShow = true;
-      let credentials = {
-        name: name,
-        password: password
-      };
-      this.$axios
-        .post(AUTH.url + "login", credentials)
-        .then(response => {
-          AUTH.setToken(response.data.token);
-          AUTH.authenticateForAll();
-          this.loadingShow = false;
-        })
-        .catch(err => {
-          if (err.response.status === 400) {
-            this.errorMessage = "Invalid credentials!";
-          }
-          this.loadingShow = false;
+    sendCode(){
+      if(this.errorMessage === null && this.email !== ''){
+        this.loadingShow = true;
+        let params = {
+          email: this.email
+        }
+        this.$axios
+          .post(AUTH.url + "sendCode", params)
+          .then(res => {
+            this.loadingShow = false;
+            console.log('success', res)
         });
+      }else{
+         this.errorMessage = "Please input your email address"
+      }
     },
     validate(input) {
       this.successMessage = null;
-      if (input === "userName") {
-        this.errorMessage2 = null;
-        if (this.userName === "") {
-          this.errorMessage2 = "Username is required.";
+      let reqWhiteSpace = /\d/;
+      let specialChar = /^[A-Za-z0-9 ]+$/;
+      if (input === "email") {
+        this.errorMessage = null;
+        if (this.validateEmail(this.email) === false) {
+          this.errorMessage = "You have entered an invalid email address.";
         } else {
-          this.errorMessage2 = null;
+          this.errorMessage = null;
         }
       } else if (input === "password") {
+        this.errorMessage2 = null;
+        if (this.password.length < 8) {
+          this.errorMessage2 = "Password must be atleast 8 characters.";
+        } else if (
+          /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/.test(
+            this.password
+          )
+        ) {
+          this.successMessage = "Strong password.";
+          this.errorMessage2 = null;
+          this.errorMessage2 = null;
+        } else {
+          this.errorMessage2 =
+            "Password must be alphanumeric characters. It should contain 1 number, 1 special character and 1 capital letter.";
+        }
+      } else if (input === "confirmPass") {
         this.errorMessage3 = null;
-        if (this.password === "") {
-          this.errorMessage3 = "Password is required.";
+        this.successMessage = null;
+        if (this.password.localeCompare(this.confirmPass) !== 0) {
+          this.errorMessage3 = "Password did not match.";
         } else {
           this.errorMessage3 = null;
         }
+      } else if (
+        this.email !== null &&
+        this.password !== null &&
+        this.password.length >= 6 &&
+        this.password.localeCompare(this.confirmPass) === 0 &&
+        this.validateEmail(this.email) === true
+      ) {
+        this.errorMessage4 = null;
       } else {
-        this.errorMessage = null;
-        this.errorMessage = "Please fill in all required fields.";
+        this.errorMessage4 = "Please fill in all required fields.";
+      }
+    },
+    validateEmail(email) {
+      let reg = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+.[a-zA-Z0-9]*$/;
+      if (reg.test(email) === false) {
+        return false;
+      } else {
+        return true;
       }
     }
   }

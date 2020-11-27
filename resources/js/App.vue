@@ -317,12 +317,12 @@ export default {
         route: "/salesInventory"
       },
       {
-        icon: "mdi-calendar-account",
+        icon: "mdi-cart-minus",
         text: "Order Inventory",
         route: "/orderInventory"
       },
       {
-        icon: "mdi-calendar-account",
+        icon: "mdi-cart",
         text: "Customers' Orders",
         route: "/allOrder"
       },
