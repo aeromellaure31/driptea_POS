@@ -9,6 +9,14 @@ export default {
             }
         },
         {
+            path: '/verifyCode',
+            name: 'verifyCode',
+            component: resolve => require(['@/js/basic/forgotPass'], resolve),
+            meta: {
+                tokenRequired: false
+            }
+        },
+        {
             path: '/login',
             name: 'login',
             component: resolve => require(['@/js/basic/landing'], resolve),

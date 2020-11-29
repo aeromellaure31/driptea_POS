@@ -1,227 +1,229 @@
 <template>
   <v-img :src="require('@/assets/landing1.jpg')" style="width: 100%; height: 100%;">
     <div class="container">
-      <center>
-        <img style="height: 150px; margin-top: 1%;" :src="image" v-on:click="redirect('/')">
-        <p>
-          Register to
-          <b class="bRegister" @click="redirect('/')">Driptea</b>
-        </p>
-        <div>
-          <i>
-            <span v-if="errorMessage7 !== null" class="text-danger text-center">{{errorMessage7}}</span>
-          </i>
-        </div>
-      </center>
-      <center>
-        <div class="containerWidth">
-          <v-form>
-            <center>
-              <i>
-                <span
-                  v-if="errorMessage1 !== null"
-                  class="text-danger text-center"
-                >{{errorMessage1}}</span>
-              </i>
-              <i>
-                <span
-                  v-if="errorMessage2 !== null"
-                  class="text-danger text-center"
-                >{{errorMessage2}}</span>
-              </i>
+      <v-card class="mx-auto" width="400" max-height="2000">
+        <center>
+          <img style="height: 150px; margin-top: 1%;" :src="image" v-on:click="redirect('/')">
+          <p>
+            Register to
+            <b class="bRegister" @click="redirect('/')">Driptea</b>
+          </p>
+          <div>
+            <i>
+              <span v-if="errorMessage7 !== null" class="text-danger text-center">{{errorMessage7}}</span>
+            </i>
+          </div>
+        </center>
+        <center>
+          <div class="containerWidth">
+            <v-form>
+              <center>
+                <i>
+                  <span
+                    v-if="errorMessage1 !== null"
+                    class="text-danger text-center"
+                  >{{errorMessage1}}</span>
+                </i>
+                <i>
+                  <span
+                    v-if="errorMessage2 !== null"
+                    class="text-danger text-center"
+                  >{{errorMessage2}}</span>
+                </i>
 
-              <v-flex xs12 sm11>
-                <v-text-field
-                  color="orange"
-                  label="firstname"
-                  outlined
-                  v-model="firstname"
-                  v-on:keyup="validate('firstname')"
-                  type="text"
-                  id="firstname"
-                  required
-                ></v-text-field>
-              </v-flex>
+                <v-flex>
+                  <v-text-field
+                    color="orange"
+                    label="firstname"
+                    outlined
+                    v-model="firstname"
+                    v-on:keyup="validate('firstname')"
+                    type="text"
+                    id="firstname"
+                    required
+                  ></v-text-field>
+                </v-flex>
 
-              <i>
-                <span
-                  v-if="errorMessage12 !== null"
-                  class="text-danger text-center"
-                >{{errorMessage12}}</span>
-              </i>
-              <i>
-                <span
-                  v-if="errorMessage13 !== null"
-                  class="text-danger text-center"
-                >{{errorMessage13}}</span>
-              </i>
+                <i>
+                  <span
+                    v-if="errorMessage12 !== null"
+                    class="text-danger text-center"
+                  >{{errorMessage12}}</span>
+                </i>
+                <i>
+                  <span
+                    v-if="errorMessage13 !== null"
+                    class="text-danger text-center"
+                  >{{errorMessage13}}</span>
+                </i>
 
-              <v-flex xs12 sm11>
-                <v-text-field
-                  color="orange"
-                  label="lastname"
-                  outlined
-                  v-model="lastname"
-                  v-on:keyup="validate('lastname')"
-                  type="text"
-                  id="lastname"
-                  required
-                ></v-text-field>
-              </v-flex>
+                <v-flex>
+                  <v-text-field
+                    color="orange"
+                    label="lastname"
+                    outlined
+                    v-model="lastname"
+                    v-on:keyup="validate('lastname')"
+                    type="text"
+                    id="lastname"
+                    required
+                  ></v-text-field>
+                </v-flex>
 
-              <i>
-                <span
-                  v-if="errorMessage10 !== null"
-                  class="text-danger text-center"
-                >{{errorMessage10}}</span>
-              </i>
+                <i>
+                  <span
+                    v-if="errorMessage10 !== null"
+                    class="text-danger text-center"
+                  >{{errorMessage10}}</span>
+                </i>
 
-              <v-flex xs12 sm11>
-                <v-text-field
-                  color="orange"
-                  label="Address"
-                  outlined
-                  v-model="address"
-                  v-on:keyup="validate('address')"
-                  type="text"
-                  id="address"
-                  required
-                ></v-text-field>
-              </v-flex>
+                <v-flex>
+                  <v-text-field
+                    color="orange"
+                    label="Address"
+                    outlined
+                    v-model="address"
+                    v-on:keyup="validate('address')"
+                    type="text"
+                    id="address"
+                    required
+                  ></v-text-field>
+                </v-flex>
 
-              <i>
-                <span
-                  v-if="errorMessage8 !== null"
-                  class="text-danger text-center"
-                >{{errorMessage8}}</span>
-              </i>
-              <i>
-                <span
-                  v-if="errorMessage9 !== null"
-                  class="text-danger text-center"
-                >{{errorMessage9}}</span>
-              </i>
+                <i>
+                  <span
+                    v-if="errorMessage8 !== null"
+                    class="text-danger text-center"
+                  >{{errorMessage8}}</span>
+                </i>
+                <i>
+                  <span
+                    v-if="errorMessage9 !== null"
+                    class="text-danger text-center"
+                  >{{errorMessage9}}</span>
+                </i>
 
-              <v-flex xs12 sm11>
-                <v-text-field
-                  color="orange"
-                  label="Contact Number"
-                  outlined
-                  v-model="contactNum"
-                  v-on:keyup="validate('contact')"
-                  type="number"
-                  id="contactNum"
-                  required
-                ></v-text-field>
-              </v-flex>
+                <v-flex>
+                  <v-text-field
+                    color="orange"
+                    label="Contact Number"
+                    outlined
+                    v-model="contactNum"
+                    v-on:keyup="validate('contact')"
+                    type="number"
+                    id="contactNum"
+                    required
+                  ></v-text-field>
+                </v-flex>
 
-              <i>
+                <i>
+                  <span
+                    v-if="errorMessage14 !== null"
+                    class="text-danger text-center"
+                  >{{errorMessage14}}</span>
+                </i>
+                <i>
+                  <span
+                    v-if="errorMessage15 !== null"
+                    class="text-danger text-center"
+                  >{{errorMessage15}}</span>
+                </i>
+                <i>
+                  <span
+                    v-if="errorMessage16 !== null"
+                    class="text-danger text-center"
+                  >{{errorMessage16}}</span>
+                </i>
+                <v-flex>
+                  <v-text-field
+                    color="orange"
+                    label="username"
+                    outlined
+                    v-model="username"
+                    v-on:keyup="validate('username')"
+                    type="text"
+                    id="username"
+                    required
+                  ></v-text-field>
+                </v-flex>
+                <i>
+                  <span
+                    v-if="errorMessage3 !== null"
+                    class="text-danger text-center"
+                  >{{errorMessage3}}</span>
+                </i>
+                <v-flex>
+                  <v-text-field
+                    color="orange"
+                    label="email"
+                    outlined
+                    v-model="email"
+                    v-on:keyup="validate('email')"
+                    type="email"
+                    id="email"
+                    required
+                  ></v-text-field>
+                </v-flex>
                 <span
-                  v-if="errorMessage14 !== null"
-                  class="text-danger text-center"
-                >{{errorMessage14}}</span>
-              </i>
-              <i>
-                <span
-                  v-if="errorMessage15 !== null"
-                  class="text-danger text-center"
-                >{{errorMessage15}}</span>
-              </i>
-              <i>
-                <span
-                  v-if="errorMessage16 !== null"
-                  class="text-danger text-center"
-                >{{errorMessage16}}</span>
-              </i>
-              <v-flex xs12 sm11>
-                <v-text-field
-                  color="orange"
-                  label="username"
+                  v-if="successMessage !== null"
+                  class="text-success text-center"
+                >{{successMessage}}</span>
+                <i>
+                  <span
+                    v-if="errorMessage4 !== null"
+                    class="text-danger text-center"
+                  >{{errorMessage4}}</span>
+                </i>
+                <i>
+                  <span
+                    v-if="errorMessage5 !== null"
+                    class="text-danger text-center"
+                  >{{errorMessage5}}</span>
+                </i>
+                <v-flex>
+                  <v-text-field
+                    color="orange"
+                    :append-icon="show3 ? 'visibility' : 'visibility_off'"
+                    :type="show3 ? 'text' : 'password'"
+                    label="Password"
+                    outlined
+                    v-model="password"
+                    v-on:keyup="validate('password')"
+                    id="password"
+                    required
+                    @click:append="show3 = !show3"
+                  ></v-text-field>
+                </v-flex>
+                <i>
+                  <span
+                    v-if="errorMessage6 !== null"
+                    class="text-danger text-center"
+                  >{{errorMessage6}}</span>
+                </i>
+                <v-flex>
+                  <v-text-field
+                    color="orange"
+                    label="Confirm Password"
+                    outlined
+                    v-model="confirmPass"
+                    v-on:keyup="validate('confirmPass')"
+                    :append-icon="show4 ? 'visibility' : 'visibility_off'"
+                    :type="show4 ? 'text' : 'password'"
+                    id="confirmPassword"
+                    required
+                    @click:append="show4 = !show4"
+                  ></v-text-field>
+                </v-flex>
+                <v-btn
+                  type="button"
                   outlined
-                  v-model="username"
-                  v-on:keyup="validate('username')"
-                  type="text"
-                  id="username"
-                  required
-                ></v-text-field>
-              </v-flex>
-              <i>
-                <span
-                  v-if="errorMessage3 !== null"
-                  class="text-danger text-center"
-                >{{errorMessage3}}</span>
-              </i>
-              <v-flex xs12 sm11>
-                <v-text-field
                   color="orange"
-                  label="email"
-                  outlined
-                  v-model="email"
-                  v-on:keyup="validate('email')"
-                  type="email"
-                  id="email"
-                  required
-                ></v-text-field>
-              </v-flex>
-              <span
-                v-if="successMessage !== null"
-                class="text-success text-center"
-              >{{successMessage}}</span>
-              <i>
-                <span
-                  v-if="errorMessage4 !== null"
-                  class="text-danger text-center"
-                >{{errorMessage4}}</span>
-              </i>
-              <i>
-                <span
-                  v-if="errorMessage5 !== null"
-                  class="text-danger text-center"
-                >{{errorMessage5}}</span>
-              </i>
-              <v-flex xs12 sm11>
-                <v-text-field
-                  color="orange"
-                  :append-icon="show3 ? 'visibility' : 'visibility_off'"
-                  :type="show3 ? 'text' : 'password'"
-                  label="Password"
-                  outlined
-                  v-model="password"
-                  v-on:keyup="validate('password')"
-                  id="password"
-                  required
-                  @click:append="show3 = !show3"
-                ></v-text-field>
-              </v-flex>
-              <i>
-                <span
-                  v-if="errorMessage6 !== null"
-                  class="text-danger text-center"
-                >{{errorMessage6}}</span>
-              </i>
-              <v-flex xs12 sm11>
-                <v-text-field
-                  color="orange"
-                  label="Confirm Password"
-                  outlined
-                  v-model="confirmPass"
-                  v-on:keyup="validate('confirmPass')"
-                  :append-icon="show4 ? 'visibility' : 'visibility_off'"
-                  :type="show4 ? 'text' : 'password'"
-                  id="confirmPassword"
-                  required
-                  @click:append="show4 = !show4"
-                ></v-text-field>
-              </v-flex>
-              <v-btn
-                type="button"
-                outlined
-                color="orange"
-                @click="register"
-                class="btn register"
-              >Register</v-btn>
-            </center>
-          </v-form>
+                  @click="register"
+                  class="btn register"
+                >Register</v-btn>
+              </center>
+            </v-form>
+          </div>
           <div>
             <center>
               <label class="termsCondition">
@@ -236,38 +238,38 @@
               </label>
             </center>
           </div>
-        </div>
-      </center>
+        </center>
+      </v-card>
       <loading v-if="loadingShow"></loading>
     </div>
   </v-img>
 </template>
-<style lang="scss" scoped>
+<style scoped>
 .register {
   width: 50%;
 }
-.container {
+/* .container {
   border: orange solid 1px;
   margin-bottom: 2%;
   margin-top: 2%;
   width: 60%;
   background-color: white;
-}
+} */
 span {
   font-size: 12px;
 }
-// hr{
+/* // hr{
 //     border: 1px solid #17D817;
-// }
+// } */
 .termsCondition {
   margin-top: 6%;
   font-size: 15px;
   text-align: center;
 }
-.form-control {
-  border: 1px solid #17d817;
-  border-radius: 5px;
-}
+/* // .form-control {
+//   border: 1px solid #17d817;
+//   border-radius: 5px;
+// } */
 .bRegister {
   color: orange;
   cursor: pointer;
@@ -275,16 +277,18 @@ span {
 p {
   font-size: 20px;
 }
-.btnRegister {
-  margin-top: 2%;
-  margin-bottom: 2%;
-  background-color: #17d817;
-  font-weight: bold;
-  width: 100%;
-}
+/* // .btnRegister {
+//   margin-top: 2%;
+//   margin-bottom: 2%;
+//   background-color: #17d817;
+//   font-weight: bold;
+//   width: 100%;
+// } */
 .containerWidth {
+  width: 80%;
   text-align: left;
-  width: 50%;
+  margin-left: 5%;
+  margin-right: 5%;
 }
 </style>
 <script>

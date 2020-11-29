@@ -19,7 +19,7 @@ class adminSeeder extends Seeder
         User::create([
             'account_type' => 'Admin',
             'name' => 'laurex',
-            'email' => 'laurex@gmail.com',
+            'email' => 'aeromel.laure@student.passerellesnumeriques.org',
             'firstname' => 'Aero',
             'lastname' => 'Laure',
             'address' => 'Talamban',

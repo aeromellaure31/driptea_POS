@@ -264,6 +264,7 @@
                                 <v-row>
                                 <div class="form-group">
                                   <i><span class="errorColor" v-if="errorMessage8 !== null">{{errorMessage8}}</span></i>
+                                  <i><span class="errorColor">*Image size must not exceed 1MB</span></i>
                                   <center>
                                     <img class="addOnsImage" :src="imageURL"><br>
                                     <input type="file" class="fileStyle" v-on:change="onImageChange" required><br>
@@ -361,6 +362,7 @@
                             </div>
                             <div class="form-group">
                                 <i><span class="errorColor" v-if="errorMessage7 !== null">{{errorMessage7}}</span></i>
+                                <i><span class="errorColor">*Image size must not exceed 1MB</span></i>
                                 <center>
                                     <img class="addOnsImage" :src="imgURL"><br>
                                     <input type="file" class="fileStyle" v-on:change="onImgChange" required><br>
@@ -1173,10 +1175,10 @@ export default {
           }
           this.loadingShow = false
           swal({
-              title: "Congrats!",
-              text: "You have successfully added cups!",
-              icon: "success"
-            });
+            title: "Congrats!",
+            text: "You have successfully added cups!",
+            icon: "success"
+          });
           this.retrieveCupSize();
           this.hide();
         });

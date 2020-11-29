@@ -708,6 +708,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 
@@ -2966,6 +2968,18 @@ var render = function() {
                                           : _vm._e()
                                       ]),
                                       _vm._v(" "),
+                                      _c("i", [
+                                        _c(
+                                          "span",
+                                          { staticClass: "errorColor" },
+                                          [
+                                            _vm._v(
+                                              "*Image size must not exceed 1MB"
+                                            )
+                                          ]
+                                        )
+                                      ]),
+                                      _vm._v(" "),
                                       _c("center", [
                                         _c("img", {
                                           staticClass: "addOnsImage",
@@ -3551,6 +3565,18 @@ var render = function() {
                                             [_vm._v(_vm._s(_vm.errorMessage7))]
                                           )
                                         : _vm._e()
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("i", [
+                                      _c(
+                                        "span",
+                                        { staticClass: "errorColor" },
+                                        [
+                                          _vm._v(
+                                            "*Image size must not exceed 1MB"
+                                          )
+                                        ]
+                                      )
                                     ]),
                                     _vm._v(" "),
                                     _c("center", [

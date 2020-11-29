@@ -65,6 +65,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _basic_loading_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../basic/loading.vue */ "./resources/js/basic/loading.vue");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_6__);
 //
 //
 //
@@ -205,6 +207,80 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -217,9 +293,13 @@ __webpack_require__.r(__webpack_exports__);
       tableData: [],
       tableDataCompleteOrder: true,
       tableDataPendingOrders: false,
+      tableCancelledOrders: false,
+      tableProccessOrders: false,
       config: _config_js__WEBPACK_IMPORTED_MODULE_2__["default"],
       loadingShow: false,
       tableDataPending: [],
+      tableProcess: [],
+      tableCancelled: [],
       search: null,
       productName: null,
       description: null,
@@ -237,20 +317,53 @@ __webpack_require__.r(__webpack_exports__);
       deliveryFee: null,
       showOrderData: null,
       addOnsData: null,
-      cupData: null
+      cupData: null,
+      saveItem: null
     };
   },
   mounted: function mounted() {
+    var _this = this;
+
     this.retrievePending();
+    this.retrieveCancelled();
+    this.retrieveProcess();
     this.retrieve();
     this.retrieveAddOns();
     this.retrieveCupType();
+    var pusher = new Pusher(this.config.PUSHER_APP_KEY, {
+      cluster: this.config.PUSHER_APP_CLUSTER,
+      secret: this.config.PUSHER_APP_SECRET,
+      encrypted: false
+    });
+    var channel = pusher.subscribe("driptea-channel");
+    var obj = this;
+    pusher.logToConsole = true;
+    channel.bind("driptea-data", function (data) {
+      jquery__WEBPACK_IMPORTED_MODULE_6___default()("#myModal").modal("hide");
+
+      _this.retrievePending();
+
+      _this.retrieveProcess();
+
+      _this.retrieveCancelled();
+
+      _this.retrieve();
+    });
   },
   components: {
     empty: _basic_empty_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
     loading: _basic_loading_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
   methods: {
+    getStatus: function getStatus(item) {
+      if (item === 'pendingCustomer') {
+        return 'pending';
+      } else if (item === 'cancel') {
+        return 'Cancelled';
+      } else {
+        return item;
+      }
+    },
     getCup: function getCup(item) {
       var cup = "";
       this.cupData.forEach(function (el) {
@@ -265,26 +378,24 @@ __webpack_require__.r(__webpack_exports__);
       return cup;
     },
     retrieveCupType: function retrieveCupType() {
-      var _this = this;
+      var _this2 = this;
 
       this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "retrieveCupType", {}, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
         if (response.data.status) {
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this.cupData = response.data.cupType;
+        _this2.cupData = response.data.cupType;
       });
     },
     getDate: function getDate(item) {
       return moment__WEBPACK_IMPORTED_MODULE_5___default()(item.updated_at).format("MM/DD/YYYY");
     },
     getTotal: function getTotal(item) {
-      var total = 0;
+      var total = 50;
       var index = item.length;
       item.forEach(function (el) {
-        if (item.indexOf(el) >= index - 1) {
-          total += el.subTotal;
-        } else {
+        if (el.status !== 'Not Available') {
           total += el.subTotal;
         }
       });
@@ -315,7 +426,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     retrieve: function retrieve() {
-      var _this2 = this;
+      var _this3 = this;
 
       this.loadingShow = true;
       var parameter = {
@@ -326,17 +437,16 @@ __webpack_require__.r(__webpack_exports__);
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this2.loadingShow = false;
+        _this3.tableData = [];
+        _this3.loadingShow = false;
         Object.keys(response.data.storeOrder).forEach(function (element) {
-          _this2.tableData.push(response.data.storeOrder[element]);
-        });
-        _this2.tableDataCompleteOrder = true;
+          _this3.tableData.push(response.data.storeOrder[element]);
+        }); // this.tableDataCompleteOrder = true;
       });
     },
     retrievePending: function retrievePending() {
-      var _this3 = this;
+      var _this4 = this;
 
-      this.tableDataPending = [];
       this.loadingShow = true;
       var parameter = {
         id: localStorage.getItem("customerId")
@@ -346,30 +456,69 @@ __webpack_require__.r(__webpack_exports__);
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this3.loadingShow = false;
+        _this4.tableDataPending = [];
+        _this4.loadingShow = false;
         Object.keys(response.data.order).forEach(function (element) {
-          _this3.tableDataPending.push(response.data.order[element]);
+          _this4.tableDataPending.push(response.data.order[element]);
+        });
+      });
+    },
+    retrieveProcess: function retrieveProcess() {
+      var _this5 = this;
+
+      this.loadingShow = true;
+      var parameter = {
+        id: localStorage.getItem("customerId")
+      };
+      this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "retrieveOnlineProcessing", parameter, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
+        if (response.data.status) {
+          _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
+        }
+
+        _this5.tableProcess = [];
+        _this5.loadingShow = false;
+        Object.keys(response.data.storeOrder).forEach(function (element) {
+          _this5.tableProcess.push(response.data.storeOrder[element]);
+        });
+      });
+    },
+    retrieveCancelled: function retrieveCancelled() {
+      var _this6 = this;
+
+      this.loadingShow = true;
+      var parameter = {
+        id: localStorage.getItem("customerId")
+      };
+      this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "retrieveCancelled", parameter, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
+        if (response.data.status) {
+          _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
+        }
+
+        _this6.tableCancelled = [];
+        _this6.loadingShow = false;
+        Object.keys(response.data.order).forEach(function (element) {
+          _this6.tableCancelled.push(response.data.order[element]);
         });
       });
     },
     retrieveAddOns: function retrieveAddOns() {
-      var _this4 = this;
+      var _this7 = this;
 
       this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "retrievingAddOns", {}, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
         if (response.data.status) {
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this4.addOnsData = response.data.addons;
+        _this7.addOnsData = response.data.addons;
       });
     },
     getAddOns: function getAddOns(item) {
-      var _this5 = this;
+      var _this8 = this;
 
       var storeAddOns = "";
       var index = item.length;
       item.forEach(function (el) {
-        _this5.addOnsData.forEach(function (e) {
+        _this8.addOnsData.forEach(function (e) {
           if (el.addOns === e.addons_name) {
             if (item.indexOf(el) >= index - 1) {
               storeAddOns += el.addOns + " (+" + e.onlineAddOnsPrice + ".00)";
@@ -382,6 +531,7 @@ __webpack_require__.r(__webpack_exports__);
       return storeAddOns;
     },
     viewOrder: function viewOrder(item) {
+      this.saveItem = item;
       this.showOrderData = item;
     }
   }
@@ -420,7 +570,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.table[data-v-0f3ac740] {\r\n  width: 70%;\r\n  margin-left: 5%;\n}\n.imageSize2[data-v-0f3ac740] {\r\n  height: 300px;\r\n  width: 300px;\r\n  margin-top: 2%;\n}\r\n", ""]);
+exports.push([module.i, "\n.successColor[data-v-0f3ac740]{\r\n  color: green;\n}\n.errorColor[data-v-0f3ac740]{\r\n  color: red;\n}\n.table[data-v-0f3ac740] {\r\n  width: 70%;\r\n  margin-left: 5%;\n}\n.imageSize2[data-v-0f3ac740] {\r\n  height: 300px;\r\n  width: 300px;\r\n  margin-top: 2%;\n}\r\n", ""]);
 
 // exports
 
@@ -568,7 +718,9 @@ var render = function() {
                       on: {
                         click: function($event) {
                           ;(_vm.tableDataCompleteOrder = true),
-                            (_vm.tableDataPendingOrders = false)
+                            (_vm.tableDataPendingOrders = false),
+                            (_vm.tableCancelledOrders = false),
+                            (_vm.tableProccessOrders = false)
                         }
                       }
                     },
@@ -581,11 +733,43 @@ var render = function() {
                       on: {
                         click: function($event) {
                           ;(_vm.tableDataCompleteOrder = false),
-                            (_vm.tableDataPendingOrders = true)
+                            (_vm.tableDataPendingOrders = false),
+                            (_vm.tableCancelledOrders = false),
+                            (_vm.tableProccessOrders = true)
+                        }
+                      }
+                    },
+                    [_vm._v("Processing Orders")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-tab",
+                    {
+                      on: {
+                        click: function($event) {
+                          ;(_vm.tableDataCompleteOrder = false),
+                            (_vm.tableDataPendingOrders = true),
+                            (_vm.tableCancelledOrders = false),
+                            (_vm.tableProccessOrders = false)
                         }
                       }
                     },
                     [_vm._v("Pending Orders")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-tab",
+                    {
+                      on: {
+                        click: function($event) {
+                          ;(_vm.tableDataCompleteOrder = false),
+                            (_vm.tableCancelledOrders = true),
+                            (_vm.tableDataPendingOrders = false),
+                            (_vm.tableProccessOrders = false)
+                        }
+                      }
+                    },
+                    [_vm._v("Cancelled Orders")]
                   )
                 ],
                 1
@@ -674,11 +858,8 @@ var render = function() {
                           ])
                         }),
                         0
-                      ),
-                      _vm._v(" "),
-                      void 0
-                    ],
-                    2
+                      )
+                    ]
                   )
                 ],
                 1
@@ -706,9 +887,9 @@ var render = function() {
                               _vm._v(" "),
                               _c("th", [_vm._v("Product Ordered")]),
                               _vm._v(" "),
-                              _c("th", [_vm._v("Total")]),
+                              _c("th", [_vm._v("Delivery Fee")]),
                               _vm._v(" "),
-                              _c("th", [_vm._v("Status")]),
+                              _c("th", [_vm._v("Total")]),
                               _vm._v(" "),
                               _c("th", { staticStyle: { width: "15px" } }, [
                                 _vm._v("Action")
@@ -735,11 +916,180 @@ var render = function() {
                             _vm._v(" "),
                             _c("td", [_vm._v(_vm._s(_vm.getProduct(items)))]),
                             _vm._v(" "),
+                            _c("td", [_vm._v("₱ 50.00")]),
+                            _vm._v(" "),
                             _c("td", [
-                              _vm._v("₱ " + _vm._s(_vm.getTotal(items)))
+                              _vm._v("₱ " + _vm._s(_vm.getTotal(items)) + ".00")
                             ]),
                             _vm._v(" "),
-                            _c("td", [_vm._v("Pending Order")]),
+                            _c("td", [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-primary",
+                                  attrs: {
+                                    "data-toggle": "modal",
+                                    "data-target": "#myModal"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.viewOrder(items)
+                                    }
+                                  }
+                                },
+                                [_vm._v("View")]
+                              )
+                            ])
+                          ])
+                        }),
+                        0
+                      )
+                    ]
+                  )
+                ],
+                1
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.tableProccessOrders
+            ? _c(
+                "div",
+                [
+                  _c(
+                    "v-simple-table",
+                    {
+                      staticClass: "elevation-3",
+                      attrs: { "items-per-page": 5 }
+                    },
+                    [
+                      _c("thead", [
+                        _vm.tableProcess !== null && _vm.tableProcess.length > 0
+                          ? _c("tr", [
+                              _c("th", [_vm._v("Date")]),
+                              _vm._v(" "),
+                              _c("th", [_vm._v("Order #")]),
+                              _vm._v(" "),
+                              _c("th", [_vm._v("Product Ordered")]),
+                              _vm._v(" "),
+                              _c("th", [_vm._v("Delivery Fee")]),
+                              _vm._v(" "),
+                              _c("th", [_vm._v("Total")]),
+                              _vm._v(" "),
+                              _c("th", { staticStyle: { width: "15px" } }, [
+                                _vm._v("Action")
+                              ])
+                            ])
+                          : _c(
+                              "div",
+                              [
+                                _c("empty", {
+                                  attrs: { title: "No Processing Orders!" }
+                                })
+                              ],
+                              1
+                            )
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "tbody",
+                        _vm._l(_vm.tableProcess, function(items, index) {
+                          return _c("tr", { key: index }, [
+                            _c("td", [_vm._v(_vm._s(_vm.getDate(items[0])))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(items[0].id))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(_vm.getProduct(items)))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v("₱ 50.00")]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _vm._v("₱ " + _vm._s(_vm.getTotal(items)) + ".00")
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-primary",
+                                  attrs: {
+                                    "data-toggle": "modal",
+                                    "data-target": "#myModal"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.viewOrder(items)
+                                    }
+                                  }
+                                },
+                                [_vm._v("View")]
+                              )
+                            ])
+                          ])
+                        }),
+                        0
+                      )
+                    ]
+                  )
+                ],
+                1
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.tableCancelledOrders
+            ? _c(
+                "div",
+                [
+                  _c(
+                    "v-simple-table",
+                    {
+                      staticClass: "elevation-3",
+                      attrs: { "items-per-page": 5 }
+                    },
+                    [
+                      _c("thead", [
+                        _vm.tableCancelled !== null &&
+                        _vm.tableCancelled.length > 0
+                          ? _c("tr", [
+                              _c("th", [_vm._v("Date")]),
+                              _vm._v(" "),
+                              _c("th", [_vm._v("Order #")]),
+                              _vm._v(" "),
+                              _c("th", [_vm._v("Product Ordered")]),
+                              _vm._v(" "),
+                              _c("th", [_vm._v("Delivery Fee")]),
+                              _vm._v(" "),
+                              _c("th", [_vm._v("Total")]),
+                              _vm._v(" "),
+                              _c("th", { staticStyle: { width: "15px" } }, [
+                                _vm._v("Action")
+                              ])
+                            ])
+                          : _c(
+                              "div",
+                              [
+                                _c("empty", {
+                                  attrs: { title: "No Cancelled Orders!" }
+                                })
+                              ],
+                              1
+                            )
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "tbody",
+                        _vm._l(_vm.tableCancelled, function(items, index) {
+                          return _c("tr", { key: index }, [
+                            _c("td", [_vm._v(_vm._s(_vm.getDate(items[0])))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(items[0].id))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(_vm.getProduct(items)))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v("₱ 50.00")]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _vm._v("₱ " + _vm._s(_vm.getTotal(items)) + ".00")
+                            ]),
                             _vm._v(" "),
                             _c("td", [
                               _c(
@@ -843,6 +1193,8 @@ var render = function() {
                           _vm._v(" "),
                           _c("th", [_vm._v("Quantity")]),
                           _vm._v(" "),
+                          _c("th", [_vm._v("Status")]),
+                          _vm._v(" "),
                           _c("th", [_vm._v("Total")])
                         ])
                       ]),
@@ -875,11 +1227,28 @@ var render = function() {
                               _vm._v(_vm._s(_vm.getCup(item.cupType)))
                             ]),
                             _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(item.choosenPrice))]),
+                            _c("td", [
+                              _vm._v("₱ " + _vm._s(item.choosenPrice) + ".00")
+                            ]),
                             _vm._v(" "),
                             _c("td", [_vm._v(_vm._s(item.quantity))]),
                             _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(item.subTotal))])
+                            _c(
+                              "td",
+                              {
+                                class:
+                                  item.status === "Not Available"
+                                    ? "errorColor"
+                                    : item.status === "Available"
+                                    ? "successColor"
+                                    : ""
+                              },
+                              [_vm._v(_vm._s(_vm.getStatus(item.status)))]
+                            ),
+                            _vm._v(" "),
+                            _c("td", [
+                              _vm._v("₱ " + _vm._s(item.subTotal) + ".00")
+                            ])
                           ])
                         }),
                         0

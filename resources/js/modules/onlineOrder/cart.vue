@@ -544,21 +544,27 @@ export default {
     },
     orderNow() {
       if (this.payment !== null) {
+        this.loadingShow = true
         let params = {
-          id: localStorage.getItem("customerId"),
+          data: this.tableData,
           ifNotAvailable: this.available,
           modeOfPayment: this.payment,
           status: "pendingCustomer"
         };
         this.$axios
-          .post(AUTH.url + "updateStatus", params, AUTH.config)
+          .post(AUTH.url + "onlineUpdate", params, AUTH.config)
           .then(res => {
+            this.loadingShow = false
             if (res.data.status) {
               AUTH.deauthenticate();
             }
-            swal("Order Successfully!", "Processing .........", "success");
-            this.retrieveProduct();
-            localStorage.removeItem("customerOnlineId");
+            swal({
+              text: "Order Successfully!",
+              icon: "success",
+            }).then(el => {
+              this.retrieveProduct();
+              localStorage.removeItem("customerOnlineId");
+            })
           });
       } else {
         this.error = "This filed is required";

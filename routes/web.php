@@ -50,11 +50,13 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('retrieveCustomer','App\Http\Controllers\CustomerDetailsController@retrieveCustomer');
 
     Route::post('addOrder','App\Http\Controllers\OrderController@addOrder');
-    Route::post('updateStatus','App\Http\Controllers\OrderController@updateStatus');
+    Route::post('onlineUpdate','App\Http\Controllers\OrderController@onlineUpdate');
+    Route::post('updateStatusOrder','App\Http\Controllers\OrderController@updateStatusOrder');
+    Route::post('updateOne','App\Http\Controllers\OrderController@updateOne');
     Route::post('updateOnlineStatus','App\Http\Controllers\OrderController@updateOnlineStatus');
     Route::post('deleteOrder','App\Http\Controllers\OrderController@deleteOrder');
     Route::post('updateCustomerOrder','App\Http\Controllers\OrderController@updateCustomerOrder');
-
+    Route::post('retrieveCancelled','App\Http\Controllers\OrderController@retrieveCancelled');
     Route::post('retrieveOrder','App\Http\Controllers\OrderController@retrieveOrder');
     Route::post('retrieveCustomerOrder','App\Http\Controllers\OrderController@retrieveCustomerOrder');
     Route::post('retrieveOnlineOrder','App\Http\Controllers\OrderController@retrieveOnlineOrder');
@@ -94,7 +96,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('retrieveAllCheckouts','App\Http\Controllers\StoreCheckoutsController@retrieveAllCheckouts');
     Route::post('retrieveOnlineCheckouts','App\Http\Controllers\StoreCheckoutsController@retrieveOnlineCheckouts');
     Route::post('retrieveAllSales','App\Http\Controllers\StoreCheckoutsController@retrieveAllSales');
-
+    Route::post('retrieveProcessing','App\Http\Controllers\StoreCheckoutsController@retrieveProcessing');
     Route::post('getDailySales','App\Http\Controllers\StoreCheckoutsController@retrieveDailySales');
     Route::post('getmonthlySales','App\Http\Controllers\StoreCheckoutsController@retrieveMonthlySales');
     Route::post('getQuarterlySales','App\Http\Controllers\StoreCheckoutsController@retrieveQuarterSales');
@@ -104,6 +106,8 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('retrieveYear','App\Http\Controllers\StoreCheckoutsController@retrieveYear');
     Route::post('retrieveDailySales','App\Http\Controllers\StoreCheckoutsController@retrieveDailySales');
     Route::post('deleteCheckout','App\Http\Controllers\StoreCheckoutsController@deleteCheckout');
+    Route::post('retrieveOnlineProcessing','App\Http\Controllers\StoreCheckoutsController@retrieveOnlineProcessing');
+    Route::post('updateStatus','App\Http\Controllers\StoreCheckoutsController@updateStatus');
     
     Route::post('getTopProd','App\Http\Controllers\OrderController@retrieveTopProducts');
     Route::post('addIncomingCups','App\Http\Controllers\QuantityCupsController@addIncomingCups');

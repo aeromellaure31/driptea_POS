@@ -7,31 +7,32 @@
                 color="white accent-4"
                 right
                 >
-                    <v-tab @click="tableDataCompleteOrder=true,tableDataPendingOrders=false">Completed Orders</v-tab>
-                    <v-tab @click="tableDataCompleteOrder=false,tableDataPendingOrders=true">Pending Orders</v-tab>
+                    <v-tab @click="tableDataCompleteOrder=true,tableDataPendingOrders=false,tableProcessOrders=false">Completed Orders</v-tab>
+                    <v-tab @click="tableDataCompleteOrder=false,tableDataPendingOrders=false,tableProcessOrders=true">Processing Orders</v-tab>
+                    <v-tab @click="tableDataCompleteOrder=false,tableDataPendingOrders=true,tableProcessOrders=false">Pending Orders</v-tab>
                 </v-tabs>
             </v-card>
  
             <div v-if="tableDataCompleteOrder">
-            <v-simple-table
-               :items-per-page="5"
-               class="elevation-3"
-               >
-                 <thead >
-                   <tr v-if="tableData !== null && tableData.length > 0">
-                       <th>Date</th>
-                       <th>Customer Name</th>
-                       <th>Address</th>
-                       <th>Contact#</th>
-                       <th>Order #</th>
-                       <th>Product&nbsp;Ordered</th>
-                       <th>Total</th>
-                       <th style="width: 15px;">Action</th>
-                   </tr>
-                    <div v-else>
-                       <empty :title="'No Complete Orders!'"></empty>
-                   </div>
-                 </thead>
+                <v-simple-table
+                :items-per-page="5"
+                class="elevation-3"
+                >
+                    <thead >
+                    <tr v-if="tableData !== null && tableData.length > 0">
+                        <th>Date</th>
+                        <th>Customer Name</th>
+                        <th>Address</th>
+                        <th>Contact#</th>
+                        <th>Order #</th>
+                        <th>Product&nbsp;Ordered</th>
+                        <th>Total</th>
+                        <th>Action</th>
+                    </tr>
+                        <div v-else>
+                        <empty :title="'No Completed Orders!'"></empty>
+                    </div>
+                    </thead>
                    <tbody>
                        <tr v-for="(item, index) in tableData" :key="index">
                            <td>{{getDate(item[0])}}</td>
@@ -41,16 +42,51 @@
                            <td>{{item[0].get_checkouts ? item[0].get_checkouts[0].customerId : ''}}</td>
                            <td>{{getProduct(item)}}</td>
                            <td>{{item[0].get_checkouts[0].total}}</td>
-                           <td style="width: 10%;">
+                           <td>
                                <v-icon medium data-toggle="modal" data-target="#myModal" @click="viewOrder(item), title = 'Completed Orders'">mdi-eye</v-icon>
-                               <v-icon medium @click="deleteOrder(item, 'complete')">mdi-window-close</v-icon>
                            </td>
                        </tr>
                    </tbody>
-               <template>
-               </template>
                </v-simple-table>
-               </div>
+            </div>
+            <div v-if="tableProcessOrders">
+                <v-simple-table
+                :items-per-page="5"
+                class="elevation-3"
+                >
+                    <thead >
+                    <tr v-if="tableProcess !== null && tableProcess.length > 0">
+                        <th>Date</th>
+                        <th>Customer Name</th>
+                        <th>Address</th>
+                        <th>Contact#</th>
+                        <th>Order #</th>
+                        <th>Product&nbsp;Ordered</th>
+                        <th>Total</th>
+                        <th>Action</th>
+                    </tr>
+                        <div v-else>
+                        <empty :title="'No Processing Orders!'"></empty>
+                    </div>
+                    </thead>
+                   <tbody>
+                       <tr v-for="(item, index) in tableProcess" :key="index">
+                           <td>{{getDate(item[0])}}</td>
+                           <td>{{item[0].get_customer ? item[0].get_customer[0].customerName : ''}}</td>
+                           <td>{{item[0].get_customer ? item[0].get_customer[0].customerAddress : ''}}</td>
+                           <td>{{item[0].get_customer ? item[0].get_customer[0].customerContactNumber : ''}}</td>
+                           <td>{{item[0].get_checkouts ? item[0].get_checkouts[0].customerId : ''}}</td>
+                           <td>{{getProduct(item)}}</td>
+                           <td>{{item[0].get_checkouts[0].total}}</td>
+                           <td style="width: 13%;">
+                               <v-icon @click="toComplete(item)">mdi-check</v-icon>
+                               <v-icon medium data-toggle="modal" data-target="#myModal" @click="viewOrder(item), title = 'Processing Orders'">mdi-eye</v-icon>
+                               <v-icon medium @click="deleteOrder(item, 'processing')">mdi-window-close</v-icon>
+                           </td>
+                       </tr>
+                   </tbody>
+               </v-simple-table>
+            </div>
                
            <div v-if="tableDataPendingOrders">
             <v-simple-table
@@ -158,12 +194,15 @@ import empty from "../../basic/empty.vue";
 import loading from "../../basic/loading.vue";
 import moment from "moment";
 import swal from "sweetalert";
+import $ from 'jquery'
 export default {
   data() {
     return {
       tableData: [],
+      tableProcess: [],
       tableDataCompleteOrder: true,
       tableDataPendingOrders: false,
+      tableProcessOrders: false,
       config: config,
       loadingShow: false,
       tableDataPending: [],
@@ -193,6 +232,27 @@ export default {
     this.retrieve();
     this.retrieveAddOns();
     this.retrieveCupType();
+    this.retrieveProcessed();
+    this.tableDataCompleteOrder = true;
+    let pusher = new Pusher(this.config.PUSHER_APP_KEY, {
+      cluster: this.config.PUSHER_APP_CLUSTER,
+      secret: this.config.PUSHER_APP_SECRET,
+      encrypted: false
+    });
+    let channel = pusher.subscribe("driptea-channel");
+    let obj = this;
+    pusher.logToConsole = true;
+    channel.bind("driptea-data", data => {
+        this.retrievePending();
+        this.retrieve();
+        this.retrieveAddOns();
+        this.retrieveCupType();
+        this.retrieveProcessed();
+        $("#myModal").modal("hide");
+        this.tableDataCompleteOrder = true
+        this.tableDataPendingOrders = false
+        this.tableProcessOrders = false
+    });
   },
   components: {
       empty,
@@ -230,9 +290,10 @@ export default {
                 title: "Congrats",
                 text: "You have successfully deleted the order",
                 icon: "success"
+                }).then(el => {
+                    this.retrieve()
+                    this.retrievePending()
                 });
-                this.retrieve()
-                this.retrievePending()
             });
         }else{
             let par = {
@@ -257,9 +318,10 @@ export default {
                     title: "Congrats",
                     text: "You have successfully deleted the order",
                     icon: "success"
+                    }).then(el => {
+                        this.retrieve()
+                        this.retrievePending()
                     });
-                    this.retrieve()
-                    this.retrievePending()
                 });
             })
         }
@@ -326,35 +388,86 @@ export default {
         this.basePrice = this.price;
       }
     },
+    toComplete(item){
+        swal({
+            text: "Are you sure you want to Complete?",
+            icon: "warning",
+            buttons: {
+                no: 'No',
+                yes: 'Yes'
+            }
+        }).then(el => {
+            if(el === 'yes'){
+                this.loadingShow = true
+                let params = {
+                    data: item,
+                    status: 'complete'
+                }
+                this.$axios.post(AUTH.url + 'updateStatus', params, AUTH.config).then(res => {
+                    this.loadingShow = false
+                    if (res.data.status) {
+                        AUTH.deauthenticate();
+                    }
+                    swal({
+                        title: "Successfully Completed!",
+                        icon: "success",
+                    }).then(e => {
+                        this.retrievePending();
+                        this.retrieve();
+                        this.retrieveAddOns();
+                        this.retrieveCupType();
+                        this.retrieveProcessed();
+                        this.tableDataCompleteOrder = false
+                        this.tableDataPendingOrders = false
+                        this.tableProcessOrders = true
+                    })
+                })
+            }
+        })
+    },
     retrieve() {
       this.loadingShow = true;
-      this.tableData = []
       this.$axios
         .post(AUTH.url + "retrieveAllCheckouts", {}, AUTH.config)
         .then(response => {
-          if (response.data.status) {
-            AUTH.deauthenticate();
-          }
-          this.loadingShow = false;
-          Object.keys(response.data.storeOrder).forEach(element => {
-            this.tableData.push(response.data.storeOrder[element]);
-          });
-          this.tableDataCompleteOrder = true;
+            if (response.data.status) {
+                AUTH.deauthenticate();
+            }
+            this.tableData = []
+            this.loadingShow = false;
+            Object.keys(response.data.storeOrder).forEach(element => {
+                this.tableData.push(response.data.storeOrder[element]);
+            });
+        });
+    },
+    retrieveProcessed() {
+      this.loadingShow = true;
+      this.$axios
+        .post(AUTH.url + "retrieveProcessing", {}, AUTH.config)
+        .then(response => {
+            if (response.data.status) {
+                AUTH.deauthenticate();
+            }
+            this.tableProcess = []
+            this.loadingShow = false;
+            Object.keys(response.data.storeOrder).forEach(element => {
+                this.tableProcess.push(response.data.storeOrder[element]);
+            });
         });
     },
     retrievePending() {
-      this.tableDataPending = []
-      this.loadingShow = true;
+        this.loadingShow = true;
       this.$axios
         .post(AUTH.url + "retrievePendingOrders", {}, AUTH.config)
         .then(response => {
             if (response.data.status) {
                 AUTH.deauthenticate();
-          }
-          this.loadingShow = false;
-          Object.keys(response.data.order).forEach(element => {
-              this.tableDataPending.push(response.data.order[element]);
-          });
+            }
+            this.tableDataPending = []
+            this.loadingShow = false;
+            Object.keys(response.data.order).forEach(element => {
+                this.tableDataPending.push(response.data.order[element]);
+            });
         });
     },
     retrieveAddOns() {
