@@ -191,10 +191,10 @@
                         <br>
                            <p style="float:right;margin-right:5%">TOTAL: <b> ₱{{priceShown}}.00</b></p>
                     </div>
-                    <!-- <div class="modal-footer">
+                    <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal" >Cancel</button>
                         <center><button type="submit" class="btn btn-success btnRegister" @click="updateCustomerOrder()">Save Change</button></center>                        
-                    </div> -->
+                    </div>
                 </div>
             </div>
         </div>

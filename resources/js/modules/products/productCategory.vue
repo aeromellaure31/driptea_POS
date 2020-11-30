@@ -17,7 +17,7 @@
                                 </div>
                                 <div class="col-md-6" style="text-align: left">
                                     <p style="margin-top: 2%;">Contact#: {{contact}}</p><br>
-                                    <p>Not Available: {{notAvailable}}</p>
+                                    <p v-if="customerType === 'online'">Not Available: {{notAvailable}}</p>
                                 </div>
                             </div>
                             <img v-if="customerType === 'walkin'" style="width: 70px; height: 50px; border: solid 1px black" src="@/assets/walkin.jpg">
@@ -25,7 +25,7 @@
                             <img v-if="customerType === 'grab'" style="width: 70px; height: 50px;" src="@/assets/grab2.png">
                             <img v-if="customerType === 'fb'" style="width: 70px; height: 50px;" src="@/assets/fb1.png"><br>
                             <img v-if="customerType === 'online'" style="width: 70px; height: 50px;" src="@/assets/logo.png"><br>
-                            <span v-if="error" style="color: red; font-style: italic">All data are required!</span>
+                            <span v-if="error !== null" style="color: red; font-style: italic">{{null}}</span>
                             <table class="table table-responsive table-bordered " id="myTable">
                                 <tr class="overline">
                                     <th style="width: 45%;">Product Name</th>
@@ -193,7 +193,7 @@ export default {
             subTotalPrice: 0,
             cash: null,
             fee: 0,
-            error: false,
+            error: null,
             receiptShow: false,
             receiptData: null,
             loadingShow: false,
@@ -442,7 +442,8 @@ export default {
                     total: parseInt(this.convertTotalPrice()),
                     incash: this.cash,
                     change: parseInt(this.convertChange()),
-                    order: this.newTableData
+                    order: this.newTableData,
+                    status: this.customerType === 'online' || this.customerType === 'fb' ? 'pending' : 'complete'
                 }
                 this.$axios.post(AUTH.url + 'addCheckout', params, AUTH.config).then(res => {
                     if(res.data.status){
@@ -471,6 +472,7 @@ export default {
                         }
                         let parameter = {
                             id: res.data.storeCheckouts.id,
+                            stat: this.customerType === 'online' || this.customerType === 'fb' ? 'processing' : 'complete'
                         }
                         this.$axios.post(AUTH.url + 'retrieveCheckouts', parameter, AUTH.config).then(response => {
                             if(response.data.status){
@@ -530,18 +532,20 @@ export default {
             })
             if(this.newTableData.length > 0){
                 if(this.customerType !== 'fb' && this.customerType !== 'online'){
-                    if(this.cash > parseInt(this.convertTotalPrice()) && this.convertTotalPrice() !== null && this.cash !== null && this.convertChange() >= 0){
-                        this.error = false
+                    if(this.cash === null){
+                        this.error = 'Amount is required'
+                    }else if(this.cash >= parseInt(this.convertTotalPrice()) && this.convertTotalPrice() !== null && this.convertChange() >= 0){
+                        this.error = null
                         this.checkoutMethod()
                     }else{
-                        this.error = true
+                        this.error = 'All data is required'
                     }
                 }else{
-                    if(this.getSubTotal() > 0 && this.fee !== '' && this.convertTotalPrice() > 0){
-                        this.error = false
+                    if(this.getSubTotal() > 0 && this.fee !== '' && this.convertTotalPrice() >= 0){
+                        this.error = null
                         this.checkoutMethod()
                     }else{
-                        this.error = true
+                        this.error = 'All data is required'
                     }
                 }
             }else{

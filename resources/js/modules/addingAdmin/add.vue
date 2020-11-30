@@ -1119,12 +1119,8 @@ export default {
     },
     addingCupType() {
       this.loadingShow = true
-      const config = {
-        headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('userToken')
-        }
-      }
-      if (this.inputCupPrice !== null && this.inputCup !== null && 
+      if (this.inputCupPrice !== null && this.inputCup !== null && this.inputCupOnlinePrice !== null &&
+      this.inputCupPrice !== '' && this.inputCup !== '' && this.inputCupOnlinePrice !== '' &&
       this.errorMessage4 === null && this.errorMessage5 === null) {
         let param = {
           cupType: this.inputCup,
@@ -1196,7 +1192,8 @@ export default {
     },
     editingCupType() {
       this.loadingShow = true
-      if (this.inputCupPrice !== null && this.inputCup !== null && 
+      if (this.inputCupPrice !== null && this.inputCup !== null && this.inputCupOnlinePrice !== null &&
+      this.inputCupPrice !== '' && this.inputCup !== '' && this.inputCupOnlinePrice !== '' &&
       this.errorMessage4 === null && this.errorMessage5 === null) {
         let param = {
           id: this.idCup,
@@ -1268,12 +1265,17 @@ export default {
     formSubmitProduct(e) {
       e.preventDefault();
       this.loadingShow = true
-      if (this.img !== null && this.prodType !== null && this.productName !== null &&
-       this.lowPrice !== null && this.highPrice !== null && this.overPrice !== null &&
-       this.onlinelowPrice !== null && this.onlinehighPrice !== null & this.onlineoverPrice !== null &&
-       this.lowPrice > 0 && this.highPrice > 0 && this.overPrice > 0 &&
-       this.onlinelowPrice > 0 && this.onlinehighPrice > 0 && this.onlineoverPrice > 0 && this.errorMessage1 === null &&
-       this.errorMessage7 === null && this.errorMessage8 === null){
+      if (this.img !== '' && this.prodType !== '' && this.productName !== '' &&
+        this.lowPrice !== '' && this.highPrice !== '' && this.overPrice !== '' &&
+        this.onlinelowPrice !== '' && this.onlinehighPrice !== '' & this.onlineoverPrice !== '' &&
+        this.lowPrice !== '' && this.highPrice !== '' && this.overPrice !== '' &&
+        this.onlinelowPrice !== '' && this.onlinehighPrice !== '' && this.onlineoverPrice !== '' &&
+        this.img !== null && this.prodType !== null && this.productName !== null &&
+        this.lowPrice !== null && this.highPrice !== null && this.overPrice !== null &&
+        this.onlinelowPrice !== null && this.onlinehighPrice !== null & this.onlineoverPrice !== null &&
+        this.lowPrice > 0 && this.highPrice > 0 && this.overPrice > 0 &&
+        this.onlinelowPrice > 0 && this.onlinehighPrice > 0 && this.onlineoverPrice > 0 && this.errorMessage1 === null &&
+        this.errorMessage7 === null && this.errorMessage8 === null){
           let currentObj = this;
           const config = {
               headers: {
@@ -1340,11 +1342,17 @@ export default {
     },
     updateProduct(e) {
       this.loadingShow = true
-      if (this.img !== null && this.prodType !== null && this.productName !== null && 
-      this.lowPrice !== null && this.highPrice !== null && this.overPrice !== null && 
-      this.onlinelowPrice !== null && this.onlinehighPrice !== null && 
-      this.onlineoverPrice !== null && this.errorMessage1 === null &&
-      this.errorMessage7 === null && this.errorMessage8 === null){
+      if (this.img !== '' && this.prodType !== '' && this.productName !== '' &&
+        this.lowPrice !== '' && this.highPrice !== '' && this.overPrice !== '' &&
+        this.onlinelowPrice !== '' && this.onlinehighPrice !== '' & this.onlineoverPrice !== '' &&
+        this.lowPrice !== '' && this.highPrice !== '' && this.overPrice !== '' &&
+        this.onlinelowPrice !== '' && this.onlinehighPrice !== '' && this.onlineoverPrice !== '' &&
+        this.img !== null && this.prodType !== null && this.productName !== null &&
+        this.lowPrice !== null && this.highPrice !== null && this.overPrice !== null &&
+        this.onlinelowPrice !== null && this.onlinehighPrice !== null & this.onlineoverPrice !== null &&
+        this.lowPrice > 0 && this.highPrice > 0 && this.overPrice > 0 &&
+        this.onlinelowPrice > 0 && this.onlinehighPrice > 0 && this.onlineoverPrice > 0 && this.errorMessage1 === null &&
+        this.errorMessage7 === null && this.errorMessage8 === null){
           e.preventDefault();
           let currentObj = this;
           const config = {
@@ -1454,7 +1462,7 @@ export default {
     },
     updateCategory(e){
       this.loadingShow = true
-      if (this.image !== null && this.productType !== null && this.errorMessage7 === null && this.errorMessage8 === null) {
+      if (this.image !== '' && this.productType !== '' && this.image !== null && this.productType !== null && this.errorMessage7 === null && this.errorMessage8 === null) {
         e.preventDefault();
         let currentObj = this;
 
@@ -1496,8 +1504,8 @@ export default {
       }
     },
     formSubmit(e) {
-      this.loadingShow = true
-      if (this.image !== null && this.productType !== null && this.errorMessage7 === null && this.errorMessage8 === null) {
+      if (this.image !== '' && this.productType !== '' && this.image !== null && this.productType !== null && this.image !== null && this.productType !== null && this.errorMessage7 === null && this.errorMessage8 === null) {
+        this.loadingShow = true
         e.preventDefault();
         let currentObj = this;
 
@@ -1534,7 +1542,6 @@ export default {
           });
       } else {
         this.errorMessage = "Please fill up all fields";
-        this.loadingShow = false
       }
     },
     product(event) {
@@ -1713,7 +1720,10 @@ export default {
         this.inputAddOns !== null &&
         this.onlineAddOnsPrice !== null && 
         this.errorMessage2 === null && 
-        this.errorMessage3 === null
+        this.errorMessage3 === null &&
+        this.addOnsPrice !== '' &&
+        this.inputAddOns !== '' &&
+        this.onlineAddOnsPrice !== ''
       ) {
         let param = {
           addOns: this.inputAddOns,
@@ -1764,8 +1774,10 @@ export default {
     },
     editAddOnsData() {
       this.loadingShow = true
-      if (this.addOnsPrice !== null && this.inputAddOns !== null && 
-      this.errorMessage2 === null && this.errorMessage3 === null) {
+      if (this.addOnsPrice !== null && this.inputAddOns !== null &&
+        this.onlineAddOnsPrice !== null && this.addOnsPrice !== '' &&
+        this.inputAddOns !== '' && this.onlineAddOnsPrice !== '' &&
+        this.errorMessage2 === null && this.errorMessage3 === null) {
         let param = {
           id: this.idAddOns,
           addOns: this.inputAddOns,

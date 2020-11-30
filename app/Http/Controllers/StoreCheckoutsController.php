@@ -38,7 +38,7 @@ class StoreCheckoutsController extends Controller
             $storeOrder->cupType = $value['cupType'];
             $storeOrder->choosenPrice = $value['choosenPrice'];
             $storeOrder->subTotal = $value['subTotal'];
-            $storeOrder->status = 'processing';
+            $storeOrder->status = $data['status'];
             $storeOrder->save();
             foreach ($dataAddOns as $val) {
                 $storeAddOns = new StoreAddOn();
@@ -52,7 +52,7 @@ class StoreCheckoutsController extends Controller
     }
     
     public function retrieveCheckouts(Request $request){
-        $storeOrder = StoreOrder::with('orderProduct')->with('sameOrder')->with('getCashier')->with('getCheckouts')->where('storeCheckoutsId', $request->id)->where('status', 'processing')->where('deleted_at', null)->get();
+        $storeOrder = StoreOrder::with('orderProduct')->with('sameOrder')->with('getCashier')->with('getCheckouts')->where('storeCheckoutsId', $request->id)->where('status', $request->stat)->where('deleted_at', null)->get();
         return response()->json(compact('storeOrder'));
     }
 

@@ -60,7 +60,7 @@ class OrderController extends Controller
     }
 
     public function retrieveOnlineOrder(Request $request){
-        $order = Order::with('getCustomer')->with('orderProduct')->with('sameOrder')->where('status', '!=', 'complete')->where('status', '!=', 'cancel')->where('deleted_at', null)->orderBy('id','ASC')->get()->groupBy('customerId');
+        $order = Order::with('getCustomer')->with('orderProduct')->with('sameOrder')->where('status', '!=', 'pending')->where('status', '!=', 'complete')->where('status', '!=', 'cancel')->where('deleted_at', null)->orderBy('id','ASC')->get()->groupBy('customerId');
         return response()->json(compact('order'));
     }
 

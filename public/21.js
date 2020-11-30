@@ -1,2652 +1,772 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[21],{
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/modules/dashboard/adminDashboard.vue?vue&type=script&lang=js&":
-/*!********************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/modules/dashboard/adminDashboard.vue?vue&type=script&lang=js& ***!
-  \********************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ "./node_modules/@babel/runtime/regenerator/index.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/@babel/runtime/regenerator/index.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue_apexcharts__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-apexcharts */ "./node_modules/vue-apexcharts/dist/vue-apexcharts.js");
-/* harmony import */ var vue_apexcharts__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_apexcharts__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _services_auth__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/auth */ "./resources/js/services/auth/index.js");
-/* harmony import */ var vuejs_datepicker__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuejs-datepicker */ "./node_modules/vuejs-datepicker/dist/vuejs-datepicker.esm.js");
-/* harmony import */ var os__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! os */ "./node_modules/os-browserify/browser.js");
-/* harmony import */ var os__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(os__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! sweetalert */ "./node_modules/sweetalert/dist/sweetalert.min.js");
-/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _assets_noDatatoShow_png__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../assets/noDatatoShow.png */ "./resources/assets/noDatatoShow.png");
-/* harmony import */ var _assets_noDatatoShow_png__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_assets_noDatatoShow_png__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _basic_loading_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../basic/loading.vue */ "./resources/js/basic/loading.vue");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+module.exports = __webpack_require__(/*! regenerator-runtime */ "./node_modules/regenerator-runtime/runtime.js");
 
 
+/***/ }),
 
+/***/ "./node_modules/regenerator-runtime/runtime.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/regenerator-runtime/runtime.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
+/**
+ * Copyright (c) 2014-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
 
+var runtime = (function (exports) {
+  "use strict";
 
+  var Op = Object.prototype;
+  var hasOwn = Op.hasOwnProperty;
+  var undefined; // More compressible than void 0.
+  var $Symbol = typeof Symbol === "function" ? Symbol : {};
+  var iteratorSymbol = $Symbol.iterator || "@@iterator";
+  var asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator";
+  var toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag";
 
- // import index from "../../services/auth";
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      //------------- for product summary -------
-      // v models
-      thedate2: null,
-      thefilter2: "Daily",
-      yrvalueS: null,
-      Multiyrvalue2: [],
-      MonthLabel2: null,
-      // sa chart
-      options2: {
-        colors: [],
-        chart: {
-          id: "product-summary"
-        },
-        xaxis: {
-          categories: []
-        },
-        stroke: {
-          width: 2,
-          curve: "smooth"
-        }
-      },
-      series2: [],
-      secondpoints: [],
-      productName: [],
-      //-------------- for sales summary --------
-      tempimg: _assets_noDatatoShow_png__WEBPACK_IMPORTED_MODULE_6___default.a,
-      Multiyrvalue: [],
-      date: ["2019-09-10", "2019-09-20"],
-      menu: false,
-      modal: false,
-      YearEnd: null,
-      YearStart: null,
-      ok: true,
-      ok2: false,
-      ok3: false,
-      yrfrmdb: null,
-      yrvalue: null,
-      theMonth: null,
-      theYear: null,
-      lastDate: null,
-      thefilter: "Daily",
-      xlabels: [],
-      options: {
-        colors: ["#ff5b04"],
-        chart: {
-          id: "sales-summary"
-        },
-        xaxis: {
-          categories: []
-        },
-        stroke: {
-          width: 2,
-          curve: "smooth"
-        }
-      },
-      series: [{
-        name: "Sales",
-        data: []
-      }],
-      options0: {},
-      series0: [],
-      points: [],
-      thedate: null,
-      years: [],
-      MonthLabel: null,
-      mnths: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-      quarter: ["Jan-Mar", "Apr-Jun", "Jul-Sept", "Oct-Dec"],
-      semi: ["Jan-Jun", "Jul-Dec"],
-      annualLabels: [],
-      firstQ: [],
-      secondQ: [],
-      thirdQ: [],
-      forthQ: [],
-      QauterData: [],
-      first_Half: null,
-      second_Half: null,
-      semi_Data: [],
-      topprodarr: [{
-        img: _assets_noDatatoShow_png__WEBPACK_IMPORTED_MODULE_6___default.a,
-        name: ""
-      }, {
-        img: _assets_noDatatoShow_png__WEBPACK_IMPORTED_MODULE_6___default.a,
-        name: ""
-      }, {
-        img: _assets_noDatatoShow_png__WEBPACK_IMPORTED_MODULE_6___default.a,
-        name: ""
-      }],
-      defaultDate: null,
-      DatePickerFormat: "yyyy",
-      loadingShow: false
+  function define(obj, key, value) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+    return obj[key];
+  }
+  try {
+    // IE 8 has a broken Object.defineProperty that only works on DOM objects.
+    define({}, "");
+  } catch (err) {
+    define = function(obj, key, value) {
+      return obj[key] = value;
     };
-  },
-  components: {
-    salesChart: vue_apexcharts__WEBPACK_IMPORTED_MODULE_0___default.a,
-    Datepicker: vuejs_datepicker__WEBPACK_IMPORTED_MODULE_3__["default"],
-    loading: _basic_loading_vue__WEBPACK_IMPORTED_MODULE_7__["default"]
-  },
-  computed: {},
-  mounted: function mounted() {
-    var date = new Date();
-    var month = date.getMonth() + 1 > 9 ? date.getMonth() + 1 : "0" + (date.getMonth() + 1);
-    this.thedate = date.getFullYear() + "-" + month;
-    this.thedate2 = date.getFullYear() + "-" + month;
-    this.MonthLabel = this.mnths[month - 1];
-    this.MonthLabel2 = this.mnths[month - 1];
-    this.yrvalue = new Date().getFullYear();
-    this.yrvalueS = new Date().getFullYear();
-    this.getYears();
-    this.getDate();
-    this.xvalues();
-    this.options2.categories = this.xlabels;
-    this.getDailySummary();
-    this.getProductNames();
-    this.dailyProductSale();
-    this.getRandomColor();
-  },
-  created: function created() {
-    this.getTop3();
-  },
-  methods: {
-    getRandomColor: function getRandomColor() {
-      var letters = "0123456789ABCDEF";
-      var color = "#";
-
-      for (var i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-      }
-
-      return color;
-    },
-    getProductNames: function getProductNames() {
-      var _this = this;
-
-      var params = {
-        month: null
-      };
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(_services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].url + "getProducts", params, _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].config).then(function (response) {
-        response.data.product.forEach(function (element) {
-          _this.productName.push(element.productName);
-        });
-      })["catch"](function (error) {});
-    },
-    //...................  for Product sales graph ....................
-    dailyProductSale: function dailyProductSale() {
-      var _this2 = this;
-
-      this.loadingShow = true;
-      this.secondpoints = [];
-      var params = {
-        month: this.theMonth,
-        year: this.theYear
-      };
-      var i;
-      var ldate = this.lastDate;
-      var PRODUCT = "";
-      var forSeries = [];
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(_services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].url + "getDailyProductSales", params, _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].config).then(function (response) {
-        // console.log("heloooooooo ", response);
-        if (response.data.status) {
-          _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].deauthenticate();
-        }
-
-        _this2.loadingShow = false;
-
-        _this2.productName.forEach(function (name) {
-          var color = _this2.getRandomColor();
-
-          _this2.options2.colors.push(color);
-
-          for (i = 1; i < ldate + 1; i++) {
-            _this2.secondpoints.push(0);
-          }
-
-          forSeries.push({
-            name: name,
-            data: _this2.secondpoints
-          });
-          _this2.secondpoints = [];
-        });
-
-        forSeries.forEach(function (obj) {
-          response.data.prods.forEach(function (prod) {
-            if (prod.ProductName === obj.name) {
-              var index = prod.date - 1;
-              obj.data.splice(index, 1, parseInt(prod.quan));
-            }
-          });
-        });
-
-        if (response.data.prods.length > 0) {
-          _this2.series2 = forSeries;
-          _this2.options2 = {
-            chart: {
-              id: "product-summary"
-            },
-            xaxis: {
-              categories: _this2.xlabels
-            },
-            stroke: {
-              width: 2,
-              curve: "smooth"
-            }
-          }; // this.options2.xaxis.categories = this.xlabels;
-        } else {
-          _this2.series2 = [];
-          _this2.options2 = {
-            chart: {
-              id: "product-summary"
-            },
-            xaxis: {
-              categories: _this2.xlabels
-            },
-            stroke: {
-              width: 2,
-              curve: "smooth"
-            }
-          };
-        }
-      })["catch"](function (error) {});
-      this.secondpoints = [];
-      this.options2.colors = [];
-    },
-    MonthlyProductSale: function MonthlyProductSale(yyyy) {
-      var _this3 = this;
-
-      this.loadingShow = true;
-      this.secondpoints = [];
-      var params = {
-        year: yyyy
-      };
-      var monthsfrmDB = [];
-      var i;
-      var totalfrmDB = [];
-      var ldate = this.lastDate;
-      var namesfromDB = [];
-      var PRODUCT = "";
-      var forSeries = [];
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(_services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].url + "getMonthlyProductSales", params, _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].config).then(function (response) {
-        if (response.data.status) {
-          _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].deauthenticate();
-        }
-
-        _this3.loadingShow = false;
-        response.data.prods.forEach(function (element) {
-          namesfromDB.push(element.ProductName);
-          var d = element.month;
-          var tots = element.quan;
-          monthsfrmDB.push(d);
-          totalfrmDB.push(tots);
-        });
-
-        _this3.productName.forEach(function (name) {
-          if (namesfromDB.includes(name)) {
-            response.data.prods.forEach(function (prod) {
-              if (prod.ProductName === name) {
-                PRODUCT = name;
-
-                for (i = 1; i < _this3.mnths.length + 1; i++) {
-                  if (prod.month === i) {
-                    _this3.secondpoints.push(parseInt(prod.quan));
-                  } else {
-                    _this3.secondpoints.push(0);
-                  }
-                }
-
-                forSeries.push({
-                  name: PRODUCT,
-                  data: _this3.secondpoints
-                });
-
-                var color = _this3.getRandomColor();
-
-                _this3.options2.colors.push(color);
-
-                PRODUCT = "";
-                _this3.secondpoints = [];
-              }
-            });
-          } else {
-            PRODUCT = name;
-
-            for (i = 1; i < _this3.mnths.length + 1; i++) {
-              _this3.secondpoints.push(0);
-            }
-
-            forSeries.push({
-              name: PRODUCT,
-              data: _this3.secondpoints
-            });
-
-            var color = _this3.getRandomColor();
-
-            _this3.options2.colors.push(color);
-
-            _this3.options2.xaxis.categories = _this3.mnths;
-            PRODUCT = "";
-            _this3.secondpoints = [];
-          }
-        });
-
-        if (response.data.prods.length > 0) {
-          _this3.series2 = forSeries;
-          _this3.options2 = {
-            chart: {
-              id: "product-summary"
-            },
-            xaxis: {
-              categories: _this3.mnths
-            },
-            stroke: {
-              width: 2,
-              curve: "smooth"
-            }
-          };
-        } else {
-          _this3.series2 = [];
-          _this3.options2 = {
-            chart: {
-              id: "product-summary"
-            },
-            xaxis: {
-              categories: _this3.mnths
-            },
-            stroke: {
-              width: 2,
-              curve: "smooth"
-            }
-          };
-        }
-      })["catch"](function (error) {});
-      this.secondpoints = [];
-      this.options2.colors = [];
-    },
-    QuarterlyProductSale: function QuarterlyProductSale(yyyy) {
-      var _this4 = this;
-
-      this.loadingShow = true;
-      this.secondpoints = [];
-      var params = {
-        year: yyyy
-      };
-      var monthsfrmDB = [];
-      var i;
-      var totalfrmDB = []; // let xs = this.xlabels;
-
-      var ldate = this.lastDate;
-      var namesfromDB = [];
-      var PRODUCT = "";
-      var forSeries = [];
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(_services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].url + "getQuarterlyProductSales", params, _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].config).then(function (response) {
-        if (response.data.status) {
-          _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].deauthenticate();
-        }
-
-        _this4.loadingShow = false;
-        response.data.prods.forEach(function (element) {
-          namesfromDB.push(element.ProductName);
-          var d = element.month;
-          var tots = element.quan;
-          monthsfrmDB.push(d);
-          totalfrmDB.push(tots);
-        });
-
-        _this4.productName.forEach(function (name) {
-          if (namesfromDB.includes(name)) {
-            response.data.prods.forEach(function (prod) {
-              if (prod.ProductName === name) {
-                PRODUCT = name;
-
-                for (i = 1; i < _this4.mnths.length + 1; i++) {
-                  if (prod.month === i) {
-                    _this4.secondpoints.push(parseInt(prod.quan));
-                  } else {
-                    _this4.secondpoints.push(0);
-                  }
-                }
-
-                for (var i = 0; i < _this4.secondpoints.length; i++) {
-                  if (i == 0 || i == 1 || i == 2) {
-                    _this4.firstQ.push(_this4.secondpoints[i]);
-                  } else if (i == 3 || i == 4 || i == 5) {
-                    _this4.secondQ.push(_this4.secondpoints[i]);
-                  } else if (i == 6 || i == 7 || i == 8) {
-                    _this4.thirdQ.push(_this4.secondpoints[i]);
-                  } else if (i == 9 || i == 10 || i == 11) {
-                    _this4.forthQ.push(_this4.secondpoints[i]);
-                  }
-                }
-
-                _this4.QauterData = [];
-
-                var one = _this4.firstQ.reduce(function (total, num) {
-                  return total + num;
-                });
-
-                _this4.QauterData.push(one);
-
-                var two = _this4.secondQ.reduce(function (total, num) {
-                  return total + num;
-                });
-
-                _this4.QauterData.push(two);
-
-                var three = _this4.thirdQ.reduce(function (total, num) {
-                  return total + num;
-                });
-
-                _this4.QauterData.push(three);
-
-                var four = _this4.forthQ.reduce(function (total, num) {
-                  return total + num;
-                });
-
-                _this4.QauterData.push(four);
-
-                _this4.secondpoints = _this4.QauterData;
-                forSeries.push({
-                  name: PRODUCT,
-                  data: _this4.secondpoints
-                });
-
-                var color = _this4.getRandomColor();
-
-                _this4.options2.colors.push(color);
-
-                PRODUCT = "";
-                _this4.secondpoints = [];
-              }
-            });
-            _this4.firstQ = [];
-            _this4.secondQ = [];
-            _this4.thirdQ = [];
-            _this4.forthQ = [];
-            _this4.QauterData = [];
-          } else {
-            PRODUCT = name;
-
-            for (i = 1; i < _this4.mnths.length + 1; i++) {
-              _this4.secondpoints.push(0);
-            }
-
-            for (var i = 0; i < _this4.secondpoints.length; i++) {
-              if (i == 0 || i == 1 || i == 2) {
-                _this4.firstQ.push(_this4.secondpoints[i]);
-              } else if (i == 3 || i == 4 || i == 5) {
-                _this4.secondQ.push(_this4.secondpoints[i]);
-              } else if (i == 6 || i == 7 || i == 8) {
-                _this4.thirdQ.push(_this4.secondpoints[i]);
-              } else if (i == 9 || i == 10 || i == 11) {
-                _this4.forthQ.push(_this4.secondpoints[i]);
-              }
-            }
-
-            _this4.QauterData = [];
-
-            var one = _this4.firstQ.reduce(function (total, num) {
-              return total + num;
-            });
-
-            _this4.QauterData.push(one);
-
-            var two = _this4.secondQ.reduce(function (total, num) {
-              return total + num;
-            });
-
-            _this4.QauterData.push(two);
-
-            var three = _this4.thirdQ.reduce(function (total, num) {
-              return total + num;
-            });
-
-            _this4.QauterData.push(three);
-
-            var four = _this4.forthQ.reduce(function (total, num) {
-              return total + num;
-            });
-
-            _this4.QauterData.push(four);
-
-            _this4.secondpoints = _this4.QauterData;
-            forSeries.push({
-              name: PRODUCT,
-              data: _this4.secondpoints
-            });
-
-            var color = _this4.getRandomColor();
-
-            _this4.options2.colors.push(color);
-
-            PRODUCT = "";
-            _this4.secondpoints = [];
-          }
-
-          _this4.firstQ = [];
-          _this4.secondQ = [];
-          _this4.thirdQ = [];
-          _this4.forthQ = [];
-          _this4.QauterData = [];
-        });
-
-        if (response.data.prods.length > 0) {
-          _this4.series2 = forSeries;
-          _this4.options2 = {
-            chart: {
-              id: "product-summary"
-            },
-            xaxis: {
-              categories: _this4.quarter
-            },
-            stroke: {
-              width: 2,
-              curve: "smooth"
-            }
-          };
-        } else {
-          _this4.series2 = [];
-          _this4.options2 = {
-            chart: {
-              id: "product-summary"
-            },
-            xaxis: {
-              categories: _this4.quarter
-            },
-            stroke: {
-              width: 2,
-              curve: "smooth"
-            }
-          };
-        }
-      })["catch"](function (error) {});
-      this.firstQ = [];
-      this.secondQ = [];
-      this.thirdQ = [];
-      this.forthQ = [];
-      this.QauterData = [];
-      this.options2.colors = [];
-    },
-    SemiProductSale: function SemiProductSale(yyyy) {
-      var _this5 = this;
-
-      this.loadingShow = true;
-      this.secondpoints = [];
-      var params = {
-        year: yyyy
-      };
-      var monthsfrmDB = [];
-      var i;
-      var totalfrmDB = []; // let xs = this.xlabels;
-
-      var ldate = this.lastDate;
-      var namesfromDB = [];
-      var PRODUCT = "";
-      var forSeries = [];
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(_services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].url + "getSemiProductSales", params, _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].config).then(function (response) {
-        if (response.data.status) {
-          _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].deauthenticate();
-        }
-
-        _this5.loadingShow = false;
-        response.data.prods.forEach(function (element) {
-          namesfromDB.push(element.ProductName);
-          var d = element.month;
-          var tots = element.quan;
-          monthsfrmDB.push(d);
-          totalfrmDB.push(tots);
-        });
-
-        _this5.productName.forEach(function (name) {
-          if (namesfromDB.includes(name)) {
-            response.data.prods.forEach(function (prod) {
-              if (prod.ProductName === name) {
-                PRODUCT = name;
-
-                for (i = 1; i < _this5.mnths.length + 1; i++) {
-                  if (prod.month === i) {
-                    _this5.secondpoints.push(parseInt(prod.quan));
-                  } else {
-                    _this5.secondpoints.push(0);
-                  }
-                }
-
-                for (var i = 0; i < _this5.secondpoints.length; i++) {
-                  if (i == 0 || i == 1 || i == 2) {
-                    _this5.firstQ.push(_this5.secondpoints[i]);
-                  } else if (i == 3 || i == 4 || i == 5) {
-                    _this5.secondQ.push(_this5.secondpoints[i]);
-                  } else if (i == 6 || i == 7 || i == 8) {
-                    _this5.thirdQ.push(_this5.secondpoints[i]);
-                  } else if (i == 9 || i == 10 || i == 11) {
-                    _this5.forthQ.push(_this5.secondpoints[i]);
-                  }
-                }
-
-                _this5.QauterData = [];
-
-                var one = _this5.firstQ.reduce(function (total, num) {
-                  return total + num;
-                });
-
-                var two = _this5.secondQ.reduce(function (total, num) {
-                  return total + num;
-                });
-
-                var three = _this5.thirdQ.reduce(function (total, num) {
-                  return total + num;
-                });
-
-                var four = _this5.forthQ.reduce(function (total, num) {
-                  return total + num;
-                });
-
-                _this5.first_Half = one + two;
-                _this5.second_Half = three + four;
-
-                _this5.semi_Data.push(_this5.first_Half);
-
-                _this5.semi_Data.push(_this5.second_Half); // this.points = this.semi_Data;
-
-
-                _this5.secondpoints = _this5.semi_Data;
-                forSeries.push({
-                  name: PRODUCT,
-                  data: _this5.secondpoints
-                }); // console.log("secondpoints ===", this.secondpoints);
-
-                PRODUCT = "";
-                _this5.secondpoints = [];
-              }
-            });
-            _this5.firstQ = [];
-            _this5.secondQ = [];
-            _this5.thirdQ = [];
-            _this5.forthQ = [];
-            _this5.QauterData = [];
-            _this5.semi_Data = [];
-          } else {
-            PRODUCT = name;
-
-            for (i = 1; i < _this5.mnths.length + 1; i++) {
-              _this5.secondpoints.push(0);
-            }
-
-            for (var i = 0; i < _this5.secondpoints.length; i++) {
-              if (i == 0 || i == 1 || i == 2) {
-                _this5.firstQ.push(_this5.secondpoints[i]);
-              } else if (i == 3 || i == 4 || i == 5) {
-                _this5.secondQ.push(_this5.secondpoints[i]);
-              } else if (i == 6 || i == 7 || i == 8) {
-                _this5.thirdQ.push(_this5.secondpoints[i]);
-              } else if (i == 9 || i == 10 || i == 11) {
-                _this5.forthQ.push(_this5.secondpoints[i]);
-              }
-            }
-
-            _this5.QauterData = [];
-
-            var one = _this5.firstQ.reduce(function (total, num) {
-              return total + num;
-            });
-
-            var two = _this5.secondQ.reduce(function (total, num) {
-              return total + num;
-            });
-
-            var three = _this5.thirdQ.reduce(function (total, num) {
-              return total + num;
-            });
-
-            var four = _this5.forthQ.reduce(function (total, num) {
-              return total + num;
-            });
-
-            _this5.first_Half = one + two;
-            _this5.second_Half = three + four;
-
-            _this5.semi_Data.push(_this5.first_Half);
-
-            _this5.semi_Data.push(_this5.second_Half); // this.points = this.semi_Data;
-
-
-            _this5.secondpoints = _this5.semi_Data;
-            forSeries.push({
-              name: PRODUCT,
-              data: _this5.secondpoints
-            });
-
-            var color = _this5.getRandomColor();
-
-            _this5.options2.colors.push(color);
-
-            PRODUCT = "";
-            _this5.secondpoints = [];
-          }
-
-          _this5.firstQ = [];
-          _this5.secondQ = [];
-          _this5.thirdQ = [];
-          _this5.forthQ = [];
-          _this5.QauterData = [];
-          _this5.semi_Data = [];
-        });
-
-        if (response.data.prods.length > 0) {
-          _this5.series2 = forSeries;
-          _this5.options2 = {
-            chart: {
-              id: "product-summary"
-            },
-            xaxis: {
-              categories: _this5.semi
-            },
-            stroke: {
-              width: 2,
-              curve: "smooth"
-            }
-          };
-        } else {
-          _this5.series2 = [];
-          _this5.options2 = {
-            chart: {
-              id: "product-summary"
-            },
-            xaxis: {
-              categories: _this5.semi
-            },
-            stroke: {
-              width: 2,
-              curve: "smooth"
-            }
-          };
-        }
-      })["catch"](function (error) {});
-      this.firstQ = [];
-      this.secondQ = [];
-      this.thirdQ = [];
-      this.forthQ = [];
-      this.QauterData = [];
-      this.semi_Data = [];
-      this.options2.colors = [];
-    },
-    getAnnualProductSales: function getAnnualProductSales(years) {// this.loadingShow = true;
-      // this.points = [];
-      // let startingYR = values[0];
-      // let endYear = values[1];
-      // let graphLabel = startingYR + " - " + endYear;
-      // this.MonthLabel = graphLabel;
-      // let gap = endYear - startingYR;
-      // let array = [];
-      // let labelsArr = [];
-      // let params = {
-      //   from: startingYR,
-      //   to: endYear
-      // };
-      // Axios.post(AUTH.url + "getAnnualProductSales", params, AUTH.config).then(
-      //   response => {
-      //     if (response.data.status) {
-      //       AUTH.deauthenticate();
-      //     }
-      //     this.loadingShow = false;
-      //     response.data.subtotal.forEach(element => {
-      //       if (element.year <= endYear && element.year == startingYR) {
-      //         array.push(element.sub);
-      //         labelsArr.push(startingYR);
-      //         startingYR++;
-      //       }
-      //     });
-      //     this.points = array;
-      //     this.annualLabels = labelsArr;
-      //     this.series = [
-      //       {
-      //         data: this.points
-      //       }
-      //     ];
-      //     this.options = {
-      //       colors: ["#ff5b04"],
-      //       chart: {
-      //         id: "sales-summary"
-      //       },
-      //       xaxis: {
-      //         categories: this.annualLabels
-      //       },
-      //       stroke: {
-      //         width: 2,
-      //         curve: "smooth"
-      //       }
-      //     };
-      //   }
-      // );
-    },
-    onFilter2: function onFilter2() {
-      if (this.thefilter2 == "Daily") {
-        this.options2.xaxis.categories = [];
-        this.MonthLabel2 = this.mnths[this.theMonth - 1]; // this.options2.xaxis.categories = this.xlabels;
-
-        this.dailyProductSale();
-        this.ok = true;
-        this.ok2 = false;
-        this.ok3 = false;
-      } else if (this.thefilter2 == "Weekly") {} else if (this.thefilter2 == "Monthly") {
-        this.MonthLabel2 = new Date(this.thedate2).getFullYear(); // this.options2.xaxis.categories = this.mnths;
-
-        this.ok = false;
-        this.ok2 = true;
-        this.ok3 = false;
-        this.MonthlyProductSale(this.yrvalueS); // console.log("ang colors bruh ", this.options2.colors);
-      } else if (this.thefilter2 == "Quarterly") {
-        this.MonthLabel2 = new Date(this.thedate2).getFullYear(); // this.options2.xaxis.categories = this.quarter;
-
-        this.QuarterlyProductSale(this.yrvalueS);
-        this.ok = false;
-        this.ok2 = true;
-        this.ok3 = false;
-      } else if (this.thefilter2 == "Semi-Annual") {
-        this.MonthLabel2 = new Date(this.thedate2).getFullYear(); // this.options2.xaxis.categories = this.semi;
-
-        this.SemiProductSale(this.yrvalueS);
-        this.ok = false;
-        this.ok2 = true;
-        this.ok3 = false;
-      } else if (this.thefilter2 == "Annual") {
-        this.ok = false;
-        this.ok2 = false;
-        this.ok3 = true;
-        sweetalert__WEBPACK_IMPORTED_MODULE_5___default()({
-          title: "Ctrl + click(select)",
-          text: "After Selecting Year start, Press Ctrl + Click to Select Year End",
-          icon: "warning",
-          dangerMode: true
-        });
-      }
-    },
-    onChangeYear2: function onChangeYear2() {
-      if (this.thefilter2 == "Monthly") {
-        this.MonthlyProductSale(this.yrvalue2);
-        this.MonthLabel2 = this.yrvalue2;
-      } else if (this.thefilter2 == "Quarterly") {
-        this.QuarterlyProductSale(this.yrvalue2);
-        this.MonthLabel2 = this.yrvalue2;
-      } else if (this.thefilter2 == "Semi-Annual") {
-        this.SemiProductSale(this.yrvalueS);
-        this.MonthLabel2 = this.yrvalueS;
-      } else if (this.thefilter2 == "Annual") {}
-    },
-    // --------------------- for sales summary graph -----------------------------------
-    getDailySummary: function getDailySummary() {
-      var _this6 = this;
-
-      this.loadingShow = true;
-      this.points = [];
-      var params = {
-        month: this.theMonth,
-        year: this.theYear
-      };
-      var i;
-      var dateFrmDBarr = [];
-      var totalfrmDB = []; // let xs = this.xlabels;
-
-      var ldate = this.lastDate;
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(_services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].url + "getDailySales", params, _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].config).then(function (response) {
-        if (response.data.status) {
-          _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].deauthenticate();
-        }
-
-        _this6.loadingShow = false;
-        response.data.total.forEach(function (element) {
-          var d = element.date;
-          var tots = element.sub;
-          dateFrmDBarr.push(d);
-          totalfrmDB.push(tots);
-        });
-
-        for (i = 1; i < ldate + 1; i++) {
-          if (dateFrmDBarr.includes(i)) {
-            response.data.total.forEach(function (element) {
-              if (element.date == i) {
-                _this6.points.push(element.sub);
-              }
-            });
-          } else {
-            _this6.points.push(0);
-          }
-        }
-
-        if (response.data.total.length > 0) {
-          _this6.series = [{
-            data: _this6.points
-          }];
-        } else {
-          _this6.series = [];
-        }
-      })["catch"](function (error) {});
-      this.points = [];
-    },
-    getDate: function getDate() {
-      var date = new Date();
-      this.theMonth = date.getMonth() + 1 > 9 ? date.getMonth() + 1 : "0" + (date.getMonth() + 1);
-      this.theYear = date.getFullYear();
-      this.lastDate = new Date(this.theYear, this.theMonth, 0).getDate();
-      this.xvalues();
-    },
-    xvalues: function xvalues() {
-      this.xlabels = [];
-      var i;
-
-      for (i = 1; i < this.lastDate + 1; i++) {
-        this.xlabels.push(i);
-      }
-
-      this.categories = this.xlabels;
-    },
-    onFilter: function onFilter() {
-      if (this.thefilter == "Daily") {
-        this.MonthLabel = this.mnths[this.theMonth - 1];
-        this.options = {
-          colors: ["#ff5b04"],
-          chart: {
-            id: "sales-summary"
-          },
-          xaxis: {
-            categories: this.xlabels
-          },
-          stroke: {
-            width: 2,
-            curve: "smooth"
-          }
-        };
-        this.getDailySummary();
-        this.ok = true;
-        this.ok2 = false;
-        this.ok3 = false;
-        this.options.xaxis.categories = [];
-      } else if (this.thefilter == "Weekly") {} else if (this.thefilter == "Monthly") {
-        this.getMonthlySummary(this.yrvalue);
-        this.MonthLabel = new Date(this.thedate).getFullYear();
-        this.options = {
-          colors: ["#ff5b04"],
-          chart: {
-            id: "sales-summary"
-          },
-          xaxis: {
-            categories: this.mnths
-          },
-          stroke: {
-            width: 2,
-            curve: "smooth"
-          }
-        };
-        this.ok = false;
-        this.ok2 = true;
-        this.ok3 = false;
-      } else if (this.thefilter == "Quarterly") {
-        this.MonthLabel = new Date(this.thedate).getFullYear();
-        this.getQuarterlySummary(this.yrvalue);
-        this.options = {
-          colors: ["#ff5b04"],
-          chart: {
-            id: "sales-summary"
-          },
-          xaxis: {
-            categories: this.quarter
-          },
-          stroke: {
-            width: 2,
-            curve: "smooth"
-          }
-        };
-        this.ok = false;
-        this.ok2 = true;
-        this.ok3 = false;
-      } else if (this.thefilter == "Semi-Annual") {
-        this.MonthLabel = new Date(this.thedate).getFullYear();
-        this.getSemi_AnnualSummary(this.yrvalue);
-        this.options = {
-          colors: ["#ff5b04"],
-          chart: {
-            id: "sales-summary"
-          },
-          xaxis: {
-            categories: this.semi
-          },
-          stroke: {
-            width: 2,
-            curve: "smooth"
-          }
-        };
-        this.ok = false;
-        this.ok2 = true;
-        this.ok3 = false;
-      } else if (this.thefilter == "Annual") {
-        this.ok = false;
-        this.ok2 = false;
-        this.ok3 = true;
-        sweetalert__WEBPACK_IMPORTED_MODULE_5___default()({
-          title: "Ctrl + click(select)",
-          text: "After Selecting Year start, Press Ctrl + Click to Select Year End",
-          icon: "warning",
-          dangerMode: true
-        });
-      }
-    },
-    onChangeDate: function onChangeDate() {
-      this.lastDate = null;
-      var d = new Date(this.thedate);
-      this.theMonth = d.getMonth() + 1 > 9 ? d.getMonth() + 1 : "0" + (d.getMonth() + 1);
-      this.theYear = d.getFullYear();
-      this.MonthLabel = this.mnths[this.theMonth - 1];
-      var lastDate = new Date(this.theYear, this.theMonth, 0).getDate();
-      this.lastDate = lastDate;
-      this.xvalues();
-      this.getDailySummary();
-    },
-    onChangeDatePS: function onChangeDatePS() {
-      this.lastDate = null;
-      var d = new Date(this.thedate2);
-      this.theMonth = d.getMonth() + 1 > 9 ? d.getMonth() + 1 : "0" + (d.getMonth() + 1);
-      this.theYear2 = d.getFullYear();
-      this.MonthLabel2 = this.mnths[this.theMonth - 1];
-      var lastDate = new Date(this.theYear, this.theMonth, 0).getDate();
-      this.lastDate = lastDate;
-      this.xvalues();
-      this.dailyProductSale();
-    },
-    onChangeYear: function onChangeYear() {
-      if (this.thefilter == "Monthly") {
-        this.getMonthlySummary(this.yrvalue);
-        this.MonthLabel = this.yrvalue;
-      } else if (this.thefilter == "Quarterly") {
-        this.getQuarterlySummary(this.yrvalue);
-        this.MonthLabel = this.yrvalue;
-      } else if (this.thefilter == "Semi-Annual") {
-        this.getSemi_AnnualSummary(this.yrvalue);
-        this.MonthLabel = this.yrvalue;
-      }
-    },
-    onChanging: function onChanging() {
-      this.getAnnualSummary(this.Multiyrvalue);
-    },
-    onChanging2: function onChanging2() {
-      this.getAnnualSummary(this.Multiyrvalue);
-    },
-    getYears: function getYears() {
-      var _this7 = this;
-
-      this.loadingShow = true;
-      var params = {
-        year: this.yrvalue
-      };
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(_services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].url + "getyears", params, _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].config).then(function (response) {
-        if (response.data.status) {
-          _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].deauthenticate();
-        }
-
-        _this7.loadingShow = false;
-        response.data.years.forEach(function (element) {
-          var yr = element.year.substring(0, 4);
-
-          if (_this7.years.includes(yr)) {} else {
-            _this7.years.push(yr);
-          }
-        });
-      })["catch"](function (error) {});
-    },
-    getMonthlySummary: function getMonthlySummary(yyyy) {
-      var _this8 = this;
-
-      this.loadingShow = true;
-      this.points = [];
-      var monthsfrmDB = [];
-      var i;
-      var params = {
-        year: yyyy
-      };
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(_services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].url + "getmonthlySales", params, _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].config).then(function (response) {
-        if (response.data.status) {
-          _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].deauthenticate();
-        }
-
-        _this8.loadingShow = false;
-        response.data.subtotal.forEach(function (element) {
-          var sub = element.sub;
-          var month = element.month;
-          monthsfrmDB.push(month);
-        });
-
-        for (i = 1; i < _this8.mnths.length + 1; i++) {
-          if (monthsfrmDB.includes(i)) {
-            response.data.subtotal.forEach(function (element) {
-              if (element.month == i) {
-                _this8.points.push(element.sub);
-              }
-            });
-          } else {
-            _this8.points.push(0);
-          }
-        }
-
-        _this8.series = [{
-          data: _this8.points
-        }];
-      })["catch"](function (error) {});
-    },
-    getQuarterlySummary: function getQuarterlySummary(yyyy) {
-      var _this9 = this;
-
-      this.loadingShow = true;
-      this.points = [];
-      var monthsfrmDB = [];
-      var i;
-      var params = {
-        year: yyyy
-      };
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(_services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].url + "getQuarterlySales", params, _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].config).then(function (response) {
-        if (response.data.status) {
-          _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].deauthenticate();
-        }
-
-        _this9.loadingShow = false;
-        response.data.subtotal.forEach(function (element) {
-          var sub = element.sub;
-          var month = element.month;
-          monthsfrmDB.push(month);
-        });
-
-        for (i = 1; i < _this9.mnths.length + 1; i++) {
-          if (monthsfrmDB.includes(i)) {
-            response.data.subtotal.forEach(function (element) {
-              if (element.month == i) {
-                _this9.points.push(element.sub);
-              }
-            });
-          } else {
-            _this9.points.push(0);
-          }
-        }
-
-        for (var i = 0; i < _this9.points.length; i++) {
-          if (i == 0 || i == 1 || i == 2) {
-            _this9.firstQ.push(_this9.points[i]);
-          } else if (i == 3 || i == 4 || i == 5) {
-            _this9.secondQ.push(_this9.points[i]);
-          } else if (i == 6 || i == 7 || i == 8) {
-            _this9.thirdQ.push(_this9.points[i]);
-          } else if (i == 9 || i == 10 || i == 11) {
-            _this9.forthQ.push(_this9.points[i]);
-          }
-        }
-
-        _this9.QauterData = [];
-
-        var one = _this9.firstQ.reduce(function (total, num) {
-          return total + num;
-        });
-
-        _this9.QauterData.push(one);
-
-        var two = _this9.secondQ.reduce(function (total, num) {
-          return total + num;
-        });
-
-        _this9.QauterData.push(two);
-
-        var three = _this9.thirdQ.reduce(function (total, num) {
-          return total + num;
-        });
-
-        _this9.QauterData.push(three);
-
-        var four = _this9.forthQ.reduce(function (total, num) {
-          return total + num;
-        });
-
-        _this9.QauterData.push(four);
-
-        _this9.points = _this9.QauterData;
-        _this9.series = [{
-          data: _this9.points
-        }];
-      })["catch"](function (error) {});
-      this.firstQ = [];
-      this.secondQ = [];
-      this.thirdQ = [];
-      this.forthQ = [];
-      this.QauterData = [];
-    },
-    getSemi_AnnualSummary: function getSemi_AnnualSummary(yyyy) {
-      var _this10 = this;
-
-      this.loadingShow = true;
-      this.semi_Data = [];
-      this.points = [];
-      var monthsfrmDB = [];
-      var i;
-      var params = {
-        year: yyyy
-      };
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(_services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].url + "getSemi-AnnualSales", params, _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].config).then(function (response) {
-        if (response.data.status) {
-          _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].deauthenticate();
-        }
-
-        _this10.loadingShow = false;
-        response.data.subtotal.forEach(function (element) {
-          var sub = element.sub;
-          var month = element.month;
-          monthsfrmDB.push(month);
-        });
-
-        for (i = 1; i < _this10.mnths.length + 1; i++) {
-          if (monthsfrmDB.includes(i)) {
-            response.data.subtotal.forEach(function (element) {
-              if (element.month == i) {
-                _this10.points.push(element.sub);
-              }
-            });
-          } else {
-            _this10.points.push(0);
-          }
-        }
-
-        for (var i = 0; i < _this10.points.length; i++) {
-          if (i == 0 || i == 1 || i == 2) {
-            _this10.firstQ.push(_this10.points[i]);
-          } else if (i == 3 || i == 4 || i == 5) {
-            _this10.secondQ.push(_this10.points[i]);
-          } else if (i == 6 || i == 7 || i == 8) {
-            _this10.thirdQ.push(_this10.points[i]);
-          } else if (i == 9 || i == 10 || i == 11) {
-            _this10.forthQ.push(_this10.points[i]);
-          }
-        }
-
-        _this10.QauterData = [];
-
-        var one = _this10.firstQ.reduce(function (total, num) {
-          return total + num;
-        });
-
-        var two = _this10.secondQ.reduce(function (total, num) {
-          return total + num;
-        });
-
-        var three = _this10.thirdQ.reduce(function (total, num) {
-          return total + num;
-        });
-
-        var four = _this10.forthQ.reduce(function (total, num) {
-          return total + num;
-        });
-
-        _this10.first_Half = one + two;
-        _this10.second_Half = three + four;
-
-        _this10.semi_Data.push(_this10.first_Half);
-
-        _this10.semi_Data.push(_this10.second_Half);
-
-        _this10.points = _this10.semi_Data;
-        _this10.series = [{
-          data: _this10.points
-        }];
-      })["catch"](function (error) {});
-      this.firstQ = [];
-      this.secondQ = [];
-      this.thirdQ = [];
-      this.forthQ = [];
-      this.first_Half = [];
-      this.second_Half = [];
-    },
-    getAnnualSummary: function getAnnualSummary(values) {
-      var _this11 = this;
-
-      this.loadingShow = true;
-      this.points = [];
-      var startingYR = values[0];
-      var endYear = values[1];
-      var graphLabel = startingYR + " - " + endYear;
-      this.MonthLabel = graphLabel;
-      var gap = endYear - startingYR;
-      var array = [];
-      var labelsArr = [];
-      var params = {
-        from: startingYR,
-        to: endYear
-      };
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(_services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].url + "getAnnualSales", params, _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].config).then(function (response) {
-        if (response.data.status) {
-          _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].deauthenticate();
-        }
-
-        _this11.loadingShow = false;
-        response.data.subtotal.forEach(function (element) {
-          if (element.year <= endYear && element.year == startingYR) {
-            array.push(element.sub);
-            labelsArr.push(startingYR);
-            startingYR++;
-          }
-        });
-        _this11.points = array;
-        _this11.annualLabels = labelsArr;
-        _this11.series = [{
-          data: _this11.points
-        }];
-        _this11.options = {
-          colors: ["#ff5b04"],
-          chart: {
-            id: "sales-summary"
-          },
-          xaxis: {
-            categories: _this11.annualLabels
-          },
-          stroke: {
-            width: 2,
-            curve: "smooth"
-          }
-        };
-      })["catch"](function (error) {});
-    },
-    getTop3: function getTop3() {
-      var _this12 = this;
-
-      this.loadingShow = true;
-      var params = {
-        year: null
-      };
-      var top3 = [];
-      var indexes = [];
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(_services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].url + "getTopProd", params, _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].config).then(function (response) {
-        if (response.data.status) {
-          _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].deauthenticate();
-        } // let resLen = response.data.prods;
-
-
-        response.data.prods.forEach(function (element) {
-          indexes.push(response.data.prods.indexOf(element));
-        });
-
-        for (var i = 0; i < 3; i++) {
-          if (indexes.includes(i)) {
-            top3.push({
-              img: response.data.prods[i].img,
-              name: response.data.prods[i].pName
-            });
-          } else {
-            top3.push({
-              img: _this12.tempimg,
-              name: ""
-            });
-          }
-        }
-
-        _this12.loadingShow = false;
-      })["catch"](function (error) {});
-      this.topprodarr = top3;
+  }
+
+  function wrap(innerFn, outerFn, self, tryLocsList) {
+    // If outerFn provided and outerFn.prototype is a Generator, then outerFn.prototype instanceof Generator.
+    var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator;
+    var generator = Object.create(protoGenerator.prototype);
+    var context = new Context(tryLocsList || []);
+
+    // The ._invoke method unifies the implementations of the .next,
+    // .throw, and .return methods.
+    generator._invoke = makeInvokeMethod(innerFn, self, context);
+
+    return generator;
+  }
+  exports.wrap = wrap;
+
+  // Try/catch helper to minimize deoptimizations. Returns a completion
+  // record like context.tryEntries[i].completion. This interface could
+  // have been (and was previously) designed to take a closure to be
+  // invoked without arguments, but in all the cases we care about we
+  // already have an existing method we want to call, so there's no need
+  // to create a new function object. We can even get away with assuming
+  // the method takes exactly one argument, since that happens to be true
+  // in every case, so we don't have to touch the arguments object. The
+  // only additional allocation required is the completion record, which
+  // has a stable shape and so hopefully should be cheap to allocate.
+  function tryCatch(fn, obj, arg) {
+    try {
+      return { type: "normal", arg: fn.call(obj, arg) };
+    } catch (err) {
+      return { type: "throw", arg: err };
     }
   }
-});
 
-/***/ }),
+  var GenStateSuspendedStart = "suspendedStart";
+  var GenStateSuspendedYield = "suspendedYield";
+  var GenStateExecuting = "executing";
+  var GenStateCompleted = "completed";
 
-/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/modules/dashboard/adminDashboard.vue?vue&type=style&index=0&id=124112e6&scoped=true&lang=css&":
-/*!***************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/modules/dashboard/adminDashboard.vue?vue&type=style&index=0&id=124112e6&scoped=true&lang=css& ***!
-  \***************************************************************************************************************************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+  // Returning this object from the innerFn has the same effect as
+  // breaking out of the dispatch switch statement.
+  var ContinueSentinel = {};
 
-exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
-// imports
+  // Dummy constructor functions that we use as the .constructor and
+  // .constructor.prototype properties for functions that return Generator
+  // objects. For full spec compliance, you may wish to configure your
+  // minifier not to mangle the names of these two functions.
+  function Generator() {}
+  function GeneratorFunction() {}
+  function GeneratorFunctionPrototype() {}
 
+  // This is a polyfill for %IteratorPrototype% for environments that
+  // don't natively support it.
+  var IteratorPrototype = {};
+  IteratorPrototype[iteratorSymbol] = function () {
+    return this;
+  };
 
-// module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* .filter{\r\n  width: 120px;\r\n} */\n.firstOpt[data-v-124112e6]{\r\n  margin-right: 5%;\n}\n.firstOpt[data-v-124112e6],\r\n.filter[data-v-124112e6] {\r\n  width: 120px;\r\n  align-content: left;\n}\n.prodNAme[data-v-124112e6] {\r\n  color: #ff5b04;\n}\n.welcome[data-v-124112e6] {\r\n  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,\r\n    Helvetica Neue, Arial, sans-serif;\r\n  font-size: 25px;\r\n  margin-bottom: 10px;\r\n  margin-left: 4%;\r\n  font-weight: bold;\r\n  margin-top: 5%;\n}\n.insideToolbar[data-v-124112e6] {\r\n  margin-top: 25px;\n}\n.GraphLabel[data-v-124112e6] {\r\n  margin-left: 45%;\r\n  font-weight: bold;\n}\n.annualDateCal1[data-v-124112e6],\r\n.annualDateCal2[data-v-124112e6],\r\n.yearMenu[data-v-124112e6],\r\n.graphTitle[data-v-124112e6] {\r\n  color: black;\n}\n.graphTitle[data-v-124112e6],\r\n.text1[data-v-124112e6] {\r\n  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,\r\n    Helvetica Neue, Arial, sans-serif;\r\n  font-size: 1rem;\r\n  font-weight: bold;\n}\n.graphTitle[data-v-124112e6]{\r\n  margin-left: 5%;\n}\n.YRcal[data-v-124112e6] {\r\n  color: black;\n}\n.Cname[data-v-124112e6],\r\n.GraphLabel[data-v-124112e6] {\r\n  color: #ff5b04;\n}\n.text1[data-v-124112e6] {\r\n  margin-left: 10%;\r\n  text-align: center;\r\n  color: black;\n}\n.TB3[data-v-124112e6] {\r\n  margin-bottom: 20px;\r\n  justify-content: center;\r\n  border-radius: 1%;\n}\r\n/* .theimageCard {\r\n  align-content: center;\r\n  border: 1px solid #999999;\r\n  border-radius: 1%;\r\n} */\n.prods[data-v-124112e6] {\r\n  border: 1px solid #999999;\r\n  border-radius: 1%;\n}\n.subhead[data-v-124112e6] {\r\n  margin-bottom: 20px;\n}\r\n/* .chart {\r\n  width: 50%;\r\n} */\n.body[data-v-124112e6] {\r\n  margin-left: 3%;\r\n  margin-right: 3%;\r\n  height: 100%;\r\n  margin-bottom: 5%;\n}\n.top3[data-v-124112e6] {\r\n  width: 370px;\r\n  height: 1000px;\r\n  border: 1px solid #999999;\r\n  border-radius: 1%;\n}\n.thetop3[data-v-124112e6] {\r\n  height: 260px;\r\n  width: 95%;\n}\n.theimage[data-v-124112e6] {\r\n  margin: 2%;\r\n  height: 280px;\r\n  width: 100%;\n}\n.Prod_name[data-v-124112e6] {\r\n  color: black;\n}\r\n", ""]);
-
-// exports
-
-
-/***/ }),
-
-/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/modules/dashboard/adminDashboard.vue?vue&type=style&index=0&id=124112e6&scoped=true&lang=css&":
-/*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/modules/dashboard/adminDashboard.vue?vue&type=style&index=0&id=124112e6&scoped=true&lang=css& ***!
-  \*******************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./adminDashboard.vue?vue&type=style&index=0&id=124112e6&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/modules/dashboard/adminDashboard.vue?vue&type=style&index=0&id=124112e6&scoped=true&lang=css&");
-
-if(typeof content === 'string') content = [[module.i, content, '']];
-
-var transform;
-var insertInto;
-
-
-
-var options = {"hmr":true}
-
-options.transform = transform
-options.insertInto = undefined;
-
-var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
-
-if(content.locals) module.exports = content.locals;
-
-if(false) {}
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/modules/dashboard/adminDashboard.vue?vue&type=template&id=124112e6&scoped=true&":
-/*!************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/modules/dashboard/adminDashboard.vue?vue&type=template&id=124112e6&scoped=true& ***!
-  \************************************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", [
-    _vm._m(0),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "row body" },
-      [
-        _c("div", { staticClass: "col-sm-7" }, [
-          _c("div", [
-            _c(
-              "div",
-              [
-                _c(
-                  "v-card",
-                  { staticClass: "subhead" },
-                  [
-                    _c("v-toolbar", { attrs: { color: "#f2f2f2", dark: "" } }, [
-                      _c(
-                        "div",
-                        { staticClass: "row insideToolbar" },
-                        [
-                          _c(
-                            "div",
-                            { staticClass: "col-xs-2" },
-                            [
-                              _c(
-                                "v-toolbar-title",
-                                { staticClass: "graphTitle" },
-                                [_vm._v("Summary of Sales")]
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c("v-spacer"),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-xs-2" }, [
-                            _c("div", { staticClass: "form-group filter" }, [
-                              _c(
-                                "select",
-                                {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.thefilter,
-                                      expression: "thefilter"
-                                    }
-                                  ],
-                                  staticClass: "form-control",
-                                  attrs: { name: "filter", id: "filters" },
-                                  on: {
-                                    change: [
-                                      function($event) {
-                                        var $$selectedVal = Array.prototype.filter
-                                          .call($event.target.options, function(
-                                            o
-                                          ) {
-                                            return o.selected
-                                          })
-                                          .map(function(o) {
-                                            var val =
-                                              "_value" in o ? o._value : o.value
-                                            return val
-                                          })
-                                        _vm.thefilter = $event.target.multiple
-                                          ? $$selectedVal
-                                          : $$selectedVal[0]
-                                      },
-                                      _vm.onFilter
-                                    ]
-                                  }
-                                },
-                                [
-                                  _c("option", { attrs: { value: "Daily" } }, [
-                                    _vm._v("Daily")
-                                  ]),
-                                  _vm._v(" "),
-                                  _c(
-                                    "option",
-                                    { attrs: { value: "Monthly" } },
-                                    [_vm._v("Monthly")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "option",
-                                    { attrs: { value: "Quarterly" } },
-                                    [_vm._v("Quarterly")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "option",
-                                    { attrs: { value: "Semi-Annual" } },
-                                    [_vm._v("Semi-Annual")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c("option", { attrs: { value: "Annual" } }, [
-                                    _vm._v("Annual")
-                                  ])
-                                ]
-                              )
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-xs-2" }, [
-                            _c(
-                              "div",
-                              {
-                                directives: [
-                                  {
-                                    name: "show",
-                                    rawName: "v-show",
-                                    value: _vm.ok,
-                                    expression: "ok"
-                                  }
-                                ],
-                                staticClass: "form-group"
-                              },
-                              [
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.thedate,
-                                      expression: "thedate"
-                                    }
-                                  ],
-                                  staticClass: "form-control firstOpt",
-                                  attrs: { type: "month", id: "calendar" },
-                                  domProps: { value: _vm.thedate },
-                                  on: {
-                                    change: _vm.onChangeDate,
-                                    input: function($event) {
-                                      if ($event.target.composing) {
-                                        return
-                                      }
-                                      _vm.thedate = $event.target.value
-                                    }
-                                  }
-                                })
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                directives: [
-                                  {
-                                    name: "show",
-                                    rawName: "v-show",
-                                    value: _vm.ok2,
-                                    expression: "ok2"
-                                  }
-                                ],
-                                staticClass: "form-group secondOpt"
-                              },
-                              [
-                                _c(
-                                  "select",
-                                  {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.yrvalue,
-                                        expression: "yrvalue"
-                                      }
-                                    ],
-                                    staticClass: "form-control",
-                                    on: {
-                                      change: [
-                                        function($event) {
-                                          var $$selectedVal = Array.prototype.filter
-                                            .call(
-                                              $event.target.options,
-                                              function(o) {
-                                                return o.selected
-                                              }
-                                            )
-                                            .map(function(o) {
-                                              var val =
-                                                "_value" in o
-                                                  ? o._value
-                                                  : o.value
-                                              return val
-                                            })
-                                          _vm.yrvalue = $event.target.multiple
-                                            ? $$selectedVal
-                                            : $$selectedVal[0]
-                                        },
-                                        _vm.onChangeYear
-                                      ]
-                                    }
-                                  },
-                                  _vm._l(_vm.years, function(year) {
-                                    return _c(
-                                      "option",
-                                      { key: year, domProps: { value: year } },
-                                      [_vm._v(_vm._s(year))]
-                                    )
-                                  }),
-                                  0
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                directives: [
-                                  {
-                                    name: "show",
-                                    rawName: "v-show",
-                                    value: _vm.ok3,
-                                    expression: "ok3"
-                                  }
-                                ],
-                                staticClass: "forannualInput"
-                              },
-                              [
-                                _c(
-                                  "select",
-                                  {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.Multiyrvalue,
-                                        expression: "Multiyrvalue"
-                                      }
-                                    ],
-                                    staticClass: "form-control",
-                                    attrs: { multiple: "" },
-                                    on: {
-                                      click: function($event) {
-                                        if (!$event.ctrlKey) {
-                                          return null
-                                        }
-                                        if (
-                                          $event.shiftKey ||
-                                          $event.altKey ||
-                                          $event.metaKey
-                                        ) {
-                                          return null
-                                        }
-                                        return _vm.onChanging($event)
-                                      },
-                                      change: function($event) {
-                                        var $$selectedVal = Array.prototype.filter
-                                          .call($event.target.options, function(
-                                            o
-                                          ) {
-                                            return o.selected
-                                          })
-                                          .map(function(o) {
-                                            var val =
-                                              "_value" in o ? o._value : o.value
-                                            return val
-                                          })
-                                        _vm.Multiyrvalue = $event.target
-                                          .multiple
-                                          ? $$selectedVal
-                                          : $$selectedVal[0]
-                                      }
-                                    }
-                                  },
-                                  _vm._l(_vm.years, function(year) {
-                                    return _c(
-                                      "option",
-                                      { key: year, domProps: { value: year } },
-                                      [_vm._v(_vm._s(year))]
-                                    )
-                                  }),
-                                  0
-                                )
-                              ]
-                            )
-                          ])
-                        ],
-                        1
-                      )
-                    ])
-                  ],
-                  1
-                )
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              [
-                _c("salesChart", {
-                  ref: "realtimeChart",
-                  attrs: {
-                    height: "300px",
-                    type: "line",
-                    options: _vm.options,
-                    series: _vm.series
-                  }
-                }),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "title" },
-                  [
-                    _c(
-                      "v-toolbar",
-                      { attrs: { color: "#f2f2f2" } },
-                      [
-                        _c(
-                          "v-toolbar-title",
-                          {
-                            staticClass: "GraphLabel",
-                            attrs: { name: "theTitle" }
-                          },
-                          [_vm._v(_vm._s(_vm.MonthLabel))]
-                        )
-                      ],
-                      1
-                    )
-                  ],
-                  1
-                )
-              ],
-              1
-            )
-          ]),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _c("div", [
-            _c(
-              "div",
-              [
-                _c(
-                  "v-card",
-                  { staticClass: "subhead" },
-                  [
-                    _c("v-toolbar", { attrs: { color: "#f2f2f2", dark: "" } }, [
-                      _c(
-                        "div",
-                        { staticClass: "row insideToolbar" },
-                        [
-                          _c(
-                            "div",
-                            { staticClass: "col-xs-2" },
-                            [
-                              _c(
-                                "v-toolbar-title",
-                                { staticClass: "graphTitle" },
-                                [_vm._v("Product Sales")]
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c("v-spacer"),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-xs-2" }, [
-                            _c("div", { staticClass: "form-group filter" }, [
-                              _c(
-                                "select",
-                                {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.thefilter2,
-                                      expression: "thefilter2"
-                                    }
-                                  ],
-                                  staticClass: "form-control",
-                                  attrs: { name: "filter", id: "filters" },
-                                  on: {
-                                    change: [
-                                      function($event) {
-                                        var $$selectedVal = Array.prototype.filter
-                                          .call($event.target.options, function(
-                                            o
-                                          ) {
-                                            return o.selected
-                                          })
-                                          .map(function(o) {
-                                            var val =
-                                              "_value" in o ? o._value : o.value
-                                            return val
-                                          })
-                                        _vm.thefilter2 = $event.target.multiple
-                                          ? $$selectedVal
-                                          : $$selectedVal[0]
-                                      },
-                                      _vm.onFilter2
-                                    ]
-                                  }
-                                },
-                                [
-                                  _c("option", { attrs: { value: "Daily" } }, [
-                                    _vm._v("Daily")
-                                  ]),
-                                  _vm._v(" "),
-                                  _c(
-                                    "option",
-                                    { attrs: { value: "Monthly" } },
-                                    [_vm._v("Monthly")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "option",
-                                    { attrs: { value: "Quarterly" } },
-                                    [_vm._v("Quarterly")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "option",
-                                    { attrs: { value: "Semi-Annual" } },
-                                    [_vm._v("Semi-Annual")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c("option", { attrs: { value: "Annual" } }, [
-                                    _vm._v("Annual")
-                                  ])
-                                ]
-                              )
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-xs-2 ccc" }, [
-                            _c(
-                              "div",
-                              {
-                                directives: [
-                                  {
-                                    name: "show",
-                                    rawName: "v-show",
-                                    value: _vm.ok,
-                                    expression: "ok"
-                                  }
-                                ],
-                                staticClass: "form-group"
-                              },
-                              [
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.thedate2,
-                                      expression: "thedate2"
-                                    }
-                                  ],
-                                  staticClass: "form-control firstOpt",
-                                  attrs: { type: "month", id: "calendar" },
-                                  domProps: { value: _vm.thedate2 },
-                                  on: {
-                                    change: _vm.onChangeDatePS,
-                                    input: function($event) {
-                                      if ($event.target.composing) {
-                                        return
-                                      }
-                                      _vm.thedate2 = $event.target.value
-                                    }
-                                  }
-                                })
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                directives: [
-                                  {
-                                    name: "show",
-                                    rawName: "v-show",
-                                    value: _vm.ok2,
-                                    expression: "ok2"
-                                  }
-                                ],
-                                staticClass: "form-group secondOpt"
-                              },
-                              [
-                                _c(
-                                  "select",
-                                  {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.yrvalueS,
-                                        expression: "yrvalueS"
-                                      }
-                                    ],
-                                    staticClass: "form-control",
-                                    on: {
-                                      change: [
-                                        function($event) {
-                                          var $$selectedVal = Array.prototype.filter
-                                            .call(
-                                              $event.target.options,
-                                              function(o) {
-                                                return o.selected
-                                              }
-                                            )
-                                            .map(function(o) {
-                                              var val =
-                                                "_value" in o
-                                                  ? o._value
-                                                  : o.value
-                                              return val
-                                            })
-                                          _vm.yrvalueS = $event.target.multiple
-                                            ? $$selectedVal
-                                            : $$selectedVal[0]
-                                        },
-                                        _vm.onChangeYear2
-                                      ]
-                                    }
-                                  },
-                                  _vm._l(_vm.years, function(year) {
-                                    return _c(
-                                      "option",
-                                      { key: year, domProps: { value: year } },
-                                      [_vm._v(_vm._s(year))]
-                                    )
-                                  }),
-                                  0
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                directives: [
-                                  {
-                                    name: "show",
-                                    rawName: "v-show",
-                                    value: _vm.ok3,
-                                    expression: "ok3"
-                                  }
-                                ],
-                                staticClass: "forannualInput"
-                              },
-                              [
-                                _c(
-                                  "select",
-                                  {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.Multiyrvalue2,
-                                        expression: "Multiyrvalue2"
-                                      }
-                                    ],
-                                    staticClass: "form-control",
-                                    attrs: { multiple: "" },
-                                    on: {
-                                      click: function($event) {
-                                        if (!$event.ctrlKey) {
-                                          return null
-                                        }
-                                        if (
-                                          $event.shiftKey ||
-                                          $event.altKey ||
-                                          $event.metaKey
-                                        ) {
-                                          return null
-                                        }
-                                        return _vm.onChanging2($event)
-                                      },
-                                      change: function($event) {
-                                        var $$selectedVal = Array.prototype.filter
-                                          .call($event.target.options, function(
-                                            o
-                                          ) {
-                                            return o.selected
-                                          })
-                                          .map(function(o) {
-                                            var val =
-                                              "_value" in o ? o._value : o.value
-                                            return val
-                                          })
-                                        _vm.Multiyrvalue2 = $event.target
-                                          .multiple
-                                          ? $$selectedVal
-                                          : $$selectedVal[0]
-                                      }
-                                    }
-                                  },
-                                  _vm._l(_vm.years, function(year) {
-                                    return _c(
-                                      "option",
-                                      { key: year, domProps: { value: year } },
-                                      [_vm._v(_vm._s(year))]
-                                    )
-                                  }),
-                                  0
-                                )
-                              ]
-                            )
-                          ])
-                        ],
-                        1
-                      )
-                    ])
-                  ],
-                  1
-                )
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              [
-                _c("salesChart", {
-                  ref: "realtimeChart",
-                  attrs: {
-                    height: "300px",
-                    type: "line",
-                    options: _vm.options2,
-                    series: _vm.series2
-                  }
-                }),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "title" },
-                  [
-                    _c(
-                      "v-toolbar",
-                      { attrs: { color: "#f2f2f2" } },
-                      [
-                        _c(
-                          "v-toolbar-title",
-                          {
-                            staticClass: "GraphLabel",
-                            attrs: { name: "theTitle" }
-                          },
-                          [_vm._v(_vm._s(_vm.MonthLabel2))]
-                        )
-                      ],
-                      1
-                    )
-                  ],
-                  1
-                )
-              ],
-              1
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-sm-1" }),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "col-sm-4 top3" },
-          [
-            _c(
-              "v-toolbar",
-              { staticClass: "TB3", attrs: { color: "#f2f2f2", dark: "" } },
-              [
-                _c("v-toolbar-title", { staticClass: "text1" }, [
-                  _vm._v("TOP 3 SALABLE PRODUCTS")
-                ])
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "prods" },
-              [
-                _c("v-card", { staticClass: "theimageCard" }, [
-                  _c(
-                    "div",
-                    { staticClass: "theimage" },
-                    [
-                      _c(
-                        "v-img",
-                        {
-                          staticClass: "white--text align-end thetop3",
-                          attrs: { src: _vm.topprodarr[0].img }
-                        },
-                        [
-                          _c("v-card-title", { staticClass: "Prod_name" }, [
-                            _c("i", { staticClass: "prodNAme" }, [
-                              _vm._v(_vm._s(_vm.topprodarr[0].name))
-                            ])
-                          ])
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "theimage" },
-                    [
-                      _c(
-                        "v-img",
-                        {
-                          staticClass: "white--text align-end thetop3",
-                          attrs: { src: _vm.topprodarr[1].img }
-                        },
-                        [
-                          _c("v-card-title", { staticClass: "Prod_name" }, [
-                            _c("i", { staticClass: "prodNAme" }, [
-                              _vm._v(_vm._s(_vm.topprodarr[1].name))
-                            ])
-                          ])
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "theimage" },
-                    [
-                      _c(
-                        "v-img",
-                        {
-                          staticClass: "white--text align-end thetop3",
-                          attrs: { src: _vm.topprodarr[2].img }
-                        },
-                        [
-                          _c("v-card-title", { staticClass: "Prod_name" }, [
-                            _c("i", { staticClass: "prodNAme" }, [
-                              _vm._v(_vm._s(_vm.topprodarr[2].name))
-                            ])
-                          ])
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ])
-              ],
-              1
-            )
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _vm.loadingShow ? _c("loading") : _vm._e()
-      ],
-      1
-    )
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "welcome" }, [
-      _c("b", [
-        _c("i", [
-          _vm._v("\n        WELCOME,\n        "),
-          _c("span", { staticClass: "Cname" }, [_vm._v("DRIPTEA ADMIN")])
-        ])
-      ])
-    ])
+  var getProto = Object.getPrototypeOf;
+  var NativeIteratorPrototype = getProto && getProto(getProto(values([])));
+  if (NativeIteratorPrototype &&
+      NativeIteratorPrototype !== Op &&
+      hasOwn.call(NativeIteratorPrototype, iteratorSymbol)) {
+    // This environment has a native %IteratorPrototype%; use it instead
+    // of the polyfill.
+    IteratorPrototype = NativeIteratorPrototype;
   }
-]
-render._withStripped = true
 
+  var Gp = GeneratorFunctionPrototype.prototype =
+    Generator.prototype = Object.create(IteratorPrototype);
+  GeneratorFunction.prototype = Gp.constructor = GeneratorFunctionPrototype;
+  GeneratorFunctionPrototype.constructor = GeneratorFunction;
+  GeneratorFunction.displayName = define(
+    GeneratorFunctionPrototype,
+    toStringTagSymbol,
+    "GeneratorFunction"
+  );
 
+  // Helper for defining the .next, .throw, and .return methods of the
+  // Iterator interface in terms of a single ._invoke method.
+  function defineIteratorMethods(prototype) {
+    ["next", "throw", "return"].forEach(function(method) {
+      define(prototype, method, function(arg) {
+        return this._invoke(method, arg);
+      });
+    });
+  }
 
-/***/ }),
+  exports.isGeneratorFunction = function(genFun) {
+    var ctor = typeof genFun === "function" && genFun.constructor;
+    return ctor
+      ? ctor === GeneratorFunction ||
+        // For the native GeneratorFunction constructor, the best we can
+        // do is to check its .name property.
+        (ctor.displayName || ctor.name) === "GeneratorFunction"
+      : false;
+  };
 
-/***/ "./resources/assets/noDatatoShow.png":
-/*!*******************************************!*\
-  !*** ./resources/assets/noDatatoShow.png ***!
-  \*******************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+  exports.mark = function(genFun) {
+    if (Object.setPrototypeOf) {
+      Object.setPrototypeOf(genFun, GeneratorFunctionPrototype);
+    } else {
+      genFun.__proto__ = GeneratorFunctionPrototype;
+      define(genFun, toStringTagSymbol, "GeneratorFunction");
+    }
+    genFun.prototype = Object.create(Gp);
+    return genFun;
+  };
 
-module.exports = "/images/noDatatoShow.png?7157d933173a9aecbe367776d59eaed5";
+  // Within the body of any async function, `await x` is transformed to
+  // `yield regeneratorRuntime.awrap(x)`, so that the runtime can test
+  // `hasOwn.call(value, "__await")` to determine if the yielded value is
+  // meant to be awaited.
+  exports.awrap = function(arg) {
+    return { __await: arg };
+  };
 
-/***/ }),
+  function AsyncIterator(generator, PromiseImpl) {
+    function invoke(method, arg, resolve, reject) {
+      var record = tryCatch(generator[method], generator, arg);
+      if (record.type === "throw") {
+        reject(record.arg);
+      } else {
+        var result = record.arg;
+        var value = result.value;
+        if (value &&
+            typeof value === "object" &&
+            hasOwn.call(value, "__await")) {
+          return PromiseImpl.resolve(value.__await).then(function(value) {
+            invoke("next", value, resolve, reject);
+          }, function(err) {
+            invoke("throw", err, resolve, reject);
+          });
+        }
 
-/***/ "./resources/js/modules/dashboard/adminDashboard.vue":
-/*!***********************************************************!*\
-  !*** ./resources/js/modules/dashboard/adminDashboard.vue ***!
-  \***********************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+        return PromiseImpl.resolve(value).then(function(unwrapped) {
+          // When a yielded Promise is resolved, its final value becomes
+          // the .value of the Promise<{value,done}> result for the
+          // current iteration.
+          result.value = unwrapped;
+          resolve(result);
+        }, function(error) {
+          // If a rejected Promise was yielded, throw the rejection back
+          // into the async generator function so it can be handled there.
+          return invoke("throw", error, resolve, reject);
+        });
+      }
+    }
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _adminDashboard_vue_vue_type_template_id_124112e6_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./adminDashboard.vue?vue&type=template&id=124112e6&scoped=true& */ "./resources/js/modules/dashboard/adminDashboard.vue?vue&type=template&id=124112e6&scoped=true&");
-/* harmony import */ var _adminDashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./adminDashboard.vue?vue&type=script&lang=js& */ "./resources/js/modules/dashboard/adminDashboard.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _adminDashboard_vue_vue_type_style_index_0_id_124112e6_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./adminDashboard.vue?vue&type=style&index=0&id=124112e6&scoped=true&lang=css& */ "./resources/js/modules/dashboard/adminDashboard.vue?vue&type=style&index=0&id=124112e6&scoped=true&lang=css&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+    var previousPromise;
 
+    function enqueue(method, arg) {
+      function callInvokeWithMethodAndArg() {
+        return new PromiseImpl(function(resolve, reject) {
+          invoke(method, arg, resolve, reject);
+        });
+      }
 
+      return previousPromise =
+        // If enqueue has been called before, then we want to wait until
+        // all previous Promises have been resolved before calling invoke,
+        // so that results are always delivered in the correct order. If
+        // enqueue has not been called before, then it is important to
+        // call invoke immediately, without waiting on a callback to fire,
+        // so that the async generator function has the opportunity to do
+        // any necessary setup in a predictable way. This predictability
+        // is why the Promise constructor synchronously invokes its
+        // executor callback, and why async functions synchronously
+        // execute code before the first await. Since we implement simple
+        // async functions in terms of async generators, it is especially
+        // important to get this right, even though it requires care.
+        previousPromise ? previousPromise.then(
+          callInvokeWithMethodAndArg,
+          // Avoid propagating failures to Promises returned by later
+          // invocations of the iterator.
+          callInvokeWithMethodAndArg
+        ) : callInvokeWithMethodAndArg();
+    }
 
+    // Define the unified helper method that is used to implement .next,
+    // .throw, and .return (see defineIteratorMethods).
+    this._invoke = enqueue;
+  }
 
+  defineIteratorMethods(AsyncIterator.prototype);
+  AsyncIterator.prototype[asyncIteratorSymbol] = function () {
+    return this;
+  };
+  exports.AsyncIterator = AsyncIterator;
 
+  // Note that simple async functions are implemented on top of
+  // AsyncIterator objects; they just return a Promise for the value of
+  // the final result produced by the iterator.
+  exports.async = function(innerFn, outerFn, self, tryLocsList, PromiseImpl) {
+    if (PromiseImpl === void 0) PromiseImpl = Promise;
 
-/* normalize component */
+    var iter = new AsyncIterator(
+      wrap(innerFn, outerFn, self, tryLocsList),
+      PromiseImpl
+    );
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
-  _adminDashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _adminDashboard_vue_vue_type_template_id_124112e6_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _adminDashboard_vue_vue_type_template_id_124112e6_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  "124112e6",
-  null
-  
-)
+    return exports.isGeneratorFunction(outerFn)
+      ? iter // If outerFn is a generator, return the full iterator.
+      : iter.next().then(function(result) {
+          return result.done ? result.value : iter.next();
+        });
+  };
 
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/modules/dashboard/adminDashboard.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+  function makeInvokeMethod(innerFn, self, context) {
+    var state = GenStateSuspendedStart;
 
-/***/ }),
+    return function invoke(method, arg) {
+      if (state === GenStateExecuting) {
+        throw new Error("Generator is already running");
+      }
 
-/***/ "./resources/js/modules/dashboard/adminDashboard.vue?vue&type=script&lang=js&":
-/*!************************************************************************************!*\
-  !*** ./resources/js/modules/dashboard/adminDashboard.vue?vue&type=script&lang=js& ***!
-  \************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+      if (state === GenStateCompleted) {
+        if (method === "throw") {
+          throw arg;
+        }
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_adminDashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./adminDashboard.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/modules/dashboard/adminDashboard.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_adminDashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+        // Be forgiving, per 25.3.3.3.3 of the spec:
+        // https://people.mozilla.org/~jorendorff/es6-draft.html#sec-generatorresume
+        return doneResult();
+      }
 
-/***/ }),
+      context.method = method;
+      context.arg = arg;
 
-/***/ "./resources/js/modules/dashboard/adminDashboard.vue?vue&type=style&index=0&id=124112e6&scoped=true&lang=css&":
-/*!********************************************************************************************************************!*\
-  !*** ./resources/js/modules/dashboard/adminDashboard.vue?vue&type=style&index=0&id=124112e6&scoped=true&lang=css& ***!
-  \********************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+      while (true) {
+        var delegate = context.delegate;
+        if (delegate) {
+          var delegateResult = maybeInvokeDelegate(delegate, context);
+          if (delegateResult) {
+            if (delegateResult === ContinueSentinel) continue;
+            return delegateResult;
+          }
+        }
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_adminDashboard_vue_vue_type_style_index_0_id_124112e6_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./adminDashboard.vue?vue&type=style&index=0&id=124112e6&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/modules/dashboard/adminDashboard.vue?vue&type=style&index=0&id=124112e6&scoped=true&lang=css&");
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_adminDashboard_vue_vue_type_style_index_0_id_124112e6_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_adminDashboard_vue_vue_type_style_index_0_id_124112e6_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_adminDashboard_vue_vue_type_style_index_0_id_124112e6_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_adminDashboard_vue_vue_type_style_index_0_id_124112e6_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_adminDashboard_vue_vue_type_style_index_0_id_124112e6_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+        if (context.method === "next") {
+          // Setting context._sent for legacy support of Babel's
+          // function.sent implementation.
+          context.sent = context._sent = context.arg;
 
-/***/ }),
+        } else if (context.method === "throw") {
+          if (state === GenStateSuspendedStart) {
+            state = GenStateCompleted;
+            throw context.arg;
+          }
 
-/***/ "./resources/js/modules/dashboard/adminDashboard.vue?vue&type=template&id=124112e6&scoped=true&":
-/*!******************************************************************************************************!*\
-  !*** ./resources/js/modules/dashboard/adminDashboard.vue?vue&type=template&id=124112e6&scoped=true& ***!
-  \******************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+          context.dispatchException(context.arg);
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_adminDashboard_vue_vue_type_template_id_124112e6_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./adminDashboard.vue?vue&type=template&id=124112e6&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/modules/dashboard/adminDashboard.vue?vue&type=template&id=124112e6&scoped=true&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_adminDashboard_vue_vue_type_template_id_124112e6_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+        } else if (context.method === "return") {
+          context.abrupt("return", context.arg);
+        }
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_adminDashboard_vue_vue_type_template_id_124112e6_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+        state = GenStateExecuting;
 
+        var record = tryCatch(innerFn, self, context);
+        if (record.type === "normal") {
+          // If an exception is thrown from innerFn, we leave state ===
+          // GenStateExecuting and loop back for another invocation.
+          state = context.done
+            ? GenStateCompleted
+            : GenStateSuspendedYield;
+
+          if (record.arg === ContinueSentinel) {
+            continue;
+          }
+
+          return {
+            value: record.arg,
+            done: context.done
+          };
+
+        } else if (record.type === "throw") {
+          state = GenStateCompleted;
+          // Dispatch the exception by looping back around to the
+          // context.dispatchException(context.arg) call above.
+          context.method = "throw";
+          context.arg = record.arg;
+        }
+      }
+    };
+  }
+
+  // Call delegate.iterator[context.method](context.arg) and handle the
+  // result, either by returning a { value, done } result from the
+  // delegate iterator, or by modifying context.method and context.arg,
+  // setting context.delegate to null, and returning the ContinueSentinel.
+  function maybeInvokeDelegate(delegate, context) {
+    var method = delegate.iterator[context.method];
+    if (method === undefined) {
+      // A .throw or .return when the delegate iterator has no .throw
+      // method always terminates the yield* loop.
+      context.delegate = null;
+
+      if (context.method === "throw") {
+        // Note: ["return"] must be used for ES3 parsing compatibility.
+        if (delegate.iterator["return"]) {
+          // If the delegate iterator has a return method, give it a
+          // chance to clean up.
+          context.method = "return";
+          context.arg = undefined;
+          maybeInvokeDelegate(delegate, context);
+
+          if (context.method === "throw") {
+            // If maybeInvokeDelegate(context) changed context.method from
+            // "return" to "throw", let that override the TypeError below.
+            return ContinueSentinel;
+          }
+        }
+
+        context.method = "throw";
+        context.arg = new TypeError(
+          "The iterator does not provide a 'throw' method");
+      }
+
+      return ContinueSentinel;
+    }
+
+    var record = tryCatch(method, delegate.iterator, context.arg);
+
+    if (record.type === "throw") {
+      context.method = "throw";
+      context.arg = record.arg;
+      context.delegate = null;
+      return ContinueSentinel;
+    }
+
+    var info = record.arg;
+
+    if (! info) {
+      context.method = "throw";
+      context.arg = new TypeError("iterator result is not an object");
+      context.delegate = null;
+      return ContinueSentinel;
+    }
+
+    if (info.done) {
+      // Assign the result of the finished delegate to the temporary
+      // variable specified by delegate.resultName (see delegateYield).
+      context[delegate.resultName] = info.value;
+
+      // Resume execution at the desired location (see delegateYield).
+      context.next = delegate.nextLoc;
+
+      // If context.method was "throw" but the delegate handled the
+      // exception, let the outer generator proceed normally. If
+      // context.method was "next", forget context.arg since it has been
+      // "consumed" by the delegate iterator. If context.method was
+      // "return", allow the original .return call to continue in the
+      // outer generator.
+      if (context.method !== "return") {
+        context.method = "next";
+        context.arg = undefined;
+      }
+
+    } else {
+      // Re-yield the result returned by the delegate method.
+      return info;
+    }
+
+    // The delegate iterator is finished, so forget it and continue with
+    // the outer generator.
+    context.delegate = null;
+    return ContinueSentinel;
+  }
+
+  // Define Generator.prototype.{next,throw,return} in terms of the
+  // unified ._invoke helper method.
+  defineIteratorMethods(Gp);
+
+  define(Gp, toStringTagSymbol, "Generator");
+
+  // A Generator should always return itself as the iterator object when the
+  // @@iterator function is called on it. Some browsers' implementations of the
+  // iterator prototype chain incorrectly implement this, causing the Generator
+  // object to not be returned from this call. This ensures that doesn't happen.
+  // See https://github.com/facebook/regenerator/issues/274 for more details.
+  Gp[iteratorSymbol] = function() {
+    return this;
+  };
+
+  Gp.toString = function() {
+    return "[object Generator]";
+  };
+
+  function pushTryEntry(locs) {
+    var entry = { tryLoc: locs[0] };
+
+    if (1 in locs) {
+      entry.catchLoc = locs[1];
+    }
+
+    if (2 in locs) {
+      entry.finallyLoc = locs[2];
+      entry.afterLoc = locs[3];
+    }
+
+    this.tryEntries.push(entry);
+  }
+
+  function resetTryEntry(entry) {
+    var record = entry.completion || {};
+    record.type = "normal";
+    delete record.arg;
+    entry.completion = record;
+  }
+
+  function Context(tryLocsList) {
+    // The root entry object (effectively a try statement without a catch
+    // or a finally block) gives us a place to store values thrown from
+    // locations where there is no enclosing try statement.
+    this.tryEntries = [{ tryLoc: "root" }];
+    tryLocsList.forEach(pushTryEntry, this);
+    this.reset(true);
+  }
+
+  exports.keys = function(object) {
+    var keys = [];
+    for (var key in object) {
+      keys.push(key);
+    }
+    keys.reverse();
+
+    // Rather than returning an object with a next method, we keep
+    // things simple and return the next function itself.
+    return function next() {
+      while (keys.length) {
+        var key = keys.pop();
+        if (key in object) {
+          next.value = key;
+          next.done = false;
+          return next;
+        }
+      }
+
+      // To avoid creating an additional object, we just hang the .value
+      // and .done properties off the next function object itself. This
+      // also ensures that the minifier will not anonymize the function.
+      next.done = true;
+      return next;
+    };
+  };
+
+  function values(iterable) {
+    if (iterable) {
+      var iteratorMethod = iterable[iteratorSymbol];
+      if (iteratorMethod) {
+        return iteratorMethod.call(iterable);
+      }
+
+      if (typeof iterable.next === "function") {
+        return iterable;
+      }
+
+      if (!isNaN(iterable.length)) {
+        var i = -1, next = function next() {
+          while (++i < iterable.length) {
+            if (hasOwn.call(iterable, i)) {
+              next.value = iterable[i];
+              next.done = false;
+              return next;
+            }
+          }
+
+          next.value = undefined;
+          next.done = true;
+
+          return next;
+        };
+
+        return next.next = next;
+      }
+    }
+
+    // Return an iterator with no values.
+    return { next: doneResult };
+  }
+  exports.values = values;
+
+  function doneResult() {
+    return { value: undefined, done: true };
+  }
+
+  Context.prototype = {
+    constructor: Context,
+
+    reset: function(skipTempReset) {
+      this.prev = 0;
+      this.next = 0;
+      // Resetting context._sent for legacy support of Babel's
+      // function.sent implementation.
+      this.sent = this._sent = undefined;
+      this.done = false;
+      this.delegate = null;
+
+      this.method = "next";
+      this.arg = undefined;
+
+      this.tryEntries.forEach(resetTryEntry);
+
+      if (!skipTempReset) {
+        for (var name in this) {
+          // Not sure about the optimal order of these conditions:
+          if (name.charAt(0) === "t" &&
+              hasOwn.call(this, name) &&
+              !isNaN(+name.slice(1))) {
+            this[name] = undefined;
+          }
+        }
+      }
+    },
+
+    stop: function() {
+      this.done = true;
+
+      var rootEntry = this.tryEntries[0];
+      var rootRecord = rootEntry.completion;
+      if (rootRecord.type === "throw") {
+        throw rootRecord.arg;
+      }
+
+      return this.rval;
+    },
+
+    dispatchException: function(exception) {
+      if (this.done) {
+        throw exception;
+      }
+
+      var context = this;
+      function handle(loc, caught) {
+        record.type = "throw";
+        record.arg = exception;
+        context.next = loc;
+
+        if (caught) {
+          // If the dispatched exception was caught by a catch block,
+          // then let that catch block handle the exception normally.
+          context.method = "next";
+          context.arg = undefined;
+        }
+
+        return !! caught;
+      }
+
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        var record = entry.completion;
+
+        if (entry.tryLoc === "root") {
+          // Exception thrown outside of any try block that could handle
+          // it, so set the completion value of the entire function to
+          // throw the exception.
+          return handle("end");
+        }
+
+        if (entry.tryLoc <= this.prev) {
+          var hasCatch = hasOwn.call(entry, "catchLoc");
+          var hasFinally = hasOwn.call(entry, "finallyLoc");
+
+          if (hasCatch && hasFinally) {
+            if (this.prev < entry.catchLoc) {
+              return handle(entry.catchLoc, true);
+            } else if (this.prev < entry.finallyLoc) {
+              return handle(entry.finallyLoc);
+            }
+
+          } else if (hasCatch) {
+            if (this.prev < entry.catchLoc) {
+              return handle(entry.catchLoc, true);
+            }
+
+          } else if (hasFinally) {
+            if (this.prev < entry.finallyLoc) {
+              return handle(entry.finallyLoc);
+            }
+
+          } else {
+            throw new Error("try statement without catch or finally");
+          }
+        }
+      }
+    },
+
+    abrupt: function(type, arg) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.tryLoc <= this.prev &&
+            hasOwn.call(entry, "finallyLoc") &&
+            this.prev < entry.finallyLoc) {
+          var finallyEntry = entry;
+          break;
+        }
+      }
+
+      if (finallyEntry &&
+          (type === "break" ||
+           type === "continue") &&
+          finallyEntry.tryLoc <= arg &&
+          arg <= finallyEntry.finallyLoc) {
+        // Ignore the finally entry if control is not jumping to a
+        // location outside the try/catch block.
+        finallyEntry = null;
+      }
+
+      var record = finallyEntry ? finallyEntry.completion : {};
+      record.type = type;
+      record.arg = arg;
+
+      if (finallyEntry) {
+        this.method = "next";
+        this.next = finallyEntry.finallyLoc;
+        return ContinueSentinel;
+      }
+
+      return this.complete(record);
+    },
+
+    complete: function(record, afterLoc) {
+      if (record.type === "throw") {
+        throw record.arg;
+      }
+
+      if (record.type === "break" ||
+          record.type === "continue") {
+        this.next = record.arg;
+      } else if (record.type === "return") {
+        this.rval = this.arg = record.arg;
+        this.method = "return";
+        this.next = "end";
+      } else if (record.type === "normal" && afterLoc) {
+        this.next = afterLoc;
+      }
+
+      return ContinueSentinel;
+    },
+
+    finish: function(finallyLoc) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.finallyLoc === finallyLoc) {
+          this.complete(entry.completion, entry.afterLoc);
+          resetTryEntry(entry);
+          return ContinueSentinel;
+        }
+      }
+    },
+
+    "catch": function(tryLoc) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.tryLoc === tryLoc) {
+          var record = entry.completion;
+          if (record.type === "throw") {
+            var thrown = record.arg;
+            resetTryEntry(entry);
+          }
+          return thrown;
+        }
+      }
+
+      // The context.catch method must only be called with a location
+      // argument that corresponds to a known catch block.
+      throw new Error("illegal catch attempt");
+    },
+
+    delegateYield: function(iterable, resultName, nextLoc) {
+      this.delegate = {
+        iterator: values(iterable),
+        resultName: resultName,
+        nextLoc: nextLoc
+      };
+
+      if (this.method === "next") {
+        // Deliberately forget the last sent value so that we don't
+        // accidentally pass it on to the delegate.
+        this.arg = undefined;
+      }
+
+      return ContinueSentinel;
+    }
+  };
+
+  // Regardless of whether this script is executing as a CommonJS module
+  // or not, return the runtime object so that we can declare the variable
+  // regeneratorRuntime in the outer scope, which allows this module to be
+  // injected easily by `bin/regenerator --include-runtime script.js`.
+  return exports;
+
+}(
+  // If this script is executing as a CommonJS module, use module.exports
+  // as the regeneratorRuntime namespace. Otherwise create a new empty
+  // object. Either way, the resulting object will be used to initialize
+  // the regeneratorRuntime variable at the top of this file.
+   true ? module.exports : undefined
+));
+
+try {
+  regeneratorRuntime = runtime;
+} catch (accidentalStrictMode) {
+  // This module should not be running in strict mode, so the above
+  // assignment should always work unless something is misconfigured. Just
+  // in case runtime.js accidentally runs in strict mode, we can escape
+  // strict mode using a global Function call. This could conceivably fail
+  // if a Content Security Policy forbids using Function, but in that case
+  // the proper solution is to fix the accidental strict mode problem. If
+  // you've misconfigured your bundler to force strict mode and applied a
+  // CSP to forbid Function, and you're not willing to fix either of those
+  // problems, please detail your unique predicament in a GitHub issue.
+  Function("r", "regeneratorRuntime = r")(runtime);
+}
 
 
 /***/ })
