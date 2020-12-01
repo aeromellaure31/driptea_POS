@@ -16,6 +16,32 @@ use App\Models\ForgotPass;
 
 class UserController extends Controller
 {
+    public function reset(Request $request) {
+        $pass = Hash::make($request->password);
+        $user = User::where('email', $request->email)->get();
+        $user[0]->password = $pass;
+        $user[0]->save();
+        return response()->json(['data' => 'true']);
+    }
+
+    public function updateCode(Request $request){
+        $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $pin = mt_rand(1000000, 9999999)
+            . mt_rand(1000000, 9999999)
+            . $characters[rand(0, strlen($characters) - 1)];
+        $code = str_shuffle($pin);
+        $forgotPass = ForgotPass::firstOrCreate(['id' => $request->id]);
+        $forgotPass->code = $code;
+        $forgotPass->save();
+        $forgotPass['status'] = 'success';
+        $account = User::where('email', $forgotPass['email'])->get();
+        $emailTo = $forgotPass['email'];
+        $message = "Hi, ".$account[0]->firstname. " ".$account[0]->lastname.". Your code is ".$code;
+        $subject = 'Driptea Verification Code';
+        Mail::to($emailTo)->send(new MailController($message, $emailTo, $subject));
+        return response()->json(compact('forgotPass'));
+    }
+
     public function sendCode(Request $request){
         $data = null;
         $account = User::where('email', $request->email)->get();
@@ -43,6 +69,17 @@ class UserController extends Controller
             return response()->json(compact('data'));
         } else {
             return response()->json(['data' => 'false']);
+        }
+    }
+
+    public function checkCode(Request $request) {
+        $item = ForgotPass::where('id', $request->id)->get();
+        if($item[0]->code === $request->code) {
+            $item['status'] = 'true';
+            return response()->json(compact('item'));
+        } else {
+            $item['status'] = 'false';
+            return response()->json(compact('item'));
         }
     }
 

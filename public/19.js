@@ -72,6 +72,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      formatDate: moment__WEBPACK_IMPORTED_MODULE_3___default()(new Date()).format('MM/DD/YYYY'),
       categoryData: [],
       search: '',
       loadingShow: false,
@@ -80,7 +81,8 @@ __webpack_require__.r(__webpack_exports__);
       storage2: [],
       storeAmount: [],
       dataAddOns: [],
-      cupType: []
+      cupType: [],
+      toDownload: []
     };
   },
   mounted: function mounted() {
@@ -94,6 +96,30 @@ __webpack_require__.r(__webpack_exports__);
     loading: _basic_loading_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   methods: {
+    excelDownload: function excelDownload() {
+      var _this = this;
+
+      this.storage2.forEach(function (el, index) {
+        var list = {
+          Date: '',
+          Products: 0,
+          Add_ons: '',
+          DeliveryFee: '',
+          CupType: '',
+          TotalSales: ''
+        };
+        el.forEach(function (e) {
+          list.Products += e.value;
+        });
+        list.Date = _this.getDate(index);
+        list.Add_ons = _this.getAddOns(index);
+        list.DeliveryFee = _this.getDeliveryFee(index);
+        list.CupType = _this.getCupType(index);
+        list.TotalSales = _this.getTotal(index);
+
+        _this.toDownload.push(list);
+      });
+    },
     getTotal: function getTotal(index) {
       var amount = 0;
       var id = 0;
@@ -106,11 +132,11 @@ __webpack_require__.r(__webpack_exports__);
       return parseInt(amount).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
     },
     getCupType: function getCupType(index) {
-      var _this = this;
+      var _this2 = this;
 
       var amount = 0;
       this.store[index].forEach(function (el) {
-        _this.cupType.forEach(function (cup) {
+        _this2.cupType.forEach(function (cup) {
           if (el.cupType === cup.cupTypeName) {
             if (el.customerType !== 'fb' && el.customerType !== 'walkin') {
               amount += cup.inputCupOnlinePrice * el.quantity;
@@ -130,12 +156,12 @@ __webpack_require__.r(__webpack_exports__);
       return parseInt(amount).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
     },
     getAddOns: function getAddOns(index) {
-      var _this2 = this;
+      var _this3 = this;
 
       var amount = 0;
       this.store[index].forEach(function (el) {
         el.same_order.forEach(function (e) {
-          _this2.dataAddOns.forEach(function (add) {
+          _this3.dataAddOns.forEach(function (add) {
             if (e.addOns === add.addons_name) {
               if (el.customerType !== 'fb' && el.customerType !== 'walkin') {
                 amount += add.onlineAddOnsPrice * el.quantity;
@@ -149,7 +175,7 @@ __webpack_require__.r(__webpack_exports__);
       return parseInt(amount).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
     },
     retrieveCupType: function retrieveCupType() {
-      var _this3 = this;
+      var _this4 = this;
 
       this.loadingShow = true;
       this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "retrieveAllCupType", {}, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
@@ -157,12 +183,12 @@ __webpack_require__.r(__webpack_exports__);
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this3.cupType = response.data.cupType;
-        _this3.loadingShow = false;
+        _this4.cupType = response.data.cupType;
+        _this4.loadingShow = false;
       });
     },
     retrieveAddOns: function retrieveAddOns() {
-      var _this4 = this;
+      var _this5 = this;
 
       this.loadingShow = true;
       this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "retrieveWithDeleteAddOns", {}, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
@@ -170,15 +196,15 @@ __webpack_require__.r(__webpack_exports__);
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this4.dataAddOns = response.data.addons;
-        _this4.loadingShow = false;
+        _this5.dataAddOns = response.data.addons;
+        _this5.loadingShow = false;
       });
     },
     getDate: function getDate(index) {
       return moment__WEBPACK_IMPORTED_MODULE_3___default()(this.store[index][0].created_at).format('MM/DD/YYYY');
     },
     retrieveCategory: function retrieveCategory() {
-      var _this5 = this;
+      var _this6 = this;
 
       this.loadingShow = true;
       this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + 'retrieveCategoryAscending', {}, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (res) {
@@ -186,12 +212,12 @@ __webpack_require__.r(__webpack_exports__);
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this5.loadingShow = false;
-        _this5.categoryData = res.data.addCategory;
+        _this6.loadingShow = false;
+        _this6.categoryData = res.data.addCategory;
       });
     },
     retrieveSale: function retrieveSale() {
-      var _this6 = this;
+      var _this7 = this;
 
       this.loadingShow = true;
       this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "retrieveAllSales", {}, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
@@ -199,18 +225,18 @@ __webpack_require__.r(__webpack_exports__);
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this6.loadingShow = false;
+        _this7.loadingShow = false;
         var store = [];
         Object.keys(response.data.storeOrder).forEach(function (element) {
           store.push(response.data.storeOrder[element]);
         });
-        _this6.store = store.reverse();
-        _this6.storage2 = [];
+        _this7.store = store.reverse();
+        _this7.storage2 = [];
 
-        _this6.store.forEach(function (el) {
-          _this6.storage = [];
+        _this7.store.forEach(function (el) {
+          _this7.storage = [];
 
-          _this6.categoryData.forEach(function (cat) {
+          _this7.categoryData.forEach(function (cat) {
             var amount = 0;
             el.forEach(function (e) {
               if (e.order_product[0].productCategory === cat.productCategory) {
@@ -218,13 +244,13 @@ __webpack_require__.r(__webpack_exports__);
               }
             });
 
-            _this6.storage.push({
+            _this7.storage.push({
               'category': cat.productCategory,
               'value': parseInt(amount).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
             });
           });
 
-          _this6.storage2.push(_this6.storage);
+          _this7.storage2.push(_this7.storage);
         });
       });
     }
@@ -293,15 +319,35 @@ var render = function() {
                         }),
                         _vm._v(" "),
                         _c(
-                          "v-btn",
-                          { staticClass: "mr-6", attrs: { color: "success" } },
+                          "VueJsonToCsv",
+                          {
+                            attrs: {
+                              "json-data": _vm.toDownload,
+                              "csv-title": _vm.formatDate + "Sales"
+                            }
+                          },
                           [
-                            _vm._v("\n                Export "),
-                            _c("i", {
-                              staticClass: "mdi mdi-export-variant",
-                              attrs: { "aria-hidden": "true" }
-                            })
-                          ]
+                            _c(
+                              "v-btn",
+                              {
+                                staticClass: "mr-6",
+                                attrs: { color: "success" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.excelDownload()
+                                  }
+                                }
+                              },
+                              [
+                                _vm._v("\n                    Export "),
+                                _c("i", {
+                                  staticClass: "mdi mdi-export-variant",
+                                  attrs: { "aria-hidden": "true" }
+                                })
+                              ]
+                            )
+                          ],
+                          1
                         )
                       ],
                       1
@@ -370,11 +416,8 @@ var render = function() {
                 )
               }),
               0
-            ),
-            _vm._v(" "),
-            void 0
-          ],
-          2
+            )
+          ]
         )
       ],
       1

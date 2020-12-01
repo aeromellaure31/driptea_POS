@@ -89,7 +89,6 @@
                     required
                   ></v-text-field>
                 </v-flex>
-
                 <i>
                   <span
                     v-if="errorMessage8 !== null"
@@ -106,7 +105,7 @@
                 <v-flex>
                   <v-text-field
                     color="orange"
-                    label="Phone Number"
+                    label="Phone number"
                     outlined
                     v-model="contactNum"
                     v-on:keyup="validate('contact')"
@@ -203,7 +202,7 @@
                 <v-flex>
                   <v-text-field
                     color="orange"
-                    label="Confirm Password"
+                    label="Confirm password"
                     outlined
                     v-model="confirmPass"
                     v-on:keyup="validate('confirmPass')"

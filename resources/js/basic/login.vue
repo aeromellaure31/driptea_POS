@@ -10,12 +10,6 @@
             <span class="quote">Your Daily Dose of Milktea.</span>
           </center>
           <v-card class="mx-auto" max-width="400">
-              <i>
-                <span
-                  v-if="errorMessage4 !== null"
-                  class="text-danger text-center"
-                >{{errorMessage4}}</span>
-              </i>
               <center>
                 <div class="containerWidth">
                   <v-form ref="form" lazy-validation>
@@ -29,7 +23,7 @@
                     <v-row>
                       <v-text-field
                         color="orange"
-                        label="Email Address*"
+                        label="Email address*"
                         outlined
                         v-model="email"
                         v-on:keyup="validate('email')"
@@ -109,11 +103,8 @@ export default {
       show3: false,
       show4: false,
       image: image,
-      userName: "",
       email: '',
-      code: '',
       errorMessage: null,
-      errorMessage4: null,
       successMessage: null,
       loadingShow: false,
     };
@@ -143,7 +134,7 @@ export default {
                 dangerMode: true
               }).then(e => {
                 this.email = ''
-                this.redirect('/verifyCode')
+                this.redirect('/verifyCode/' + res.data.data.id)
               })
             }else{
               this.errorMessage = 'Email not recognize'
@@ -159,7 +150,9 @@ export default {
       let specialChar = /^[A-Za-z0-9 ]+$/;
       if (input === "email") {
         this.errorMessage = null;
-        if (this.validateEmail(this.email) === false) {
+        if(this.email === ''){
+          this.errorMessage = "Email is required";
+        } else if (this.validateEmail(this.email) === false) {
           this.errorMessage = "You have entered an invalid email address.";
         } else {
           this.errorMessage = null;
@@ -168,9 +161,7 @@ export default {
         this.email !== null &&
         this.validateEmail(this.email) === true
       ) {
-        this.errorMessage4 = null;
-      } else {
-        this.errorMessage4 = "Please fill in all required fields.";
+        this.errorMessage = null;
       }
     },
     validateEmail(email) {

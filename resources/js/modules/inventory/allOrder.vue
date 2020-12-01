@@ -287,8 +287,7 @@ export default {
                 }
                 this.loadingShow = false;
                 swal({
-                title: "Congrats",
-                text: "You have successfully deleted the order",
+                title: "You have successfully deleted the order",
                 icon: "success"
                 }).then(el => {
                     this.retrieve()
@@ -315,8 +314,7 @@ export default {
                     }
                     this.loadingShow = false;
                     swal({
-                    title: "Congrats",
-                    text: "You have successfully deleted the order",
+                    title: "You have successfully deleted the order",
                     icon: "success"
                     }).then(el => {
                         this.retrieve()
@@ -390,7 +388,7 @@ export default {
     },
     toComplete(item){
         swal({
-            text: "Are you sure you want to Complete?",
+            text: "Are you sure you want to Complete this order?",
             icon: "warning",
             buttons: {
                 no: 'No',

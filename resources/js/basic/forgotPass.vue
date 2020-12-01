@@ -10,12 +10,6 @@
             <span class="quote">Your Daily Dose of Milktea.</span>
           </center>
           <v-card class="mx-auto" max-width="400">
-              <i>
-                <span
-                  v-if="errorMessage4 !== null"
-                  class="text-danger text-center"
-                >{{errorMessage4}}</span>
-              </i>
               <center>
                 <div class="containerWidth">
                   <v-form ref="form" lazy-validation>
@@ -28,8 +22,9 @@
                     </i>
                     <v-row>
                       <v-text-field
+                        @keyup="validate()"
                         color="orange"
-                        label="Verification Code*"
+                        label="Verification code*"
                         outlined
                         v-model="code"
                         type="text"
@@ -37,10 +32,10 @@
                         required
                       ></v-text-field>
                     </v-row>
-                    <v-btn type="button" class="btn btnRegister" color="orange" @click="VerifyCode()">Verify</v-btn>
+                    <v-btn type="button" class="btn btnRegister" color="orange" @click="verifyCode()">Verify</v-btn>
                   </v-form>
                 </div>
-                <i><a class="FP" @click="redirect('/login')">Resend Code</a></i>
+                <i><a class="FP" @click="resend()">Resend Code</a></i>
               </center><br>
           </v-card>
         </div>
@@ -104,12 +99,12 @@ export default {
   name: "app",
   data() {
     return {
+      id: this.$route.params.id,
       show3: false,
       show4: false,
       image: image,
       code: '',
-      errorMessage4: null,
-      errorMessage65: null,
+      errorMessage5: null,
       successMessage: null,
       loadingShow: false,
     };
@@ -122,32 +117,49 @@ export default {
     redirect(route) {
       ROUTER.push(route).catch(() => {});
     },
-    sendCode(){
-      if(this.errorMessage === null && this.email !== ''){
+    validate(){
+      if(this.code === ''){
+        this.errorMessage5 = "Verification code required"
+      }else{
+         this.errorMessage5 = null
+      }
+    },
+    resend(){
+      this.loadingShow = true;
+      let params = {
+        id: this.id
+      }
+      this.$axios
+        .post(AUTH.url + "updateCode", params)
+        .then(res => {
+          this.loadingShow = false;
+          if(res.data.forgotPass.status === 'success'){
+            swal({
+              text: "Verification Sent to " + res.data.forgotPass.email,
+              icon: "success",
+            })
+          }
+      });
+    },
+    verifyCode(){
+      if(this.errorMessage5 === null && this.code !== ''){
         this.loadingShow = true;
         let params = {
-          email: this.email
+          id: this.id,
+          code: this.code
         }
         this.$axios
-          .post(AUTH.url + "sendCode", params)
+          .post(AUTH.url + "checkCode", params)
           .then(res => {
             this.loadingShow = false;
-            if(res.data.data.status === 'true'){
-              swal({
-                text: "Verification Sent to " + this.email,
-                icon: "success",
-                dangerMode: true
-              }).then(e => {
-                this.confirmShow = false
-                this.confirmEmail = false
-                this.verify = true
-              })
+            if(res.data.item.status === 'true'){
+              this.redirect('/changePass/' + res.data.item[0].email)
             }else{
-              this.errorMessage = 'Email not recognize'
+              this.errorMessage5 = 'Verification code not recognize'
             }
         });
       }else{
-         this.errorMessage = "Please input your email address"
+         this.errorMessage5 = "Verification code required"
       }
     },
   }

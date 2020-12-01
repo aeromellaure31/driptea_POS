@@ -79,7 +79,7 @@
                                   <v-flex xs12 sm11>
                                     <v-text-field
                                       color="orange"
-                                      label="firstname"
+                                      label="First name"
                                       outlined
                                       v-model="firstname"
                                       v-on:keyup="validate('firstname')"
@@ -105,7 +105,7 @@
                                   <v-flex xs12 sm11>
                                     <v-text-field
                                       color="orange"
-                                      label="lastname"
+                                      label="Last name"
                                       outlined
                                       v-model="lastname"
                                       v-on:keyup="validate('lastname')"
@@ -151,7 +151,7 @@
                                   <v-flex xs12 sm11>
                                     <v-text-field
                                       color="orange"
-                                      label="Contact Number"
+                                      label="Contact number"
                                       outlined
                                       v-model="contactNum"
                                       v-on:keyup="validate('contact')"
@@ -187,7 +187,7 @@
                                   <v-flex xs12 sm11>
                                     <v-text-field
                                       color="orange"
-                                      label="username"
+                                      label="Username"
                                       outlined
                                       v-model="username"
                                       v-on:keyup="validate('username')"
@@ -207,7 +207,7 @@
                                   <v-flex xs12 sm11>
                                     <v-text-field
                                       color="orange"
-                                      label="email"
+                                      label="Email"
                                       outlined
                                       v-model="email"
                                       v-on:keyup="validate('email')"
@@ -259,7 +259,7 @@
                                   <v-flex xs12 sm11>
                                     <v-text-field
                                       color="orange"
-                                      label="Confirm Password"
+                                      label="Confirm password"
                                       outlined
                                       v-model="confirmPass"
                                       v-on:keyup="validate('confirmPass')"
@@ -558,8 +558,7 @@ export default {
           .then(response => {
             this.loadingShow = false
             swal({
-              title: "Congrats!",
-              text: "You successfully created an account!",
+              title: "You successfully created an account",
               icon: "success"
             });
             this.showModal = false

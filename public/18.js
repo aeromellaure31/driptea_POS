@@ -709,8 +709,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
 
         sweetalert__WEBPACK_IMPORTED_MODULE_7___default()({
-          title: "Congrats!",
-          text: "You have successfully edited your profile picture",
+          title: "You have successfully edited your profile picture",
           icon: "success"
         });
       })["catch"](function (error) {
@@ -837,8 +836,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           }
 
           sweetalert__WEBPACK_IMPORTED_MODULE_7___default()({
-            title: "Congrats!",
-            text: "You have successfully edited your information",
+            title: "You have successfully edited your information",
             icon: "success"
           });
 

@@ -18,6 +18,9 @@ Route::post('login', 'App\Http\Controllers\UserController@authenticate');
 Route::post('tokenRefresh', 'App\Http\Controllers\UserController@tokenRefresh');
 Route::post('deaunthenticate', 'App\Http\Controllers\UserController@deaunthenticate');
 Route::post('sendCode', 'App\Http\Controllers\UserController@sendCode');
+Route::post('checkCode', 'App\Http\Controllers\UserController@checkCode');
+Route::post('reset', 'App\Http\Controllers\UserController@reset');
+Route::post('updateCode', 'App\Http\Controllers\UserController@updateCode');
 
 Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('updateImage', 'App\Http\Controllers\UserController@updateImage');

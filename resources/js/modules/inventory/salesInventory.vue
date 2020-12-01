@@ -14,9 +14,14 @@
                    label="Search"
                  ></v-text-field>
                  <v-divider class="mx-4" vertical></v-divider>
-                   <v-btn color="success" class="mr-6">
-                    Export <i class="mdi mdi-export-variant" aria-hidden="true"></i>
-              </v-btn>
+                <VueJsonToCsv
+                :json-data="toDownload"
+                :csv-title="formatDate + 'Sales'"
+                >
+                    <v-btn color="success" class="mr-6" @click="excelDownload()">
+                        Export <i class="mdi mdi-export-variant" aria-hidden="true"></i>
+                    </v-btn>
+                </VueJsonToCsv>
                </v-toolbar>
              </template>
                 <thead >
@@ -39,12 +44,7 @@
                         <td>₱ {{getTotal(index)}}</td>
                     </tr>
                 </tbody>
-
-             <template></template>
            </v-simple-table>
-           
-               
-            
         </div>
     </v-card>
 </template>
@@ -56,6 +56,7 @@ import moment from 'moment'
 export default {
     data(){
         return{
+            formatDate: moment(new Date()).format('MM/DD/YYYY'),
             categoryData: [],
             search: '',
             loadingShow: false,
@@ -64,7 +65,8 @@ export default {
             storage2: [],
             storeAmount: [],
             dataAddOns: [],
-            cupType: []
+            cupType: [],
+            toDownload: [],
         }
     },
     mounted(){
@@ -78,6 +80,27 @@ export default {
         loading
     },
     methods:{
+        excelDownload(){
+            this.storage2.forEach((el, index) => {
+                var list = {
+                    Date: '',
+                    Products: 0,
+                    Add_ons: '',
+                    DeliveryFee: '',
+                    CupType: '',
+                    TotalSales: ''
+                }
+                el.forEach(e => {
+                    list.Products += e.value
+                })
+                list.Date = this.getDate(index)
+                list.Add_ons = this.getAddOns(index)
+                list.DeliveryFee = this.getDeliveryFee(index)
+                list.CupType = this.getCupType(index)
+                list.TotalSales = this.getTotal(index)
+                this.toDownload.push(list)
+            })
+        },
         getTotal(index){
             let amount = 0
             let id = 0

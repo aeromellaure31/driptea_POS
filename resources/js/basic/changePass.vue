@@ -10,14 +10,8 @@
             <span class="quote">Your Daily Dose of Milktea.</span>
           </center>
           <v-card class="mx-auto" max-width="400">
-              <i>
-                <span
-                  v-if="errorMessage4 !== null"
-                  class="text-danger text-center"
-                >{{errorMessage4}}</span>
-              </i>
               <center>
-                <div v-if="confirmEmail" class="containerWidth">
+                <div class="containerWidth">
                   <v-form ref="form" lazy-validation>
                     <br><br>
                     <i>
@@ -29,52 +23,7 @@
                     <v-row>
                       <v-text-field
                         color="orange"
-                        label="Emai Address*"
-                        outlined
-                        v-model="email"
-                        v-on:keyup="validate('email')"
-                        type="text"
-                        required
-                      ></v-text-field>
-                    </v-row>
-                    <v-btn type="button" class="btn btnRegister" color="orange" @click="sendCode()">Continue</v-btn>
-                  </v-form>
-                </div>
-                <div v-if="verify" class="containerWidth">
-                  <v-form ref="form" lazy-validation>
-                    <br><br>
-                    <i>
-                      <span
-                        v-if="errorMessage5 !== null"
-                        class="text-danger text-center"
-                      >{{errorMessage5}}</span>
-                    </i>
-                    <v-row>
-                      <v-text-field
-                        color="orange"
-                        label="Verification Code*"
-                        outlined
-                        v-model="code"
-                        type="text"
-                        required
-                      ></v-text-field>
-                    </v-row>
-                    <v-btn type="button" class="btn btnRegister" color="orange" @click="VerifyCode()">Verify</v-btn>
-                  </v-form>
-                </div>
-                <div v-if="confirmShow" class="containerWidth">
-                  <v-form ref="form" lazy-validation>
-                    <br><br>
-                    <i>
-                      <span
-                        v-if="errorMessage !== null"
-                        class="text-danger text-center"
-                      >{{errorMessage}}</span>
-                    </i>
-                    <v-row>
-                      <v-text-field
-                        color="orange"
-                        label="Email Address*"
+                        label="Email address*"
                         outlined
                         v-model="email"
                         v-on:keyup="validate('email')"
@@ -88,16 +37,10 @@
                         class="text-danger text-center"
                       >{{errorMessage2}}</span>
                     </i>
-                    <i>
-                      <span
-                        v-if="successMessage !== null"
-                        class="text-success text-center"
-                      >{{successMessage}}</span>
-                    </i>
                     <v-row>
                       <v-text-field
                         color="orange"
-                        label="Password*"
+                        label="New Password*"
                         outlined
                         v-model="password"
                         v-on:keyup="validate('password')"
@@ -128,10 +71,9 @@
                         @click:append="show4 = !show4"
                       ></v-text-field>
                     </v-row>
-                    <v-btn type="button" class="btn btnRegister" color="orange">Continue</v-btn>
+                    <v-btn type="button" class="btn btnRegister" color="orange" @click="changePass()">Change Password</v-btn>
                   </v-form>
                 </div>
-                <i v-if="verify"><a class="FP" @click="redirect('/login')">Resend Code</a></i>
               </center><br>
           </v-card>
         </div>
@@ -198,20 +140,14 @@ export default {
       show3: false,
       show4: false,
       image: image,
-      userName: "",
-      email: '',
+      email: this.$route.params.email,
       password: "",
       confirmPass: "",
-      code: '',
       errorMessage: null,
       errorMessage2: null,
       errorMessage3: null,
-      errorMessage4: null,
       successMessage: null,
       loadingShow: false,
-      confirmShow: false,
-      confirmEmail: true,
-      verify: false,
     };
   },
   mounted() {},
@@ -222,32 +158,36 @@ export default {
     redirect(route) {
       ROUTER.push(route).catch(() => {});
     },
-    sendCode(){
-      if(this.errorMessage === null && this.email !== ''){
+    changePass(){
+      this.validate('email')
+      this.validate('password')
+      this.validate('confirmPass')
+      if(this.email !== this.$route.params.email){
+        this.errorMessage2 = 'Email did not match'
+      } else if(this.password !== '' && this.confirmPass !== '' && this.errorMessage === null &&
+      this.errorMessage2 === null && this.errorMessage3 === null){
         this.loadingShow = true;
         let params = {
-          email: this.email
+          email: this.email,
+          password: this.password,
+          confirmPass: this.confirmPass,
         }
         this.$axios
-          .post(AUTH.url + "sendCode", params)
+          .post(AUTH.url + "reset", params)
           .then(res => {
             this.loadingShow = false;
-            if(res.data.data.status === 'true'){
+            console.log(res.data)
+            if(res.data.data === 'true'){
               swal({
-                text: "Verification Sent to " + this.email,
-                icon: "success",
-                dangerMode: true
+                text: "Successfully Changed Password",
+                icon: "success"
               }).then(e => {
-                this.confirmShow = false
-                this.confirmEmail = false
-                this.verify = true
+                this.redirect('/login');
               })
             }else{
               this.errorMessage = 'Email not recognize'
             }
         });
-      }else{
-         this.errorMessage = "Please input your email address"
       }
     },
     validate(input) {
@@ -256,14 +196,18 @@ export default {
       let specialChar = /^[A-Za-z0-9 ]+$/;
       if (input === "email") {
         this.errorMessage = null;
-        if (this.validateEmail(this.email) === false) {
+        if(this.email === ''){
+          this.errorMessage === 'Email required'
+        } else if (this.validateEmail(this.email) === false) {
           this.errorMessage = "You have entered an invalid email address.";
         } else {
           this.errorMessage = null;
         }
       } else if (input === "password") {
         this.errorMessage2 = null;
-        if (this.password.length < 8) {
+        if(this.password === ''){
+          this.errorMessage2 = 'Password is required'
+        } else if (this.password.length < 8) {
           this.errorMessage2 = "Password must be atleast 8 characters.";
         } else if (
           /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/.test(
@@ -293,8 +237,6 @@ export default {
         this.validateEmail(this.email) === true
       ) {
         this.errorMessage4 = null;
-      } else {
-        this.errorMessage4 = "Please fill in all required fields.";
       }
     },
     validateEmail(email) {

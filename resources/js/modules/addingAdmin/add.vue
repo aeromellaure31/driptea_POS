@@ -259,7 +259,7 @@
                             <i><span class="errorColor" v-if="errorMessage !== null">{{errorMessage}}</span></i>
                             <v-container>
                                 <v-row>
-                                    <v-text-field label="ProductCategory Name" outlined dense v-model="productType" type="text" required></v-text-field>
+                                    <v-text-field label="Product Category Name" outlined dense v-model="productType" type="text" required></v-text-field>
                                 </v-row>
                                 <v-row>
                                 <div class="form-group">
@@ -276,7 +276,7 @@
                             <v-spacer></v-spacer>
                                 <v-btn color="blue darken-1" text @click="dialogForCategory = false"> Close</v-btn>
                                 <v-btn v-if="!editCat" color="blue darken-1" text  type="submit" class="btn btn-primary">Add Category</v-btn>
-                                <v-btn v-if="editCat" color="blue darken-1" text  type="button" class="btn btn-primary" @click="updateCategory($event)">Edit Category</v-btn>
+                                <v-btn v-if="editCat" color="blue darken-1" text  type="button" class="btn btn-primary" @click="updateCategory($event)">Update Category</v-btn>
                             </v-card-actions>
                           </v-form>
                         </v-card-text>
@@ -372,7 +372,7 @@
                                 <v-spacer></v-spacer>
                                 <v-btn color="blue darken-1" text @click="dialogForProduct = false"> Close</v-btn>
                                 <v-btn v-if="productAdd" type="submit" class="btn btn-primary" >Add Product</v-btn>
-                                <v-btn v-if="productEdit" type="button" class="btn btn-primary" @click="updateProduct($event)">Edit Product</v-btn>
+                                <v-btn v-if="productEdit" type="button" class="btn btn-primary" @click="updateProduct($event)">Update Product</v-btn>
                             </v-card-actions>
                           </v-container>
                         </v-form>
@@ -950,8 +950,7 @@ export default {
           this.dialogConfirmation = false
           this.loadingShow = false
           swal({
-            title: "Congrats!",
-            text: "You successfully deleted the cup type",
+            title: "You successfully deleted the cup type",
             icon: "success"
           });
           this.retrieveCupType();
@@ -973,8 +972,7 @@ export default {
           this.dialogConfirmation = false
           this.loadingShow = false
           swal({
-            title: "Congrats!",
-            text: "You successfully deleted the add-ons",
+            title: "You successfully deleted the add-ons",
             icon: "success"
           });
           this.retrieveAddOns();
@@ -996,8 +994,7 @@ export default {
           this.dialogConfirmation = false
           this.loadingShow = false
           swal({
-            title: "Congrats!",
-            text: "You successfully deleted the product",
+            title: "You successfully deleted the product",
             icon: "success"
           });
           this.retrieveProducts();
@@ -1019,8 +1016,7 @@ export default {
           this.dialogConfirmation = false
           this.loadingShow = false
           swal({
-            title: "Congrats!",
-            text: "You successfully deleted the category",
+            title: "You successfully deleted the category",
             icon: "success"
           });
           this.retrieveCategories();
@@ -1134,8 +1130,7 @@ export default {
           }
           this.loadingShow = false
           swal({
-            title: "Congrats!",
-            text: "You have successfully added a cup type!",
+            title: "You have successfully added a cup type",
             icon: "success"
           });
           this.retrieveCupType();
@@ -1171,8 +1166,7 @@ export default {
           }
           this.loadingShow = false
           swal({
-            title: "Congrats!",
-            text: "You have successfully added cups!",
+            title: "You have successfully added cups",
             icon: "success"
           });
           this.retrieveCupSize();
@@ -1208,8 +1202,7 @@ export default {
           }
           this.loadingShow = false
           swal({
-              title: "Congrats!",
-              text: "You have successfully updated the cup type!",
+              title: "You have successfully updated the cup type",
               icon: "success"
             });
           this.retrieveCupType();
@@ -1265,12 +1258,12 @@ export default {
     formSubmitProduct(e) {
       e.preventDefault();
       this.loadingShow = true
-      if (this.img !== '' && this.prodType !== '' && this.productName !== '' &&
+      if (this.toSaveImage !== '' && this.prodType !== '' && this.productName !== '' &&
         this.lowPrice !== '' && this.highPrice !== '' && this.overPrice !== '' &&
         this.onlinelowPrice !== '' && this.onlinehighPrice !== '' & this.onlineoverPrice !== '' &&
         this.lowPrice !== '' && this.highPrice !== '' && this.overPrice !== '' &&
         this.onlinelowPrice !== '' && this.onlinehighPrice !== '' && this.onlineoverPrice !== '' &&
-        this.img !== null && this.prodType !== null && this.productName !== null &&
+        this.toSaveImage !== null && this.prodType !== null && this.productName !== null &&
         this.lowPrice !== null && this.highPrice !== null && this.overPrice !== null &&
         this.onlinelowPrice !== null && this.onlinehighPrice !== null & this.onlineoverPrice !== null &&
         this.lowPrice > 0 && this.highPrice > 0 && this.overPrice > 0 &&
@@ -1299,8 +1292,7 @@ export default {
           this.$axios.post('/formSubmit', formData, config).then(function (response) {
             currentObj.loadingShow = false
             swal({
-              title: "Congrats!",
-              text: "You have successfully added a product!",
+              title: "You have successfully added a product",
               icon: "success"
             });
             currentObj.success = response.data.success
@@ -1322,32 +1314,32 @@ export default {
     },
     editProduct(item) {
       this.errorMessage = null;
-        this.dialogForProduct = true;
-        this.productName = item.productName
-        this.description = item.description
-        this.prodType = item.productCategory
-        this.toSaveImage = item.image
-        // this.img = item.image
-        this.lowPrice = item.lowPrice
-        this.highPrice = item.highPrice
-        this.overPrice = item.overPrice
-        this.onlinelowPrice = item.onlinelowPrice
-        this.onlinehighPrice = item.onlinehighPrice
-        this.onlineoverPrice = item.onlineoverPrice
-        this.imgURL = item.image
-        this.productAdd = false
-        this.productEdit = true
-        this.status = item.status
-        this.prodId = item.id
+      this.dialogForProduct = true;
+      this.productName = item.productName
+      this.description = item.description
+      this.prodType = item.productCategory
+      this.toSaveImage = item.image
+      // this.img = item.image
+      this.lowPrice = item.lowPrice
+      this.highPrice = item.highPrice
+      this.overPrice = item.overPrice
+      this.onlinelowPrice = item.onlinelowPrice
+      this.onlinehighPrice = item.onlinehighPrice
+      this.onlineoverPrice = item.onlineoverPrice
+      this.imgURL = item.image
+      this.productAdd = false
+      this.productEdit = true
+      this.status = item.status
+      this.prodId = item.id
     },
     updateProduct(e) {
       this.loadingShow = true
-      if (this.img !== '' && this.prodType !== '' && this.productName !== '' &&
+      if (this.toSaveImage !== '' && this.prodType !== '' && this.productName !== '' &&
         this.lowPrice !== '' && this.highPrice !== '' && this.overPrice !== '' &&
         this.onlinelowPrice !== '' && this.onlinehighPrice !== '' & this.onlineoverPrice !== '' &&
         this.lowPrice !== '' && this.highPrice !== '' && this.overPrice !== '' &&
         this.onlinelowPrice !== '' && this.onlinehighPrice !== '' && this.onlineoverPrice !== '' &&
-        this.img !== null && this.prodType !== null && this.productName !== null &&
+        this.toSaveImage !== null && this.prodType !== null && this.productName !== null &&
         this.lowPrice !== null && this.highPrice !== null && this.overPrice !== null &&
         this.onlinelowPrice !== null && this.onlinehighPrice !== null & this.onlineoverPrice !== null &&
         this.lowPrice > 0 && this.highPrice > 0 && this.overPrice > 0 &&
@@ -1382,8 +1374,7 @@ export default {
             }
             currentObj.loadingShow = false
             swal({
-              title: "Congrats!",
-              text: "You have successfully updated the product!",
+              title: "You have successfully updated the product",
               icon: "success"
             });
             currentObj.success = response.data.success
@@ -1462,7 +1453,7 @@ export default {
     },
     updateCategory(e){
       this.loadingShow = true
-      if (this.image !== '' && this.productType !== '' && this.image !== null && this.productType !== null && this.errorMessage7 === null && this.errorMessage8 === null) {
+      if (this.toSaveImage2 !== '' && this.productType !== '' && this.toSaveImage2 !== null && this.productType !== null && this.errorMessage7 === null && this.errorMessage8 === null) {
         e.preventDefault();
         let currentObj = this;
 
@@ -1485,8 +1476,7 @@ export default {
             }
             currentObj.loadingShow = false
             swal({
-              title: "Congrats!",
-              text: "You have successfully updated the category",
+              title: "You have successfully updated the category",
               icon: "success"
             });
             currentObj.success = response.data.success;
@@ -1504,7 +1494,7 @@ export default {
       }
     },
     formSubmit(e) {
-      if (this.image !== '' && this.productType !== '' && this.image !== null && this.productType !== null && this.image !== null && this.productType !== null && this.errorMessage7 === null && this.errorMessage8 === null) {
+      if (this.toSaveImage2 !== '' && this.productType !== '' && this.toSaveImage2 !== null && this.productType !== null && this.image !== null && this.productType !== null && this.errorMessage7 === null && this.errorMessage8 === null) {
         this.loadingShow = true
         e.preventDefault();
         let currentObj = this;
@@ -1527,8 +1517,7 @@ export default {
             }
             currentObj.loadingShow = false
             swal({
-              title: "Congrats!",
-              text: "You have successfully added a category",
+              title: "You have successfully added a category",
               icon: "success"
             });
             currentObj.success = response.data.success;
@@ -1737,8 +1726,7 @@ export default {
           }
           this.loadingShow = false
           swal({
-            title: "Congrats!",
-            text: "You have successfully added an add-ons!",
+            title: "You have successfully added an add-ons",
             icon: "success"
           });
           this.retrieveAddOns();
@@ -1791,8 +1779,7 @@ export default {
           }
           this.loadingShow = false
           swal({
-            title: "Congrats!",
-            text: "You have successfully updated the add-ons!",
+            title: "You have successfully updated the add-ons",
             icon: "success"
           });
           this.retrieveAddOns();

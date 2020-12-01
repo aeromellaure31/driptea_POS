@@ -545,8 +545,7 @@ __webpack_require__.r(__webpack_exports__);
         this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_1__["default"].url + "register", parameter).then(function (response) {
           _this2.loadingShow = false;
           sweetalert__WEBPACK_IMPORTED_MODULE_4___default()({
-            title: "Congrats!",
-            text: "You successfully created an account!",
+            title: "You successfully created an account",
             icon: "success"
           });
           _this2.showModal = false;
@@ -1013,7 +1012,7 @@ var render = function() {
                                                     _c("v-text-field", {
                                                       attrs: {
                                                         color: "orange",
-                                                        label: "firstname",
+                                                        label: "First name",
                                                         outlined: "",
                                                         type: "text",
                                                         id: "firstname",
@@ -1098,7 +1097,7 @@ var render = function() {
                                                     _c("v-text-field", {
                                                       attrs: {
                                                         color: "orange",
-                                                        label: "lastname",
+                                                        label: "Last name",
                                                         outlined: "",
                                                         type: "text",
                                                         id: "lastname",
@@ -1249,7 +1248,7 @@ var render = function() {
                                                     _c("v-text-field", {
                                                       attrs: {
                                                         color: "orange",
-                                                        label: "Contact Number",
+                                                        label: "Contact number",
                                                         outlined: "",
                                                         type: "number",
                                                         id: "contactNum",
@@ -1366,7 +1365,7 @@ var render = function() {
                                                     _c("v-text-field", {
                                                       attrs: {
                                                         color: "orange",
-                                                        label: "username",
+                                                        label: "Username",
                                                         outlined: "",
                                                         type: "text",
                                                         id: "username",
@@ -1432,7 +1431,7 @@ var render = function() {
                                                     _c("v-text-field", {
                                                       attrs: {
                                                         color: "orange",
-                                                        label: "email",
+                                                        label: "Email",
                                                         outlined: "",
                                                         type: "email",
                                                         id: "email",
@@ -1609,7 +1608,7 @@ var render = function() {
                                                       attrs: {
                                                         color: "orange",
                                                         label:
-                                                          "Confirm Password",
+                                                          "Confirm password",
                                                         outlined: "",
                                                         "append-icon": _vm.show4
                                                           ? "visibility"
