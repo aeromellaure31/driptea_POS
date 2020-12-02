@@ -34,7 +34,7 @@
                 <v-flex>
                   <v-text-field
                     color="orange"
-                    label="firstname"
+                    label="First name"
                     outlined
                     v-model="firstname"
                     v-on:keyup="validate('firstname')"
@@ -60,7 +60,7 @@
                 <v-flex>
                   <v-text-field
                     color="orange"
-                    label="lastname"
+                    label="Last name"
                     outlined
                     v-model="lastname"
                     v-on:keyup="validate('lastname')"
@@ -89,7 +89,6 @@
                     required
                   ></v-text-field>
                 </v-flex>
-
                 <i>
                   <span
                     v-if="errorMessage8 !== null"
@@ -106,7 +105,7 @@
                 <v-flex>
                   <v-text-field
                     color="orange"
-                    label="Contact Number"
+                    label="Phone number"
                     outlined
                     v-model="contactNum"
                     v-on:keyup="validate('contact')"
@@ -137,7 +136,7 @@
                 <v-flex>
                   <v-text-field
                     color="orange"
-                    label="username"
+                    label="Username"
                     outlined
                     v-model="username"
                     v-on:keyup="validate('username')"
@@ -155,7 +154,7 @@
                 <v-flex>
                   <v-text-field
                     color="orange"
-                    label="email"
+                    label="Email"
                     outlined
                     v-model="email"
                     v-on:keyup="validate('email')"
@@ -203,7 +202,7 @@
                 <v-flex>
                   <v-text-field
                     color="orange"
-                    label="Confirm Password"
+                    label="Confirm password"
                     outlined
                     v-model="confirmPass"
                     v-on:keyup="validate('confirmPass')"
@@ -244,32 +243,32 @@
     </div>
   </v-img>
 </template>
-<style lang="scss" scoped>
+<style scoped>
 .register {
   width: 50%;
 }
-// .container {
-//   border: orange solid 1px;
-//   margin-bottom: 2%;
-//   margin-top: 2%;
-//   width: 60%;
-//   background-color: white;
-// }
+/* .container {
+  border: orange solid 1px;
+  margin-bottom: 2%;
+  margin-top: 2%;
+  width: 60%;
+  background-color: white;
+} */
 span {
   font-size: 12px;
 }
-// hr{
+/* // hr{
 //     border: 1px solid #17D817;
-// }
+// } */
 .termsCondition {
   margin-top: 6%;
   font-size: 15px;
   text-align: center;
 }
-// .form-control {
+/* // .form-control {
 //   border: 1px solid #17d817;
 //   border-radius: 5px;
-// }
+// } */
 .bRegister {
   color: orange;
   cursor: pointer;
@@ -277,13 +276,13 @@ span {
 p {
   font-size: 20px;
 }
-// .btnRegister {
+/* // .btnRegister {
 //   margin-top: 2%;
 //   margin-bottom: 2%;
 //   background-color: #17d817;
 //   font-weight: bold;
 //   width: 100%;
-// }
+// } */
 .containerWidth {
   width: 80%;
   text-align: left;
@@ -390,11 +389,11 @@ export default {
           .then(response => {
             this.loadingShow = false;
             swal({
-              title: "Congrats!",
-              text: "You have successfully registered!",
+              title: "You have successfully registered!",
               icon: "success"
+            }).then(el => {
+              this.authenticate(this.username, this.password);
             });
-            this.authenticate(this.username, this.password);
           })
           .catch(error => {
             if (error.response.status === 300) {
@@ -406,7 +405,7 @@ export default {
             this.loadingShow = false;
           });
       } else {
-        this.errorMessage1 = "Please fill up all fields";
+        // this.errorMessage1 = "Please fill up all fields";
         this.loadingShow = false;
       }
     },
@@ -437,12 +436,12 @@ export default {
       if (input === "firstname") {
         this.errorMessage1 = null;
         if (reqWhiteSpace.test(this.firstname)) {
-          this.errorMessage1 = "firstname should not contain a number.";
+          this.errorMessage1 = "First name should not contain a number.";
         } else if (this.firstname === "") {
-          this.errorMessage2 = "firstname is required.";
+          this.errorMessage2 = "First name is required.";
         } else if (!specialChar.test(this.firstname)) {
           this.errorMessage2 =
-            "firstname should not contain a special character.";
+            "First name should not contain a special character.";
         } else {
           this.errorMessage1 = null;
           this.errorMessage2 = null;
@@ -450,12 +449,12 @@ export default {
       } else if (input === "lastname") {
         this.errorMessage12 = null;
         if (reqWhiteSpace.test(this.lastname)) {
-          this.errorMessage12 = "lastname should not contain a number.";
+          this.errorMessage12 = "Last name should not contain a number.";
         } else if (this.lastname === "") {
-          this.errorMessage13 = "lastname is required.";
+          this.errorMessage13 = "Last name is required.";
         } else if (!specialChar.test(this.lastname)) {
           this.errorMessage13 =
-            "lastname should not contain a special character.";
+            "Last name should not contain a special character.";
         } else {
           this.errorMessage12 = null;
           this.errorMessage13 = null;
@@ -475,14 +474,18 @@ export default {
         }
       } else if (input === "email") {
         this.errorMessage3 = null;
-        if (this.validateEmail(this.email) === false) {
-          this.errorMessage3 = "You have entered an invalid email address.";
+        if(this.email === ''){
+          this.errorMessage3 = "Email is required";
+        } else if (this.validateEmail(this.email) === false) {
+          this.errorMessage3 = "You have entered an invalid email address";
         } else {
           this.errorMessage3 = null;
         }
       } else if (input === "password") {
         this.errorMessage4 = null;
-        if (this.password.length < 8) {
+        if(this.password === ''){
+          this.errorMessage4 = "Password is required";
+        } else if (this.password.length < 8) {
           this.errorMessage4 = "Password must be atleast 8 characters.";
         } else if (
           /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/.test(
@@ -499,7 +502,9 @@ export default {
       } else if (input === "confirmPass") {
         this.errorMessage6 = null;
         this.successMessage = null;
-        if (this.password.localeCompare(this.confirmPass) !== 0) {
+        if(this.confirmPass === ''){
+          this.errorMessage4 = "Confirm password is required";
+        } else if (this.password.localeCompare(this.confirmPass) !== 0) {
           this.errorMessage6 = "Password did not match.";
         } else {
           this.errorMessage6 = null;
@@ -514,12 +519,14 @@ export default {
       } else if (input === "contact") {
         this.errorMessage8 = null;
         this.successMessage9 = null;
-        if (this.contactNum.length > 11) {
-          this.errorMessage8 = "Cell number must be 11 digits";
+        if (this.contactNum === ''){
+          this.errorMessage8 = "Phone number is required";
+        } else if (this.contactNum.length > 11) {
+          this.errorMessage8 = "Phone number must be 11 digits";
         } else if (this.contactNum.length < 11) {
-          this.errorMessage9 = "Contact number must be 11 digits";
+          this.errorMessage9 = "Phone number must be 11 digits";
         } else if (this.contactNum.slice(0, 2) != "09") {
-          this.errorMessage9 = "Contact number must start with 09";
+          this.errorMessage9 = "Phone number must start with 09";
         } else {
           this.errorMessage8 = null;
           this.errorMessage9 = null;
@@ -537,7 +544,7 @@ export default {
       ) {
         this.errorMessage1 = null;
       } else {
-        this.errorMessage7 = "Please fill in all required fields.";
+        // this.errorMessage7 = "Please fill in all required fields.";
         this.errorMessage7 = null;
       }
     },

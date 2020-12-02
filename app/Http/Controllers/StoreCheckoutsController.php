@@ -38,7 +38,7 @@ class StoreCheckoutsController extends Controller
             $storeOrder->cupType = $value['cupType'];
             $storeOrder->choosenPrice = $value['choosenPrice'];
             $storeOrder->subTotal = $value['subTotal'];
-            $storeOrder->status = $value['status'];
+            $storeOrder->status = $data['status'];
             $storeOrder->save();
             foreach ($dataAddOns as $val) {
                 $storeAddOns = new StoreAddOn();
@@ -52,26 +52,46 @@ class StoreCheckoutsController extends Controller
     }
     
     public function retrieveCheckouts(Request $request){
-        $storeOrder = StoreOrder::with('orderProduct')->with('sameOrder')->with('getCashier')->with('getCheckouts')->where('storeCheckoutsId', $request->id)->where('deleted_at', null)->get();
+        $storeOrder = StoreOrder::with('orderProduct')->with('sameOrder')->with('getCashier')->with('getCheckouts')->where('storeCheckoutsId', $request->id)->where('status', $request->stat)->where('deleted_at', null)->get();
         return response()->json(compact('storeOrder'));
     }
 
     public function retrieveOnlineCheckouts(Request $request){
-        $storeOrder = StoreOrder::with('orderProduct')->with('sameOrder')->with('getCashier')->with('getCheckouts')->where('onlineId', $request->id)->where('deleted_at', null)->get()->groupBy('storeCheckoutsId');
+        $storeOrder = StoreOrder::with('orderProduct')->with('sameOrder')->with('getCashier')->with('getCheckouts')->where('onlineId', $request->id)->where('status', 'complete')->where('deleted_at', null)->get()->groupBy('storeCheckoutsId');
+        return response()->json(compact('storeOrder'));
+    }
+
+    public function retrieveOnlineProcessing(Request $request){
+        $storeOrder = StoreOrder::with('orderProduct')->with('sameOrder')->with('getCashier')->with('getCheckouts')->where('onlineId', $request->id)->where('status', 'processing')->where('deleted_at', null)->get()->groupBy('storeCheckoutsId');
         return response()->json(compact('storeOrder'));
     }
     
+    public function retrieveAllCheckouts(Request $request){
+        $storeOrder = StoreOrder::with('getCustomer')->with('orderProduct')->with('sameOrder')->with('getCashier')->with('getCheckouts')->where('status', 'complete')->where('deleted_at', null)->get()->groupBy('storeCheckoutsId');
+        return response()->json(compact('storeOrder'));
+    }
+
+    public function retrieveProcessing(Request $request){
+        $storeOrder = StoreOrder::with('getCustomer')->with('orderProduct')->with('sameOrder')->with('getCashier')->with('getCheckouts')->where('status', 'processing')->where('deleted_at', null)->get()->groupBy('storeCheckoutsId');
+        return response()->json(compact('storeOrder'));
+    }
+
+    public function updateStatus(Request $request){
+        foreach ($request->data as $value) {
+            $ord = StoreOrder::firstOrCreate(['id' => $value['id']]);
+            $ord->status = $request['status'];
+            $ord->save();
+        }
+        event(new pusherEvent($request['status']));
+        return response()->json(['success' => 'successfully updated!']);
+    }
+
     public function retrieveYears(Request $request)
     {
         $years = StoreCheckouts::select('created_at as year')
         ->groupBy('year')
         ->get();
         return response()->JSON(compact('years'));
-    }
-
-    public function retrieveAllCheckouts(Request $request){
-        $storeOrder = StoreOrder::with('getCustomer')->with('orderProduct')->with('sameOrder')->with('getCashier')->with('getCheckouts')->where('deleted_at', null)->get()->groupBy('storeCheckoutsId');
-        return response()->json(compact('storeOrder'));
     }
 
     public function deleteCheckout(Request $request){
@@ -81,11 +101,12 @@ class StoreCheckoutsController extends Controller
         }
         $storeOrder = StoreCheckouts::find($request->checkoutId);
         $storeOrder->delete();
+        event(new pusherEvent($storeOrder));
         return response()->json(['success' => 'successfully deleted!']);
     }
 
     public function retrieveAllSales(Request $request){
-        $storeOrder = StoreOrder::with('orderProduct')->with('sameOrder')->with('getCheckouts')->where('deleted_at', null)->get()->groupBy(function($item)
+        $storeOrder = StoreOrder::with('orderProduct')->with('sameOrder')->with('getCheckouts')->where('status', 'complete')->where('deleted_at', null)->get()->groupBy(function($item)
         {
           return $item->created_at->format('d-M-y');
         });

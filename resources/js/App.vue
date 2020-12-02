@@ -221,10 +221,8 @@
       </a>
       <v-app-bar-title app name="thetitle">DRIPTEA</v-app-bar-title>
       <v-spacer></v-spacer>
-         <div class="col-6 text-right">
-          <v-btn icon style="margin-right: 3%;" @click="redirect('/login')">Login</v-btn>
-          <v-btn icon @click="redirect('/register')" style="margin-right: 2%;">Register</v-btn>
-        </div>
+        <v-btn icon style="margin-right: 3%;" @click="redirect('/login')">Login</v-btn>
+        <v-btn icon @click="redirect('/register')" style="margin-right: 2%;">Register</v-btn>
     </v-app-bar>
     <v-main>
       <router-view></router-view>
@@ -316,12 +314,12 @@ export default {
         route: "/salesInventory"
       },
       {
-        icon: "mdi-calendar-account",
+        icon: "mdi-cart-minus",
         text: "Order Inventory",
         route: "/orderInventory"
       },
       {
-        icon: "mdi-calendar-account",
+        icon: "mdi-cart",
         text: "Customers' Orders",
         route: "/allOrder"
       },
@@ -350,7 +348,6 @@ export default {
     count: 0,
     onlineCount: 0
   }),
-  components: {},
   mounted() {
     this.admin = localStorage.getItem("adminId");
     this.cashier = localStorage.getItem("cashierId");
@@ -377,8 +374,7 @@ export default {
     pusher.logToConsole = true;
 
     channel.bind("driptea-data", data => {
-      console.log('bolbol ate jess', data)
-      if (data.order === "pendingCustomer") {
+      if (data.order !== "complete") {
         // this.playSound('file://resources/audio/notify.mp3')
         this.playSound(
           "http://soundbible.com/mp3/Air Plane Ding-SoundBible.com-496729130.mp3"

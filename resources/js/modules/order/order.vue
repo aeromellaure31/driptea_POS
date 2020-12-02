@@ -2,9 +2,8 @@
     <div class="sudlanan">
         <div>
           <v-btn  style="margin-left: 3%;margin-top:10px" class= "warning" @click="previous()">
-                <v-icon >mdi-home</v-icon>&nbsp;&nbsp;Back
-            </v-btn>
-
+            <v-icon >mdi-home</v-icon>&nbsp;&nbsp;Back
+        </v-btn>
     </div>
         <center>
             <h1 style="margin-top: 2%; color: black">{{itemSelected}}</h1>
@@ -38,7 +37,7 @@
                 </div>
                 <div class="col-md-4">
                     <center>
-                        <h3 class="black--text">Add-ons</h3>
+                        <h3 class="black--text">Add-ons<span class="black--text" style="font-size: 15px;">(Optional)</span></h3>
                         <button class="btn overline" v-for="(item, index) in addOnsData" :key="index" @click="addAddOns(item, $event)">{{getAddOnsName(item)}}</button>
                     </center>
                 </div>
@@ -54,7 +53,6 @@
 .errorColor {
   color: red;
 }
-
 .addCart{
     /* margin-top: 20% !important; */
     width: 300px !important;
@@ -206,6 +204,7 @@ export default {
                 }
             }
             this.cupEvent = event.target;
+            this.errorMessage = null
         },
         getCupTypeName(item){
             let value = ''
@@ -267,6 +266,7 @@ export default {
                 }
             }
             this.sugarEvent = event.target
+            this.errorMessage2 = null
         },
         getCupType(params, event){
             if(this.cupTypeEvent !== event.target){
@@ -284,6 +284,7 @@ export default {
                 }
             }
             this.cupTypeEvent = event.target
+            this.errorMessage1 = null
         },
         addAddOns(params, event){
             this.$axios.post(AUTH.url + "retrieveOneAddOn", {id: params.id}, AUTH.config).then(response => {
@@ -309,6 +310,8 @@ export default {
         addToCart(){
             if(this.quantity <= 0){
                 this.errorMessage3 = 'Quantity must be greater than 0!'
+            }else{
+                this.errorMessage3 = null
             }
             if(this.cupSize === null){
                 this.errorMessage = 'Cup size is required!'

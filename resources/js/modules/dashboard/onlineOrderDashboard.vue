@@ -389,7 +389,7 @@ export default {
                                 AUTH.deauthenticate()
                             }
                             $('#viewDetails').modal('hide')
-                             swal("Order added to cart", "Successfully", "success")
+                             swal("Order successfully added to cart", "success")
                         })
                     })
                 }else{
@@ -412,7 +412,7 @@ export default {
                             AUTH.deauthenticate()
                         }
                         $('#viewDetails').modal('hide')
-                        swal("Order added to cart", "Successfully", "success")
+                        swal("Order successfully added to cart", "success")
                     })
                 }
             }

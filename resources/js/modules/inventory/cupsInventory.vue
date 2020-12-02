@@ -72,7 +72,6 @@ export default {
   },
   components: {
     VueJsonToCsv,
-    
     loading
   },
   mounted(){

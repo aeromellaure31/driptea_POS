@@ -684,8 +684,7 @@ export default {
           AUTH.deauthenticate()
         }
         swal({
-          title: "Congrats!",
-          text: "You have successfully edited your profile picture",
+          title: "You have successfully edited your profile picture",
           icon: "success"
         });
       })
@@ -811,8 +810,7 @@ export default {
               AUTH.deauthenticate()
             }
             swal({
-              title: "Congrats!",
-              text: "You have successfully edited your information",
+              title: "You have successfully edited your information",
               icon: "success"
             });
             this.retrieveUserDatas(this.userID);

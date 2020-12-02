@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Controllers\MailController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -10,10 +11,78 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Support\Facades\DB;
 use App\Events\pusherEvent;
 use Illuminate\Support\Facades\Storage;
-// use JD\Cloudder\Facades\Cloudder;
+use Illuminate\Support\Facades\Mail;
+use App\Models\ForgotPass;
 
 class UserController extends Controller
 {
+    public function reset(Request $request) {
+        $pass = Hash::make($request->password);
+        $user = User::where('email', $request->email)->get();
+        $user[0]->password = $pass;
+        $user[0]->save();
+        return response()->json(['data' => 'true']);
+    }
+
+    public function updateCode(Request $request){
+        $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $pin = mt_rand(1000000, 9999999)
+            . mt_rand(1000000, 9999999)
+            . $characters[rand(0, strlen($characters) - 1)];
+        $code = str_shuffle($pin);
+        $forgotPass = ForgotPass::firstOrCreate(['id' => $request->id]);
+        $forgotPass->code = $code;
+        $forgotPass->save();
+        $forgotPass['status'] = 'success';
+        $account = User::where('email', $forgotPass['email'])->get();
+        $emailTo = $forgotPass['email'];
+        $message = "Hi, ".$account[0]->firstname. " ".$account[0]->lastname.". Your code is ".$code;
+        $subject = 'Driptea Verification Code';
+        Mail::to($emailTo)->send(new MailController($message, $emailTo, $subject));
+        return response()->json(compact('forgotPass'));
+    }
+
+    public function sendCode(Request $request){
+        $data = null;
+        $account = User::where('email', $request->email)->get();
+        if(count($account) != 0) {
+            $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            $pin = mt_rand(1000000, 9999999)
+                . mt_rand(1000000, 9999999)
+                . $characters[rand(0, strlen($characters) - 1)];
+            $code = str_shuffle($pin);
+            $emailTo = $request->email;
+            $message = "Hi, ".$account[0]->firstname. " ".$account[0]->lastname.". Your code is ".$code;
+            $subject = 'Driptea Verification Code';
+
+            $forgotPass = new ForgotPass;
+            $forgotPass->email = $request->email;
+            $forgotPass->code = $code;
+            $forgotPass->save();
+            
+            $data['status'] =  "true";
+            $data['id'] = $forgotPass->id;
+            $data['email'] = $request->email;
+            $data['code'] = $code;
+            Mail::to($emailTo)
+                ->send(new MailController($message, $emailTo, $subject));
+            return response()->json(compact('data'));
+        } else {
+            return response()->json(['data' => 'false']);
+        }
+    }
+
+    public function checkCode(Request $request) {
+        $item = ForgotPass::where('id', $request->id)->get();
+        if($item[0]->code === $request->code) {
+            $item['status'] = 'true';
+            return response()->json(compact('item'));
+        } else {
+            $item['status'] = 'false';
+            return response()->json(compact('item'));
+        }
+    }
+
     public function updateImage(Request $request){
         $user = User::firstOrCreate(['id' => $request->id]);
         // $imageName = time().'.'.$request->image->getClientOriginalExtension();
@@ -68,11 +137,8 @@ class UserController extends Controller
             if ($validate->fails()) {
                 return response()->json($validate->errors()->toJson(), 301);
             }
-        }else {
-            $userdata = DB::table('users')->where('id', $request->ID)->update([$request->col => $request->data]);
         }
-        // return $this->userdata($request);
-        // $this.userdata();
+        $userdata = DB::table('users')->where('id', $request->ID)->update([$request->col => $request->data]);
     }
 
     public function retrieve(Request $request){

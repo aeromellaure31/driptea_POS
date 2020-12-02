@@ -28,10 +28,14 @@
               label="Search"
             ></v-text-field>
             <v-divider class="mx-4" vertical></v-divider>
-            <v-btn color="success" class="mr-6">
-              Export
-              <i class="mdi mdi-export-variant" aria-hidden="true"></i>
-            </v-btn>
+            <VueJsonToCsv
+            :json-data="storeData"
+            :csv-title="formatDate + ' Order Inventory'"
+            >
+                <v-btn color="success" class="mr-6" @click="downloadData()">
+                    Export<i class="mdi mdi-export-variant" aria-hidden="true"></i>
+                </v-btn>
+            </VueJsonToCsv>
           </v-toolbar>
         </template>
         <div class="zui-wrapper">
@@ -89,9 +93,6 @@
           </div>
         </div>
       </v-simple-table>
-      <!-- <table >
-                       
-      </table>-->
        <loading v-if="loadingShow"></loading>
     </div>
 
@@ -162,6 +163,7 @@
 </style>
 <script>
 import loading from "../../basic/loading.vue";
+import VueJsonToCsv from 'vue-json-to-csv'
 import AUTH from "../../services/auth";
 import ROUTER from "../../router";
 import config from "../../config.js";
@@ -169,6 +171,7 @@ import moment from "moment";
 export default {
   data() {
     return {
+      formatDate: moment(new Date()).format('MM/DD/YYYY Hh:mm'),
       tableData: [],
       productData: [],
       category: ["Low Dose", "High Dose", "Over Dose"],
@@ -178,11 +181,13 @@ export default {
       prod: [],
       categoryName: "",
       finalData: [],
-      changeName: "lowDose"
+      changeName: "lowDose",
+      storeData: []
     };
   },
   components: {
-    loading
+    loading,
+    VueJsonToCsv
   },
   mounted() {
     this.retrieveCategory();
@@ -190,6 +195,36 @@ export default {
     this.retrieveProducts();
   },
   methods: {
+    downloadData(){
+      this.finalData.forEach(items => {
+        var list = {
+          Date: this.getDate(items[0].get_customer[0].created_at),
+          Name: items[0].get_customer[0].customerName ? items[0].get_customer[0].customerName : '',
+          Address: items[0].get_customer[0].customerAddress ? items[0].get_customer[0].customerAddress : '',
+        }
+        var productName = []
+        this.category.forEach(element => {
+          this.productData.forEach((el, ind) => {
+            productName.push(el.productName)
+          })
+        })
+        this.prod.forEach((item, index) => {
+          let lowLength = productName.length / 3;
+          let highLength = lowLength + lowLength;
+          let overLength = highLength + lowLength;
+          var a = this.getAllValue(item, items, index)
+          if(index < lowLength){
+            list['LowDose ' + productName[index]] = a
+          } else if(index < highLength && index >= lowLength){
+            list['HighDose ' + productName[index]] = a
+          } else if(index < overLength && index >= highLength){
+            list['OverDose ' + productName[index]] = a
+          }
+        })
+        list['Total'] = this.getTotal(items)
+        this.storeData.push(list)
+      })
+    },
     getAllValue(item, items, index) {
       let total = 0;
       let category = "lowDose";

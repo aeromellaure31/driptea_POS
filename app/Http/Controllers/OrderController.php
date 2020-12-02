@@ -55,17 +55,22 @@ class OrderController extends Controller
     }
 
     public function getOrder(Request $request){
-        $order = Order::with('getCustomer')->with('orderProduct')->with('sameOrder')->where('customerId', $request->id)->where('status', 'pendingCustomer')->where('deleted_at', null)->orderBy('id','DESC')->get();
+        $order = Order::with('getCustomer')->with('orderProduct')->with('sameOrder')->where('customerId', $request->id)->where('status', '!=', 'complete')->where('deleted_at', null)->orderBy('id','DESC')->get();
         return response()->json(compact('order'));
     }
 
     public function retrieveOnlineOrder(Request $request){
-        $order = Order::with('getCustomer')->with('orderProduct')->with('sameOrder')->where('status', 'pendingCustomer')->where('deleted_at', null)->orderBy('id','ASC')->get()->groupBy('customerId');
+        $order = Order::with('getCustomer')->with('orderProduct')->with('sameOrder')->where('status', '!=', 'pending')->where('status', '!=', 'complete')->where('status', '!=', 'cancel')->where('deleted_at', null)->orderBy('id','ASC')->get()->groupBy('customerId');
         return response()->json(compact('order'));
     }
 
     public function retrieveOneOnlineOrder(Request $request){
-        $order = Order::with('getCustomer')->with('orderProduct')->with('sameOrder')->where('onlineId', $request->id)->where('status', 'pendingCustomer')->where('deleted_at', null)->orderBy('id','DESC')->get()->groupBy('customerId');
+        $order = Order::with('getCustomer')->with('orderProduct')->with('sameOrder')->where('onlineId', $request->id)->where('status', '!=', 'complete')->where('status', '!=', 'cancel')->where('deleted_at', null)->orderBy('id','DESC')->get()->groupBy('customerId');
+        return response()->json(compact('order'));
+    }
+
+    public function retrieveCancelled(Request $request){
+        $order = Order::with('getCustomer')->with('orderProduct')->with('sameOrder')->where('onlineId', $request->id)->where('status', '=', 'cancel')->where('deleted_at', null)->orderBy('id','DESC')->get()->groupBy('customerId');
         return response()->json(compact('order'));
     }
 
@@ -79,8 +84,28 @@ class OrderController extends Controller
     //     return response()->json(compact('order'));
     // }
 
-    public function updateStatus(Request $request){
-        if($request['status'] === 'complete'){
+    public function updateOne(Request $request){
+        $ord = Order::firstOrCreate(['id' => $request->id]);
+        $ord->status = $request['status'];
+        $ord->save();
+        event(new pusherEvent($request['status']));
+        return response()->json(['success' => 'successfully updated!']);
+    }
+
+    public function onlineUpdate(Request $request){
+        foreach ($request->data as $value) {
+            $ord = Order::firstOrCreate(['id' => $value['id']]);
+            $ord->modeOfPayment = $request['modeOfPayment'];
+            $ord->ifNotAvailable = $request['ifNotAvailable'];
+            $ord->status = $request['status'];
+            $ord->save();
+        }
+        event(new pusherEvent($request['status']));
+        return response()->json(['success' => 'successfully updated!']);
+    }
+
+    public function updateStatusOrder(Request $request){
+        if($request['status'] === 'cancel' ||$request['status'] === 'complete' || $request['status'] === 'Available' || $request['status'] === 'Not Available'){
             $order = Order::where('customerId', $request->id)->where('deleted_at', null)->get();
         }else{
             $order = Order::where('onlineId', $request->id)->where('deleted_at', null)->get();
@@ -88,7 +113,9 @@ class OrderController extends Controller
         foreach ($order as $value) {
             $ord = Order::firstOrCreate(['id' => $value->id]);
             $ord->modeOfPayment = $request['modeOfPayment'];
-            $ord->ifNotAvailable = $request['ifNotAvailable'];
+            if($request['ifNotAvailable']){
+                $ord->ifNotAvailable = $request['ifNotAvailable'];
+            }
             $ord->status = $request['status'];
             $ord->save();
         }

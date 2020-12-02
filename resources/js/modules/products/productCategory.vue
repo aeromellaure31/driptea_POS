@@ -6,18 +6,18 @@
             </v-btn>
         </div>
         <div class="row firstRow">
-            <div class="col-md-6">
+            <div class="col-md-7">
                 <center>
                     <v-card class="ml-10">
                         <center>
-                            <div class="row" style="margin-bottom: -10%" v-if="customerType === 'online' || customerType === 'fb'" >
+                            <div class="row" style="margin-bottom: -8%" v-if="customerType === 'online' || customerType === 'fb'" >
                                 <div class="col-md-6" style="text-align: left">
                                     <p style="margin-left: 2%; margin-top: 2%;">Name: {{name}}</p><br>
                                     <p style="margin-left: 2%;">Address: {{address}}</p>
                                 </div>
                                 <div class="col-md-6" style="text-align: left">
                                     <p style="margin-top: 2%;">Contact#: {{contact}}</p><br>
-                                    <p>Not Available: {{notAvailable}}</p>
+                                    <p v-if="customerType === 'online'">Not Available: {{notAvailable}}</p>
                                 </div>
                             </div>
                             <img v-if="customerType === 'walkin'" style="width: 70px; height: 50px; border: solid 1px black" src="@/assets/walkin.jpg">
@@ -25,7 +25,7 @@
                             <img v-if="customerType === 'grab'" style="width: 70px; height: 50px;" src="@/assets/grab2.png">
                             <img v-if="customerType === 'fb'" style="width: 70px; height: 50px;" src="@/assets/fb1.png"><br>
                             <img v-if="customerType === 'online'" style="width: 70px; height: 50px;" src="@/assets/logo.png"><br>
-                            <span v-if="error" style="color: red; font-style: italic">All data are required!</span>
+                            <span v-if="error !== null" style="color: red; font-style: italic">{{error}}</span>
                             <table class="table table-responsive table-bordered " id="myTable">
                                 <tr class="overline">
                                     <th style="width: 45%;">Product Name</th>
@@ -34,6 +34,7 @@
                                     <th>Unit Price</th>
                                     <th>Quantity</th>
                                     <th>Total</th>
+                                    <th>Status Check</th>
                                     <th style="width: 15px;" >❌</th>
                                 </tr>
                                 <tbody class="Caption">
@@ -45,6 +46,10 @@
                                         <td>{{item.quantity}}</td>
                                         <td>{{convert(item.subTotal)}}</td>
                                         <td>
+                                            <button :class="item.status === 'Not Available' ? 'btnClick' : 'btnAvailability'" @click="checkAvailability('Not Available', item)">N/A</button>
+                                            <button :class="item.status === 'Available' ? 'btnClick' : 'btnAvailability'" @click="checkAvailability('Available', item)">Available</button>
+                                        </td>
+                                        <td>
                                             <button style="font-size: 10px" type="button" aria-expanded="false" @click="deleteOrder(item.id)">❌</button>
                                         </td>
                                     </tr>
@@ -52,27 +57,31 @@
                             </table>
                         </center>
                         <div class="row">
-                            <div class="col-md-6"></div>
+                            <div class="col-md-3"></div>
                             <div class="col-md-6 overline" style="text-align:left;">
-                                <p v-if="customerType === 'fb' || customerType === 'online'" style="display: inline;">Subtotal:&emsp;&emsp;</p>
-                                <p v-if="customerType === 'fb' || customerType === 'online'" style="display: inline;">₱ {{getSubTotal()}}</p><br>
-                                <p v-if="customerType === 'fb' || customerType === 'online'" style="display: inline;">Del.&nbsp;Fee:&emsp;</p>
-                                <input disabled v-if="customerType === 'fb' || customerType === 'online'" style="display: inline;" type="text" placeholder="₱ 0.00" v-model="feeDeliver">
-                                <p style="display: inline;" class="pStyle">Total:&emsp;&emsp;&emsp;&emsp;</p>
-                                <p style="display: inline;" class="pStyle">₱ {{convertTotalPrice()}}</p><br>
-                                <p v-if="customerType !== 'fb'  && customerType !== 'online'" style="display: inline;" class="pStyle">Amount:&emsp;&emsp;&nbsp;&nbsp;&nbsp;</p>
-                                <input v-if="customerType !== 'fb'  && customerType !== 'online'" style="display: inline;" type="number" placeholder="₱ 0.00" v-model="cash"><br>
-                                <p v-if="customerType !== 'fb'  && customerType !== 'online'" style="display: inline;" class="pStyle">Change:&emsp;&emsp;&emsp;</p>
-                                <p v-if="customerType !== 'fb'  && customerType !== 'online'" style="display: inline;" class="pStyle">₱ {{convertChange()}}</p>
-                                <div >
-                                 <button class="btn btn-primary checkout overline" @click="checkoutOrder">Checkout</button>
-                                </div>
+                                <center>
+                                    <p v-if="customerType === 'fb' || customerType === 'online'" style="display: inline;">Subtotal:&emsp;&emsp;</p>
+                                    <p v-if="customerType === 'fb' || customerType === 'online'" style="display: inline;">₱ {{getSubTotal()}}</p><br>
+                                    <p v-if="customerType === 'fb' || customerType === 'online'" style="display: inline;">Del.&nbsp;Fee:&emsp;</p>
+                                    <input disabled v-if="customerType === 'fb' || customerType === 'online'" style="display: inline;" type="text" placeholder="₱ 0.00" v-model="feeDeliver"><br>
+                                    <p style="display: inline;" class="pStyle">Total:&emsp;&emsp;&emsp;&emsp;</p>
+                                    <p style="display: inline;" class="pStyle">₱ {{convertTotalPrice()}}</p><br>
+                                    <p v-if="customerType !== 'fb'  && customerType !== 'online'" style="display: inline;" class="pStyle">Amount:&emsp;&emsp;&nbsp;&nbsp;&nbsp;</p>
+                                    <input v-if="customerType !== 'fb'  && customerType !== 'online'" style="display: inline;" type="number" placeholder="₱ 0.00" v-model="cash"><br>
+                                    <p v-if="customerType !== 'fb'  && customerType !== 'online'" style="display: inline;" class="pStyle">Change:&emsp;&emsp;&emsp;</p>
+                                    <p v-if="customerType !== 'fb'  && customerType !== 'online'" style="display: inline;" class="pStyle">₱ {{convertChange()}}</p>
+                                    <div >
+                                    <button class="btn btn-primary checkout overline" @click="checkoutOrder">Checkout</button>
+                                    <button class="btn btn-danger checkout overline" @click="cancelOrder">Cancel</button>
+                                    </div>
+                                </center>
                             </div>
+                            <div class="col-md-3"></div>
                         </div>
                     </v-card>
                 </center>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-5">
                 <div class="dataStyle">
                     <div class="row">
                         <div class="col-md-5 secondCol" v-for="(item, index) in data" :key="index">
@@ -90,6 +99,16 @@
     </div>
 </template>
 <style scoped>
+.btnAvailability{
+    background-color: rgb(243, 243, 243);
+    padding: 5px;
+    border-radius: 5px;
+}
+.btnClick{
+    background-color: #ff5b04;
+    padding: 5px;
+    border-radius: 5px;
+}
 .dataStyle{
     height: 700px;
     overflow-y: scroll;
@@ -158,11 +177,13 @@ import ROUTER from '../../router'
 import receipt from '../order/receipt.vue'
 import config from '../../config.js'
 import loading from '../../basic/loading.vue';
+import swal from "sweetalert";
 export default {
     data(){
         return{
             data: null,
             tableData: null,
+            newTableData: null,
             customerType: this.$route.params.image,
             config: config,
             deliveryFee: 0,
@@ -172,7 +193,7 @@ export default {
             subTotalPrice: 0,
             cash: null,
             fee: 0,
-            error: false,
+            error: null,
             receiptShow: false,
             receiptData: null,
             loadingShow: false,
@@ -182,7 +203,8 @@ export default {
             addOnsData: [],
             cupData: [],
             notAvailable: null,
-            feeDeliver: 0
+            feeDeliver: 0,
+            btnClick: false
         }
     },
     components: {
@@ -194,8 +216,36 @@ export default {
         this.retrieveProduct()
         this.retrieveAddOns()
         this.retrieveCupType()
+        let pusher = new Pusher(this.config.PUSHER_APP_KEY, {
+        cluster: this.config.PUSHER_APP_CLUSTER,
+        secret: this.config.PUSHER_APP_SECRET,
+        encrypted: false
+        });
+        let channel = pusher.subscribe("driptea-channel");
+        let obj = this;
+        pusher.logToConsole = true;
+        channel.bind("driptea-data", data => {
+            this.retrieveCategory()
+            this.retrieveProduct()
+            this.retrieveAddOns()
+            this.retrieveCupType()
+        });
     },
     methods: {
+        checkAvailability(item, param){
+            this.loadingShow = true
+            let params = {
+                id: param.id,
+                status: item
+            }
+            this.$axios.post(AUTH.url + 'updateOne', params, AUTH.config).then(res => {
+                this.loadingShow = false
+                if(res.data.status){
+                    AUTH.deauthenticate()
+                }
+                this.retrieveProduct()
+            })
+        },
         convert(item){
             return parseInt(item).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
         },
@@ -275,7 +325,9 @@ export default {
             if(this.tableData != null){
                 let total = 0
                 this.tableData.forEach(element => {
-                    total += parseInt(element.subTotal)
+                    if(element.status !== 'Not Available'){
+                        total += parseInt(element.subTotal)
+                    }
                 });
                 this.subTotalPrice = total
                 return parseInt(total).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
@@ -297,7 +349,7 @@ export default {
                     this.notAvailable = res.data.order[0].ifNotAvailable
                     this.tableData = res.data.order
                     this.fee = 50
-                    this.feeDeliver = "        ₱ " + parseInt(50).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
+                    this.feeDeliver = "        ₱   " + parseInt(50).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
                 })
             }else{
                 let params = {
@@ -378,7 +430,7 @@ export default {
                 id: localStorage.getItem('customer'),
                 status: 'complete'
             }
-            this.$axios.post(AUTH.url + 'updateStatus', params, AUTH.config).then(res => {
+            this.$axios.post(AUTH.url + 'updateStatusOrder', params, AUTH.config).then(res => {
                 if(res.data.status){
                     AUTH.deauthenticate()
                 }
@@ -390,7 +442,8 @@ export default {
                     total: parseInt(this.convertTotalPrice()),
                     incash: this.cash,
                     change: parseInt(this.convertChange()),
-                    order: this.tableData
+                    order: this.newTableData,
+                    status: this.customerType === 'online' || this.customerType === 'fb' ? 'processing' : 'complete'
                 }
                 this.$axios.post(AUTH.url + 'addCheckout', params, AUTH.config).then(res => {
                     if(res.data.status){
@@ -399,7 +452,7 @@ export default {
                     let low = 0
                     let high = 0
                     let over = 0
-                    this.tableData.forEach(el => {
+                    this.newTableData.forEach(el => {
                         if(el.size === 'lowDose'){
                             low += el.quantity
                         }else if(el.size === 'highDose'){
@@ -419,6 +472,7 @@ export default {
                         }
                         let parameter = {
                             id: res.data.storeCheckouts.id,
+                            stat: this.customerType === 'online' || this.customerType === 'fb' ? 'processing' : 'complete'
                         }
                         this.$axios.post(AUTH.url + 'retrieveCheckouts', parameter, AUTH.config).then(response => {
                             if(response.data.status){
@@ -432,21 +486,73 @@ export default {
                 })
             })
         },
+        cancelOrder(){
+            this.tableData.forEach(el => {
+                var table = []
+                if(el.status !== 'Not Available'){
+                    table.push(el)
+                }
+                this.newTableData = table
+            })
+            if(this.newTableData.length <= 0){
+                this.loadingShow = true
+                let params = {
+                    id: localStorage.getItem('customer'),
+                    status: 'cancel'
+                }
+                this.$axios.post(AUTH.url + 'updateStatusOrder', params, AUTH.config).then(res => {
+                    this.loadingShow = false
+                    if(res.data.status){
+                        AUTH.deauthenticate()
+                    }
+                    swal({
+                        title: "Successfully Cancelled",
+                        icon: "success",
+                    }).then(e => {
+                        this.retrieveProduct()
+                        localStorage.removeItem('customerId')
+                        localStorage.removeItem('customerType')
+                        ROUTER.push('/casherDashboard').catch(()=>{})
+                    })
+                })
+            }else{
+                swal({
+                    title: "You cannot Cancel with Available Data",
+                    icon: "error"
+                });
+            }
+        },
         checkoutOrder(){
-            if(this.customerType !== 'fb' && this.customerType !== 'online'){
-                if(this.cash > parseInt(this.convertTotalPrice()) && this.convertTotalPrice() !== null && this.cash !== null && this.convertChange() >= 0){
-                    this.error = false
-                    this.checkoutMethod()
+            var table = []
+            this.tableData.forEach(el => {
+                if(el.status !== 'Not Available'){
+                    table.push(el)
+                }
+                this.newTableData = table
+            })
+            if(this.newTableData.length > 0){
+                if(this.customerType !== 'fb' && this.customerType !== 'online'){
+                    if(this.cash === null){
+                        this.error = 'Amount is required'
+                    }else if(this.cash >= parseInt(this.convertTotalPrice()) && this.convertTotalPrice() !== null && this.convertChange() >= 0){
+                        this.error = null
+                        this.checkoutMethod()
+                    }else{
+                        this.error = 'All data is required'
+                    }
                 }else{
-                    this.error = true
+                    if(this.getSubTotal() > 0 && this.fee !== '' && this.convertTotalPrice() >= 0){
+                        this.error = null
+                        this.checkoutMethod()
+                    }else{
+                        this.error = 'All data is required'
+                    }
                 }
             }else{
-                if(this.getSubTotal() > 0 && this.fee !== '' && this.convertTotalPrice() > 0){
-                    this.error = false
-                    this.checkoutMethod()
-                }else{
-                    this.error = true
-                }
+                swal({
+                    title: "No Available Data to Checkout!",
+                    icon: "error"
+                });
             }
         },
          previous(){
