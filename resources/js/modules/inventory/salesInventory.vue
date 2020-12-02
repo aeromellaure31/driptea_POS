@@ -16,7 +16,7 @@
                  <v-divider class="mx-4" vertical></v-divider>
                 <VueJsonToCsv
                 :json-data="toDownload"
-                :csv-title="formatDate + 'Sales'"
+                :csv-title="formatDate + ' Sales'"
                 >
                     <v-btn color="success" class="mr-6" @click="excelDownload()">
                         Export <i class="mdi mdi-export-variant" aria-hidden="true"></i>
@@ -56,7 +56,7 @@ import moment from 'moment'
 export default {
     data(){
         return{
-            formatDate: moment(new Date()).format('MM/DD/YYYY'),
+            formatDate: moment(new Date()).format('MM/DD/YYYY Hh:mm'),
             categoryData: [],
             search: '',
             loadingShow: false,
