@@ -336,6 +336,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -343,7 +346,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
- // import index from "../../services/auth";
+ // import { connect } from 'net';
+// import index from "../../services/auth";
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -383,6 +387,9 @@ __webpack_require__.r(__webpack_exports__);
       ok: true,
       ok2: false,
       ok3: false,
+      ok4: true,
+      ok5: false,
+      ok6: false,
       yrfrmdb: null,
       yrvalue: null,
       theMonth: null,
@@ -393,9 +400,20 @@ __webpack_require__.r(__webpack_exports__);
       options: {
         colors: ["#ff5b04"],
         chart: {
-          id: "sales-summary"
+          id: "sales-summary",
+          toolbar: {
+            "export": {
+              csv: {
+                filename: "Driptea_Sales_Report",
+                columnDelimiter: ",",
+                headerCategory: "Date",
+                headerValue: "Sales"
+              }
+            }
+          }
         },
         xaxis: {
+          name: "Date",
           categories: []
         },
         stroke: {
@@ -463,6 +481,7 @@ __webpack_require__.r(__webpack_exports__);
     this.getProductNames();
     this.dailyProductSale();
     this.getRandomColor();
+    this.getAnnualProductSales([2020, 2021]);
   },
   created: function created() {
     this.getTop3();
@@ -1088,54 +1107,88 @@ __webpack_require__.r(__webpack_exports__);
       this.semi_Data = [];
       this.options2.colors = [];
     },
-    getAnnualProductSales: function getAnnualProductSales(years) {// this.loadingShow = true;
-      // this.points = [];
-      // let startingYR = values[0];
-      // let endYear = values[1];
-      // let graphLabel = startingYR + " - " + endYear;
-      // this.MonthLabel = graphLabel;
-      // let gap = endYear - startingYR;
-      // let array = [];
-      // let labelsArr = [];
-      // let params = {
-      //   from: startingYR,
-      //   to: endYear
-      // };
-      // Axios.post(AUTH.url + "getAnnualProductSales", params, AUTH.config).then(
-      //   response => {
-      //     if (response.data.status) {
-      //       AUTH.deauthenticate();
-      //     }
-      //     this.loadingShow = false;
-      //     response.data.subtotal.forEach(element => {
-      //       if (element.year <= endYear && element.year == startingYR) {
-      //         array.push(element.sub);
-      //         labelsArr.push(startingYR);
-      //         startingYR++;
-      //       }
-      //     });
-      //     this.points = array;
-      //     this.annualLabels = labelsArr;
-      //     this.series = [
-      //       {
-      //         data: this.points
-      //       }
-      //     ];
-      //     this.options = {
-      //       colors: ["#ff5b04"],
-      //       chart: {
-      //         id: "sales-summary"
-      //       },
-      //       xaxis: {
-      //         categories: this.annualLabels
-      //       },
-      //       stroke: {
-      //         width: 2,
-      //         curve: "smooth"
-      //       }
-      //     };
-      //   }
-      // );
+    getAnnualProductSales: function getAnnualProductSales(values) {
+      // this.loadingShow = true;
+      this.secondpoints = [];
+      var startingYR = values[0];
+      var endYear = values[1];
+      var graphLabel = startingYR + " - " + endYear; // this.MonthLabel2 = graphLabel;
+
+      var gap = endYear - startingYR;
+      var Seriesarray = [];
+      var labelsArr = [];
+      var pointsArr = [];
+      var Product = "";
+      var params = {
+        from: null
+      };
+      var datas = []; // console.log("hey bb ");
+
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(_services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].url + "getAnnualProductSales", params, _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].config).then(function (response) {
+        console.log("ang response bb ", response);
+
+        if (response.data.status) {
+          _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].deauthenticate();
+        }
+
+        for (var i = startingYR; i <= endYear; i++) {
+          labelsArr.push(i);
+        } // console.log("year labels bruh ",labelsArr)
+
+
+        labelsArr.forEach(function (label) {
+          response.data.prods.forEach(function (element) {
+            // console.log("ang element bb ",element.year);
+            Product = element.ProductName;
+
+            if (element.year === label) {
+              pointsArr.push(element.quan);
+            } else {
+              pointsArr.push(0);
+            }
+          });
+          Seriesarray.push({
+            name: Product,
+            data: pointsArr
+          });
+          var pointsArr = [];
+          var Product = "";
+          console.log("the series ... ", Seriesarray);
+        }); // this.loadingShow = false;
+        // response.data.prods.forEach(element => {
+        //   if (element.year <= endYear && element.year == startingYR) {
+        //     array.push(element.year);
+        //     labelsArr.push(startingYR);
+        //     startingYR++;
+        //     datas.push(element.quan)
+        //     pointsArr.push({
+        //       name: element.ProductName,
+        //       data: datas
+        //     })
+        //   }
+        // });
+        // // for(var i = 0; i < this.array.length; i++){
+        // // }
+        // this.secondpoints = pointsArr ;
+        // console.log("ang points bb", this.secondpoints)
+        // this.annualLabels = labelsArr;
+        // this.series2 = pointsArr;
+        // this.options2 = {
+        //   colors: ["#ff5b04"],
+        //   chart: {
+        //     id: "product-summary"
+        //   },
+        //   xaxis: {
+        //     categories: this.annualLabels
+        //   },
+        //   stroke: {
+        //     width: 2,
+        //     curve: "smooth"
+        //   }
+        // };
+      })["catch"](function (error) {
+        console.log("ang mahiwagang mensahe ", error);
+      });
     },
     onFilter2: function onFilter2() {
       if (this.thefilter2 == "Daily") {
@@ -1143,40 +1196,46 @@ __webpack_require__.r(__webpack_exports__);
         this.MonthLabel2 = this.mnths[this.theMonth - 1]; // this.options2.xaxis.categories = this.xlabels;
 
         this.dailyProductSale();
-        this.ok = true;
-        this.ok2 = false;
-        this.ok3 = false;
+        this.ok4 = true;
+        this.ok5 = false;
+        this.ok6 = false;
       } else if (this.thefilter2 == "Weekly") {} else if (this.thefilter2 == "Monthly") {
         this.MonthLabel2 = new Date(this.thedate2).getFullYear(); // this.options2.xaxis.categories = this.mnths;
 
-        this.ok = false;
-        this.ok2 = true;
-        this.ok3 = false;
+        this.ok4 = false;
+        this.ok5 = true;
+        this.ok6 = false;
         this.MonthlyProductSale(this.yrvalueS); // console.log("ang colors bruh ", this.options2.colors);
       } else if (this.thefilter2 == "Quarterly") {
         this.MonthLabel2 = new Date(this.thedate2).getFullYear(); // this.options2.xaxis.categories = this.quarter;
 
         this.QuarterlyProductSale(this.yrvalueS);
-        this.ok = false;
-        this.ok2 = true;
-        this.ok3 = false;
+        this.ok4 = false;
+        this.ok5 = true;
+        this.ok6 = false;
       } else if (this.thefilter2 == "Semi-Annual") {
         this.MonthLabel2 = new Date(this.thedate2).getFullYear(); // this.options2.xaxis.categories = this.semi;
 
         this.SemiProductSale(this.yrvalueS);
-        this.ok = false;
-        this.ok2 = true;
-        this.ok3 = false;
+        this.ok4 = false;
+        this.ok5 = true;
+        this.ok6 = false;
       } else if (this.thefilter2 == "Annual") {
-        this.ok = false;
-        this.ok2 = false;
-        this.ok3 = true;
-        sweetalert__WEBPACK_IMPORTED_MODULE_5___default()({
-          title: "Ctrl + click(select)",
-          text: "After Selecting Year start, Press Ctrl + Click to Select Year End",
-          icon: "warning",
-          dangerMode: true
-        });
+        this.ok4 = false;
+        this.ok5 = false;
+        this.ok6 = true;
+
+        if (this.years.length < 2) {
+          sweetalert__WEBPACK_IMPORTED_MODULE_5___default()({
+            text: "This is temporarily not available for there's only one year in the list. Year Range is still not applicable.",
+            dangerMode: false
+          });
+        } else {
+          sweetalert__WEBPACK_IMPORTED_MODULE_5___default()({
+            text: "To select Year range, choose starting year then Press Ctrl + year end.",
+            dangerMode: false
+          });
+        }
       }
     },
     onChangeYear2: function onChangeYear2() {
@@ -1189,7 +1248,13 @@ __webpack_require__.r(__webpack_exports__);
       } else if (this.thefilter2 == "Semi-Annual") {
         this.SemiProductSale(this.yrvalueS);
         this.MonthLabel2 = this.yrvalueS;
-      } else if (this.thefilter2 == "Annual") {}
+      } else if (this.thefilter2 == "Annual") {
+        this.getAnnualProductSales(this.Multiyrvalue2);
+        this.MonthLabel2 = this.yrvalueS;
+      }
+    },
+    onChanging2: function onChanging2() {
+      this.getAnnualProductSales(this.Multiyrvalue2); // this.getAnnualSummary(this.Multiyrvalue);
     },
     // --------------------- for sales summary graph -----------------------------------
     getDailySummary: function getDailySummary() {
@@ -1233,10 +1298,11 @@ __webpack_require__.r(__webpack_exports__);
 
         if (response.data.total.length > 0) {
           _this6.series = [{
+            name: "Sales",
             data: _this6.points
           }];
         } else {
-          _this6.series = [];
+          name: "Sales", _this6.series = [];
         }
       })["catch"](function (error) {});
       this.points = [];
@@ -1340,12 +1406,23 @@ __webpack_require__.r(__webpack_exports__);
         this.ok = false;
         this.ok2 = false;
         this.ok3 = true;
-        sweetalert__WEBPACK_IMPORTED_MODULE_5___default()({
-          title: "Ctrl + click(select)",
-          text: "After Selecting Year start, Press Ctrl + Click to Select Year End",
-          icon: "warning",
-          dangerMode: true
-        });
+
+        if (this.years.length < 2) {
+          sweetalert__WEBPACK_IMPORTED_MODULE_5___default()({
+            text: "This is temporarily not available for there's only one year in the list. Year Range is still not applicable.",
+            // text:
+            //   "After Selecting Year start, Press Ctrl + Select Year End",
+            // icon: "info",
+            dangerMode: false
+          });
+        } else {
+          sweetalert__WEBPACK_IMPORTED_MODULE_5___default()({
+            // title: "Ctrl + Year End",
+            text: "To select Year range, choose starting year then Press Ctrl + year end.",
+            // icon: "info",
+            dangerMode: false
+          });
+        }
       }
     },
     onChangeDate: function onChangeDate() {
@@ -1383,9 +1460,6 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     onChanging: function onChanging() {
-      this.getAnnualSummary(this.Multiyrvalue);
-    },
-    onChanging2: function onChanging2() {
       this.getAnnualSummary(this.Multiyrvalue);
     },
     getYears: function getYears() {
@@ -1445,6 +1519,7 @@ __webpack_require__.r(__webpack_exports__);
         }
 
         _this8.series = [{
+          name: "Sales",
           data: _this8.points
         }];
       })["catch"](function (error) {});
@@ -1523,6 +1598,7 @@ __webpack_require__.r(__webpack_exports__);
 
         _this9.points = _this9.QauterData;
         _this9.series = [{
+          name: "Sales",
           data: _this9.points
         }];
       })["catch"](function (error) {});
@@ -1606,6 +1682,7 @@ __webpack_require__.r(__webpack_exports__);
 
         _this10.points = _this10.semi_Data;
         _this10.series = [{
+          name: "Sales",
           data: _this10.points
         }];
       })["catch"](function (error) {});
@@ -1648,6 +1725,7 @@ __webpack_require__.r(__webpack_exports__);
         _this11.points = array;
         _this11.annualLabels = labelsArr;
         _this11.series = [{
+          name: "Sales",
           data: _this11.points
         }];
         _this11.options = {
@@ -1719,7 +1797,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* .filter{\r\n  width: 120px;\r\n} */\n.firstOpt[data-v-124112e6]{\r\n  margin-right: 5%;\n}\n.firstOpt[data-v-124112e6],\r\n.filter[data-v-124112e6] {\r\n  width: 120px;\r\n  align-content: left;\n}\n.prodNAme[data-v-124112e6] {\r\n  color: #ff5b04;\n}\n.welcome[data-v-124112e6] {\r\n  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,\r\n    Helvetica Neue, Arial, sans-serif;\r\n  font-size: 25px;\r\n  margin-bottom: 10px;\r\n  margin-left: 4%;\r\n  font-weight: bold;\r\n  margin-top: 5%;\n}\n.insideToolbar[data-v-124112e6] {\r\n  margin-top: 25px;\n}\n.GraphLabel[data-v-124112e6] {\r\n  margin-left: 45%;\r\n  font-weight: bold;\n}\n.annualDateCal1[data-v-124112e6],\r\n.annualDateCal2[data-v-124112e6],\r\n.yearMenu[data-v-124112e6],\r\n.graphTitle[data-v-124112e6] {\r\n  color: black;\n}\n.graphTitle[data-v-124112e6],\r\n.text1[data-v-124112e6] {\r\n  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,\r\n    Helvetica Neue, Arial, sans-serif;\r\n  font-size: 1rem;\r\n  font-weight: bold;\n}\n.graphTitle[data-v-124112e6]{\r\n  margin-left: 5%;\n}\n.YRcal[data-v-124112e6] {\r\n  color: black;\n}\n.Cname[data-v-124112e6],\r\n.GraphLabel[data-v-124112e6] {\r\n  color: #ff5b04;\n}\n.text1[data-v-124112e6] {\r\n  margin-left: 10%;\r\n  text-align: center;\r\n  color: black;\n}\n.TB3[data-v-124112e6] {\r\n  margin-bottom: 20px;\r\n  justify-content: center;\r\n  border-radius: 1%;\n}\r\n/* .theimageCard {\r\n  align-content: center;\r\n  border: 1px solid #999999;\r\n  border-radius: 1%;\r\n} */\n.prods[data-v-124112e6] {\r\n  border: 1px solid #999999;\r\n  border-radius: 1%;\n}\n.subhead[data-v-124112e6] {\r\n  margin-bottom: 20px;\n}\r\n/* .chart {\r\n  width: 50%;\r\n} */\n.body[data-v-124112e6] {\r\n  margin-left: 3%;\r\n  margin-right: 3%;\r\n  height: 100%;\r\n  margin-bottom: 5%;\n}\n.top3[data-v-124112e6] {\r\n  width: 370px;\r\n  height: 1000px;\r\n  border: 1px solid #999999;\r\n  border-radius: 1%;\n}\n.thetop3[data-v-124112e6] {\r\n  height: 260px;\r\n  width: 95%;\n}\n.theimage[data-v-124112e6] {\r\n  margin: 2%;\r\n  height: 280px;\r\n  width: 100%;\n}\n.Prod_name[data-v-124112e6] {\r\n  color: black;\n}\r\n", ""]);
+exports.push([module.i, "\nselect.form-control[multiple][data-v-124112e6], select.form-control[size][data-v-124112e6] {\r\n    height: auto;\n}\nselect.form-control[multiple][data-v-124112e6][data-v-124112e6], select.form-control[size][data-v-124112e6][data-v-124112e6] {\r\n    height: 52px;\n}\n.firstOpt[data-v-124112e6] {\r\n  margin-right: 5%;\n}\n.firstOpt[data-v-124112e6],\r\n.filter[data-v-124112e6] {\r\n  width: 120px;\r\n  align-content: left;\n}\n.prodNAme[data-v-124112e6] {\r\n  color: #ff5b04;\n}\n.welcome[data-v-124112e6] {\r\n  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,\r\n    Helvetica Neue, Arial, sans-serif;\r\n  font-size: 25px;\r\n  margin-bottom: 10px;\r\n  margin-left: 4%;\r\n  font-weight: bold;\r\n  margin-top: 5%;\n}\n.insideToolbar[data-v-124112e6] {\r\n  margin-top: 25px;\n}\n.GraphLabel[data-v-124112e6] {\r\n  margin-left: 45%;\r\n  font-weight: bold;\n}\n.annualDateCal1[data-v-124112e6],\r\n.annualDateCal2[data-v-124112e6],\r\n.yearMenu[data-v-124112e6],\r\n.graphTitle[data-v-124112e6] {\r\n  color: black;\n}\n.graphTitle[data-v-124112e6],\r\n.text1[data-v-124112e6] {\r\n  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,\r\n    Helvetica Neue, Arial, sans-serif;\r\n  font-size: 1rem;\r\n  font-weight: bold;\n}\n.graphTitle[data-v-124112e6] {\r\n  margin-left: 5%;\n}\n.YRcal[data-v-124112e6] {\r\n  color: black;\n}\n.Cname[data-v-124112e6],\r\n.GraphLabel[data-v-124112e6] {\r\n  color: #ff5b04;\n}\n.text1[data-v-124112e6] {\r\n  margin-left: 10%;\r\n  text-align: center;\r\n  color: black;\n}\n.TB3[data-v-124112e6] {\r\n  margin-bottom: 20px;\r\n  justify-content: center;\r\n  border-radius: 1%;\n}\r\n/* .theimageCard {\r\n  align-content: center;\r\n  border: 1px solid #999999;\r\n  border-radius: 1%;\r\n} */\n.prods[data-v-124112e6] {\r\n  border: 1px solid #999999;\r\n  border-radius: 1%;\n}\n.subhead[data-v-124112e6] {\r\n  margin-bottom: 20px;\n}\r\n/* .chart {\r\n  width: 50%;\r\n} */\n.body[data-v-124112e6] {\r\n  margin-left: 3%;\r\n  margin-right: 3%;\r\n  height: 100%;\r\n  margin-bottom: 5%;\n}\n.top3[data-v-124112e6] {\r\n  width: 370px;\r\n  height: 1000px;\r\n  border: 1px solid #999999;\r\n  border-radius: 1%;\n}\n.thetop3[data-v-124112e6] {\r\n  height: 260px;\r\n  width: 95%;\n}\n.theimage[data-v-124112e6] {\r\n  margin: 2%;\r\n  height: 280px;\r\n  width: 100%;\n}\n.Prod_name[data-v-124112e6] {\r\n  color: black;\n}\r\n", ""]);
 
 // exports
 
@@ -1794,12 +1872,12 @@ var render = function() {
                         [
                           _c(
                             "div",
-                            { staticClass: "col-xs-2" },
+                            { staticClass: "col-sm-3" },
                             [
                               _c(
                                 "v-toolbar-title",
                                 { staticClass: "graphTitle" },
-                                [_vm._v("Summary of Sales")]
+                                [_vm._v("Sales Summary")]
                               )
                             ],
                             1
@@ -2120,7 +2198,7 @@ var render = function() {
                         [
                           _c(
                             "div",
-                            { staticClass: "col-xs-2" },
+                            { staticClass: "col-sm-3" },
                             [
                               _c(
                                 "v-toolbar-title",
@@ -2209,8 +2287,8 @@ var render = function() {
                                   {
                                     name: "show",
                                     rawName: "v-show",
-                                    value: _vm.ok,
-                                    expression: "ok"
+                                    value: _vm.ok4,
+                                    expression: "ok4"
                                   }
                                 ],
                                 staticClass: "form-group"
@@ -2248,8 +2326,8 @@ var render = function() {
                                   {
                                     name: "show",
                                     rawName: "v-show",
-                                    value: _vm.ok2,
-                                    expression: "ok2"
+                                    value: _vm.ok5,
+                                    expression: "ok5"
                                   }
                                 ],
                                 staticClass: "form-group secondOpt"
@@ -2311,8 +2389,8 @@ var render = function() {
                                   {
                                     name: "show",
                                     rawName: "v-show",
-                                    value: _vm.ok3,
-                                    expression: "ok3"
+                                    value: _vm.ok6,
+                                    expression: "ok6"
                                   }
                                 ],
                                 staticClass: "forannualInput"
@@ -2629,7 +2707,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_adminDashboard_vue_vue_type_style_index_0_id_124112e6_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./adminDashboard.vue?vue&type=style&index=0&id=124112e6&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/modules/dashboard/adminDashboard.vue?vue&type=style&index=0&id=124112e6&scoped=true&lang=css&");
 /* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_adminDashboard_vue_vue_type_style_index_0_id_124112e6_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_adminDashboard_vue_vue_type_style_index_0_id_124112e6_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_adminDashboard_vue_vue_type_style_index_0_id_124112e6_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_adminDashboard_vue_vue_type_style_index_0_id_124112e6_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_adminDashboard_vue_vue_type_style_index_0_id_124112e6_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
 
 /***/ }),
 

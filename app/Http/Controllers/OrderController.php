@@ -196,9 +196,9 @@ class OrderController extends Controller
 
     public function AnnualProductSales(Request $request){
         $prods = DB::table('store_orders')->leftJoin('products', 'store_orders.productId', '=', 'products.id')
-            ->select(DB::raw('products.productName as ProductName'),DB::raw('SUM(store_orders.quantity) as quan'),DB::raw('products.id as ID'),DB::raw('extract(DAY from store_orders.created_at) as date'),DB::raw('extract(YEAR from store_orders.created_at) as year'),DB::raw('extract(MONTH  from store_orders.created_at) as month'))
+            ->select(DB::raw('products.productName as ProductName'),DB::raw('SUM(store_orders.quantity) as quan'),DB::raw('extract(YEAR from store_orders.created_at) as year'))
             ->where('store_orders.deleted_at', null)
-            ->groupBy('year','ID')
+            ->groupBy('year','ProductName')
             // ->orderBy('quan', 'desc')
             ->get();
         return response()->JSON(compact('prods'));
