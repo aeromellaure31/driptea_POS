@@ -25,7 +25,7 @@
                             <img v-if="customerType === 'grab'" style="width: 70px; height: 50px;" src="@/assets/grab2.png">
                             <img v-if="customerType === 'fb'" style="width: 70px; height: 50px;" src="@/assets/fb1.png"><br>
                             <img v-if="customerType === 'online'" style="width: 70px; height: 50px;" src="@/assets/logo.png"><br>
-                            <span v-if="error !== null" style="color: red; font-style: italic">{{null}}</span>
+                            <span v-if="error !== null" style="color: red; font-style: italic">{{error}}</span>
                             <table class="table table-responsive table-bordered " id="myTable">
                                 <tr class="overline">
                                     <th style="width: 45%;">Product Name</th>
@@ -443,7 +443,7 @@ export default {
                     incash: this.cash,
                     change: parseInt(this.convertChange()),
                     order: this.newTableData,
-                    status: this.customerType === 'online' || this.customerType === 'fb' ? 'pending' : 'complete'
+                    status: this.customerType === 'online' || this.customerType === 'fb' ? 'processing' : 'complete'
                 }
                 this.$axios.post(AUTH.url + 'addCheckout', params, AUTH.config).then(res => {
                     if(res.data.status){
