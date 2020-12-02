@@ -120,6 +120,7 @@ class StoreCheckoutsController extends Controller
         ->whereMonth('created_at', '=', $request->month)
         ->whereYear('created_at', '=', $request->year)
         ->where('deleted_at', null)
+        ->where('status', 'complete')
         ->groupBy('year','month','date')
         ->get();
         return response()->JSON(compact('total'));
@@ -130,6 +131,7 @@ class StoreCheckoutsController extends Controller
         $subtotal = StoreCheckouts::select(array(DB::raw('SUM(total) as sub'),DB::raw('extract(MONTH from created_at) as month')))
         ->whereYear('created_at', '=', $request->year)
         ->where('deleted_at', null)
+        ->where('status', 'complete')
         ->groupBy('month')
         ->get();
 
@@ -141,6 +143,7 @@ class StoreCheckoutsController extends Controller
         $subtotal = StoreCheckouts::select(array(DB::raw('SUM(total) as sub'),DB::raw('extract(MONTH from created_at) as month')))
                     ->whereYear('created_at', '=', $request->year)
                     ->where('deleted_at', null)
+                    ->where('status', 'complete')
                     ->groupBy('month')
                     ->get();
 
@@ -152,6 +155,7 @@ class StoreCheckoutsController extends Controller
         $subtotal = StoreCheckouts::select(array(DB::raw('SUM(total) as sub'),DB::raw('extract(MONTH from created_at) as month')))
         ->whereYear('created_at', '=', $request->year)
         ->where('deleted_at', null)
+        ->where('status', 'complete')
         ->groupBy('month')
         ->get();
 
@@ -163,12 +167,10 @@ class StoreCheckoutsController extends Controller
         $from = $request->from;
         $to = $request->to;
         $subtotal = StoreCheckouts::select(array(DB::raw('SUM(total) as sub'),DB::raw('extract(YEAR from created_at) as year')))
-            // ->whereBetween('created_at', [$from, $to])
             ->where('deleted_at', null)
+            ->where('status', 'complete')
             ->groupBy('year')
-            // ->orderBy('year', 'asc')
             ->get();
-        // dd($subtotal);
         return response()->JSON(compact('subtotal'));
     }
 }

@@ -143,6 +143,7 @@ class OrderController extends Controller
         $prods = DB::table('store_orders')->leftJoin('products', 'store_orders.productId', '=', 'products.id')
             ->select(DB::raw('products.image as img'),DB::raw('SUM(store_orders.quantity) as quan'),DB::raw('products.productName as pName'))
             ->where('store_orders.deleted_at', null)
+            ->where('store_orders.status', 'complete' )
             ->groupBy('img','pName')
             ->orderBy('quan', 'desc')
             ->get();
@@ -155,6 +156,7 @@ class OrderController extends Controller
             ->whereMonth('store_orders.created_at', '=', $request->month)
             ->whereYear('store_orders.created_at', '=', $request->year)
             ->where('store_orders.deleted_at', null)
+            ->where('store_orders.status', 'complete')
             ->groupBy('year','month','date','ProductName')
             // ->orderBy('quan', 'desc')
             ->get();
@@ -166,6 +168,7 @@ class OrderController extends Controller
             ->select(DB::raw('products.productName as ProductName'),DB::raw('SUM(store_orders.quantity) as quan'),DB::raw('extract(MONTH from store_orders.created_at) as month'))
             ->whereYear('store_orders.created_at', '=', $request->year)
             ->where('store_orders.deleted_at', null)
+            ->where('store_orders.status', 'complete')
             ->groupBy('month','ProductName')
             // ->orderBy('quan', 'desc')
             ->get();
@@ -177,6 +180,7 @@ class OrderController extends Controller
             ->select(DB::raw('products.productName as ProductName'),DB::raw('SUM(store_orders.quantity) as quan'),DB::raw('extract(MONTH from store_orders.created_at) as month'))
             ->whereYear('store_orders.created_at', '=', $request->year)
             ->where('store_orders.deleted_at', null)
+            ->where('store_orders.status', 'complete')
             ->groupBy('month','ProductName')
             // ->orderBy('quan', 'desc')
             ->get();
@@ -188,6 +192,7 @@ class OrderController extends Controller
             ->select(DB::raw('products.productName as ProductName'),DB::raw('SUM(store_orders.quantity) as quan'),DB::raw('extract(MONTH from store_orders.created_at) as month'))
             ->whereYear('store_orders.created_at', '=', $request->year)
             ->where('store_orders.deleted_at', null)
+            ->where('store_orders.status', 'complete')
             ->groupBy('month','ProductName')
             // ->orderBy('quan', 'desc')
             ->get();
@@ -198,6 +203,7 @@ class OrderController extends Controller
         $prods = DB::table('store_orders')->leftJoin('products', 'store_orders.productId', '=', 'products.id')
             ->select(DB::raw('products.productName as ProductName'),DB::raw('SUM(store_orders.quantity) as quan'),DB::raw('extract(YEAR from store_orders.created_at) as year'))
             ->where('store_orders.deleted_at', null)
+            ->where('store_orders.status', 'complete')
             ->groupBy('year','ProductName')
             // ->orderBy('quan', 'desc')
             ->get();
