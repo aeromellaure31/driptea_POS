@@ -1,7 +1,7 @@
 <template>
   <v-img :src="require('@/assets/landing1.jpg')" style="width: 100%; height: 100%;">
     <div class="container">
-      <v-card class="mx-auto" width="400" max-height="1000">
+      <v-card class="mx-auto" width="400" max-height="2000">
         <center>
           <img style="height: 150px; margin-top: 1%;" :src="image" v-on:click="redirect('/')">
           <p>
@@ -248,13 +248,13 @@
 .register {
   width: 50%;
 }
-.container {
-  border: orange solid 1px;
-  margin-bottom: 2%;
-  margin-top: 2%;
-  width: 60%;
-  background-color: white;
-}
+// .container {
+//   border: orange solid 1px;
+//   margin-bottom: 2%;
+//   margin-top: 2%;
+//   width: 60%;
+//   background-color: white;
+// }
 span {
   font-size: 12px;
 }

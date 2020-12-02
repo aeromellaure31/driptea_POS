@@ -569,7 +569,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".register[data-v-5b3af0cd] {\n  width: 50%;\n}\n.container[data-v-5b3af0cd] {\n  border: orange solid 1px;\n  margin-bottom: 2%;\n  margin-top: 2%;\n  width: 60%;\n  background-color: white;\n}\nspan[data-v-5b3af0cd] {\n  font-size: 12px;\n}\n.termsCondition[data-v-5b3af0cd] {\n  margin-top: 6%;\n  font-size: 15px;\n  text-align: center;\n}\n.bRegister[data-v-5b3af0cd] {\n  color: orange;\n  cursor: pointer;\n}\np[data-v-5b3af0cd] {\n  font-size: 20px;\n}\n.containerWidth[data-v-5b3af0cd] {\n  width: 80%;\n  text-align: left;\n  margin-left: 5%;\n  margin-right: 5%;\n}", ""]);
+exports.push([module.i, ".register[data-v-5b3af0cd] {\n  width: 50%;\n}\nspan[data-v-5b3af0cd] {\n  font-size: 12px;\n}\n.termsCondition[data-v-5b3af0cd] {\n  margin-top: 6%;\n  font-size: 15px;\n  text-align: center;\n}\n.bRegister[data-v-5b3af0cd] {\n  color: orange;\n  cursor: pointer;\n}\np[data-v-5b3af0cd] {\n  font-size: 20px;\n}\n.containerWidth[data-v-5b3af0cd] {\n  width: 80%;\n  text-align: left;\n  margin-left: 5%;\n  margin-right: 5%;\n}", ""]);
 
 // exports
 
@@ -636,7 +636,7 @@ var render = function() {
             "v-card",
             {
               staticClass: "mx-auto",
-              attrs: { width: "400", "max-height": "1000" }
+              attrs: { width: "400", "max-height": "2000" }
             },
             [
               _c("center", [
