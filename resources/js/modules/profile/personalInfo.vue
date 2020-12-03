@@ -764,7 +764,6 @@ export default {
       this.Cpassword = null;
     },
     Save(data, colname, modalID) {
-      this.loadingShow = true
       if(colname === 'firstname'){
         this.validate("firstname");
       }else if(colname === 'lastname'){
@@ -798,6 +797,7 @@ export default {
         this.errorMessage14 === null &&
         this.errorMessage15 === null
       ){
+        this.loadingShow = true
         let params = {
           ID: this.userID,
           data: data,
@@ -841,10 +841,10 @@ export default {
       let specialChar = /^[A-Za-z0-9 ]+$/;
       if (input === "firstname") {
         this.errorMessage1 = null;
-        if (reqWhiteSpace.test(this.newfirstname)) {
-          this.errorMessage1 = "firstname should not contain a number.";
-        } else if (this.newfirstname === "") {
+        if(this.newfirstname === '' || this.newfirstname === null){
           this.errorMessage2 = "firstname is required.";
+        } else if (reqWhiteSpace.test(this.newfirstname)) {
+          this.errorMessage1 = "firstname should not contain a number.";
         } else if (!specialChar.test(this.newfirstname)) {
           this.errorMessage2 =
             "firstname should not contain a special character.";
@@ -856,7 +856,7 @@ export default {
         this.errorMessage12 = null;
         if (reqWhiteSpace.test(this.newlastname)) {
           this.errorMessage12 = "lastname should not contain a number.";
-        } else if (this.newlastname === "") {
+        } else if (this.newlastname === "" || this.newlastname === null) {
           this.errorMessage13 = "lastname is required.";
         } else if (!specialChar.test(this.newlastname)) {
           this.errorMessage13 =
@@ -869,7 +869,7 @@ export default {
         this.errorMessage14 = null;
         if (reqWhiteSpace.test(this.newusername)) {
           this.errorMessage14 = "Username should not contain a space.";
-        } else if (this.newusername === "") {
+        } else if (this.newusername === "" || this.newusername === null) {
           this.errorMessage15 = "Username is required.";
         } else if (this.newusername.length < 6) {
           this.errorMessage16 = "Username must be atleast 6 characters";
@@ -880,14 +880,18 @@ export default {
         }
       } else if (input === "email") {
         this.errorMessage3 = null;
-        if (this.validateEmail(this.newemailAdd) === false) {
+        if(this.newemailAdd === '' || this.newemailAdd === null){
+          this.errorMessage3 = "Email address is required";
+        } else if (this.validateEmail(this.newemailAdd) === false) {
           this.errorMessage3 = "You have entered an invalid email address.";
         } else {
           this.errorMessage3 = null;
         }
       } else if (input === "password") {
         this.errorMessage4 = null;
-        if (this.newpassword.length < 8) {
+        if(this.newpassword === null || this.newpassword === ''){
+          this.errorMessage4 = "Password is required";
+        } else if (this.newpassword.length < 8) {
           this.errorMessage4 = "Password must be atleast 8 characters.";
         } else if (
           /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/.test(
@@ -904,14 +908,16 @@ export default {
       } else if (input === "confirmPass") {
         this.errorMessage6 = null;
         this.successMessage = null;
-        if (this.password.localeCompare(this.Cpassword) !== 0) {
+        if(this.Cpassword === '' || this.Cpassword === null){
+          this.errorMessage6 = "Confirm password is required";
+        } else if (this.password.localeCompare(this.Cpassword) !== 0) {
           this.errorMessage6 = "Password did not match.";
         } else {
           this.errorMessage6 = null;
         }
       } else if (input === "address") {
         this.errorMessage10 = null;
-        if (this.newaddress === "") {
+        if (this.newaddress === "" || this.newaddress === null) {
           this.errorMessage10 = "Address is required.";
         } else {
           this.errorMessage10 = null;
@@ -919,7 +925,9 @@ export default {
       } else if (input === "contact") {
         this.errorMessage8 = null;
         this.successMessage9 = null;
-        if (this.newcontactnum.length > 11) {
+        if(this.newcontactnum === '' || this.newcontactnum === null){
+          this.errorMessage8 = "Contact number is required";
+        } else if (this.newcontactnum.length > 11) {
           this.errorMessage8 = "Contact number must not exceed 11 numbers.";
         } else if (this.newcontactnum.slice(0, 2) != "09") {
           this.errorMessage9 = "Contact number must start with 09";
