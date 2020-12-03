@@ -2969,7 +2969,11 @@ var render = function() {
                                         _vm._v(" "),
                                         _c("input", {
                                           staticClass: "fileStyle",
-                                          attrs: { type: "file", required: "" },
+                                          attrs: {
+                                            type: "file",
+                                            accept: "image/*",
+                                            required: ""
+                                          },
                                           on: { change: _vm.onImageChange }
                                         }),
                                         _c("br")
@@ -3568,7 +3572,11 @@ var render = function() {
                                       _vm._v(" "),
                                       _c("input", {
                                         staticClass: "fileStyle",
-                                        attrs: { type: "file", required: "" },
+                                        attrs: {
+                                          type: "file",
+                                          accept: "image/*",
+                                          required: ""
+                                        },
                                         on: { change: _vm.onImgChange }
                                       }),
                                       _c("br")

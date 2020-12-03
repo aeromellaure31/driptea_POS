@@ -267,7 +267,7 @@
                                   <i><span class="errorColor">*Image size must not exceed 1MB</span></i>
                                   <center>
                                     <img class="addOnsImage" :src="imageURL"><br>
-                                    <input type="file" class="fileStyle" v-on:change="onImageChange" required><br>
+                                    <input type="file" accept="image/*" class="fileStyle" v-on:change="onImageChange" required><br>
                                   </center>
                                 </div>
                                 </v-row>  
@@ -365,7 +365,7 @@
                                 <i><span class="errorColor">*Image size must not exceed 1MB</span></i>
                                 <center>
                                     <img class="addOnsImage" :src="imgURL"><br>
-                                    <input type="file" class="fileStyle" v-on:change="onImgChange" required><br>
+                                    <input type="file" accept="image/*" class="fileStyle" v-on:change="onImgChange" required><br>
                                 </center>
                             </div>
                             <v-card-actions>
