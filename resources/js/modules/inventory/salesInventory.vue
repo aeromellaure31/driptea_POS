@@ -1,19 +1,19 @@
 <template>
-    <v-card>
+    <v-card class="top">
         <div class="my-custom-scrollbar">
                 <v-simple-table :items-per-page="5" class="elevation-3">
              <template v-slot:top>
                <v-toolbar class="mb-2" color="#ff5b04" dark flat>
                  <v-toolbar-title class="col pa-3 py-4 white--text">Sales Inventory</v-toolbar-title>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                 <v-text-field
+                 <!-- <v-text-field
                    clearable
                    flat
                    solo-inverted
                    prepend-inner-icon="mdi-magnify"
                    class="mt-7"
+                   v-model="search"
                    label="Search"
-                 ></v-text-field>
-                 <v-divider class="mx-4" vertical></v-divider>
+                 ></v-text-field> -->
                 <VueJsonToCsv
                 :json-data="toDownload"
                 :csv-title="formatDate + ' Sales'"
@@ -48,6 +48,12 @@
         </div>
     </v-card>
 </template>
+<style scoped>
+.top{
+    margin-top: 6%;
+}
+</style>
+
 <script>
 import AUTH from '../../services/auth'
 import VueJsonToCsv from 'vue-json-to-csv'
@@ -75,6 +81,13 @@ export default {
         this.retrieveSale()
         this.retrieveAddOns()
     },
+    // computed: {
+    //     filterData () {
+    //         return this.data.filter( data => {
+    //           return !this.search || data.address.toLowerCase().includes(this.search.toLowerCase())
+    //         })
+    //     }
+    // },
     components: {
         VueJsonToCsv,
         loading

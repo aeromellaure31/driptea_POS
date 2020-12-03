@@ -41,6 +41,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('deleteProduct','App\Http\Controllers\ProductController@deleteProduct');
     Route::post('getProducts','App\Http\Controllers\ProductController@retrieveAllProductAscending');
     Route::post('RetrieveWithDelete','App\Http\Controllers\ProductController@RetrieveWithDelete');
+    Route::post('updateProductCategory','App\Http\Controllers\ProductController@updateProductCategory');
 
     Route::post('addCategory','App\Http\Controllers\AddCategoryController@addCategory');
     Route::post('updateCategory','App\Http\Controllers\AddCategoryController@updateCategory');

@@ -154,7 +154,7 @@
               <v-list-item
                 v-for="(item, index) in account"
                 :key="index"
-                @click="redirect(item.route+ (admin ? admin : cashier))"
+                @click="redirect(item.route === '/allOrder' ? item.route : item.route + (admin ? admin : cashier))"
               >
                 <v-list-item-icon>
                   <v-icon color="black darken-2">{{ item.icon }}</v-icon>
@@ -304,6 +304,7 @@ export default {
     ],
     account: [
       { icon: "mdi-account", text: "My Account", route: "/personalInfo/" },
+      { icon: "mdi-cart", text: "Customers' Order", route: "/allOrder" },
       { icon: "mdi-logout", text: "Logout", route: "/logout/" }
     ],
     employee: [

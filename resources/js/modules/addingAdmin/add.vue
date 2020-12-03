@@ -722,6 +722,7 @@ export default {
       onlineoverPrice: null,
       prodType: null,
       image: null,
+      categoryOld: null,
       imageURL: null,
       productType: null,
       inputAddOns: null,
@@ -1449,6 +1450,7 @@ export default {
       this.toSaveImage2 = item.image
       this.imageURL = item.image;
       this.productType = item.productCategory;
+      this.categoryOld = item.productCategory;
       this.catId = item.id
     },
     updateCategory(e){
@@ -1478,11 +1480,24 @@ export default {
             swal({
               title: "You have successfully updated the category",
               icon: "success"
-            });
-            currentObj.success = response.data.success;
-            currentObj.retrieveCategories();
-            currentObj.retrieveProducts();
-            currentObj.hide();
+            }).then(el => {
+              let param = {
+                oldType: currentObj.categoryOld,
+                productCategory: currentObj.productType
+              }
+              axios.post('/updateProductCategory', param, AUTH.config)
+              .then(function (response) {
+                if(response.data.status){
+                  AUTH.deauthenticate()
+                }
+              })
+              currentObj.success = response.data.success;
+              currentObj.retrieveCategories();
+              currentObj.retrieveProducts();
+              currentObj.hide();
+  
+            })
+            
           })
           .catch(function(error) {
             currentObj.loadingShow = false
@@ -1840,6 +1855,7 @@ export default {
         }
         this.loadingShow = false
         this.categoryData = response.data.addCategory;
+        this.categoryName = []
         response.data.addCategory.forEach(element => {
           this.categoryName.push(element.productCategory);
         });

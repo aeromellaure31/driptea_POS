@@ -55,6 +55,16 @@ class ProductController extends Controller
         return response()->json(compact('product'));
     }
 
+    public function updateProductCategory(Request $request){
+        $product = Product::where('productCategory', $request->oldType)->get();
+        foreach($product as $value){
+            $prod = Product::firstOrCreate(['id' => $value['id']]);
+            $prod['productCategory'] = $request->productCategory;
+            $prod->save();
+        }
+        return response()->json(['stat' => 'success']);
+    }
+
     // public function formSubmit(Request $request)
     // {
     //     $validator = Validator::make($request->all(), [

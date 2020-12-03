@@ -520,21 +520,6 @@ var render = function() {
                         [_vm._v(_vm._s(_vm.categoryName))]
                       ),
                       _vm._v("      \n        "),
-                      _c("v-text-field", {
-                        staticClass: "mt-7",
-                        attrs: {
-                          clearable: "",
-                          flat: "",
-                          "solo-inverted": "",
-                          "prepend-inner-icon": "mdi-magnify",
-                          label: "Search"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("v-divider", {
-                        staticClass: "mx-4",
-                        attrs: { vertical: "" }
-                      }),
                       _vm._v(" "),
                       _c(
                         "VueJsonToCsv",

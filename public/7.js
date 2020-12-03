@@ -745,6 +745,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       onlineoverPrice: null,
       prodType: null,
       image: null,
+      categoryOld: null,
       imageURL: null,
       productType: null,
       inputAddOns: null,
@@ -1517,6 +1518,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.toSaveImage2 = item.image;
       this.imageURL = item.image;
       this.productType = item.productCategory;
+      this.categoryOld = item.productCategory;
       this.catId = item.id;
     },
     updateCategory: function updateCategory(e) {
@@ -1545,11 +1547,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           sweetalert__WEBPACK_IMPORTED_MODULE_3___default()({
             title: "You have successfully updated the category",
             icon: "success"
+          }).then(function (el) {
+            var param = {
+              oldType: currentObj.categoryOld,
+              productCategory: currentObj.productType
+            };
+            axios.post('/updateProductCategory', param, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
+              if (response.data.status) {
+                _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
+              }
+            });
+            currentObj.success = response.data.success;
+            currentObj.retrieveCategories();
+            currentObj.retrieveProducts();
+            currentObj.hide();
           });
-          currentObj.success = response.data.success;
-          currentObj.retrieveCategories();
-          currentObj.retrieveProducts();
-          currentObj.hide();
         })["catch"](function (error) {
           currentObj.loadingShow = false;
           currentObj.output = error;
@@ -1936,6 +1948,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         _this22.loadingShow = false;
         _this22.categoryData = response.data.addCategory;
+        _this22.categoryName = [];
         response.data.addCategory.forEach(function (element) {
           _this22.categoryName.push(element.productCategory);
         });

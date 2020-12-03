@@ -19,15 +19,15 @@
         <template v-slot:top>
           <v-toolbar class="mb-2" color="#ff5b04" dark flat>
             <v-toolbar-title class="col pa-3 py-4 white--text">{{categoryName}}</v-toolbar-title>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <v-text-field
+            <!-- <v-text-field
               clearable
               flat
               solo-inverted
               prepend-inner-icon="mdi-magnify"
               class="mt-7"
               label="Search"
-            ></v-text-field>
-            <v-divider class="mx-4" vertical></v-divider>
+            ></v-text-field> -->
+            <!-- <v-divider class="mx-4" vertical></v-divider> -->
             <VueJsonToCsv
             :json-data="storeData"
             :csv-title="formatDate + ' Order Inventory'"
