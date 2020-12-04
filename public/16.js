@@ -71,6 +71,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -83,7 +90,8 @@ __webpack_require__.r(__webpack_exports__);
       cupName: null,
       headersForCup: [],
       loadingShow: false,
-      toCsv: []
+      toCsv: [],
+      dates: [new Date().toISOString().substr(0, 10)]
     };
   },
   components: {
@@ -93,26 +101,39 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     this.tableForUpcomingCups();
   },
+  computed: {
+    dateRangeText: function dateRangeText() {
+      return this.dates.join(" ~ ");
+    }
+  },
   methods: {
+    searchData: function searchData() {
+      this.toCsv = [], this.tableForUpcomingCups();
+    },
     getTotal: function getTotal(item) {
-      if (this.cupName === 'Upcoming Cups') {
+      if (this.cupName === "Upcoming Cups") {
         return item.incomingLowDose + item.incomingHighDose + item.incomingOverDose;
-      } else if (this.cupName === 'Cups Onrack') {
+      } else if (this.cupName === "Cups Onrack") {
         return item.onRockLowDose + item.onRockHighDose + item.onRockOverDose;
-      } else if (this.cupName === 'Used Cups') {
+      } else if (this.cupName === "Used Cups") {
         return item.usedCupsLowDose + item.usedCupsHighDose + item.usedCupsOverDose;
-      } else if (this.cupName === 'Remaining Cups') {
+      } else if (this.cupName === "Remaining Cups") {
         return item.remainingLowDose + item.remainingHighDose + item.remainingOverDose;
       }
     },
     getDate: function getDate(date) {
-      return moment__WEBPACK_IMPORTED_MODULE_3___default()(date).format('MM/DD/YYYY');
+      return moment__WEBPACK_IMPORTED_MODULE_3___default()(date).format("MM/DD/YYYY");
     },
     tableForUpcomingCups: function tableForUpcomingCups() {
       var _this = this;
 
       this.loadingShow = true;
-      this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "retrieveCupForInventory", {}, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
+      this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "retrieveCupForInventory", {
+        dateFrom: this.dates[0],
+        dateTo: this.dates[1]
+      }, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
+        console.log(_this.dates[0], _this.dates[1]);
+
         if (response.data.status) {
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
@@ -122,7 +143,7 @@ __webpack_require__.r(__webpack_exports__);
           var thisDate = _this.getDate(element.created_at);
 
           _this.toCsv.push({
-            "Date": thisDate,
+            Date: thisDate,
             "Incoming Low Dose": element.incomingLowDose,
             "Incoming High Dose": element.incomingHighDose,
             "Incoming Over Dose": element.incomingOverDose,
@@ -165,7 +186,10 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       this.loadingShow = true;
-      this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "retrieveCupForInventory", {}, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
+      this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "retrieveCupForInventory", {
+        dateFrom: this.dates[0],
+        dateTo: this.dates[1]
+      }, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
         if (response.data.status) {
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
@@ -195,7 +219,10 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
 
       this.loadingShow = true;
-      this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "retrieveCupForInventory", {}, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
+      this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "retrieveCupForInventory", {
+        dateFrom: this.dates[0],
+        dateTo: this.dates[1]
+      }, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
         if (response.data.status) {
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
@@ -225,7 +252,10 @@ __webpack_require__.r(__webpack_exports__);
       var _this4 = this;
 
       this.loadingShow = true;
-      this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "retrieveCupForInventory", {}, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
+      this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "retrieveCupForInventory", {
+        dateFrom: this.dates[0],
+        dateTo: this.dates[1]
+      }, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
         if (response.data.status) {
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
@@ -268,7 +298,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.table[data-v-2d64b2de]{\r\n  margin-left: 50px;\r\n  width: 90%;\n}\ntd[data-v-2d64b2de]{\r\n  text-align: center\n}\r\n", ""]);
+exports.push([module.i, "\n.table[data-v-2d64b2de] {\r\n  margin-left: 50px;\r\n  width: 90%;\n}\ntd[data-v-2d64b2de] {\r\n  text-align: center;\n}\r\n", ""]);
 
 // exports
 
@@ -393,28 +423,79 @@ var render = function() {
                       [_vm._v(_vm._s(_vm.cupName))]
                     ),
                     _vm._v("      \n        "),
-                    _c("v-text-field", {
-                      staticClass: "mt-7",
-                      attrs: {
-                        clearable: "",
-                        flat: "",
-                        "solo-inverted": "",
-                        "prepend-inner-icon": "mdi-magnify",
-                        label: "Search"
-                      },
-                      model: {
-                        value: _vm.search,
-                        callback: function($$v) {
-                          _vm.search = $$v
+                    _c(
+                      "v-menu",
+                      {
+                        attrs: {
+                          "close-on-content-click": false,
+                          transition: "scale-transition",
+                          "offset-y": "",
+                          "min-width": "290px"
                         },
-                        expression: "search"
-                      }
-                    }),
+                        scopedSlots: _vm._u([
+                          {
+                            key: "activator",
+                            fn: function(ref) {
+                              var on = ref.on
+                              var attrs = ref.attrs
+                              return [
+                                _c(
+                                  "v-text-field",
+                                  _vm._g(
+                                    _vm._b(
+                                      {
+                                        staticClass: "calendarDate",
+                                        attrs: {
+                                          chips: "",
+                                          label: "DATE",
+                                          "prepend-icon": "mdi-calendar",
+                                          readonly: ""
+                                        },
+                                        model: {
+                                          value: _vm.dateRangeText,
+                                          callback: function($$v) {
+                                            _vm.dateRangeText = $$v
+                                          },
+                                          expression: "dateRangeText"
+                                        }
+                                      },
+                                      "v-text-field",
+                                      attrs,
+                                      false
+                                    ),
+                                    on
+                                  )
+                                )
+                              ]
+                            }
+                          }
+                        ])
+                      },
+                      [
+                        _vm._v(" "),
+                        _c("v-date-picker", {
+                          attrs: { range: "" },
+                          model: {
+                            value: _vm.dates,
+                            callback: function($$v) {
+                              _vm.dates = $$v
+                            },
+                            expression: "dates"
+                          }
+                        })
+                      ],
+                      1
+                    ),
                     _vm._v(" "),
-                    _c("v-divider", {
-                      staticClass: "mx-4",
-                      attrs: { vertical: "" }
-                    }),
+                    _c(
+                      "v-btn",
+                      {
+                        staticClass: "mr-6",
+                        attrs: { color: "success" },
+                        on: { click: _vm.searchData }
+                      },
+                      [_vm._v("Find")]
+                    ),
                     _vm._v(" "),
                     _c(
                       "VueJsonToCsv",
@@ -426,7 +507,7 @@ var render = function() {
                           "v-btn",
                           { staticClass: "mr-6", attrs: { color: "success" } },
                           [
-                            _vm._v("\n                  Export "),
+                            _vm._v("\n            Export\n            "),
                             _c("i", {
                               staticClass: "mdi mdi-export-variant",
                               attrs: { "aria-hidden": "true" }

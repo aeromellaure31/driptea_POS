@@ -370,9 +370,19 @@ __webpack_require__.r(__webpack_exports__);
             title: "You have successfully deleted the order",
             icon: "success"
           }).then(function (el) {
+            _this2.retrievePending();
+
             _this2.retrieve();
 
-            _this2.retrievePending();
+            _this2.retrieveAddOns();
+
+            _this2.retrieveCupType();
+
+            _this2.retrieveProcessed();
+
+            _this2.tableDataCompleteOrder = false;
+            _this2.tableDataPendingOrders = true;
+            _this2.tableProcessOrders = false;
           });
         });
       } else {
@@ -398,9 +408,19 @@ __webpack_require__.r(__webpack_exports__);
               title: "You have successfully deleted the order",
               icon: "success"
             }).then(function (el) {
+              _this2.retrievePending();
+
               _this2.retrieve();
 
-              _this2.retrievePending();
+              _this2.retrieveAddOns();
+
+              _this2.retrieveCupType();
+
+              _this2.retrieveProcessed();
+
+              _this2.tableDataCompleteOrder = false;
+              _this2.tableDataPendingOrders = false;
+              _this2.tableProcessOrders = true;
             });
           });
         });

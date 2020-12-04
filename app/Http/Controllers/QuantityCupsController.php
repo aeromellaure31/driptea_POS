@@ -87,8 +87,11 @@ class QuantityCupsController extends Controller
 
     public function retrieveCupSize(Request $request){
         $quantityCupsInDB = QuantityCups::get();
-        // dd($quantityCupsInDB);
         return response()->json(compact('quantityCupsInDB'));
+    }
 
+    public function retrieveAddedCupSize(Request $request){
+        $quantityCupsInDB = QuantityCups::whereBetween(DB::raw('DATE(created_at)'), array($request->dateFrom, $request->dateTo))->get();
+        return response()->json(compact('quantityCupsInDB'));
     }
 }

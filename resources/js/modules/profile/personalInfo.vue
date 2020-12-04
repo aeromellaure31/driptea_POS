@@ -43,7 +43,7 @@
             <img class="profilePic cursorText" :src="imgURL ? imgURL : profilepic">
             <v-icon class="cursorText" medium>mdi-pencil</v-icon>
           </label>
-          <input id="file-input" type="file" name="profile_image" v-on:change="onImgChange"/>
+          <input id="file-input" type="file" accept="image/*" name="profile_image" v-on:change="onImgChange"/>
         </div>
         <button v-if="show" class="btn" style="height: 25px; padding: 0; background-color: #ff5b04; color:white" @click="imageUpdate($event)">Update</button><br>
         <span class="title">Personal Information</span>

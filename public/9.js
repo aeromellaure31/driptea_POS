@@ -441,7 +441,10 @@ __webpack_require__.r(__webpack_exports__);
               }
 
               jquery__WEBPACK_IMPORTED_MODULE_3___default()('#viewDetails').modal('hide');
-              sweetalert__WEBPACK_IMPORTED_MODULE_0___default()("Order successfully added to cart", "success");
+              sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
+                title: "Order successfully added to cart",
+                icon: "success"
+              });
             });
           });
         } else {
@@ -465,7 +468,10 @@ __webpack_require__.r(__webpack_exports__);
             }
 
             jquery__WEBPACK_IMPORTED_MODULE_3___default()('#viewDetails').modal('hide');
-            sweetalert__WEBPACK_IMPORTED_MODULE_0___default()("Order successfully added to cart", "success");
+            sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
+              title: "Order successfully added to cart",
+              icon: "success"
+            });
           });
         }
       }

@@ -99,6 +99,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('addCheckout','App\Http\Controllers\StoreCheckoutsController@addCheckout');
     Route::post('retrieveCheckouts','App\Http\Controllers\StoreCheckoutsController@retrieveCheckouts');
     Route::post('retrieveAllCheckouts','App\Http\Controllers\StoreCheckoutsController@retrieveAllCheckouts');
+    Route::post('retrieveChoosenCheckouts','App\Http\Controllers\StoreCheckoutsController@retrieveChoosenCheckouts');
     Route::post('retrieveOnlineCheckouts','App\Http\Controllers\StoreCheckoutsController@retrieveOnlineCheckouts');
     Route::post('retrieveAllSales','App\Http\Controllers\StoreCheckoutsController@retrieveAllSales');
     Route::post('retrieveProcessing','App\Http\Controllers\StoreCheckoutsController@retrieveProcessing');
@@ -120,6 +121,6 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('updateRemainingCups','App\Http\Controllers\QuantityCupsController@updateRemainingCups');
     Route::post('updateDeletedCups','App\Http\Controllers\QuantityCupsController@updateDeletedCups');
     Route::post('retrieveCupSize','App\Http\Controllers\QuantityCupsController@retrieveCupSize');
-    Route::post('retrieveCupForInventory','App\Http\Controllers\QuantityCupsController@retrieveCupSize');
+    Route::post('retrieveCupForInventory','App\Http\Controllers\QuantityCupsController@retrieveAddedCupSize');
 });
  

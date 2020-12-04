@@ -67,7 +67,19 @@ class StoreCheckoutsController extends Controller
     }
     
     public function retrieveAllCheckouts(Request $request){
-        $storeOrder = StoreOrder::with('getCustomer')->with('orderProduct')->with('sameOrder')->with('getCashier')->with('getCheckouts')->where('status', 'complete')->where('deleted_at', null)->get()->groupBy('storeCheckoutsId');
+        $storeOrder = StoreOrder::with('getCustomer')->with('orderProduct')
+        ->with('sameOrder')->with('getCashier')->with('getCheckouts')
+        ->where('status', 'complete')->where('deleted_at', null)->get()
+        ->groupBy('storeCheckoutsId');
+        return response()->json(compact('storeOrder'));
+    }
+
+    public function retrieveChoosenCheckouts(Request $request){
+        $storeOrder = StoreOrder::with('getCustomer')->with('orderProduct')
+        ->with('sameOrder')->with('getCashier')->with('getCheckouts')
+        ->where('status', 'complete')->where('deleted_at', null)
+        ->whereBetween(DB::raw('DATE(created_at)'), array($request->start, $request->end))->get()
+        ->groupBy('storeCheckoutsId');
         return response()->json(compact('storeOrder'));
     }
 

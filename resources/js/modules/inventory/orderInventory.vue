@@ -43,14 +43,6 @@
                 ></v-date-picker>
             </v-menu>
             <v-btn color="success" class="mr-6" @click="showModal()">Find</v-btn>
-            <!-- <VueJsonToCsv
-            :json-data="storeData"
-            :csv-title="formatDate + ' Order Inventory'"
-            >
-                <v-btn color="success" class="mr-6" @click="downloadData()">
-                    Export<i class="mdi mdi-export-variant" aria-hidden="true"></i>
-                </v-btn>
-            </VueJsonToCsv> -->
           </v-toolbar>
         </template>
         <div class="zui-wrapper">
@@ -134,40 +126,74 @@
                         </div>
                         <v-card-text>
                             <div class="my-custom-scrollbar">
-                                <v-simple-table :items-per-page="5" class="elevation-2">
-                                    <template v-slot:top>
-                                        <v-toolbar class="mb-2" color="#ff5b04" dark flat>
-                                            <v-toolbar-title class="col pa-3 py-4 white--text">Sales Inventory ({{dates[0]}} ~ {{dates[1] ? dates[1] : dates[0]}})</v-toolbar-title>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <VueJsonToCsv
-                                            :json-data="toDownload"
-                                            :csv-title="formatDate + ' Sales'"
-                                            >
-                                                <v-btn color="success" class="mr-6" @click="excelDownload()">
-                                                    Export <i class="mdi mdi-export-variant" aria-hidden="true"></i>
-                                                </v-btn>
-                                            </VueJsonToCsv>
-                                        </v-toolbar>
-                                    </template>
-                                    <thead >
-                                        <tr class="header">
-                                            <th scope="col">Date</th>
-                                            <th scope="col" v-for="(item, index) in categoryData" :key="index">{{item.productCategory}}</th>
-                                            <th scope="col">Add Ons</th>
-                                            <th scope="col">Delivery Fee</th>
-                                            <th scope="col">Cup Type</th>
-                                            <th scope="col">Total Sales</th>
+                                <v-simple-table :items-per-page="5" class="elevation-3 zui-table" id="table">
+                                  <template v-slot:top>
+                                    <v-toolbar class="mb-2" color="#ff5b04" dark flat>
+                                      <v-toolbar-title class="col pa-3 py-4 white--text">{{categoryName}}</v-toolbar-title>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                      <VueJsonToCsv
+                                      :json-data="storeData"
+                                      :csv-title="formatDate + '_' + categoryName + ' Order Inventory'"
+                                      >
+                                          <v-btn color="success" class="mr-6" @click="downloadData()">
+                                              Export<i class="mdi mdi-export-variant" aria-hidden="true"></i>
+                                          </v-btn>
+                                      </VueJsonToCsv>
+                                    </v-toolbar>
+                                  </template>
+                                  <div class="zui-wrapper">
+                                    <div class="zui-scroller">
+                                      <thead>
+                                        <tr>
+                                          <th style="text-align: center" rowspan="3" class="zui-sticky-col2">Date</th>
+                                          <th style="text-align: center" rowspan="3" class="zui-sticky-col3">Name</th>
+                                          <th style="text-align: center" rowspan="3" class="zui-sticky-col4">Address</th>
+                                          <th
+                                            :colspan="oneProd.length"
+                                            style="text-align: center"
+                                            v-for="(item, index) in category"
+                                            :key="index"
+                                          >
+                                            {{item}}
+                                            <tr>
+                                              <th
+                                                style="text-align: center"
+                                                v-if="categoryName === i.productCategory"
+                                                v-for="(i, ind) in productData"
+                                                :key="ind"
+                                              >{{i.productName}}</th>
+                                            </tr>
+                                          </th>
+                                          <th rowspan="3" class="zui-sticky-col5">Total</th>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr v-for="(item, index) in newDateStorage" :key="index">
-                                            <td>{{getDate2(index)}}</td>
-                                            <td scope="row" v-for="(i, ind) in item" :key="ind">{{format(i.value)}}</td>
-                                            <td>₱ {{getAddOns2(index)}}</td>
-                                            <td>₱ {{getDeliveryFee2(index)}}</td>
-                                            <td>₱ {{getCupType2(index)}}</td>
-                                            <td>₱ {{getTotal2(index)}}</td>
+                                      </thead>
+                                      <tbody>
+                                        <tr v-for="(items, indexes) in newDataStorage" :key="indexes">
+                                          <td
+                                            style="text-align: center"
+                                            class="zui-sticky-col2"
+                                          >{{getDate(items[0].get_customer[0].created_at)}}</td>
+                                          <td
+                                            style="text-align: center"
+                                            class="zui-sticky-col3"
+                                          >{{items[0].get_customer[0].customerName ? items[0].get_customer[0].customerName : '&nbsp;'}}</td>
+                                          <td
+                                            style="text-align: center"
+                                            class="zui-sticky-col4"
+                                          >{{items[0].get_customer[0].customerAddress ? items[0].get_customer[0].customerAddress : '&nbsp;'}}</td>
+
+                                          <td
+                                            style="text-align: center"
+                                            v-for="(item, index) in prod"
+                                            :key="index"
+                                          >{{getAllValue(item, items, index)}}</td>
+                                          <td
+                                            class="zui-sticky-col5"
+                                            style="text-align: center; font-weight: bold"
+                                          >{{getTotal(items)}} quantity</td>
                                         </tr>
-                                    </tbody>
+                                      </tbody>
+                                    </div>
+                                  </div>
                                 </v-simple-table>
                             </div>
                         </v-card-text>
@@ -276,6 +302,7 @@ export default {
       prod: [],
       categoryName: "",
       finalData: [],
+      newDataStorage: [],
       changeName: "lowDose",
       storeData: [],
       choosenDate: false,
@@ -300,8 +327,12 @@ export default {
     this.downloadData();
   },
   methods: {
+    showModal(){
+      this.choosenDate = true
+      this.retrieveChoosenData()
+    },
     downloadData(){
-      this.finalData.forEach(items => {
+      this.newDataStorage.forEach(items => {
         var list = {
           Date: this.getDate(items[0].get_customer[0].created_at),
           Name: items[0].get_customer[0].customerName ? items[0].get_customer[0].customerName : '',
@@ -309,11 +340,12 @@ export default {
         }
         var productName = []
         this.category.forEach(element => {
-          this.productData.forEach((el, ind) => {
-            productName.push(el.productName)
-          })
+          this.productData.forEach(e => {
+            if (e.productCategory === this.categoryName) {
+              productName.push(e.productName);
+            }
+          });
         })
-        console.log(productName)
         this.prod.forEach((item, index) => {
           let lowLength = productName.length / 3;
           let highLength = lowLength + lowLength;
@@ -386,11 +418,12 @@ export default {
       this.$axios
         .post(AUTH.url + "retrieveAllCheckouts", {}, AUTH.config)
         .then(res => {
+          this.loadingShow = false;
           if (res.data.status) {
             AUTH.deauthenticate();
           }
+          console.log(res.data.storeOrder)
           this.dataMethod(res.data.storeOrder);
-          this.loadingShow = false;
         });
     },
     dataMethod(item) {
@@ -399,6 +432,26 @@ export default {
         data.push(item[element]);
       });
       this.finalData = data.reverse();
+    },
+    retrieveChoosenData(){
+      this.loadingShow = true;
+      let params = {
+        start: this.dates[0] > this.dates[1] ? this.dates[1] : this.dates[0],
+        end: this.dates[1] ? (this.dates[0] > this.dates[1] ? this.dates[0] : this.dates[1]) : this.dates[0]
+      }
+      this.$axios
+        .post(AUTH.url + "retrieveChoosenCheckouts", params, AUTH.config)
+        .then(res => {
+          this.loadingShow = false;
+          if (res.data.status) {
+            AUTH.deauthenticate();
+          }
+          let data = [];
+          Object.keys(res.data.storeOrder).forEach(element => {
+            data.push(res.data.storeOrder[element]);
+          });
+          this.newDataStorage = data.reverse();
+        });
     },
     retrieveCategory() {
       this.loadingShow = true;

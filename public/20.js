@@ -1076,6 +1076,7 @@ var render = function() {
                 attrs: {
                   id: "file-input",
                   type: "file",
+                  accept: "image/*",
                   name: "profile_image"
                 },
                 on: { change: _vm.onImgChange }

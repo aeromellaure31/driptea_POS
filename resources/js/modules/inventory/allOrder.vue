@@ -290,8 +290,14 @@ export default {
                 title: "You have successfully deleted the order",
                 icon: "success"
                 }).then(el => {
-                    this.retrieve()
-                    this.retrievePending()
+                    this.retrievePending();
+                    this.retrieve();
+                    this.retrieveAddOns();
+                    this.retrieveCupType();
+                    this.retrieveProcessed();
+                    this.tableDataCompleteOrder = false
+                    this.tableDataPendingOrders = true
+                    this.tableProcessOrders = false
                 });
             });
         }else{
@@ -317,8 +323,14 @@ export default {
                     title: "You have successfully deleted the order",
                     icon: "success"
                     }).then(el => {
-                        this.retrieve()
-                        this.retrievePending()
+                        this.retrievePending();
+                        this.retrieve();
+                        this.retrieveAddOns();
+                        this.retrieveCupType();
+                        this.retrieveProcessed();
+                        this.tableDataCompleteOrder = false
+                        this.tableDataPendingOrders = false
+                        this.tableProcessOrders = true
                     });
                 });
             })
