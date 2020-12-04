@@ -530,6 +530,8 @@ __webpack_require__.r(__webpack_exports__);
         Object.keys(response.data.storeOrder).forEach(function (element) {
           _this5.tableData.push(response.data.storeOrder[element]);
         });
+
+        _this5.tableData.reverse();
       });
     },
     retrieveProcessed: function retrieveProcessed() {
@@ -546,6 +548,8 @@ __webpack_require__.r(__webpack_exports__);
         Object.keys(response.data.storeOrder).forEach(function (element) {
           _this6.tableProcess.push(response.data.storeOrder[element]);
         });
+
+        _this6.tableProcess.reverse();
       });
     },
     retrievePending: function retrievePending() {
@@ -562,6 +566,8 @@ __webpack_require__.r(__webpack_exports__);
         Object.keys(response.data.order).forEach(function (element) {
           _this7.tableDataPending.push(response.data.order[element]);
         });
+
+        _this7.tableDataPendingOrders.reverse();
       });
     },
     retrieveAddOns: function retrieveAddOns() {

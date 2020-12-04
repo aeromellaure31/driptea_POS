@@ -180,6 +180,101 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -200,17 +295,27 @@ __webpack_require__.r(__webpack_exports__);
       categoryName: "",
       finalData: [],
       changeName: "lowDose",
-      storeData: []
+      storeData: [],
+      choosenDate: false,
+      dialogConfirmation: false,
+      newDateStorage: [],
+      dates: [new Date().toISOString().substr(0, 10)]
     };
   },
   components: {
     loading: _basic_loading_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     VueJsonToCsv: vue_json_to_csv__WEBPACK_IMPORTED_MODULE_1___default.a
   },
+  computed: {
+    dateRangeText: function dateRangeText() {
+      return this.dates.join(' ~ ');
+    }
+  },
   mounted: function mounted() {
     this.retrieveCategory();
     this.retrieveCheckout();
     this.retrieveProducts();
+    this.downloadData();
   },
   methods: {
     downloadData: function downloadData() {
@@ -229,6 +334,8 @@ __webpack_require__.r(__webpack_exports__);
             productName.push(el.productName);
           });
         });
+
+        console.log(productName);
 
         _this.prod.forEach(function (item, index) {
           var lowLength = productName.length / 3;
@@ -398,7 +505,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.zui-table[data-v-1e034772] {\r\n  border: none;\r\n  /* border-right: solid 1px #DDEFEF; */\r\n  border-collapse: separate;\r\n  border-spacing: 0;\r\n  font: normal 13px Arial, sans-serif;\n}\n.zui-table thead th[data-v-1e034772] {\r\n  /* background-color: #DDEFEF; */\r\n  border: none;\r\n  color: #336b6b;\r\n  padding: 10px;\r\n  text-align: left;\r\n  /* text-shadow: 1px 1px 1px #fff; */\r\n  white-space: nowrap;\n}\n.zui-table tbody td[data-v-1e034772] {\r\n  /* border-bottom: solid 1px #DDEFEF; */\r\n  color: #333;\r\n  padding: 10px;\r\n  /* text-shadow: 1px 1px 1px #fff; */\r\n  white-space: nowrap;\n}\n.zui-wrapper[data-v-1e034772] {\r\n  position: relative;\n}\n.zui-scroller[data-v-1e034772] {\r\n  margin-left: 490px;\r\n  overflow-x: scroll;\r\n  overflow-y: visible;\r\n  padding-bottom: 5px;\r\n  width: 600px;\n}\n.zui-table .zui-sticky-col2[data-v-1e034772] {\r\n  /* border-right: solid 1px #DDEFEF; */\r\n  left: 0;\r\n  position: absolute;\r\n  top: auto;\r\n  width: 110px;\n}\n.zui-table .zui-sticky-col3[data-v-1e034772] {\r\n  /* border-right: solid 1px #DDEFEF; */\r\n  left: 110px;\r\n  position: absolute;\r\n  top: auto;\r\n  width: 180px;\n}\n.zui-table .zui-sticky-col4[data-v-1e034772] {\r\n  /* border-right: solid 1px #DDEFEF; */\r\n  left: 290px;\r\n  position: absolute;\r\n  top: auto;\r\n  width: 200px;\n}\n.zui-table .zui-sticky-col5[data-v-1e034772] {\r\n  /* border-right: solid 1px #DDEFEF; */\r\n  left: 1090px;\r\n  position: absolute;\r\n  top: auto;\r\n  width: 100px;\n}\r\n", ""]);
+exports.push([module.i, "\n.colorstyle[data-v-1e034772]{\r\n    width: 25%;\r\n    color: white;\r\n    background-color: #ff5b04;\r\n    border-top-style: hidden;\r\n    border-right-style: hidden;\r\n    border-left-style: hidden;\r\n    border-bottom-style: white;\n}\n.calendarDate[data-v-1e034772]{\r\n    width: 0%;\r\n    margin-top: 2.3%;\r\n    margin-right: 3%;\n}\n.zui-table[data-v-1e034772] {\r\n  border: none;\r\n  /* border-right: solid 1px #DDEFEF; */\r\n  border-collapse: separate;\r\n  border-spacing: 0;\r\n  font: normal 13px Arial, sans-serif;\n}\n.zui-table thead th[data-v-1e034772] {\r\n  /* background-color: #DDEFEF; */\r\n  border: none;\r\n  color: #336b6b;\r\n  padding: 10px;\r\n  text-align: left;\r\n  /* text-shadow: 1px 1px 1px #fff; */\r\n  white-space: nowrap;\n}\n.zui-table tbody td[data-v-1e034772] {\r\n  /* border-bottom: solid 1px #DDEFEF; */\r\n  color: #333;\r\n  padding: 10px;\r\n  /* text-shadow: 1px 1px 1px #fff; */\r\n  white-space: nowrap;\n}\n.zui-wrapper[data-v-1e034772] {\r\n  position: relative;\n}\n.zui-scroller[data-v-1e034772] {\r\n  margin-left: 490px;\r\n  overflow-x: scroll;\r\n  overflow-y: visible;\r\n  padding-bottom: 5px;\r\n  width: 600px;\n}\n.zui-table .zui-sticky-col2[data-v-1e034772] {\r\n  /* border-right: solid 1px #DDEFEF; */\r\n  left: 0;\r\n  position: absolute;\r\n  top: auto;\r\n  width: 110px;\n}\n.zui-table .zui-sticky-col3[data-v-1e034772] {\r\n  /* border-right: solid 1px #DDEFEF; */\r\n  left: 110px;\r\n  position: absolute;\r\n  top: auto;\r\n  width: 180px;\n}\n.zui-table .zui-sticky-col4[data-v-1e034772] {\r\n  /* border-right: solid 1px #DDEFEF; */\r\n  left: 290px;\r\n  position: absolute;\r\n  top: auto;\r\n  width: 200px;\n}\n.zui-table .zui-sticky-col5[data-v-1e034772] {\r\n  /* border-right: solid 1px #DDEFEF; */\r\n  left: 1090px;\r\n  position: absolute;\r\n  top: auto;\r\n  width: 100px;\n}\r\n", ""]);
 
 // exports
 
@@ -520,37 +627,82 @@ var render = function() {
                         [_vm._v(_vm._s(_vm.categoryName))]
                       ),
                       _vm._v("      \n        "),
-                      _vm._v(" "),
                       _c(
-                        "VueJsonToCsv",
+                        "v-menu",
                         {
                           attrs: {
-                            "json-data": _vm.storeData,
-                            "csv-title": _vm.formatDate + " Order Inventory"
-                          }
+                            "close-on-content-click": false,
+                            transition: "scale-transition",
+                            "offset-y": "",
+                            "min-width": "290px"
+                          },
+                          scopedSlots: _vm._u([
+                            {
+                              key: "activator",
+                              fn: function(ref) {
+                                var on = ref.on
+                                var attrs = ref.attrs
+                                return [
+                                  _c(
+                                    "v-text-field",
+                                    _vm._g(
+                                      _vm._b(
+                                        {
+                                          staticClass: "calendarDate",
+                                          attrs: {
+                                            chips: "",
+                                            label: "DATE",
+                                            "prepend-icon": "mdi-calendar",
+                                            readonly: ""
+                                          },
+                                          model: {
+                                            value: _vm.dateRangeText,
+                                            callback: function($$v) {
+                                              _vm.dateRangeText = $$v
+                                            },
+                                            expression: "dateRangeText"
+                                          }
+                                        },
+                                        "v-text-field",
+                                        attrs,
+                                        false
+                                      ),
+                                      on
+                                    )
+                                  )
+                                ]
+                              }
+                            }
+                          ])
                         },
                         [
-                          _c(
-                            "v-btn",
-                            {
-                              staticClass: "mr-6",
-                              attrs: { color: "success" },
-                              on: {
-                                click: function($event) {
-                                  return _vm.downloadData()
-                                }
-                              }
-                            },
-                            [
-                              _vm._v("\n                Export"),
-                              _c("i", {
-                                staticClass: "mdi mdi-export-variant",
-                                attrs: { "aria-hidden": "true" }
-                              })
-                            ]
-                          )
+                          _vm._v(" "),
+                          _c("v-date-picker", {
+                            attrs: { range: "" },
+                            model: {
+                              value: _vm.dates,
+                              callback: function($$v) {
+                                _vm.dates = $$v
+                              },
+                              expression: "dates"
+                            }
+                          })
                         ],
                         1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
+                        {
+                          staticClass: "mr-6",
+                          attrs: { color: "success" },
+                          on: {
+                            click: function($event) {
+                              return _vm.showModal()
+                            }
+                          }
+                        },
+                        [_vm._v("Find")]
                       )
                     ],
                     1
@@ -735,9 +887,317 @@ var render = function() {
         ]
       ),
       _vm._v(" "),
+      [
+        _c(
+          "v-row",
+          { attrs: { justify: "center" } },
+          [
+            _c(
+              "v-dialog",
+              {
+                attrs: { persistent: "", "max-width": "600px" },
+                model: {
+                  value: _vm.dialogConfirmation,
+                  callback: function($$v) {
+                    _vm.dialogConfirmation = $$v
+                  },
+                  expression: "dialogConfirmation"
+                }
+              },
+              [
+                _c(
+                  "v-card",
+                  [
+                    _c("div", { staticClass: "modal-header" }, [
+                      _c("span", { staticClass: "headline" }, [
+                        _vm._v("Confirmation")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "close",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              _vm.dialogConfirmation = false
+                            }
+                          }
+                        },
+                        [_vm._v("×")]
+                      ),
+                      _c("br")
+                    ]),
+                    _vm._v(" "),
+                    _c("empty", {
+                      attrs: { title: "No Order in this Date/s" }
+                    }),
+                    _vm._v(" "),
+                    _c("v-card-actions", [_c("v-spacer")], 1)
+                  ],
+                  1
+                )
+              ],
+              1
+            )
+          ],
+          1
+        )
+      ],
+      _vm._v(" "),
+      [
+        _c(
+          "v-row",
+          { attrs: { justify: "center" } },
+          [
+            _c(
+              "v-dialog",
+              {
+                attrs: { persistent: "", "max-width": "1000px" },
+                model: {
+                  value: _vm.choosenDate,
+                  callback: function($$v) {
+                    _vm.choosenDate = $$v
+                  },
+                  expression: "choosenDate"
+                }
+              },
+              [
+                _c(
+                  "v-card",
+                  [
+                    _c("div", { staticClass: "modal-header" }, [
+                      _c("span", { staticClass: "headline" }, [
+                        _vm._v("Export as Excel")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "close",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              _vm.choosenDate = false
+                            }
+                          }
+                        },
+                        [_vm._v("×")]
+                      ),
+                      _c("br")
+                    ]),
+                    _vm._v(" "),
+                    _c("v-card-text", [
+                      _c(
+                        "div",
+                        { staticClass: "my-custom-scrollbar" },
+                        [
+                          _c(
+                            "v-simple-table",
+                            {
+                              staticClass: "elevation-2",
+                              attrs: { "items-per-page": 5 },
+                              scopedSlots: _vm._u([
+                                {
+                                  key: "top",
+                                  fn: function() {
+                                    return [
+                                      _c(
+                                        "v-toolbar",
+                                        {
+                                          staticClass: "mb-2",
+                                          attrs: {
+                                            color: "#ff5b04",
+                                            dark: "",
+                                            flat: ""
+                                          }
+                                        },
+                                        [
+                                          _c(
+                                            "v-toolbar-title",
+                                            {
+                                              staticClass:
+                                                "col pa-3 py-4 white--text"
+                                            },
+                                            [
+                                              _vm._v(
+                                                "Sales Inventory (" +
+                                                  _vm._s(_vm.dates[0]) +
+                                                  " ~ " +
+                                                  _vm._s(
+                                                    _vm.dates[1]
+                                                      ? _vm.dates[1]
+                                                      : _vm.dates[0]
+                                                  ) +
+                                                  ")"
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(
+                                            "      \n                                        "
+                                          ),
+                                          _c(
+                                            "VueJsonToCsv",
+                                            {
+                                              attrs: {
+                                                "json-data": _vm.toDownload,
+                                                "csv-title":
+                                                  _vm.formatDate + " Sales"
+                                              }
+                                            },
+                                            [
+                                              _c(
+                                                "v-btn",
+                                                {
+                                                  staticClass: "mr-6",
+                                                  attrs: { color: "success" },
+                                                  on: {
+                                                    click: function($event) {
+                                                      return _vm.excelDownload()
+                                                    }
+                                                  }
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    "\n                                                Export "
+                                                  ),
+                                                  _c("i", {
+                                                    staticClass:
+                                                      "mdi mdi-export-variant",
+                                                    attrs: {
+                                                      "aria-hidden": "true"
+                                                    }
+                                                  })
+                                                ]
+                                              )
+                                            ],
+                                            1
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    ]
+                                  },
+                                  proxy: true
+                                }
+                              ])
+                            },
+                            [
+                              _vm._v(" "),
+                              _c("thead", [
+                                _c(
+                                  "tr",
+                                  { staticClass: "header" },
+                                  [
+                                    _c("th", { attrs: { scope: "col" } }, [
+                                      _vm._v("Date")
+                                    ]),
+                                    _vm._v(" "),
+                                    _vm._l(_vm.categoryData, function(
+                                      item,
+                                      index
+                                    ) {
+                                      return _c(
+                                        "th",
+                                        { key: index, attrs: { scope: "col" } },
+                                        [_vm._v(_vm._s(item.productCategory))]
+                                      )
+                                    }),
+                                    _vm._v(" "),
+                                    _c("th", { attrs: { scope: "col" } }, [
+                                      _vm._v("Add Ons")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("th", { attrs: { scope: "col" } }, [
+                                      _vm._v("Delivery Fee")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("th", { attrs: { scope: "col" } }, [
+                                      _vm._v("Cup Type")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("th", { attrs: { scope: "col" } }, [
+                                      _vm._v("Total Sales")
+                                    ])
+                                  ],
+                                  2
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "tbody",
+                                _vm._l(_vm.newDateStorage, function(
+                                  item,
+                                  index
+                                ) {
+                                  return _c(
+                                    "tr",
+                                    { key: index },
+                                    [
+                                      _c("td", [
+                                        _vm._v(_vm._s(_vm.getDate2(index)))
+                                      ]),
+                                      _vm._v(" "),
+                                      _vm._l(item, function(i, ind) {
+                                        return _c(
+                                          "td",
+                                          { key: ind, attrs: { scope: "row" } },
+                                          [_vm._v(_vm._s(_vm.format(i.value)))]
+                                        )
+                                      }),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _vm._v(
+                                          "₱ " + _vm._s(_vm.getAddOns2(index))
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _vm._v(
+                                          "₱ " +
+                                            _vm._s(_vm.getDeliveryFee2(index))
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _vm._v(
+                                          "₱ " + _vm._s(_vm.getCupType2(index))
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _vm._v(
+                                          "₱ " + _vm._s(_vm.getTotal2(index))
+                                        )
+                                      ])
+                                    ],
+                                    2
+                                  )
+                                }),
+                                0
+                              )
+                            ]
+                          )
+                        ],
+                        1
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("v-spacer")
+                  ],
+                  1
+                )
+              ],
+              1
+            )
+          ],
+          1
+        )
+      ],
+      _vm._v(" "),
       _vm.loadingShow ? _c("loading") : _vm._e()
     ],
-    1
+    2
   )
 }
 var staticRenderFns = []

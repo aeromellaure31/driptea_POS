@@ -393,7 +393,7 @@ __webpack_require__.r(__webpack_exports__);
         password_confirmation: this.confirmPass
       };
 
-      if (this.errorMessage1 === null && this.errorMessage2 === null && this.errorMessage3 === null && this.errorMessage4 === null && this.errorMessage5 === null && this.errorMessage6 === null && this.errorMessage7 === null && this.errorMessage8 === null && this.errorMessage9 === null && this.errorMessage10 === null && this.errorMessage11 === null && this.errorMessage12 === null && this.errorMessage13 === null && this.errorMessage14 === null && this.errorMessage15 === null) {
+      if (this.errorMessage1 === null && this.errorMessage2 === null && this.errorMessage3 === null && this.errorMessage4 === null && this.errorMessage5 === null && this.errorMessage6 === null && this.errorMessage7 === null && this.errorMessage8 === null && this.errorMessage9 === null && this.errorMessage10 === null && this.errorMessage11 === null && this.errorMessage12 === null && this.errorMessage13 === null && this.errorMessage14 === null && this.errorMessage15 === null && this.errorMessage16 === null) {
         this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].url + "register", parameter).then(function (response) {
           _this.loadingShow = false;
           sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
@@ -512,7 +512,7 @@ __webpack_require__.r(__webpack_exports__);
         this.successMessage = null;
 
         if (this.confirmPass === '') {
-          this.errorMessage4 = "Confirm password is required";
+          this.errorMessage6 = "Confirm password is required";
         } else if (this.password.localeCompare(this.confirmPass) !== 0) {
           this.errorMessage6 = "Password did not match.";
         } else {

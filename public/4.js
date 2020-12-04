@@ -441,7 +441,10 @@ __webpack_require__.r(__webpack_exports__);
         _this3.loadingShow = false;
         Object.keys(response.data.storeOrder).forEach(function (element) {
           _this3.tableData.push(response.data.storeOrder[element]);
-        }); // this.tableDataCompleteOrder = true;
+        });
+
+        _this3.tableData.reverse(); // this.tableDataCompleteOrder = true;
+
       });
     },
     retrievePending: function retrievePending() {
@@ -461,6 +464,8 @@ __webpack_require__.r(__webpack_exports__);
         Object.keys(response.data.order).forEach(function (element) {
           _this4.tableDataPending.push(response.data.order[element]);
         });
+
+        _this4.tableDataPending.reverse();
       });
     },
     retrieveProcess: function retrieveProcess() {
@@ -480,6 +485,8 @@ __webpack_require__.r(__webpack_exports__);
         Object.keys(response.data.storeOrder).forEach(function (element) {
           _this5.tableProcess.push(response.data.storeOrder[element]);
         });
+
+        _this5.tableProcess.reverse();
       });
     },
     retrieveCancelled: function retrieveCancelled() {
@@ -499,6 +506,8 @@ __webpack_require__.r(__webpack_exports__);
         Object.keys(response.data.order).forEach(function (element) {
           _this6.tableCancelled.push(response.data.order[element]);
         });
+
+        _this6.tableCancelled.reverse();
       });
     },
     retrieveAddOns: function retrieveAddOns() {

@@ -15,8 +15,8 @@
             <v-card class="subhead">
               <v-toolbar color="#f2f2f2" dark>
                 <div class="row insideToolbar">
-                  <div class="col-xs-2">
-                    <v-toolbar-title class="graphTitle">Summary of Sales</v-toolbar-title>
+                  <div class="col-sm-3">
+                    <v-toolbar-title class="graphTitle">Sales Summary</v-toolbar-title>
                   </div>
                   <v-spacer></v-spacer>
                   <div class="col-xs-2">
@@ -96,7 +96,7 @@
             <v-card class="subhead">
               <v-toolbar color="#f2f2f2" dark>
                 <div class="row insideToolbar">
-                  <div class="col-xs-2">
+                  <div class="col-sm-3">
                     <v-toolbar-title class="graphTitle">Product Sales</v-toolbar-title>
                   </div>
                   <v-spacer></v-spacer>
@@ -118,7 +118,7 @@
                     </div>
                   </div>
                   <div class="col-xs-2 ccc">
-                    <div class="form-group" v-show="ok">
+                    <div class="form-group" v-show="ok4">
                       <input
                         class="form-control firstOpt"
                         type="month"
@@ -127,7 +127,7 @@
                         v-on:change="onChangeDatePS"
                       >
                     </div>
-                    <div class="form-group secondOpt" v-show="ok2">
+                    <div class="form-group secondOpt" v-show="ok5">
                       <select class="form-control" v-on:change="onChangeYear2" v-model="yrvalueS">
                         <option
                           v-for="year in years"
@@ -136,7 +136,7 @@
                         >{{ year }}</option>
                       </select>
                     </div>
-                    <div v-show="ok3" class="forannualInput">
+                    <div v-show="ok6" class="forannualInput">
                       <select
                         class="form-control"
                         v-on:click.ctrl.exact="onChanging2"
@@ -208,10 +208,13 @@
 </template>
 
 <style scoped>
-/* .filter{
-  width: 120px;
-} */
-.firstOpt{
+select.form-control[multiple], select.form-control[size] {
+    height: auto;
+}
+select.form-control[multiple][data-v-124112e6], select.form-control[size][data-v-124112e6] {
+    height: 52px;
+}
+.firstOpt {
   margin-right: 5%;
 }
 .firstOpt,
@@ -251,7 +254,7 @@
   font-size: 1rem;
   font-weight: bold;
 }
-.graphTitle{
+.graphTitle {
   margin-left: 5%;
 }
 .YRcal {
@@ -321,13 +324,12 @@ import { arch } from "os";
 import swal from "sweetalert";
 import nodataImg from "../../../assets/noDatatoShow.png";
 import loading from "../../basic/loading.vue";
+// import { connect } from 'net';
 // import index from "../../services/auth";
-
 export default {
   data() {
     return {
       //------------- for product summary -------
-
       // v models
       thedate2: null,
       thefilter2: "Daily",
@@ -362,6 +364,9 @@ export default {
       ok: true,
       ok2: false,
       ok3: false,
+      ok4: true,
+      ok5: false,
+      ok6: false,
       yrfrmdb: null,
       yrvalue: null,
       theMonth: null,
@@ -372,9 +377,20 @@ export default {
       options: {
         colors: ["#ff5b04"],
         chart: {
-          id: "sales-summary"
+          id: "sales-summary",
+          toolbar: {
+            export: {
+              csv: {
+                filename: "Driptea_Sales_Report",
+                columnDelimiter: ",",
+                headerCategory: "Date",
+                headerValue: "Sales"
+              }
+            }
+          }
         },
         xaxis: {
+          name: "Date",
           categories: []
         },
         stroke: {
@@ -388,7 +404,6 @@ export default {
           data: []
         }
       ],
-
       options0: {},
       series0: [],
       points: [],
@@ -456,6 +471,7 @@ export default {
     this.getProductNames();
     this.dailyProductSale();
     this.getRandomColor();
+    this.getAnnualProductSales([2020, 2021]);
   },
   created() {
     this.getTop3();
@@ -481,7 +497,6 @@ export default {
         })
         .catch(error => {});
     },
-
     //...................  for Product sales graph ....................
     dailyProductSale() {
       this.loadingShow = true;
@@ -494,7 +509,6 @@ export default {
       let ldate = this.lastDate;
       let PRODUCT = "";
       let forSeries = [];
-
       Axios.post(AUTH.url + "getDailyProductSales", params, AUTH.config)
         .then(response => {
           // console.log("heloooooooo ", response);
@@ -514,7 +528,6 @@ export default {
             });
             this.secondpoints = [];
           });
-
           forSeries.forEach(obj => {
             response.data.prods.forEach(prod => {
               if (prod.ProductName === obj.name) {
@@ -523,7 +536,6 @@ export default {
               }
             });
           });
-
           if (response.data.prods.length > 0) {
             this.series2 = forSeries;
             this.options2 = {
@@ -572,7 +584,6 @@ export default {
       let namesfromDB = [];
       let PRODUCT = "";
       let forSeries = [];
-
       Axios.post(AUTH.url + "getMonthlyProductSales", params, AUTH.config)
         .then(response => {
           if (response.data.status) {
@@ -586,7 +597,6 @@ export default {
             monthsfrmDB.push(d);
             totalfrmDB.push(tots);
           });
-
           this.productName.forEach(name => {
             if (namesfromDB.includes(name)) {
               response.data.prods.forEach(prod => {
@@ -625,7 +635,6 @@ export default {
               this.secondpoints = [];
             }
           });
-
           if (response.data.prods.length > 0) {
             this.series2 = forSeries;
             this.options2 = {
@@ -674,7 +683,6 @@ export default {
       let namesfromDB = [];
       let PRODUCT = "";
       let forSeries = [];
-
       Axios.post(AUTH.url + "getQuarterlyProductSales", params, AUTH.config)
         .then(response => {
           if (response.data.status) {
@@ -688,7 +696,6 @@ export default {
             monthsfrmDB.push(d);
             totalfrmDB.push(tots);
           });
-
           this.productName.forEach(name => {
             if (namesfromDB.includes(name)) {
               response.data.prods.forEach(prod => {
@@ -716,7 +723,6 @@ export default {
                   let one = this.firstQ.reduce((total, num) => {
                     return total + num;
                   });
-
                   this.QauterData.push(one);
                   let two = this.secondQ.reduce((total, num) => {
                     return total + num;
@@ -795,7 +801,6 @@ export default {
             this.forthQ = [];
             this.QauterData = [];
           });
-
           if (response.data.prods.length > 0) {
             this.series2 = forSeries;
             this.options2 = {
@@ -848,7 +853,6 @@ export default {
       let namesfromDB = [];
       let PRODUCT = "";
       let forSeries = [];
-
       Axios.post(AUTH.url + "getSemiProductSales", params, AUTH.config)
         .then(response => {
           if (response.data.status) {
@@ -862,7 +866,6 @@ export default {
             monthsfrmDB.push(d);
             totalfrmDB.push(tots);
           });
-
           this.productName.forEach(name => {
             if (namesfromDB.includes(name)) {
               response.data.prods.forEach(prod => {
@@ -909,7 +912,6 @@ export default {
                     name: PRODUCT,
                     data: this.secondpoints
                   });
-
                   // console.log("secondpoints ===", this.secondpoints);
                   PRODUCT = "";
                   this.secondpoints = [];
@@ -972,7 +974,6 @@ export default {
             this.QauterData = [];
             this.semi_Data = [];
           });
-
           if (response.data.prods.length > 0) {
             this.series2 = forSeries;
             this.options2 = {
@@ -1012,55 +1013,87 @@ export default {
       this.semi_Data = [];
       this.options2.colors = [];
     },
-    getAnnualProductSales(years) {
+    getAnnualProductSales(values) {
       // this.loadingShow = true;
-      // this.points = [];
-      // let startingYR = values[0];
-      // let endYear = values[1];
-      // let graphLabel = startingYR + " - " + endYear;
-      // this.MonthLabel = graphLabel;
-      // let gap = endYear - startingYR;
-      // let array = [];
-      // let labelsArr = [];
-      // let params = {
-      //   from: startingYR,
-      //   to: endYear
-      // };
-      // Axios.post(AUTH.url + "getAnnualProductSales", params, AUTH.config).then(
-      //   response => {
-      //     if (response.data.status) {
-      //       AUTH.deauthenticate();
-      //     }
-      //     this.loadingShow = false;
-      //     response.data.subtotal.forEach(element => {
-      //       if (element.year <= endYear && element.year == startingYR) {
-      //         array.push(element.sub);
-      //         labelsArr.push(startingYR);
-      //         startingYR++;
-      //       }
-      //     });
-      //     this.points = array;
-      //     this.annualLabels = labelsArr;
-      //     this.series = [
-      //       {
-      //         data: this.points
-      //       }
-      //     ];
-      //     this.options = {
-      //       colors: ["#ff5b04"],
-      //       chart: {
-      //         id: "sales-summary"
-      //       },
-      //       xaxis: {
-      //         categories: this.annualLabels
-      //       },
-      //       stroke: {
-      //         width: 2,
-      //         curve: "smooth"
-      //       }
-      //     };
-      //   }
-      // );
+      this.secondpoints = [];
+      let startingYR = values[0];
+      let endYear = values[1];
+      let graphLabel = startingYR + " - " + endYear;
+      // this.MonthLabel2 = graphLabel;
+      let gap = endYear - startingYR;
+      let Seriesarray = [];
+      let labelsArr = [];
+      let pointsArr = [];
+      let Product = "";
+      let params = {
+        from: null
+      };
+      let datas = [];
+      // console.log("hey bb ");
+      Axios.post(AUTH.url + "getAnnualProductSales", params, AUTH.config)
+        .then(response => {
+          console.log("ang response bb ", response);
+          if (response.data.status) {
+            AUTH.deauthenticate();
+          }
+          for (var i = startingYR; i <= endYear; i++) {
+            labelsArr.push(i);
+          }
+          // console.log("year labels bruh ",labelsArr)
+          labelsArr.forEach(label => {
+            response.data.prods.forEach(element => {
+              // console.log("ang element bb ",element.year);
+              Product = element.ProductName;
+              if (element.year === label) {
+                pointsArr.push(element.quan);
+              } else {
+                pointsArr.push(0);
+              }
+            });
+            Seriesarray.push({
+              name: Product,
+              data: pointsArr
+            });
+            let pointsArr = [];
+            let Product = "";
+            console.log("the series ... ", Seriesarray);
+          });
+          // this.loadingShow = false;
+          // response.data.prods.forEach(element => {
+          //   if (element.year <= endYear && element.year == startingYR) {
+          //     array.push(element.year);
+          //     labelsArr.push(startingYR);
+          //     startingYR++;
+          //     datas.push(element.quan)
+          //     pointsArr.push({
+          //       name: element.ProductName,
+          //       data: datas
+          //     })
+          //   }
+          // });
+          // // for(var i = 0; i < this.array.length; i++){
+          // // }
+          // this.secondpoints = pointsArr ;
+          // console.log("ang points bb", this.secondpoints)
+          // this.annualLabels = labelsArr;
+          // this.series2 = pointsArr;
+          // this.options2 = {
+          //   colors: ["#ff5b04"],
+          //   chart: {
+          //     id: "product-summary"
+          //   },
+          //   xaxis: {
+          //     categories: this.annualLabels
+          //   },
+          //   stroke: {
+          //     width: 2,
+          //     curve: "smooth"
+          //   }
+          // };
+        })
+        .catch(error => {
+          console.log("ang mahiwagang mensahe ", error);
+        });
     },
     onFilter2() {
       if (this.thefilter2 == "Daily") {
@@ -1068,43 +1101,49 @@ export default {
         this.MonthLabel2 = this.mnths[this.theMonth - 1];
         // this.options2.xaxis.categories = this.xlabels;
         this.dailyProductSale();
-        this.ok = true;
-        this.ok2 = false;
-        this.ok3 = false;
+        this.ok4 = true;
+        this.ok5 = false;
+        this.ok6 = false;
       } else if (this.thefilter2 == "Weekly") {
       } else if (this.thefilter2 == "Monthly") {
         this.MonthLabel2 = new Date(this.thedate2).getFullYear();
         // this.options2.xaxis.categories = this.mnths;
-        this.ok = false;
-        this.ok2 = true;
-        this.ok3 = false;
+        this.ok4 = false;
+        this.ok5 = true;
+        this.ok6 = false;
         this.MonthlyProductSale(this.yrvalueS);
         // console.log("ang colors bruh ", this.options2.colors);
       } else if (this.thefilter2 == "Quarterly") {
         this.MonthLabel2 = new Date(this.thedate2).getFullYear();
         // this.options2.xaxis.categories = this.quarter;
         this.QuarterlyProductSale(this.yrvalueS);
-        this.ok = false;
-        this.ok2 = true;
-        this.ok3 = false;
+        this.ok4 = false;
+        this.ok5 = true;
+        this.ok6 = false;
       } else if (this.thefilter2 == "Semi-Annual") {
         this.MonthLabel2 = new Date(this.thedate2).getFullYear();
         // this.options2.xaxis.categories = this.semi;
         this.SemiProductSale(this.yrvalueS);
-        this.ok = false;
-        this.ok2 = true;
-        this.ok3 = false;
+        this.ok4 = false;
+        this.ok5 = true;
+        this.ok6 = false;
       } else if (this.thefilter2 == "Annual") {
-        this.ok = false;
-        this.ok2 = false;
-        this.ok3 = true;
-        swal({
-          title: "Ctrl + click(select)",
-          text:
-            "After Selecting Year start, Press Ctrl + Click to Select Year End",
-          icon: "warning",
-          dangerMode: true
+        this.ok4 = false;
+        this.ok5 = false;
+        this.ok6 = true;
+        if (this.years.length < 2){
+          swal({
+          text: "This is temporarily not available for there's only one year in the list. Year Range is still not applicable.",
+          dangerMode: false
         });
+        }else {
+          swal({
+          text:
+            "To select Year range, choose starting year then Press Ctrl + year end.",
+          dangerMode: false
+        });
+        }
+        
       }
     },
     onChangeYear2() {
@@ -1118,9 +1157,14 @@ export default {
         this.SemiProductSale(this.yrvalueS);
         this.MonthLabel2 = this.yrvalueS;
       } else if (this.thefilter2 == "Annual") {
+        this.getAnnualProductSales(this.Multiyrvalue2);
+        this.MonthLabel2 = this.yrvalueS;
       }
     },
-
+    onChanging2() {
+      this.getAnnualProductSales(this.Multiyrvalue2);
+      // this.getAnnualSummary(this.Multiyrvalue);
+    },
     // --------------------- for sales summary graph -----------------------------------
     getDailySummary() {
       this.loadingShow = true;
@@ -1134,7 +1178,6 @@ export default {
       let totalfrmDB = [];
       // let xs = this.xlabels;
       let ldate = this.lastDate;
-
       Axios.post(AUTH.url + "getDailySales", params, AUTH.config)
         .then(response => {
           if (response.data.status) {
@@ -1158,21 +1201,20 @@ export default {
               this.points.push(0);
             }
           }
-
           if (response.data.total.length > 0) {
             this.series = [
               {
+                name: "Sales",
                 data: this.points
               }
             ];
           } else {
-            this.series = [];
+            name: "Sales", (this.series = []);
           }
         })
         .catch(error => {});
       this.points = [];
     },
-
     getDate() {
       let date = new Date();
       this.theMonth =
@@ -1274,13 +1316,23 @@ export default {
         this.ok = false;
         this.ok2 = false;
         this.ok3 = true;
-        swal({
-          title: "Ctrl + click(select)",
-          text:
-            "After Selecting Year start, Press Ctrl + Click to Select Year End",
-          icon: "warning",
-          dangerMode: true
+        if (this.years.length < 2){
+          swal({
+          text: "This is temporarily not available for there's only one year in the list. Year Range is still not applicable.",
+          // text:
+          //   "After Selecting Year start, Press Ctrl + Select Year End",
+          // icon: "info",
+          dangerMode: false
         });
+        }else {
+          swal({
+          // title: "Ctrl + Year End",
+          text:
+            "To select Year range, choose starting year then Press Ctrl + year end.",
+          // icon: "info",
+          dangerMode: false
+        });
+        }
       }
     },
     onChangeDate() {
@@ -1319,11 +1371,7 @@ export default {
         this.MonthLabel = this.yrvalue;
       }
     },
-
     onChanging() {
-      this.getAnnualSummary(this.Multiyrvalue);
-    },
-    onChanging2() {
       this.getAnnualSummary(this.Multiyrvalue);
     },
     getYears() {
@@ -1379,6 +1427,7 @@ export default {
           }
           this.series = [
             {
+              name: "Sales",
               data: this.points
             }
           ];
@@ -1446,6 +1495,7 @@ export default {
           this.points = this.QauterData;
           this.series = [
             {
+              name: "Sales",
               data: this.points
             }
           ];
@@ -1519,6 +1569,7 @@ export default {
           this.points = this.semi_Data;
           this.series = [
             {
+              name: "Sales",
               data: this.points
             }
           ];
@@ -1539,7 +1590,6 @@ export default {
       let graphLabel = startingYR + " - " + endYear;
       this.MonthLabel = graphLabel;
       let gap = endYear - startingYR;
-
       let array = [];
       let labelsArr = [];
       let params = {
@@ -1563,6 +1613,7 @@ export default {
           this.annualLabels = labelsArr;
           this.series = [
             {
+              name: "Sales",
               data: this.points
             }
           ];
@@ -1594,7 +1645,6 @@ export default {
           if (response.data.status) {
             AUTH.deauthenticate();
           }
-
           // let resLen = response.data.prods;
           response.data.prods.forEach(element => {
             indexes.push(response.data.prods.indexOf(element));

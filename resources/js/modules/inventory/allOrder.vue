@@ -30,8 +30,8 @@
                         <th>Action</th>
                     </tr>
                         <div v-else>
-                        <empty :title="'No Completed Orders!'"></empty>
-                    </div>
+                            <empty :title="'No Completed Orders!'"></empty>
+                        </div>
                     </thead>
                    <tbody>
                        <tr v-for="(item, index) in tableData" :key="index">
@@ -255,7 +255,7 @@ export default {
     });
   },
   components: {
-      empty,
+    empty,
     loading
   },
   methods: {
@@ -436,6 +436,7 @@ export default {
             Object.keys(response.data.storeOrder).forEach(element => {
                 this.tableData.push(response.data.storeOrder[element]);
             });
+            this.tableData.reverse()
         });
     },
     retrieveProcessed() {
@@ -451,6 +452,7 @@ export default {
             Object.keys(response.data.storeOrder).forEach(element => {
                 this.tableProcess.push(response.data.storeOrder[element]);
             });
+            this.tableProcess.reverse()
         });
     },
     retrievePending() {
@@ -466,6 +468,7 @@ export default {
             Object.keys(response.data.order).forEach(element => {
                 this.tableDataPending.push(response.data.order[element]);
             });
+            this.tableDataPendingOrders.reverse()
         });
     },
     retrieveAddOns() {

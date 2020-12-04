@@ -19,23 +19,38 @@
         <template v-slot:top>
           <v-toolbar class="mb-2" color="#ff5b04" dark flat>
             <v-toolbar-title class="col pa-3 py-4 white--text">{{categoryName}}</v-toolbar-title>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <!-- <v-text-field
-              clearable
-              flat
-              solo-inverted
-              prepend-inner-icon="mdi-magnify"
-              class="mt-7"
-              label="Search"
-            ></v-text-field> -->
-            <!-- <v-divider class="mx-4" vertical></v-divider> -->
-            <VueJsonToCsv
+            <v-menu
+            :close-on-content-click="false"
+            transition="scale-transition"
+            offset-y
+            min-width="290px"
+            >
+                <template v-slot:activator="{ on, attrs }">
+                    <v-text-field
+                    class="calendarDate"
+                    v-model="dateRangeText"
+                    chips
+                    label="DATE"
+                    prepend-icon="mdi-calendar"
+                    readonly
+                    v-bind="attrs"
+                    v-on="on"
+                    ></v-text-field>
+                </template>
+                <v-date-picker
+                    v-model="dates"
+                    range
+                ></v-date-picker>
+            </v-menu>
+            <v-btn color="success" class="mr-6" @click="showModal()">Find</v-btn>
+            <!-- <VueJsonToCsv
             :json-data="storeData"
             :csv-title="formatDate + ' Order Inventory'"
             >
                 <v-btn color="success" class="mr-6" @click="downloadData()">
                     Export<i class="mdi mdi-export-variant" aria-hidden="true"></i>
                 </v-btn>
-            </VueJsonToCsv>
+            </VueJsonToCsv> -->
           </v-toolbar>
         </template>
         <div class="zui-wrapper">
@@ -93,12 +108,92 @@
           </div>
         </div>
       </v-simple-table>
+      <template>
+            <v-row justify="center">
+                <v-dialog v-model="dialogConfirmation" persistent max-width="600px">
+                    <v-card>
+                        <div class="modal-header">
+                          <span class="headline">Confirmation</span>
+                          <button type="button" class="close" @click="dialogConfirmation = false">&times;</button><br>
+                        </div>
+                        <empty :title="'No Order in this Date/s'"></empty>
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                        </v-card-actions>
+                    </v-card>
+                </v-dialog>
+            </v-row>
+        </template>
+        <template>
+            <v-row justify="center">
+                <v-dialog v-model="choosenDate" persistent max-width="1000px">
+                    <v-card>
+                        <div class="modal-header">
+                          <span class="headline">Export as Excel</span>
+                          <button type="button" class="close" @click="choosenDate = false">&times;</button><br>
+                        </div>
+                        <v-card-text>
+                            <div class="my-custom-scrollbar">
+                                <v-simple-table :items-per-page="5" class="elevation-2">
+                                    <template v-slot:top>
+                                        <v-toolbar class="mb-2" color="#ff5b04" dark flat>
+                                            <v-toolbar-title class="col pa-3 py-4 white--text">Sales Inventory ({{dates[0]}} ~ {{dates[1] ? dates[1] : dates[0]}})</v-toolbar-title>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <VueJsonToCsv
+                                            :json-data="toDownload"
+                                            :csv-title="formatDate + ' Sales'"
+                                            >
+                                                <v-btn color="success" class="mr-6" @click="excelDownload()">
+                                                    Export <i class="mdi mdi-export-variant" aria-hidden="true"></i>
+                                                </v-btn>
+                                            </VueJsonToCsv>
+                                        </v-toolbar>
+                                    </template>
+                                    <thead >
+                                        <tr class="header">
+                                            <th scope="col">Date</th>
+                                            <th scope="col" v-for="(item, index) in categoryData" :key="index">{{item.productCategory}}</th>
+                                            <th scope="col">Add Ons</th>
+                                            <th scope="col">Delivery Fee</th>
+                                            <th scope="col">Cup Type</th>
+                                            <th scope="col">Total Sales</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="(item, index) in newDateStorage" :key="index">
+                                            <td>{{getDate2(index)}}</td>
+                                            <td scope="row" v-for="(i, ind) in item" :key="ind">{{format(i.value)}}</td>
+                                            <td>₱ {{getAddOns2(index)}}</td>
+                                            <td>₱ {{getDeliveryFee2(index)}}</td>
+                                            <td>₱ {{getCupType2(index)}}</td>
+                                            <td>₱ {{getTotal2(index)}}</td>
+                                        </tr>
+                                    </tbody>
+                                </v-simple-table>
+                            </div>
+                        </v-card-text>
+                        <v-spacer></v-spacer>
+                    </v-card>
+                </v-dialog>
+            </v-row>
+        </template>
        <loading v-if="loadingShow"></loading>
     </div>
-
-   
 </template>
 <style scoped>
+.colorstyle{
+    width: 25%;
+    color: white;
+    background-color: #ff5b04;
+    border-top-style: hidden;
+    border-right-style: hidden;
+    border-left-style: hidden;
+    border-bottom-style: white;
+}
+.calendarDate{
+    width: 0%;
+    margin-top: 2.3%;
+    margin-right: 3%;
+}
 .zui-table {
   border: none;
   /* border-right: solid 1px #DDEFEF; */
@@ -182,17 +277,27 @@ export default {
       categoryName: "",
       finalData: [],
       changeName: "lowDose",
-      storeData: []
+      storeData: [],
+      choosenDate: false,
+      dialogConfirmation: false,
+      newDateStorage: [],
+      dates: [new Date().toISOString().substr(0, 10), ],
     };
   },
   components: {
     loading,
     VueJsonToCsv
   },
+  computed: {
+    dateRangeText () {
+      return this.dates.join(' ~ ')
+    },
+  },
   mounted() {
     this.retrieveCategory();
     this.retrieveCheckout();
     this.retrieveProducts();
+    this.downloadData();
   },
   methods: {
     downloadData(){
@@ -208,6 +313,7 @@ export default {
             productName.push(el.productName)
           })
         })
+        console.log(productName)
         this.prod.forEach((item, index) => {
           let lowLength = productName.length / 3;
           let highLength = lowLength + lowLength;

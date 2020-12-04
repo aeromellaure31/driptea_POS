@@ -49,6 +49,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('retrieveCategoryAscending','App\Http\Controllers\AddCategoryController@retrieveCategoryAscending');
     Route::post('retrieveCategoryForSales','App\Http\Controllers\AddCategoryController@retrieveCategoryAscending');
     Route::post('deleteCategory','App\Http\Controllers\AddCategoryController@deleteCategory');
+    Route::post('retrieveCategoryById','App\Http\Controllers\AddCategoryController@retrieveCategoryById');
 
     Route::post('addCustomer','App\Http\Controllers\CustomerDetailsController@insertCustomer');
     Route::post('retrieveCustomer','App\Http\Controllers\CustomerDetailsController@retrieveCustomer');
@@ -112,6 +113,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('deleteCheckout','App\Http\Controllers\StoreCheckoutsController@deleteCheckout');
     Route::post('retrieveOnlineProcessing','App\Http\Controllers\StoreCheckoutsController@retrieveOnlineProcessing');
     Route::post('updateStatus','App\Http\Controllers\StoreCheckoutsController@updateStatus');
+    Route::post('retrieveChosenSales','App\Http\Controllers\StoreCheckoutsController@retrieveChosenSales');
     
     Route::post('getTopProd','App\Http\Controllers\OrderController@retrieveTopProducts');
     Route::post('addIncomingCups','App\Http\Controllers\QuantityCupsController@addIncomingCups');

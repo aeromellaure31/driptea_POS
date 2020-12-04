@@ -367,6 +367,7 @@ export default {
           Object.keys(response.data.storeOrder).forEach(element => {
             this.tableData.push(response.data.storeOrder[element]);
           });
+          this.tableData.reverse()
           // this.tableDataCompleteOrder = true;
         });
     },
@@ -386,6 +387,7 @@ export default {
           Object.keys(response.data.order).forEach(element => {
             this.tableDataPending.push(response.data.order[element]);
           });
+          this.tableDataPending.reverse()
         });
     },
     retrieveProcess() {
@@ -404,6 +406,7 @@ export default {
           Object.keys(response.data.storeOrder).forEach(element => {
             this.tableProcess.push(response.data.storeOrder[element]);
           });
+          this.tableProcess.reverse()
         });
     },
     retrieveCancelled() {
@@ -422,6 +425,7 @@ export default {
           Object.keys(response.data.order).forEach(element => {
             this.tableCancelled.push(response.data.order[element]);
           });
+          this.tableCancelled.reverse()
         });
     },
     retrieveAddOns() {

@@ -76,6 +76,11 @@ class AddCategoryController extends Controller
         $addCategory = AddCategory::orderBy('productCategory','ASC')->get();
         return response()->json(compact('addCategory'));
     }
+
+    public function retrieveCategoryById(Request $request){
+        $addCategory = AddCategory::orderBy('id','ASC')->get();
+        return response()->json(compact('addCategory'));
+    }
     
     public function deleteCategory(Request $request){
         $addCategory = AddCategory::firstOrCreate(['id' => $request->id]);

@@ -112,6 +112,18 @@ class StoreCheckoutsController extends Controller
         });
         return response()->json(compact('storeOrder'));
     }
+
+    public function retrieveChosenSales(Request $request){
+        $storeOrder = StoreOrder::with('orderProduct')
+        ->with('sameOrder')->with('getCheckouts')
+        ->where('status', 'complete')->where('deleted_at', null)
+        ->whereBetween(DB::raw('DATE(created_at)'), array($request->start, $request->end))->get()
+        ->groupBy(function($item)
+        {
+          return $item->created_at->format('d-M-y');
+        });
+        return response()->json(compact('storeOrder'));
+    }
     
     public function retrieveDailySales(Request $request)
     {

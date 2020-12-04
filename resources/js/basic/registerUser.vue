@@ -382,7 +382,8 @@ export default {
         this.errorMessage12 === null &&
         this.errorMessage13 === null &&
         this.errorMessage14 === null &&
-        this.errorMessage15 === null
+        this.errorMessage15 === null &&
+        this.errorMessage16 === null
       ) {
         this.$axios
           .post(AUTH.url + "register", parameter)
@@ -503,7 +504,7 @@ export default {
         this.errorMessage6 = null;
         this.successMessage = null;
         if(this.confirmPass === ''){
-          this.errorMessage4 = "Confirm password is required";
+          this.errorMessage6 = "Confirm password is required";
         } else if (this.password.localeCompare(this.confirmPass) !== 0) {
           this.errorMessage6 = "Password did not match.";
         } else {
