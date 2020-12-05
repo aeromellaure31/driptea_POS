@@ -25,7 +25,7 @@
              <template v-slot:top>
                <v-toolbar class="mb-2" color="#ff5b04" dark flat>
                  <v-toolbar-title class="col pa-3 py-4 white--text">Orders in Cart</v-toolbar-title>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                 <v-text-field
+                 <!-- <v-text-field
                    v-model="search"
                    clearable
                    flat
@@ -34,7 +34,7 @@
                    class="mt-7"
                    label="Search"
                  ></v-text-field>
-                 <v-divider class="mx-4" vertical></v-divider>
+                 <v-divider class="mx-4" vertical></v-divider> -->
                </v-toolbar>
              </template>
  

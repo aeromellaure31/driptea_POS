@@ -954,30 +954,7 @@ var render = function() {
                                             },
                                             [_vm._v("Orders in Cart")]
                                           ),
-                                          _vm._v("      \n               "),
-                                          _c("v-text-field", {
-                                            staticClass: "mt-7",
-                                            attrs: {
-                                              clearable: "",
-                                              flat: "",
-                                              "solo-inverted": "",
-                                              "prepend-inner-icon":
-                                                "mdi-magnify",
-                                              label: "Search"
-                                            },
-                                            model: {
-                                              value: _vm.search,
-                                              callback: function($$v) {
-                                                _vm.search = $$v
-                                              },
-                                              expression: "search"
-                                            }
-                                          }),
-                                          _vm._v(" "),
-                                          _c("v-divider", {
-                                            staticClass: "mx-4",
-                                            attrs: { vertical: "" }
-                                          })
+                                          _vm._v("      \n               ")
                                         ],
                                         1
                                       )
@@ -988,7 +965,7 @@ var render = function() {
                               ],
                               null,
                               false,
-                              3558984481
+                              3045837343
                             )
                           },
                           [
