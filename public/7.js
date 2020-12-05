@@ -441,6 +441,7 @@ __webpack_require__.r(__webpack_exports__);
     validate: function validate(input) {
       this.successMessage = null;
       var reqWhiteSpace = /\d/;
+      var reqSpace = /\s/;
       var specialChar = /^[A-Za-z0-9 ]+$/;
 
       if (input === "firstname") {
@@ -472,16 +473,16 @@ __webpack_require__.r(__webpack_exports__);
       } else if (input === "username") {
         this.errorMessage14 = null;
 
-        if (reqWhiteSpace.test(this.username)) {
+        if (reqSpace.test(this.username)) {
           this.errorMessage14 = "Username should not contain a space.";
         } else if (this.username === "") {
-          this.errorMessage15 = "Username is required.";
+          this.errorMessage14 = "Username is required.";
         } else if (this.username.length < 6) {
-          this.errorMessage16 = "Username must be atleast 6 characters";
+          this.errorMessage14 = "Username must be atleast 6 characters";
         } else {
           this.errorMessage14 = null;
-          this.errorMessage15 = null;
-          this.errorMessage16 = null;
+          this.errorMessage14 = null;
+          this.errorMessage14 = null;
         }
       } else if (input === "email") {
         this.errorMessage3 = null;
