@@ -544,7 +544,8 @@ export default {
                         this.error = 'All data is required'
                     }
                 }else{
-                    if(this.getSubTotal() > 0 && this.fee !== '' && this.convertTotalPrice() >= 0){
+                    console.log('asdfasfsafsadf', this.getSubTotal, this.convertTotalPrice())
+                    if(parseInt(this.getSubTotal()) > 0 && this.fee !== '' && parseInt(this.convertTotalPrice()) >= 0){
                         this.error = null
                         this.checkoutMethod()
                     }else{
