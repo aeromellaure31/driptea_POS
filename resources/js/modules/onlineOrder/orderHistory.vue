@@ -38,7 +38,7 @@
                            <td>{{getProduct(item)}}</td>
                            <td>{{item[0].get_checkouts[0].total}}</td>
                            <td>
-                               <button class="btn btn-primary"  data-toggle="modal" data-target="#myModal" @click="viewOrder(item)">View</button>
+                               <button class="btn btn-primary"  data-toggle="modal" data-target="#myModal" @click="viewOrder(item, 'Completed Order')">View</button>
                            </td>
                        </tr>
                    </tbody>
@@ -72,7 +72,7 @@
                       <td>₱ 50.00</td>
                       <td>₱ {{getTotal(items)}}.00</td>
                       <td>
-                          <button class="btn btn-primary"  data-toggle="modal" data-target="#myModal" @click="viewOrder(items)">View</button>
+                          <button class="btn btn-primary"  data-toggle="modal" data-target="#myModal" @click="viewOrder(items, 'Pending Order')">View</button>
                       </td>
                     </tr>
                   </tbody>
@@ -105,7 +105,7 @@
                       <td>₱ 50.00</td>
                       <td>₱ {{getTotal(items)}}.00</td>
                       <td>
-                          <button class="btn btn-primary"  data-toggle="modal" data-target="#myModal" @click="viewOrder(items)">View</button>
+                          <button class="btn btn-primary"  data-toggle="modal" data-target="#myModal" @click="viewOrder(items, 'Processing Order')">View</button>
                       </td>
                     </tr>
                   </tbody>
@@ -138,7 +138,7 @@
                       <td>₱ 50.00</td>
                       <td>₱ {{getTotal(items)}}.00</td>
                       <td>
-                          <button class="btn btn-primary"  data-toggle="modal" data-target="#myModal" @click="viewOrder(items)">View</button>
+                          <button class="btn btn-primary"  data-toggle="modal" data-target="#myModal" @click="viewOrder(items, 'Cancelled Order')">View</button>
                       </td>
                     </tr>
                   </tbody>
@@ -156,7 +156,7 @@
                             <template v-slot:top>
                             <center>
                                 <v-toolbar class="mb-2" color="#ff5b04" dark flat>
-                                    <v-toolbar-title class="col pa-3 py-4 white--text">Completed Order</v-toolbar-title>
+                                    <v-toolbar-title class="col pa-3 py-4 white--text">{{tableName}}</v-toolbar-title>
                                 </v-toolbar>
                             </center>
                             </template>
@@ -250,7 +250,8 @@ export default {
       showOrderData: null,
       addOnsData: null,
       cupData: null,
-      saveItem: null
+      saveItem: null,
+      tableName: ''
     };
   },
   mounted() {
@@ -454,9 +455,10 @@ export default {
       });
       return storeAddOns;
     },
-    viewOrder(item) {
-        this.saveItem = item
-        this.showOrderData = item
+    viewOrder(item, param) {
+      this.tableName = param
+      this.saveItem = item
+      this.showOrderData = item
     },
   }
 };

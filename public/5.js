@@ -318,7 +318,8 @@ __webpack_require__.r(__webpack_exports__);
       showOrderData: null,
       addOnsData: null,
       cupData: null,
-      saveItem: null
+      saveItem: null,
+      tableName: ''
     };
   },
   mounted: function mounted() {
@@ -539,7 +540,8 @@ __webpack_require__.r(__webpack_exports__);
       });
       return storeAddOns;
     },
-    viewOrder: function viewOrder(item) {
+    viewOrder: function viewOrder(item, param) {
+      this.tableName = param;
       this.saveItem = item;
       this.showOrderData = item;
     }
@@ -857,7 +859,10 @@ var render = function() {
                                   },
                                   on: {
                                     click: function($event) {
-                                      return _vm.viewOrder(item)
+                                      return _vm.viewOrder(
+                                        item,
+                                        "Completed Order"
+                                      )
                                     }
                                   }
                                 },
@@ -942,7 +947,10 @@ var render = function() {
                                   },
                                   on: {
                                     click: function($event) {
-                                      return _vm.viewOrder(items)
+                                      return _vm.viewOrder(
+                                        items,
+                                        "Pending Order"
+                                      )
                                     }
                                   }
                                 },
@@ -1026,7 +1034,10 @@ var render = function() {
                                   },
                                   on: {
                                     click: function($event) {
-                                      return _vm.viewOrder(items)
+                                      return _vm.viewOrder(
+                                        items,
+                                        "Processing Order"
+                                      )
                                     }
                                   }
                                 },
@@ -1111,7 +1122,10 @@ var render = function() {
                                   },
                                   on: {
                                     click: function($event) {
-                                      return _vm.viewOrder(items)
+                                      return _vm.viewOrder(
+                                        items,
+                                        "Cancelled Order"
+                                      )
                                     }
                                   }
                                 },
@@ -1174,7 +1188,7 @@ var render = function() {
                                           staticClass:
                                             "col pa-3 py-4 white--text"
                                         },
-                                        [_vm._v("Completed Order")]
+                                        [_vm._v(_vm._s(_vm.tableName))]
                                       )
                                     ],
                                     1
