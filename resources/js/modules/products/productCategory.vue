@@ -346,7 +346,7 @@ export default {
                     if(res.data.status){
                         AUTH.deauthenticate()
                     }
-                    this.notAvailable = res.data.order[0].ifNotAvailable
+                    this.notAvailable = res.data.order[0] ? res.data.order[0].ifNotAvailable : ''
                     this.tableData = res.data.order
                     this.fee = 50
                     this.feeDeliver = "        ₱   " + parseInt(50).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
@@ -431,6 +431,7 @@ export default {
                 status: 'complete'
             }
             this.$axios.post(AUTH.url + 'updateStatusOrder', params, AUTH.config).then(res => {
+                this.loadingShow = true
                 if(res.data.status){
                     AUTH.deauthenticate()
                 }
@@ -446,6 +447,7 @@ export default {
                     status: this.customerType === 'online' || this.customerType === 'fb' ? 'processing' : 'complete'
                 }
                 this.$axios.post(AUTH.url + 'addCheckout', params, AUTH.config).then(res => {
+                    this.loadingShow = true
                     if(res.data.status){
                         AUTH.deauthenticate()
                     }
@@ -467,6 +469,7 @@ export default {
                         usedCupsOverDose: over
                     }
                     this.$axios.post(AUTH.url + 'updateRemainingCups', param, AUTH.config).then(response => {
+                        this.loadingShow = true
                         if(response.data.status){
                             AUTH.deauthenticate()
                         }
@@ -506,7 +509,7 @@ export default {
                         AUTH.deauthenticate()
                     }
                     swal({
-                        title: "Successfully Cancelled",
+                        title: "Order successfully Cancelled",
                         icon: "success",
                     }).then(e => {
                         this.retrieveProduct()

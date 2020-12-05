@@ -187,7 +187,7 @@
           <v-btn icon style="margin-right: 2%;" @click="redirect('/onlineDashboard')">
               <v-icon>mdi-home</v-icon>
           </v-btn>
-          <v-btn icon @click="redirect('/customerCart')" style="margin-right: 2%;">
+          <v-btn icon @click="redirect('/customerCart'), onlineCount = 0" style="margin-right: 2%;">
               <v-icon>mdi-cart</v-icon>
               <span style="margin-left: -3%;">Cart</span>
               <span style="background-color: red; color: white; border-radius: 20%; font-size: 10px; margin-left: -10%; margin-top: -20%;">{{onlineCount > 0 ? 'New' : ''}}</span>

@@ -42,13 +42,6 @@
             <v-date-picker v-model="dates" range></v-date-picker>
           </v-menu>
           <v-btn color="success" class="mr-6" @click="searchData">Find</v-btn>
-
-          <VueJsonToCsv :json-data="toCsv" :csv-title="'myCups'">
-            <v-btn color="success" class="mr-6">
-              Export
-              <i class="mdi mdi-export-variant" aria-hidden="true"></i>
-            </v-btn>
-          </VueJsonToCsv>
         </v-toolbar>
       </template>
       <template v-slot:item.created_at="{ item }">
@@ -58,6 +51,64 @@
         <span>{{getTotal(item)}}</span>
       </template>
     </v-data-table>
+
+    <!-- Modal For exporting -->
+
+    <template>
+      <v-row justify="center">
+        <v-dialog v-model="dialogForCupSize" persistent max-width="1000px">
+          <v-card>
+            <div class="modal-header">
+              <span class="headline">Export as Excel</span>
+              <button type="button" class="close" @click="close">&times;</button>
+              <br>
+            </div>
+            <v-card-text>
+              <div class="my-custom-scrollbar">
+                <v-toolbar-title
+                  class="col pa-3 py-4 black--text"
+                >Cups Inventory ({{dates[0]}} ~ {{dates[1] ? dates[1] : dates[0]}})</v-toolbar-title>
+                <v-data-table
+                  :headers="headersForCup"
+                  :items="modalData"
+                  :search="search"
+                  :items-per-page="5"
+                  class="elevation-3"
+                >
+                  <template v-slot:item.created_at="{ item }">
+                    <span>{{getDate(item.created_at)}}</span>
+                  </template>
+                  <template v-slot:item.totalIncoming="{ item }">
+                    <span>{{getTotal(item)}}</span>
+                  </template>
+                  <template v-slot:top>
+                    <v-toolbar class="mb-2" color="#ff5b04" dark flat>
+                      <v-tabs dark background-color="#ff5b04" fixed-tabs>
+                        <v-tabs-slider></v-tabs-slider>
+                        <v-tab @click="tableForUpcomingCupsModal">Incoming Cups</v-tab>
+                        <v-tab @click="tableForCupsOnrackModal">Cups Onrack</v-tab>
+                        <v-tab @click="tableForUsedCupsModal">Used Cups</v-tab>
+                        <v-tab @click="tableForRemainingCupsModal">Remaining Cups</v-tab>
+                      </v-tabs>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <VueJsonToCsv :json-data="toCsv" F :csv-title="formatDate + ' Sales'">
+                        <v-btn color="success" class="mr-6">
+                          Export
+                          <i class="mdi mdi-export-variant" aria-hidden="true"></i>
+                        </v-btn>
+                      </VueJsonToCsv>
+                    </v-toolbar>
+                  </template>
+                </v-data-table>
+              </div>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-row>
+    </template>
+
     <loading v-if="loadingShow"></loading>
   </div>
 </template>
@@ -69,13 +120,17 @@ import moment from "moment";
 export default {
   data() {
     return {
+      formatDate: moment(new Date()).format("MM/DD/YYYY Hh:mm"),
+      modalData: [],
       dataInDB: [],
       search: null,
       cupName: null,
       headersForCup: [],
       loadingShow: false,
       toCsv: [],
-      dates: [new Date().toISOString().substr(0, 10), ],
+      dialogForCupSize: false,
+
+      dates: []
     };
   },
   components: {
@@ -83,7 +138,7 @@ export default {
     loading
   },
   mounted() {
-    this.tableForUpcomingCups();
+    this.tableForAllCups();
   },
   computed: {
     dateRangeText() {
@@ -92,11 +147,46 @@ export default {
   },
 
   methods: {
+    close() {
+      this.dialogForCupSize = false;
+      this.tableForAllCups();
+    },
     searchData() {
-
-      this.toCsv=[],
+      (this.toCsv = []),
+        (this.dialogForCupSize = true),
+        this.tableForUpcomingCups();
+    },
+    tableForCupsOnrackModal() {
+      this.tableForCupsOnrack();
+    },
+    tableForUpcomingCupsModal() {
       this.tableForUpcomingCups();
-      
+    },
+    tableForUsedCupsModal() {
+      this.tableForUsedCups();
+    },
+    tableForRemainingCupsModal() {
+      this.tableForRemainingCups();
+    },
+    tableForAllCups() {
+      this.loadingShow = true;
+      this.$axios
+        .post(AUTH.url + "retrieveCupSize", {}, AUTH.config)
+        .then(response => {
+          if (response.data.status) {
+            AUTH.deauthenticate();
+          }
+          this.dataInDB = response.data.quantityCupsInDB.reverse();
+          this.headersForCup = [
+            { text: "Date", value: "created_at" },
+            { text: "Low Dose (LD)", value: "onRockLowDose" },
+            { text: "High Dose (HD)", value: "onRockHighDose" },
+            { text: "Over Dose (OD)", value: "onRockOverDose" },
+            { text: "Total", value: "totalIncoming" }
+          ];
+          this.cupName = "Cups Onrack";
+          this.loadingShow = false;
+        });
     },
     getTotal(item) {
       if (this.cupName === "Upcoming Cups") {
@@ -122,19 +212,23 @@ export default {
     },
     tableForUpcomingCups() {
       this.loadingShow = true;
+      let params = {
+        dateFrom: this.dates[0] > this.dates[1] ? this.dates[1] : this.dates[0],
+        dateTo: this.dates[1]
+          ? this.dates[0] > this.dates[1]
+            ? this.dates[0]
+            : this.dates[1]
+          : this.dates[0]
+      };
       this.$axios
-        .post(
-          AUTH.url + "retrieveCupForInventory",
-          { dateFrom: this.dates[0], dateTo: this.dates[1] },
-          AUTH.config
-        )
+        .post(AUTH.url + "retrieveCupForInventory", params, AUTH.config)
         .then(response => {
           console.log(this.dates[0], this.dates[1]);
 
           if (response.data.status) {
             AUTH.deauthenticate();
           }
-          this.dataInDB = response.data.quantityCupsInDB.reverse();
+          this.modalData = response.data.quantityCupsInDB.reverse();
           response.data.quantityCupsInDB.forEach(element => {
             let thisDate = this.getDate(element.created_at);
             this.toCsv.push({
@@ -160,13 +254,13 @@ export default {
                 element.usedCupsLowDose +
                 element.usedCupsHighDose +
                 element.usedCupsOverDose,
-              "Remaining Cups Low Dose": element.incomingLowDose,
-              "Remaining Cups High Dose": element.incomingHighDose,
-              "Remaining Cups Over Dose": element.incomingOverDose,
+              "Remaining Cups Low Dose": element.remainingLowDose,
+              "Remaining Cups High Dose": element.remainingHighDose,
+              "Remaining Cups Over Dose": element.remainingOverDose,
               "Total Remaining Cups":
-                element.incomingLowDose +
-                element.incomingHighDose +
-                element.incomingOverDose
+                element.remainingLowDose +
+                element.remainingHighDose +
+                element.remainingOverDose
             });
           });
           this.headersForCup = [
@@ -182,13 +276,21 @@ export default {
     },
     tableForCupsOnrack() {
       this.loadingShow = true;
+      let params = {
+        dateFrom: this.dates[0] > this.dates[1] ? this.dates[1] : this.dates[0],
+        dateTo: this.dates[1]
+          ? this.dates[0] > this.dates[1]
+            ? this.dates[0]
+            : this.dates[1]
+          : this.dates[0]
+      };
       this.$axios
-        .post(AUTH.url + "retrieveCupForInventory", { dateFrom: this.dates[0], dateTo: this.dates[1] }, AUTH.config)
+        .post(AUTH.url + "retrieveCupForInventory", params, AUTH.config)
         .then(response => {
           if (response.data.status) {
             AUTH.deauthenticate();
           }
-          this.dataInDB = response.data.quantityCupsInDB.reverse();
+          this.modalData = response.data.quantityCupsInDB.reverse();
           this.headersForCup = [
             { text: "Date", value: "created_at" },
             { text: "Low Dose (LD)", value: "onRockLowDose" },
@@ -202,13 +304,21 @@ export default {
     },
     tableForUsedCups() {
       this.loadingShow = true;
+      let params = {
+        dateFrom: this.dates[0] > this.dates[1] ? this.dates[1] : this.dates[0],
+        dateTo: this.dates[1]
+          ? this.dates[0] > this.dates[1]
+            ? this.dates[0]
+            : this.dates[1]
+          : this.dates[0]
+      };
       this.$axios
-        .post(AUTH.url + "retrieveCupForInventory", { dateFrom: this.dates[0], dateTo: this.dates[1] }, AUTH.config)
+        .post(AUTH.url + "retrieveCupForInventory", params, AUTH.config)
         .then(response => {
           if (response.data.status) {
             AUTH.deauthenticate();
           }
-          this.dataInDB = response.data.quantityCupsInDB.reverse();
+          this.modalData = response.data.quantityCupsInDB.reverse();
           this.headersForCup = [
             { text: "Date", value: "created_at" },
             { text: "Low Dose (LD)", value: "usedCupsLowDose" },
@@ -222,13 +332,21 @@ export default {
     },
     tableForRemainingCups() {
       this.loadingShow = true;
+      let params = {
+        dateFrom: this.dates[0] > this.dates[1] ? this.dates[1] : this.dates[0],
+        dateTo: this.dates[1]
+          ? this.dates[0] > this.dates[1]
+            ? this.dates[0]
+            : this.dates[1]
+          : this.dates[0]
+      };
       this.$axios
-        .post(AUTH.url + "retrieveCupForInventory", { dateFrom: this.dates[0], dateTo: this.dates[1] }, AUTH.config)
+        .post(AUTH.url + "retrieveCupForInventory", params, AUTH.config)
         .then(response => {
           if (response.data.status) {
             AUTH.deauthenticate();
           }
-          this.dataInDB = response.data.quantityCupsInDB.reverse();
+          this.modalData = response.data.quantityCupsInDB.reverse();
           this.headersForCup = [
             { text: "Date", value: "created_at" },
             { text: "Low Dose (LD)", value: "remainingLowDose" },

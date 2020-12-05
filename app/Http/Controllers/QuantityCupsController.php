@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\QuantityCups;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class QuantityCupsController extends Controller
 {
@@ -90,7 +91,7 @@ class QuantityCupsController extends Controller
         return response()->json(compact('quantityCupsInDB'));
     }
 
-    public function retrieveAddedCupSize(Request $request){
+    public function retrieveCupForInventory(Request $request){
         $quantityCupsInDB = QuantityCups::whereBetween(DB::raw('DATE(created_at)'), array($request->dateFrom, $request->dateTo))->get();
         return response()->json(compact('quantityCupsInDB'));
     }

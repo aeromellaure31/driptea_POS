@@ -81,7 +81,7 @@
                            <td style="width: 13%;">
                                <v-icon @click="toComplete(item)">mdi-check</v-icon>
                                <v-icon medium data-toggle="modal" data-target="#myModal" @click="viewOrder(item), title = 'Processing Orders'">mdi-eye</v-icon>
-                               <v-icon medium @click="deleteOrder(item, 'processing')">mdi-window-close</v-icon>
+                               <!-- <v-icon medium @click="deleteOrder(item, 'processing')">mdi-window-close</v-icon> -->
                            </td>
                        </tr>
                    </tbody>
@@ -275,21 +275,20 @@ export default {
             }
         });
         if(param === 'pending'){
+            this.loadingShow = true
             let params = {
-                id: id
+                id: id,
+                status: 'cancel'
             }
-            this.loadingShow = true;
-            this.$axios
-                .post(AUTH.url + "deleteManyOrder", params, AUTH.config)
-                .then(response => {
-                if (response.data.status) {
-                    AUTH.deauthenticate();
+            this.$axios.post(AUTH.url + 'updateCancelOrder', params, AUTH.config).then(res => {
+                this.loadingShow = false
+                if(res.data.status){
+                    AUTH.deauthenticate()
                 }
-                this.loadingShow = false;
                 swal({
-                title: "You have successfully deleted the order",
-                icon: "success"
-                }).then(el => {
+                    title: "Order successfully Cancelled",
+                    icon: "success",
+                }).then(e => {
                     this.retrievePending();
                     this.retrieve();
                     this.retrieveAddOns();
@@ -298,42 +297,42 @@ export default {
                     this.tableDataCompleteOrder = false
                     this.tableDataPendingOrders = true
                     this.tableProcessOrders = false
-                });
-            });
-        }else{
-            let par = {
-                usedCupsLowDose: low,
-                usedCupsHighDose: high,
-                usedCupsOverDose: over
-            }
-            this.$axios.post(AUTH.url + 'updateDeletedCups', par, AUTH.config).then(response => {
-                let params = {
-                    id: id,
-                    checkoutId: item[0].storeCheckoutsId
-                }
-                this.loadingShow = true;
-                this.$axios
-                    .post(AUTH.url + "deleteCheckout", params, AUTH.config)
-                    .then(response => {
-                    if (response.data.status) {
-                        AUTH.deauthenticate();
-                    }
-                    this.loadingShow = false;
-                    swal({
-                    title: "You have successfully deleted the order",
-                    icon: "success"
-                    }).then(el => {
-                        this.retrievePending();
-                        this.retrieve();
-                        this.retrieveAddOns();
-                        this.retrieveCupType();
-                        this.retrieveProcessed();
-                        this.tableDataCompleteOrder = false
-                        this.tableDataPendingOrders = false
-                        this.tableProcessOrders = true
-                    });
-                });
+                })
             })
+        }else{
+            // let par = {
+            //     usedCupsLowDose: low,
+            //     usedCupsHighDose: high,
+            //     usedCupsOverDose: over
+            // }
+            // this.$axios.post(AUTH.url + 'updateDeletedCups', par, AUTH.config).then(response => {
+            //     let params = {
+            //         id: id,
+            //         checkoutId: item[0].storeCheckoutsId
+            //     }
+            //     this.loadingShow = true;
+            //     this.$axios
+            //         .post(AUTH.url + "deleteCheckout", params, AUTH.config)
+            //         .then(response => {
+            //         if (response.data.status) {
+            //             AUTH.deauthenticate();
+            //         }
+            //         this.loadingShow = false;
+            //         swal({
+            //         title: "You have successfully deleted the order",
+            //         icon: "success"
+            //         }).then(el => {
+            //             this.retrievePending();
+            //             this.retrieve();
+            //             this.retrieveAddOns();
+            //             this.retrieveCupType();
+            //             this.retrieveProcessed();
+            //             this.tableDataCompleteOrder = false
+            //             this.tableDataPendingOrders = false
+            //             this.tableProcessOrders = true
+            //         });
+            //     });
+            // })
         }
     },
     getCup(item) {
@@ -342,11 +341,11 @@ export default {
             if (item === el.cupTypeName) {
                 if (parseInt(el.inputCupOnlinePrice) === 0) {
                     cup = item;
-            } else {
-                cup = item + "(+" + el.inputCupOnlinePrice + ".00)";
+                } else {
+                    cup = item + "(+" + el.inputCupOnlinePrice + ".00)";
+                }
             }
-        }
-    });
+        });
       return cup;
     },
     retrieveCupType() {
@@ -360,43 +359,43 @@ export default {
         });
     },
     getDate(item) {
-      return moment(item.updated_at).format("MM/DD/YYYY");
+        return moment(item.updated_at).format("MM/DD/YYYY");
     },
     getTotal(item) {
-      let total = 0;
-      let index = item.length;
-      item.forEach(el => {
-        if (item.indexOf(el) >= index - 1) {
-          total += el.subTotal;
-        } else {
-          total += el.subTotal;
-        }
-      });
-      return total;
+        let total = 0;
+        let index = item.length;
+        item.forEach(el => {
+            if (item.indexOf(el) >= index - 1) {
+                total += el.subTotal;
+            } else {
+                total += el.subTotal;
+            }
+        });
+        return total;
     },
     getProduct(item) {
-      let product = "";
-      let index = item.length;
-      item.forEach(el => {
-        if (item.indexOf(el) >= index - 1) {
-          product += el.order_product[0].productName;
-        } else {
-          product += el.order_product[0].productName + ", ";
-        }
-      });
-      return product;
+        let product = "";
+        let index = item.length;
+        item.forEach(el => {
+            if (item.indexOf(el) >= index - 1) {
+                product += el.order_product[0].productName;
+            } else {
+                product += el.order_product[0].productName + ", ";
+            }
+        });
+        return product;
     },
     getSizePrice() {
-      if (this.size === "highDose") {
-        this.sizeName = "High Dose";
-        this.basePrice = this.highPrice;
-      } else if (this.size === "overDose") {
-        this.sizeName = "Over Dose";
-        this.basePrice = this.overPrice;
-      } else if (this.size === "lowDose") {
-        this.sizeName = "Low Dose";
-        this.basePrice = this.price;
-      }
+        if (this.size === "highDose") {
+            this.sizeName = "High Dose";
+            this.basePrice = this.highPrice;
+        } else if (this.size === "overDose") {
+            this.sizeName = "Over Dose";
+            this.basePrice = this.overPrice;
+        } else if (this.size === "lowDose") {
+            this.sizeName = "Low Dose";
+            this.basePrice = this.price;
+        }
     },
     toComplete(item){
         swal({
@@ -480,7 +479,7 @@ export default {
             Object.keys(response.data.order).forEach(element => {
                 this.tableDataPending.push(response.data.order[element]);
             });
-            this.tableDataPendingOrders.reverse()
+            this.tableDataPending.reverse()
         });
     },
     retrieveAddOns() {

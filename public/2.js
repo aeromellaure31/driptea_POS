@@ -356,20 +356,22 @@ __webpack_require__.r(__webpack_exports__);
       });
 
       if (param === 'pending') {
-        var params = {
-          id: id
-        };
         this.loadingShow = true;
-        this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "deleteManyOrder", params, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
-          if (response.data.status) {
+        var params = {
+          id: id,
+          status: 'cancel'
+        };
+        this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + 'updateCancelOrder', params, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (res) {
+          _this2.loadingShow = false;
+
+          if (res.data.status) {
             _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
           }
 
-          _this2.loadingShow = false;
           sweetalert__WEBPACK_IMPORTED_MODULE_6___default()({
-            title: "You have successfully deleted the order",
+            title: "Order successfully Cancelled",
             icon: "success"
-          }).then(function (el) {
+          }).then(function (e) {
             _this2.retrievePending();
 
             _this2.retrieve();
@@ -385,45 +387,39 @@ __webpack_require__.r(__webpack_exports__);
             _this2.tableProcessOrders = false;
           });
         });
-      } else {
-        var par = {
-          usedCupsLowDose: low,
-          usedCupsHighDose: high,
-          usedCupsOverDose: over
-        };
-        this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + 'updateDeletedCups', par, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
-          var params = {
-            id: id,
-            checkoutId: item[0].storeCheckoutsId
-          };
-          _this2.loadingShow = true;
-
-          _this2.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "deleteCheckout", params, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
-            if (response.data.status) {
-              _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
-            }
-
-            _this2.loadingShow = false;
-            sweetalert__WEBPACK_IMPORTED_MODULE_6___default()({
-              title: "You have successfully deleted the order",
-              icon: "success"
-            }).then(function (el) {
-              _this2.retrievePending();
-
-              _this2.retrieve();
-
-              _this2.retrieveAddOns();
-
-              _this2.retrieveCupType();
-
-              _this2.retrieveProcessed();
-
-              _this2.tableDataCompleteOrder = false;
-              _this2.tableDataPendingOrders = false;
-              _this2.tableProcessOrders = true;
-            });
-          });
-        });
+      } else {// let par = {
+        //     usedCupsLowDose: low,
+        //     usedCupsHighDose: high,
+        //     usedCupsOverDose: over
+        // }
+        // this.$axios.post(AUTH.url + 'updateDeletedCups', par, AUTH.config).then(response => {
+        //     let params = {
+        //         id: id,
+        //         checkoutId: item[0].storeCheckoutsId
+        //     }
+        //     this.loadingShow = true;
+        //     this.$axios
+        //         .post(AUTH.url + "deleteCheckout", params, AUTH.config)
+        //         .then(response => {
+        //         if (response.data.status) {
+        //             AUTH.deauthenticate();
+        //         }
+        //         this.loadingShow = false;
+        //         swal({
+        //         title: "You have successfully deleted the order",
+        //         icon: "success"
+        //         }).then(el => {
+        //             this.retrievePending();
+        //             this.retrieve();
+        //             this.retrieveAddOns();
+        //             this.retrieveCupType();
+        //             this.retrieveProcessed();
+        //             this.tableDataCompleteOrder = false
+        //             this.tableDataPendingOrders = false
+        //             this.tableProcessOrders = true
+        //         });
+        //     });
+        // })
       }
     },
     getCup: function getCup(item) {
@@ -587,7 +583,7 @@ __webpack_require__.r(__webpack_exports__);
           _this7.tableDataPending.push(response.data.order[element]);
         });
 
-        _this7.tableDataPendingOrders.reverse();
+        _this7.tableDataPending.reverse();
       });
     },
     retrieveAddOns: function retrieveAddOns() {
@@ -1102,22 +1098,6 @@ var render = function() {
                                     }
                                   },
                                   [_vm._v("mdi-eye")]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "v-icon",
-                                  {
-                                    attrs: { medium: "" },
-                                    on: {
-                                      click: function($event) {
-                                        return _vm.deleteOrder(
-                                          item,
-                                          "processing"
-                                        )
-                                      }
-                                    }
-                                  },
-                                  [_vm._v("mdi-window-close")]
                                 )
                               ],
                               1

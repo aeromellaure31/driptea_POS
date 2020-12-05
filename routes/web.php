@@ -56,6 +56,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
     Route::post('addOrder','App\Http\Controllers\OrderController@addOrder');
     Route::post('onlineUpdate','App\Http\Controllers\OrderController@onlineUpdate');
+    Route::post('updateCancelOrder','App\Http\Controllers\OrderController@updateCancelOrder');
     Route::post('updateStatusOrder','App\Http\Controllers\OrderController@updateStatusOrder');
     Route::post('updateOne','App\Http\Controllers\OrderController@updateOne');
     Route::post('updateOnlineStatus','App\Http\Controllers\OrderController@updateOnlineStatus');
@@ -121,6 +122,6 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('updateRemainingCups','App\Http\Controllers\QuantityCupsController@updateRemainingCups');
     Route::post('updateDeletedCups','App\Http\Controllers\QuantityCupsController@updateDeletedCups');
     Route::post('retrieveCupSize','App\Http\Controllers\QuantityCupsController@retrieveCupSize');
-    Route::post('retrieveCupForInventory','App\Http\Controllers\QuantityCupsController@retrieveAddedCupSize');
+    Route::post('retrieveCupForInventory','App\Http\Controllers\QuantityCupsController@retrieveCupForInventory');
 });
  

@@ -123,6 +123,16 @@ class OrderController extends Controller
         return response()->json(['success' => 'successfully updated!']);
     }
 
+    public function updateCancelOrder(Request $request){
+        foreach ($request['id'] as $value) {
+            $ord = Order::firstOrCreate(['id' => $value]);
+            $ord->status = $request['status'];
+            $ord->save();
+        }
+        event(new pusherEvent($request['status']));
+        return response()->json(['success' => 'successfully updated!']);
+    }
+
     public function retrieveWholeOrder(Request $request){
         $order = Order::with('orderProduct')->find($request->id)->get();
         $addOns = AddOns::where('orderId', $request->id)->get(['addOns']);
