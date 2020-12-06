@@ -85,7 +85,7 @@
               <!-- ang Click kay wala pay nay method -->
               <!-- <product ref="product"></product> -->
               <v-list-item
-                v-for="(item, index) in account"
+                v-for="(item, index) in accountAdmin"
                 :key="index"
                 @click="redirect(item.route+admin)"
               >
@@ -301,6 +301,10 @@ export default {
         title: "Our Contact info",
         active: false
       }
+    ],
+    accountAdmin: [
+      { icon: "mdi-account", text: "My Account", route: "/personalInfo/" },
+      { icon: "mdi-logout", text: "Logout", route: "/logout/" }
     ],
     account: [
       { icon: "mdi-account", text: "My Account", route: "/personalInfo/" },

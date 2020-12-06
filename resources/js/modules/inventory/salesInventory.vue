@@ -82,48 +82,23 @@
                 <v-dialog v-model="choosenDate" persistent max-width="1000px">
                     <v-card>
                         <div class="modal-header">
-                          <span class="headline">Export as Excel</span>
-                          <button type="button" class="close" @click="choosenDate = false">&times;</button><br>
+                            <span class="headline">Export as Excel</span>
+                            <button type="button" class="close" @click="choosenDate = false">&times;</button><br>
                         </div>
                         <v-card-text>
-                            <div class="my-custom-scrollbar">
-                                <v-simple-table :items-per-page="5" class="elevation-2">
-                                    <template v-slot:top>
-                                        <v-toolbar class="mb-2" color="#ff5b04" dark flat>
-                                            <v-toolbar-title class="col pa-3 py-4 white--text">Sales Inventory ({{dates[0]}} ~ {{dates[1] ? dates[1] : dates[0]}})</v-toolbar-title>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <VueJsonToCsv
-                                            :json-data="toDownload"
-                                            :csv-title="formatDate + ' Sales'"
-                                            >
-                                                <v-btn color="success" class="mr-6" @click="excelDownload()">
-                                                    Export <i class="mdi mdi-export-variant" aria-hidden="true"></i>
-                                                </v-btn>
-                                            </VueJsonToCsv>
-                                        </v-toolbar>
-                                    </template>
-                                    <thead >
-                                        <tr class="header">
-                                            <th scope="col">Date</th>
-                                            <th scope="col" v-for="(item, index) in categoryData" :key="index">{{item.productCategory}}</th>
-                                            <th scope="col">Add Ons</th>
-                                            <th scope="col">Delivery Fee</th>
-                                            <th scope="col">Cup Type</th>
-                                            <th scope="col">Total Sales</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr v-for="(item, index) in newDateStorage" :key="index">
-                                            <td>{{getDate2(index)}}</td>
-                                            <td scope="row" v-for="(i, ind) in item" :key="ind">{{format(i.value)}}</td>
-                                            <td>₱ {{getAddOns2(index)}}</td>
-                                            <td>₱ {{getDeliveryFee2(index)}}</td>
-                                            <td>₱ {{getCupType2(index)}}</td>
-                                            <td>₱ {{getTotal2(index)}}</td>
-                                        </tr>
-                                    </tbody>
-                                </v-simple-table>
-                            </div>
+                            <ejs-grid ref='grid' id='Grid' :dataSource='toDownload' :toolbar='toolbarOptions' height='270px' :allowPaging='true' :allowExcelExport='true' :toolbarClick='toolbarClick'>
+                                <e-columns>
+                                    <e-column field='Date' headerText='Date' width=120></e-column>
+                                    <e-column field='Products' headerText='All Products' width=150></e-column>
+                                    <e-column field='Add_ons' headerText='Add-Ons' width=150></e-column>
+                                    <e-column field='DeliveryFee' headerText='Delivery Fee' width=150></e-column>
+                                    <e-column field='CupType' headerText='Cup Type' width=150></e-column>
+                                    <e-column field='TotalSales' headerText='Total Sales' width=150></e-column>
+                                </e-columns>
+                            </ejs-grid>
                         </v-card-text>
+                        <v-spacer></v-spacer>
+                        <h4 style="text-align: right; margin-right: 3%;">Total: ₱ {{overAllTotal}}</h4><br>
                         <v-spacer></v-spacer>
                     </v-card>
                 </v-dialog>
@@ -132,6 +107,7 @@
     </v-card>
 </template>
 <style scoped>
+@import url('https://cdn.syncfusion.com/ej2/material.css');
 .top{
     margin-top: 6%;
 }
@@ -155,10 +131,12 @@ import AUTH from '../../services/auth'
 import VueJsonToCsv from 'vue-json-to-csv'
 import loading from '../../basic/loading.vue';
 import empty from "../../basic/empty.vue";
+import { GridPlugin, Toolbar, ExcelExport } from "@syncfusion/ej2-vue-grids";
 import moment from 'moment'
 export default {
     data(){
         return{
+            toolbarOptions: ['ExcelExport'],
             formatDate: moment(new Date()).format('MM/DD/YYYY Hh:mm'),
             categoryData: [],
             search: '',
@@ -175,6 +153,8 @@ export default {
             dialogConfirmation: false,
             newDateStorage: [],
             dates: [new Date().toISOString().substr(0, 10), ],
+            overAllTotal: 0,
+            adminName: ''
         }
     },
     mounted(){
@@ -182,6 +162,10 @@ export default {
         this.retrieveCupType()
         this.retrieveSale()
         this.retrieveAddOns()
+        this.getAdmin()
+    },
+    provide: {
+        grid: [Toolbar, ExcelExport]
     },
     components: {
         VueJsonToCsv,
@@ -194,6 +178,34 @@ export default {
         },
     },
     methods:{
+        toolbarClick(args) {
+            if (args.item.id === 'Grid_excelexport') { // 'Grid_excelexport' -> Grid component id + _ + toolbar item name
+                let excelExportProperties = {
+                    fileName: this.formatDate + ' Sales.xlsx',
+                    header: {
+                        headerRows: 10,
+                        rows: [
+                            { cells: [{ colSpan: 6, value: "Driptea System", style: { fontColor: '#C67878', fontSize: 20, hAlign: 'Center', bold: true, } }] },
+                            { cells: [{ colSpan: 6, value: "A.C. Cortes Ave., Looc", style: { fontColor: '#C67878', fontSize: 15, hAlign: 'Center', bold: true, } }] },
+                            { cells: [{ colSpan: 6, value: "6014 Mandaue City, Philippine", style: { fontColor: '#C67878', fontSize: 15, hAlign: 'Center', bold: true, } }] },
+                            { cells: [{ colSpan: 6, value: "0917 329 7269", style: { fontColor: '#C67878', fontSize: 15, hAlign: 'Center', bold: true, } }] },
+                            { cells: [{ colSpan: 6, hyperlink: { target: 'https://www.facebook.com/driptealoocmandaue/', displayText: 'www.facebook.com/driptealoocmandaue' }, style: { hAlign: 'Center' } }] },
+                            { cells: [{ colSpan: 6, hyperlink: { target: 'samuelazurajr@gmail.com' }, style: { hAlign: 'Center' } }] },
+                            { cells:  [{ colSpan: 6, value: ""}]},
+                            { cells:  [{ colSpan: 2, value: "Download By: " + this.adminName, style: {fontSize: 15, hAlign: 'Left', bold: true, }},]},
+                            { cells:  [{ colSpan: 2, value: "Date Downloaded: " + moment(new Date()).format('MM/DD/YYYY'), style: {fontSize: 15, hAlign: 'Left', bold: true,} }]},
+                        ]
+                    },
+                    footer: {
+                        footerRows: 3,
+                        rows: [
+                            { cells: [{ colSpan: 6, value: ("Total Sales: " + this.overAllTotal), style: { hAlign: 'Center', bold: true } }] },
+                        ]
+                    }
+                };
+                this.$refs.grid.excelExport(excelExportProperties);
+            }
+        },
         showModal(){
             this.retrieveChoosen()
         },
@@ -201,6 +213,8 @@ export default {
             return '₱ ' + parseInt(item).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
         },
         excelDownload(){
+            this.overAllTotal = 0
+            this.toDownload = []
             this.newDateStorage.forEach((el, index) => {
                 var list = {
                     Date: '',
@@ -220,6 +234,22 @@ export default {
                 list.TotalSales = this.getTotal2(index)
                 list.Products = parseInt(list.Products).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
                 this.toDownload.push(list)
+                this.overAllTotal += parseInt(this.getTotal3(index))
+            })
+            this.overAllTotal = parseInt(this.overAllTotal).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
+            this.choosenDate = true
+        },
+        getAdmin(){
+            this.loadingShow = true
+            let params = {
+                uname: localStorage.getItem('adminId')
+            };
+            this.$axios.post(AUTH.url + "getUserData", params, AUTH.config).then(response => {
+                this.loadingShow = false
+                if(response.data.status){
+                    AUTH.deauthenticate()
+                }
+                this.adminName = response.data.userdata[0].fname + ' ' + response.data.userdata[0].lname
             })
         },
         getTotal(index){
@@ -243,6 +273,17 @@ export default {
                 }
             })
             return parseInt(amount).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
+        },
+        getTotal3(index){
+            let amount = 0
+            let id = 0
+            this.store2[index].forEach(el => {
+                if(el.get_checkouts[0].id !== id){
+                    id = el.get_checkouts[0].id
+                    amount +=  parseInt(el.get_checkouts[0].total)
+                }
+            })
+            return amount
         },
         getCupType(index){
             let amount = 0 
@@ -417,7 +458,7 @@ export default {
                     this.newDateStorage.push(storage)
                 })
                 if(this.newDateStorage.length > 0){
-                    this.choosenDate = true
+                    this.excelDownload()
                 }else{
                     this.dialogConfirmation = true
                 }

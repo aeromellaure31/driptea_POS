@@ -13,8 +13,10 @@ import 'vuetify/dist/vuetify.min.css'
 import '@mdi/font/css/materialdesignicons.css'
 import 'vue-json-csv'
 import bus from './bus'
+import { GridPlugin, Toolbar, ExcelExport } from "@syncfusion/ej2-vue-grids";
 
 Vue.prototype.$bus = bus
+Vue.use(GridPlugin);
 Vue.use(Vuetify)
 Vue.prototype.$axios = axios
 const app = new Vue({

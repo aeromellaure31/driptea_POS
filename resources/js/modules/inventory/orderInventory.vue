@@ -125,77 +125,15 @@
                           <button type="button" class="close" @click="choosenDate = false">&times;</button><br>
                         </div>
                         <v-card-text>
-                            <div class="my-custom-scrollbar">
-                                <v-simple-table :items-per-page="5" class="elevation-3 zui-table" id="table">
-                                  <template v-slot:top>
-                                    <v-toolbar class="mb-2" color="#ff5b04" dark flat>
-                                      <v-toolbar-title class="col pa-3 py-4 white--text">{{categoryName}}</v-toolbar-title>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                      <VueJsonToCsv
-                                      :json-data="storeData"
-                                      :csv-title="formatDate + '_' + categoryName + ' Order Inventory'"
-                                      >
-                                          <v-btn color="success" class="mr-6" @click="downloadData()">
-                                              Export<i class="mdi mdi-export-variant" aria-hidden="true"></i>
-                                          </v-btn>
-                                      </VueJsonToCsv>
-                                    </v-toolbar>
-                                  </template>
-                                  <div class="zui-wrapper">
-                                    <div class="zui-scroller">
-                                      <thead>
-                                        <tr>
-                                          <th style="text-align: center" rowspan="3" class="zui-sticky-col2">Date</th>
-                                          <th style="text-align: center" rowspan="3" class="zui-sticky-col3">Name</th>
-                                          <th style="text-align: center" rowspan="3" class="zui-sticky-col4">Address</th>
-                                          <th
-                                            :colspan="oneProd.length"
-                                            style="text-align: center"
-                                            v-for="(item, index) in category"
-                                            :key="index"
-                                          >
-                                            {{item}}
-                                            <tr>
-                                              <th
-                                                style="text-align: center"
-                                                v-if="categoryName === i.productCategory"
-                                                v-for="(i, ind) in productData"
-                                                :key="ind"
-                                              >{{i.productName}}</th>
-                                            </tr>
-                                          </th>
-                                          <th rowspan="3" class="zui-sticky-col5">Total</th>
-                                        </tr>
-                                      </thead>
-                                      <tbody>
-                                        <tr v-for="(items, indexes) in newDataStorage" :key="indexes">
-                                          <td
-                                            style="text-align: center"
-                                            class="zui-sticky-col2"
-                                          >{{getDate(items[0].get_customer[0].created_at)}}</td>
-                                          <td
-                                            style="text-align: center"
-                                            class="zui-sticky-col3"
-                                          >{{items[0].get_customer[0].customerName ? items[0].get_customer[0].customerName : '&nbsp;'}}</td>
-                                          <td
-                                            style="text-align: center"
-                                            class="zui-sticky-col4"
-                                          >{{items[0].get_customer[0].customerAddress ? items[0].get_customer[0].customerAddress : '&nbsp;'}}</td>
-
-                                          <td
-                                            style="text-align: center"
-                                            v-for="(item, index) in prod"
-                                            :key="index"
-                                          >{{getAllValue(item, items, index)}}</td>
-                                          <td
-                                            class="zui-sticky-col5"
-                                            style="text-align: center; font-weight: bold"
-                                          >{{getTotal(items)}} quantity</td>
-                                        </tr>
-                                      </tbody>
-                                    </div>
-                                  </div>
-                                </v-simple-table>
-                            </div>
+                          <ejs-grid ref='grid' id='Grid' :dataSource='storeData' :toolbar='toolbarOptions' height='270px' :allowPaging='true' :allowExcelExport='true' :toolbarClick='toolbarClick'>
+                            <e-columns>
+                              <e-column field='Date' headerText='Date' width=120></e-column>
+                              <e-column field='Name' headerText="Customer's Name" width=150></e-column>
+                              <e-column field='Address' headerText='Address' width=150></e-column>
+                              <e-column v-for="(i, ind)  in categoryAll" :key="ind" :field='i' :headerText='i' width=150></e-column>
+                              <e-column field='Total' headerText='Total Quantity' width=150></e-column>
+                            </e-columns>
+                          </ejs-grid>
                         </v-card-text>
                         <v-spacer></v-spacer>
                     </v-card>
@@ -206,6 +144,7 @@
     </div>
 </template>
 <style scoped>
+@import url('https://cdn.syncfusion.com/ej2/material.css');
 .colorstyle{
     width: 25%;
     color: white;
@@ -288,13 +227,16 @@ import VueJsonToCsv from 'vue-json-to-csv'
 import AUTH from "../../services/auth";
 import ROUTER from "../../router";
 import config from "../../config.js";
+import { GridPlugin, Toolbar, ExcelExport } from "@syncfusion/ej2-vue-grids";
 import moment from "moment";
 export default {
   data() {
     return {
+      toolbarOptions: ['ExcelExport'],
       formatDate: moment(new Date()).format('MM/DD/YYYY Hh:mm'),
       tableData: [],
       productData: [],
+      categoryAll: [],
       category: ["Low Dose", "High Dose", "Over Dose"],
       loadingShow: false,
       categoryData: [],
@@ -308,12 +250,17 @@ export default {
       choosenDate: false,
       dialogConfirmation: false,
       newDateStorage: [],
+      adminName: '',
       dates: [new Date().toISOString().substr(0, 10), ],
+      overAllTotal: 0
     };
   },
   components: {
     loading,
     VueJsonToCsv
+  },
+  provide: {
+    grid: [Toolbar, ExcelExport]
   },
   computed: {
     dateRangeText () {
@@ -324,14 +271,56 @@ export default {
     this.retrieveCategory();
     this.retrieveCheckout();
     this.retrieveProducts();
-    this.downloadData();
+    this.getAdmin();
   },
   methods: {
+    toolbarClick(args) {
+      if (args.item.id === 'Grid_excelexport') {
+        let excelExportProperties = {
+          fileName: this.formatDate + ' Sales.xlsx',
+          header: {
+            headerRows: 10,
+            rows: [
+              { cells: [{ colSpan: this.categoryAll.length + 4, value: "Driptea System", style: { fontColor: '#C67878', fontSize: 25, hAlign: 'Center', bold: true, } }] },
+              { cells: [{ colSpan: this.categoryAll.length + 4, value: "A.C. Cortes Ave., Looc", style: { fontColor: '#C67878', fontSize: 20, hAlign: 'Center', bold: true, } }] },
+              { cells: [{ colSpan: this.categoryAll.length + 4, value: "6014 Mandaue City, Philippine", style: { fontColor: '#C67878', fontSize: 20, hAlign: 'Center', bold: true, } }] },
+              { cells: [{ colSpan: this.categoryAll.length + 4, value: "0917 329 7269", style: { fontColor: '#C67878', fontSize: 20, hAlign: 'Center', bold: true, } }] },
+              { cells: [{ colSpan: this.categoryAll.length + 4, hyperlink: { target: 'https://www.facebook.com/driptealoocmandaue/', displayText: 'www.facebook.com/driptealoocmandaue' }, style: { hAlign: 'Center' } }] },
+              { cells: [{ colSpan: this.categoryAll.length + 4, hyperlink: { target: 'samuelazurajr@gmail.com' }, style: { hAlign: 'Center' } }] },
+              { cells:  [{ colSpan: this.categoryAll.length + 4, value: ""}]},
+              { cells:  [{ colSpan: 2, value: "Download By: " + this.adminName, style: {fontSize: 15, hAlign: 'Left', bold: true, }},]},
+              { cells:  [{ colSpan: 2, value: "Date Downloaded: " + moment(new Date()).format('MM/DD/YYYY'), style: {fontSize: 15, hAlign: 'Left', bold: true,} }]},
+            ]
+          },
+          footer: {
+            footerRows: 3,
+            rows: [
+              { cells: [{ colSpan: this.categoryAll.length + 4, value: ("Total Quantity Used: " + this.overAllTotal), style: { fontSize: 20, hAlign: 'Center', bold: true } }] },
+            ]
+          }
+        };
+        this.$refs.grid.excelExport(excelExportProperties);
+      }
+    },
+    getAdmin(){
+      this.loadingShow = true
+      let params = {
+        uname: localStorage.getItem('adminId')
+      };
+      this.$axios.post(AUTH.url + "getUserData", params, AUTH.config).then(response => {
+        this.loadingShow = false
+        if(response.data.status){
+          AUTH.deauthenticate()
+        }
+        this.adminName = response.data.userdata[0].fname + ' ' + response.data.userdata[0].lname
+      })
+    },
     showModal(){
-      this.choosenDate = true
       this.retrieveChoosenData()
     },
     downloadData(){
+      this.storeData = []
+      this.overAllTotal = 0
       this.newDataStorage.forEach(items => {
         var list = {
           Date: this.getDate(items[0].get_customer[0].created_at),
@@ -346,6 +335,7 @@ export default {
             }
           });
         })
+        var categoryAllStore = []
         this.prod.forEach((item, index) => {
           let lowLength = productName.length / 3;
           let highLength = lowLength + lowLength;
@@ -353,15 +343,21 @@ export default {
           var a = this.getAllValue(item, items, index)
           if(index < lowLength){
             list['LowDose ' + productName[index]] = a
+            categoryAllStore.push('LowDose ' + productName[index])
           } else if(index < highLength && index >= lowLength){
             list['HighDose ' + productName[index]] = a
+            categoryAllStore.push('HighDose ' + productName[index])
           } else if(index < overLength && index >= highLength){
             list['OverDose ' + productName[index]] = a
+            categoryAllStore.push('OverDose ' + productName[index])
           }
         })
         list['Total'] = this.getTotal(items)
+        this.categoryAll = categoryAllStore
+        this.overAllTotal += this.getTotal(items)
         this.storeData.push(list)
       })
+      this.choosenDate = true
     },
     getAllValue(item, items, index) {
       let total = 0;
@@ -422,7 +418,6 @@ export default {
           if (res.data.status) {
             AUTH.deauthenticate();
           }
-          console.log(res.data.storeOrder)
           this.dataMethod(res.data.storeOrder);
         });
     },
@@ -451,6 +446,7 @@ export default {
             data.push(res.data.storeOrder[element]);
           });
           this.newDataStorage = data.reverse();
+          this.downloadData()
         });
     },
     retrieveCategory() {
