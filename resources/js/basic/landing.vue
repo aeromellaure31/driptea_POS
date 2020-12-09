@@ -56,7 +56,7 @@
                 <i><a class="FP" style="font-size: 13px" @click="redirect('/forgotPass')">Forgot Password</a></i><br />
                 <center>
                   <v-btn
-                    type="button"
+                    type="submit"
                     class="ma-2"
                     @click="login"
                     color="orange"

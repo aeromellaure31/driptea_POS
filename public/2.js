@@ -257,6 +257,45 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -273,9 +312,11 @@ __webpack_require__.r(__webpack_exports__);
       tableDataCompleteOrder: true,
       tableDataPendingOrders: false,
       tableProcessOrders: false,
+      tableCancelled: false,
       config: _config_js__WEBPACK_IMPORTED_MODULE_2__["default"],
       loadingShow: false,
       tableDataPending: [],
+      tableDataCancelled: [],
       search: null,
       productName: null,
       description: null,
@@ -305,6 +346,7 @@ __webpack_require__.r(__webpack_exports__);
     this.retrieveAddOns();
     this.retrieveCupType();
     this.retrieveProcessed();
+    this.retrieveCancelled();
     this.tableDataCompleteOrder = true;
     var pusher = new Pusher(this.config.PUSHER_APP_KEY, {
       cluster: this.config.PUSHER_APP_CLUSTER,
@@ -324,6 +366,8 @@ __webpack_require__.r(__webpack_exports__);
       _this.retrieveCupType();
 
       _this.retrieveProcessed();
+
+      _this.retrieveCancelled();
 
       jquery__WEBPACK_IMPORTED_MODULE_7___default()("#myModal").modal("hide");
       _this.tableDataCompleteOrder = true;
@@ -359,7 +403,8 @@ __webpack_require__.r(__webpack_exports__);
         this.loadingShow = true;
         var params = {
           id: id,
-          status: 'cancel'
+          status: 'cancel',
+          cashierId: localStorage.getItem('cashierId') ? localStorage.getItem('cashierId') : localStorage.getItem('adminId')
         };
         this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + 'updateCancelOrder', params, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (res) {
           _this2.loadingShow = false;
@@ -387,39 +432,6 @@ __webpack_require__.r(__webpack_exports__);
             _this2.tableProcessOrders = false;
           });
         });
-      } else {// let par = {
-        //     usedCupsLowDose: low,
-        //     usedCupsHighDose: high,
-        //     usedCupsOverDose: over
-        // }
-        // this.$axios.post(AUTH.url + 'updateDeletedCups', par, AUTH.config).then(response => {
-        //     let params = {
-        //         id: id,
-        //         checkoutId: item[0].storeCheckoutsId
-        //     }
-        //     this.loadingShow = true;
-        //     this.$axios
-        //         .post(AUTH.url + "deleteCheckout", params, AUTH.config)
-        //         .then(response => {
-        //         if (response.data.status) {
-        //             AUTH.deauthenticate();
-        //         }
-        //         this.loadingShow = false;
-        //         swal({
-        //         title: "You have successfully deleted the order",
-        //         icon: "success"
-        //         }).then(el => {
-        //             this.retrievePending();
-        //             this.retrieve();
-        //             this.retrieveAddOns();
-        //             this.retrieveCupType();
-        //             this.retrieveProcessed();
-        //             this.tableDataCompleteOrder = false
-        //             this.tableDataPendingOrders = false
-        //             this.tableProcessOrders = true
-        //         });
-        //     });
-        // })
       }
     },
     getCup: function getCup(item) {
@@ -500,7 +512,8 @@ __webpack_require__.r(__webpack_exports__);
           _this4.loadingShow = true;
           var params = {
             data: item,
-            status: 'complete'
+            status: 'complete',
+            cashierId: localStorage.getItem('cashierId') ? localStorage.getItem('cashierId') : localStorage.getItem('adminId')
           };
 
           _this4.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + 'updateStatus', params, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (res) {
@@ -586,24 +599,42 @@ __webpack_require__.r(__webpack_exports__);
         _this7.tableDataPending.reverse();
       });
     },
-    retrieveAddOns: function retrieveAddOns() {
+    retrieveCancelled: function retrieveCancelled() {
       var _this8 = this;
+
+      this.loadingShow = true;
+      this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "retrieveAllCancelled", {}, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
+        if (response.data.status) {
+          _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
+        }
+
+        _this8.tableDataCancelled = [];
+        _this8.loadingShow = false;
+        Object.keys(response.data.order).forEach(function (element) {
+          _this8.tableDataCancelled.push(response.data.order[element]);
+        });
+
+        _this8.tableDataCancelled.reverse();
+      });
+    },
+    retrieveAddOns: function retrieveAddOns() {
+      var _this9 = this;
 
       this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "retrievingAddOns", {}, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
         if (response.data.status) {
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this8.addOnsData = response.data.addons;
+        _this9.addOnsData = response.data.addons;
       });
     },
     getAddOns: function getAddOns(item) {
-      var _this9 = this;
+      var _this10 = this;
 
       var storeAddOns = "";
       var index = item.length;
       item.forEach(function (el) {
-        _this9.addOnsData.forEach(function (e) {
+        _this10.addOnsData.forEach(function (e) {
           if (el.addOns === e.addons_name) {
             if (item.indexOf(el) >= index - 1) {
               storeAddOns += el.addOns + " (+" + e.onlineAddOnsPrice + ".00)";
@@ -803,7 +834,8 @@ var render = function() {
                         click: function($event) {
                           ;(_vm.tableDataCompleteOrder = true),
                             (_vm.tableDataPendingOrders = false),
-                            (_vm.tableProcessOrders = false)
+                            (_vm.tableProcessOrders = false),
+                            (_vm.tableCancelled = false)
                         }
                       }
                     },
@@ -817,7 +849,8 @@ var render = function() {
                         click: function($event) {
                           ;(_vm.tableDataCompleteOrder = false),
                             (_vm.tableDataPendingOrders = false),
-                            (_vm.tableProcessOrders = true)
+                            (_vm.tableProcessOrders = true),
+                            (_vm.tableCancelled = false)
                         }
                       }
                     },
@@ -831,11 +864,27 @@ var render = function() {
                         click: function($event) {
                           ;(_vm.tableDataCompleteOrder = false),
                             (_vm.tableDataPendingOrders = true),
-                            (_vm.tableProcessOrders = false)
+                            (_vm.tableProcessOrders = false),
+                            (_vm.tableCancelled = false)
                         }
                       }
                     },
                     [_vm._v("Pending Orders")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-tab",
+                    {
+                      on: {
+                        click: function($event) {
+                          ;(_vm.tableDataCompleteOrder = false),
+                            (_vm.tableDataPendingOrders = false),
+                            (_vm.tableProcessOrders = false),
+                            (_vm.tableCancelled = true)
+                        }
+                      }
+                    },
+                    [_vm._v("Cancelled Orders")]
                   )
                 ],
                 1
@@ -1239,6 +1288,134 @@ var render = function() {
                                     }
                                   },
                                   [_vm._v("mdi-window-close")]
+                                )
+                              ],
+                              1
+                            )
+                          ])
+                        }),
+                        0
+                      )
+                    ]
+                  )
+                ],
+                1
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.tableCancelled
+            ? _c(
+                "div",
+                [
+                  _c(
+                    "v-simple-table",
+                    {
+                      staticClass: "elevation-3",
+                      attrs: { "items-per-page": 5 }
+                    },
+                    [
+                      _c("thead", [
+                        _vm.tableDataCancelled !== null &&
+                        _vm.tableDataCancelled.length > 0
+                          ? _c("tr", [
+                              _c("th", [_vm._v("Date")]),
+                              _vm._v(" "),
+                              _c("th", [_vm._v("Customer Name")]),
+                              _vm._v(" "),
+                              _c("th", [_vm._v("Address")]),
+                              _vm._v(" "),
+                              _c("th", [_vm._v("Contact#")]),
+                              _vm._v(" "),
+                              _c("th", [_vm._v("Order #")]),
+                              _vm._v(" "),
+                              _c("th", [_vm._v("Product Ordered")]),
+                              _vm._v(" "),
+                              _c("th", [_vm._v("Total")]),
+                              _vm._v(" "),
+                              _c("th", [_vm._v("Status")]),
+                              _vm._v(" "),
+                              _c("th", { staticStyle: { width: "15px" } }, [
+                                _vm._v("Action")
+                              ])
+                            ])
+                          : _c(
+                              "div",
+                              [
+                                _c("empty", {
+                                  attrs: { title: "No Cancelled Orders!" }
+                                })
+                              ],
+                              1
+                            )
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "tbody",
+                        _vm._l(_vm.tableDataCancelled, function(items, index) {
+                          return _c("tr", { key: index }, [
+                            _c("td", [_vm._v(_vm._s(_vm.getDate(items[0])))]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _vm._v(
+                                _vm._s(
+                                  items[0].get_customer
+                                    ? items[0].get_customer[0].customerName
+                                    : ""
+                                )
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _vm._v(
+                                _vm._s(
+                                  items[0].get_customer
+                                    ? items[0].get_customer[0].customerAddress
+                                    : ""
+                                )
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _vm._v(
+                                _vm._s(
+                                  items[0].get_customer
+                                    ? items[0].get_customer[0]
+                                        .customerContactNumber
+                                    : ""
+                                )
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(items[0].id))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(_vm.getProduct(items)))]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _vm._v("₱ " + _vm._s(_vm.getTotal(items)))
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v("Cancelled Order")]),
+                            _vm._v(" "),
+                            _c(
+                              "td",
+                              { staticStyle: { width: "10%" } },
+                              [
+                                _c(
+                                  "v-icon",
+                                  {
+                                    attrs: {
+                                      medium: "",
+                                      "data-toggle": "modal",
+                                      "data-target": "#myModal"
+                                    },
+                                    on: {
+                                      click: function($event) {
+                                        _vm.viewOrder(items),
+                                          (_vm.title = "Cancelled Orders")
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("mdi-eye")]
                                 )
                               ],
                               1

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\StoreOrder;
 use App\Models\StoreAddOn;
 use App\Models\StoreCheckouts;
+use App\Models\ActivityLog;
 use App\Events\pusherEvent;
 use Illuminate\Support\Facades\DB;
 
@@ -47,6 +48,13 @@ class StoreCheckoutsController extends Controller
                 $storeAddOns->save();
             }
         }
+
+        $activityLog = new ActivityLog();
+        $activityLog->cashierId = $data['cashierId'];
+        $activityLog->activity = 'Checkout ' . $data['orderHistory'];
+        $activityLog->amount = $data['total'];
+        $activityLog->save();
+
         event(new pusherEvent($storeCheckouts));
         return response()->json(compact('storeCheckouts'));
     }
@@ -94,6 +102,12 @@ class StoreCheckoutsController extends Controller
             $ord->status = $request['status'];
             $ord->save();
         }
+
+        $activityLog = new ActivityLog();
+        $activityLog->cashierId = $request['cashierId'];
+        $activityLog->activity = 'Complete Order';
+        $activityLog->save();
+
         event(new pusherEvent($request['status']));
         return response()->json(['success' => 'successfully updated!']);
     }

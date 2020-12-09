@@ -417,7 +417,7 @@ var render = function() {
                                 "v-btn",
                                 {
                                   staticClass: "ma-2",
-                                  attrs: { type: "button", color: "orange" },
+                                  attrs: { type: "submit", color: "orange" },
                                   on: { click: _vm.login }
                                 },
                                 [_vm._v("Login")]

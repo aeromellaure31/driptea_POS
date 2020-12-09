@@ -5,9 +5,621 @@
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/modules/inventory/orderInventory.vue?vue&type=script&lang=js& ***!
   \********************************************************************************************************************************************************************************/
 /*! exports provided: default */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: C:\\Users\\2ndyrGroupC\\Documents\\laure\\driptea_POS\\resources\\js\\modules\\inventory\\orderInventory.vue: Unexpected token, expected \",\" (288:204)\n\n\u001b[0m \u001b[90m 286 | \u001b[39m              { cells\u001b[33m:\u001b[39m [{ colSpan\u001b[33m:\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mcategoryAll\u001b[33m.\u001b[39mlength \u001b[33m+\u001b[39m \u001b[35m4\u001b[39m\u001b[33m,\u001b[39m value\u001b[33m:\u001b[39m \u001b[32m\"6014 Mandaue City, Philippine\"\u001b[39m\u001b[33m,\u001b[39m style\u001b[33m:\u001b[39m { fontColor\u001b[33m:\u001b[39m \u001b[32m'#C67878'\u001b[39m\u001b[33m,\u001b[39m fontSize\u001b[33m:\u001b[39m \u001b[35m20\u001b[39m\u001b[33m,\u001b[39m hAlign\u001b[33m:\u001b[39m \u001b[32m'Center'\u001b[39m\u001b[33m,\u001b[39m bold\u001b[33m:\u001b[39m \u001b[36mtrue\u001b[39m\u001b[33m,\u001b[39m } }] }\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 287 | \u001b[39m              { cells\u001b[33m:\u001b[39m [{ colSpan\u001b[33m:\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mcategoryAll\u001b[33m.\u001b[39mlength \u001b[33m+\u001b[39m \u001b[35m4\u001b[39m\u001b[33m,\u001b[39m value\u001b[33m:\u001b[39m \u001b[32m\"0917 329 7269\"\u001b[39m\u001b[33m,\u001b[39m style\u001b[33m:\u001b[39m { fontColor\u001b[33m:\u001b[39m \u001b[32m'#C67878'\u001b[39m\u001b[33m,\u001b[39m fontSize\u001b[33m:\u001b[39m \u001b[35m20\u001b[39m\u001b[33m,\u001b[39m hAlign\u001b[33m:\u001b[39m \u001b[32m'Center'\u001b[39m\u001b[33m,\u001b[39m bold\u001b[33m:\u001b[39m \u001b[36mtrue\u001b[39m\u001b[33m,\u001b[39m } }] }\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 288 | \u001b[39m              { cells\u001b[33m:\u001b[39m [{ colSpan\u001b[33m:\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mcategoryAll\u001b[33m.\u001b[39mlength \u001b[33m+\u001b[39m \u001b[35m4\u001b[39m\u001b[33m,\u001b[39m hyperlink\u001b[33m:\u001b[39m { target\u001b[33m:\u001b[39m \u001b[32m'https://www.facebook.com/driptealoocmandaue/'\u001b[39m\u001b[33m,\u001b[39m displayText\u001b[33m:\u001b[39m \u001b[32m'www.facebook.com/driptealoocmandaue }, style: { hAlign: '\u001b[39m\u001b[33mCenter\u001b[39m\u001b[32m' } }] },\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m     | \u001b[39m                                                                                                                                                                                                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 289 | \u001b[39m              { cells\u001b[33m:\u001b[39m [{ colSpan\u001b[33m:\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mcategoryAll\u001b[33m.\u001b[39mlength \u001b[33m+\u001b[39m \u001b[35m4\u001b[39m\u001b[33m,\u001b[39m hyperlink\u001b[33m:\u001b[39m { target\u001b[33m:\u001b[39m \u001b[32m'mailto:support@northwind.com'\u001b[39m }\u001b[33m,\u001b[39m style\u001b[33m:\u001b[39m { hAlign\u001b[33m:\u001b[39m \u001b[32m'Center'\u001b[39m } }] }\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 290 | \u001b[39m              { cells\u001b[33m:\u001b[39m  [{ colSpan\u001b[33m:\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mcategoryAll\u001b[33m.\u001b[39mlength \u001b[33m+\u001b[39m \u001b[35m4\u001b[39m\u001b[33m,\u001b[39m value\u001b[33m:\u001b[39m \u001b[32m\"\"\u001b[39m}]}\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 291 | \u001b[39m              { cells\u001b[33m:\u001b[39m  [{ colSpan\u001b[33m:\u001b[39m \u001b[35m2\u001b[39m\u001b[33m,\u001b[39m value\u001b[33m:\u001b[39m \u001b[32m\"Download By: \"\u001b[39m \u001b[33m+\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39madminName\u001b[33m,\u001b[39m style\u001b[33m:\u001b[39m {fontSize\u001b[33m:\u001b[39m \u001b[35m20\u001b[39m\u001b[33m,\u001b[39m hAlign\u001b[33m:\u001b[39m \u001b[32m'Left'\u001b[39m\u001b[33m,\u001b[39m bold\u001b[33m:\u001b[39m \u001b[36mtrue\u001b[39m\u001b[33m,\u001b[39m }}\u001b[33m,\u001b[39m]}\u001b[33m,\u001b[39m\u001b[0m\n    at Parser._raise (C:\\Users\\2ndyrGroupC\\Documents\\laure\\driptea_POS\\node_modules\\@babel\\parser\\lib\\index.js:790:17)\n    at Parser.raiseWithData (C:\\Users\\2ndyrGroupC\\Documents\\laure\\driptea_POS\\node_modules\\@babel\\parser\\lib\\index.js:783:17)\n    at Parser.raise (C:\\Users\\2ndyrGroupC\\Documents\\laure\\driptea_POS\\node_modules\\@babel\\parser\\lib\\index.js:777:17)\n    at Parser.unexpected (C:\\Users\\2ndyrGroupC\\Documents\\laure\\driptea_POS\\node_modules\\@babel\\parser\\lib\\index.js:9095:16)\n    at Parser.expect (C:\\Users\\2ndyrGroupC\\Documents\\laure\\driptea_POS\\node_modules\\@babel\\parser\\lib\\index.js:9081:28)\n    at Parser.parseObjectLike (C:\\Users\\2ndyrGroupC\\Documents\\laure\\driptea_POS\\node_modules\\@babel\\parser\\lib\\index.js:10886:14)\n    at Parser.parseExprAtom (C:\\Users\\2ndyrGroupC\\Documents\\laure\\driptea_POS\\node_modules\\@babel\\parser\\lib\\index.js:10445:23)\n    at Parser.parseExprSubscripts (C:\\Users\\2ndyrGroupC\\Documents\\laure\\driptea_POS\\node_modules\\@babel\\parser\\lib\\index.js:10094:23)\n    at Parser.parseUpdate (C:\\Users\\2ndyrGroupC\\Documents\\laure\\driptea_POS\\node_modules\\@babel\\parser\\lib\\index.js:10074:21)\n    at Parser.parseMaybeUnary (C:\\Users\\2ndyrGroupC\\Documents\\laure\\driptea_POS\\node_modules\\@babel\\parser\\lib\\index.js:10063:17)\n    at Parser.parseExprOps (C:\\Users\\2ndyrGroupC\\Documents\\laure\\driptea_POS\\node_modules\\@babel\\parser\\lib\\index.js:9933:23)\n    at Parser.parseMaybeConditional (C:\\Users\\2ndyrGroupC\\Documents\\laure\\driptea_POS\\node_modules\\@babel\\parser\\lib\\index.js:9907:23)\n    at Parser.parseMaybeAssign (C:\\Users\\2ndyrGroupC\\Documents\\laure\\driptea_POS\\node_modules\\@babel\\parser\\lib\\index.js:9870:21)\n    at allowInAnd (C:\\Users\\2ndyrGroupC\\Documents\\laure\\driptea_POS\\node_modules\\@babel\\parser\\lib\\index.js:9837:39)\n    at Parser.allowInAnd (C:\\Users\\2ndyrGroupC\\Documents\\laure\\driptea_POS\\node_modules\\@babel\\parser\\lib\\index.js:11510:12)\n    at Parser.parseMaybeAssignAllowIn (C:\\Users\\2ndyrGroupC\\Documents\\laure\\driptea_POS\\node_modules\\@babel\\parser\\lib\\index.js:9837:17)\n    at Parser.parseObjectProperty (C:\\Users\\2ndyrGroupC\\Documents\\laure\\driptea_POS\\node_modules\\@babel\\parser\\lib\\index.js:11055:101)\n    at Parser.parseObjPropValue (C:\\Users\\2ndyrGroupC\\Documents\\laure\\driptea_POS\\node_modules\\@babel\\parser\\lib\\index.js:11080:100)\n    at Parser.parsePropertyDefinition (C:\\Users\\2ndyrGroupC\\Documents\\laure\\driptea_POS\\node_modules\\@babel\\parser\\lib\\index.js:11004:10)\n    at Parser.parseObjectLike (C:\\Users\\2ndyrGroupC\\Documents\\laure\\driptea_POS\\node_modules\\@babel\\parser\\lib\\index.js:10894:25)\n    at Parser.parseExprAtom (C:\\Users\\2ndyrGroupC\\Documents\\laure\\driptea_POS\\node_modules\\@babel\\parser\\lib\\index.js:10445:23)\n    at Parser.parseExprSubscripts (C:\\Users\\2ndyrGroupC\\Documents\\laure\\driptea_POS\\node_modules\\@babel\\parser\\lib\\index.js:10094:23)\n    at Parser.parseUpdate (C:\\Users\\2ndyrGroupC\\Documents\\laure\\driptea_POS\\node_modules\\@babel\\parser\\lib\\index.js:10074:21)\n    at Parser.parseMaybeUnary (C:\\Users\\2ndyrGroupC\\Documents\\laure\\driptea_POS\\node_modules\\@babel\\parser\\lib\\index.js:10063:17)\n    at Parser.parseExprOps (C:\\Users\\2ndyrGroupC\\Documents\\laure\\driptea_POS\\node_modules\\@babel\\parser\\lib\\index.js:9933:23)\n    at Parser.parseMaybeConditional (C:\\Users\\2ndyrGroupC\\Documents\\laure\\driptea_POS\\node_modules\\@babel\\parser\\lib\\index.js:9907:23)\n    at Parser.parseMaybeAssign (C:\\Users\\2ndyrGroupC\\Documents\\laure\\driptea_POS\\node_modules\\@babel\\parser\\lib\\index.js:9870:21)\n    at allowInAnd (C:\\Users\\2ndyrGroupC\\Documents\\laure\\driptea_POS\\node_modules\\@babel\\parser\\lib\\index.js:9837:39)\n    at Parser.allowInAnd (C:\\Users\\2ndyrGroupC\\Documents\\laure\\driptea_POS\\node_modules\\@babel\\parser\\lib\\index.js:11510:12)\n    at Parser.parseMaybeAssignAllowIn (C:\\Users\\2ndyrGroupC\\Documents\\laure\\driptea_POS\\node_modules\\@babel\\parser\\lib\\index.js:9837:17)\n    at Parser.parseExprListItem (C:\\Users\\2ndyrGroupC\\Documents\\laure\\driptea_POS\\node_modules\\@babel\\parser\\lib\\index.js:11271:18)\n    at Parser.parseExprList (C:\\Users\\2ndyrGroupC\\Documents\\laure\\driptea_POS\\node_modules\\@babel\\parser\\lib\\index.js:11241:22)\n    at Parser.parseArrayLike (C:\\Users\\2ndyrGroupC\\Documents\\laure\\driptea_POS\\node_modules\\@babel\\parser\\lib\\index.js:11133:26)\n    at Parser.parseExprAtom (C:\\Users\\2ndyrGroupC\\Documents\\laure\\driptea_POS\\node_modules\\@babel\\parser\\lib\\index.js:10434:23)\n    at Parser.parseExprSubscripts (C:\\Users\\2ndyrGroupC\\Documents\\laure\\driptea_POS\\node_modules\\@babel\\parser\\lib\\index.js:10094:23)\n    at Parser.parseUpdate (C:\\Users\\2ndyrGroupC\\Documents\\laure\\driptea_POS\\node_modules\\@babel\\parser\\lib\\index.js:10074:21)");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _basic_loading_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../basic/loading.vue */ "./resources/js/basic/loading.vue");
+/* harmony import */ var vue_json_to_csv__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-json-to-csv */ "./node_modules/vue-json-to-csv/dist/vue-json-to-csv.js");
+/* harmony import */ var vue_json_to_csv__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_json_to_csv__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _services_auth__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/auth */ "./resources/js/services/auth/index.js");
+/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../router */ "./resources/js/router/index.js");
+/* harmony import */ var _config_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../config.js */ "./resources/js/config.js");
+/* harmony import */ var _syncfusion_ej2_vue_grids__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @syncfusion/ej2-vue-grids */ "./node_modules/@syncfusion/ej2-vue-grids/index.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_6__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      toolbarOptions: ['ExcelExport'],
+      formatDate: moment__WEBPACK_IMPORTED_MODULE_6___default()(new Date()).format('MM/DD/YYYY Hh:mm'),
+      tableData: [],
+      productData: [],
+      categoryAll: [],
+      category: ["Low Dose", "High Dose", "Over Dose"],
+      loadingShow: false,
+      categoryData: [],
+      oneProd: [],
+      prod: [],
+      categoryName: "",
+      finalData: [],
+      newDataStorage: [],
+      changeName: "lowDose",
+      storeData: [],
+      choosenDate: false,
+      dialogConfirmation: false,
+      newDateStorage: [],
+      adminName: '',
+      dates: [new Date().toISOString().substr(0, 10)],
+      overAllTotal: 0
+    };
+  },
+  components: {
+    loading: _basic_loading_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    VueJsonToCsv: vue_json_to_csv__WEBPACK_IMPORTED_MODULE_1___default.a
+  },
+  provide: {
+    grid: [_syncfusion_ej2_vue_grids__WEBPACK_IMPORTED_MODULE_5__["Toolbar"], _syncfusion_ej2_vue_grids__WEBPACK_IMPORTED_MODULE_5__["ExcelExport"]]
+  },
+  computed: {
+    dateRangeText: function dateRangeText() {
+      return this.dates.join(' ~ ');
+    }
+  },
+  mounted: function mounted() {
+    this.retrieveCategory();
+    this.retrieveCheckout();
+    this.retrieveProducts();
+    this.getAdmin();
+  },
+  methods: {
+    toolbarClick: function toolbarClick(args) {
+      if (args.item.id === 'Grid_excelexport') {
+        var excelExportProperties = {
+          fileName: this.formatDate + ' Order inventory.xlsx',
+          header: {
+            headerRows: 7,
+            rows: [{
+              cells: [{
+                colSpan: this.categoryAll.length + 4,
+                value: "Driptea System",
+                style: {
+                  fontColor: '#C67878',
+                  fontSize: 20,
+                  hAlign: 'Center',
+                  bold: true
+                }
+              }]
+            }, {
+              cells: [{
+                colSpan: this.categoryAll.length + 4,
+                value: "A.C. Cortes Ave., Looc",
+                style: {
+                  fontColor: '#C67878',
+                  fontSize: 15,
+                  hAlign: 'Center',
+                  bold: true
+                }
+              }]
+            }, {
+              cells: [{
+                colSpan: this.categoryAll.length + 4,
+                value: "6014 Mandaue City, Philippine",
+                style: {
+                  fontColor: '#C67878',
+                  fontSize: 15,
+                  hAlign: 'Center',
+                  bold: true
+                }
+              }]
+            }, {
+              cells: [{
+                colSpan: this.categoryAll.length + 4,
+                value: "0917 329 7269",
+                style: {
+                  fontColor: '#C67878',
+                  fontSize: 15,
+                  hAlign: 'Center',
+                  bold: true
+                }
+              }]
+            }, {
+              cells: [{
+                colSpan: this.categoryAll.length + 4,
+                hyperlink: {
+                  target: 'https://www.facebook.com/driptealoocmandaue/',
+                  displayText: 'www.facebook.com/driptealoocmandaue'
+                },
+                style: {
+                  hAlign: 'Center'
+                }
+              }]
+            }, {
+              cells: [{
+                colSpan: this.categoryAll.length + 4,
+                hyperlink: {
+                  target: 'samuelazurajr@gmail.com'
+                },
+                style: {
+                  hAlign: 'Center'
+                }
+              }]
+            }]
+          },
+          footer: {
+            footerRows: 3,
+            rows: [{
+              cells: [{
+                colSpan: this.categoryAll.length + 4,
+                value: "Total Quantity Used: " + this.overAllTotal,
+                style: {
+                  fontSize: 15,
+                  hAlign: 'Right',
+                  bold: true
+                }
+              }]
+            }, {
+              cells: [{
+                colSpan: this.categoryAll.length + 4,
+                value: "Print By: " + this.adminName + '  ' + moment__WEBPACK_IMPORTED_MODULE_6___default()(new Date()).format('MM/DD/YYYY'),
+                style: {
+                  fontSize: 15,
+                  hAlign: 'Left',
+                  bold: true
+                }
+              }]
+            }]
+          }
+        };
+        this.$refs.grid.excelExport(excelExportProperties);
+      }
+    },
+    getAdmin: function getAdmin() {
+      var _this = this;
+
+      this.loadingShow = true;
+      var params = {
+        uname: localStorage.getItem('adminId')
+      };
+      this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].url + "getUserData", params, _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].config).then(function (response) {
+        _this.loadingShow = false;
+
+        if (response.data.status) {
+          _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].deauthenticate();
+        }
+
+        _this.adminName = response.data.userdata[0].fname + ' ' + response.data.userdata[0].lname;
+      });
+    },
+    showModal: function showModal() {
+      this.retrieveChoosenData();
+    },
+    downloadData: function downloadData() {
+      var _this2 = this;
+
+      this.storeData = [];
+      this.overAllTotal = 0;
+      this.newDataStorage.forEach(function (items) {
+        var list = {
+          Date: _this2.getDate(items[0].get_customer[0].created_at),
+          Name: items[0].get_customer[0].customerName ? items[0].get_customer[0].customerName : '',
+          Address: items[0].get_customer[0].customerAddress ? items[0].get_customer[0].customerAddress : ''
+        };
+        var productName = [];
+
+        _this2.category.forEach(function (element) {
+          _this2.productData.forEach(function (e) {
+            if (e.productCategory === _this2.categoryName) {
+              productName.push(e.productName);
+            }
+          });
+        });
+
+        var categoryAllStore = [];
+
+        _this2.prod.forEach(function (item, index) {
+          var lowLength = productName.length / 3;
+          var highLength = lowLength + lowLength;
+          var overLength = highLength + lowLength;
+
+          var a = _this2.getAllValue(item, items, index);
+
+          if (index < lowLength) {
+            list['LowDose ' + productName[index]] = a;
+            categoryAllStore.push('LowDose ' + productName[index]);
+          } else if (index < highLength && index >= lowLength) {
+            list['HighDose ' + productName[index]] = a;
+            categoryAllStore.push('HighDose ' + productName[index]);
+          } else if (index < overLength && index >= highLength) {
+            list['OverDose ' + productName[index]] = a;
+            categoryAllStore.push('OverDose ' + productName[index]);
+          }
+        });
+
+        list['Total'] = _this2.getTotal(items);
+        _this2.categoryAll = categoryAllStore;
+        _this2.overAllTotal += _this2.getTotal(items);
+
+        _this2.storeData.push(list);
+      });
+      this.choosenDate = true;
+    },
+    getAllValue: function getAllValue(item, items, index) {
+      var total = 0;
+      var category = "lowDose";
+      var lowLength = this.prod.length / 3;
+      var highLength = lowLength + lowLength;
+      var overLength = highLength + lowLength;
+      var a = 0;
+
+      for (var i = 0; i < this.prod.length; i++) {
+        if (a < lowLength) {
+          if (index === a) {
+            category = "lowDose";
+            break;
+          } else {
+            a++;
+          }
+        } else if (a < highLength && a >= lowLength) {
+          if (index === a) {
+            category = "highDose";
+            break;
+          } else {
+            a++;
+          }
+        } else if (a < overLength && a >= highLength) {
+          if (index === a) {
+            category = "overDose";
+            break;
+          } else {
+            a++;
+          }
+        }
+      }
+
+      items.forEach(function (el) {
+        if (el.size === category) {
+          if (el.order_product[0].id === item.id) {
+            total += el.quantity;
+          }
+        }
+      });
+      return total;
+    },
+    getTotal: function getTotal(items) {
+      var subTotal = 0;
+      items.forEach(function (el) {
+        subTotal += el.quantity;
+      });
+      return subTotal;
+    },
+    getDate: function getDate(date) {
+      return moment__WEBPACK_IMPORTED_MODULE_6___default()(date).format("MM/DD/YYYY");
+    },
+    retrieveCheckout: function retrieveCheckout() {
+      var _this3 = this;
+
+      this.loadingShow = true;
+      this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].url + "retrieveAllCheckouts", {}, _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].config).then(function (res) {
+        _this3.loadingShow = false;
+
+        if (res.data.status) {
+          _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].deauthenticate();
+        }
+
+        _this3.dataMethod(res.data.storeOrder);
+      });
+    },
+    dataMethod: function dataMethod(item) {
+      var data = [];
+      Object.keys(item).forEach(function (element) {
+        data.push(item[element]);
+      });
+      this.finalData = data.reverse();
+    },
+    retrieveChoosenData: function retrieveChoosenData() {
+      var _this4 = this;
+
+      this.loadingShow = true;
+      var params = {
+        start: this.dates[0] > this.dates[1] ? this.dates[1] : this.dates[0],
+        end: this.dates[1] ? this.dates[0] > this.dates[1] ? this.dates[0] : this.dates[1] : this.dates[0]
+      };
+      this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].url + "retrieveChoosenCheckouts", params, _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].config).then(function (res) {
+        _this4.loadingShow = false;
+
+        if (res.data.status) {
+          _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].deauthenticate();
+        }
+
+        var data = [];
+        Object.keys(res.data.storeOrder).forEach(function (element) {
+          data.push(res.data.storeOrder[element]);
+        });
+        _this4.newDataStorage = data.reverse();
+
+        _this4.downloadData();
+      });
+    },
+    retrieveCategory: function retrieveCategory() {
+      var _this5 = this;
+
+      this.loadingShow = true;
+      this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].url + "retrieveCategoryAscending", {}, _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].config).then(function (res) {
+        if (res.data.status) {
+          _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].deauthenticate();
+        }
+
+        _this5.categoryData = res.data.addCategory;
+        _this5.categoryName = res.data.addCategory[0].productCategory;
+        _this5.loadingShow = false;
+      });
+    },
+    retrieveProducts: function retrieveProducts() {
+      var _this6 = this;
+
+      this.loadingShow = true;
+      this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].url + "RetrieveWithDelete", {}, _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].config).then(function (response) {
+        if (response.data.status) {
+          _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].deauthenticate();
+        }
+
+        _this6.productData = response.data.product;
+        _this6.loadingShow = false;
+
+        _this6.getProdLength();
+      });
+    },
+    getProdLength: function getProdLength() {
+      var _this7 = this;
+
+      this.loadingShow = true;
+      var storeOneProd = [];
+      this.productData.forEach(function (e) {
+        if (e.productCategory === _this7.categoryName) {
+          storeOneProd.push(e);
+        }
+      });
+      this.oneProd = storeOneProd;
+      var storeProd = [];
+
+      for (var i = 0; i < this.category.length; i++) {
+        this.productData.forEach(function (el) {
+          if (el.productCategory === _this7.categoryName) {
+            storeProd.push(el);
+          }
+        });
+      }
+
+      this.prod = storeProd;
+      this.loadingShow = false;
+    },
+    changeCategory: function changeCategory(param) {
+      this.categoryName = param;
+      this.getProdLength();
+    }
+  }
+});
 
 /***/ }),
 

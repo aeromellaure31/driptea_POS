@@ -136,11 +136,18 @@ export default {
                 tokenRequired: true
             }
         },
-        
         {
             path: '/cupsInventory',
             name: 'cupsInventory',
             component: resolve => require(['@/js/modules/inventory/cupsInventory'], resolve),
+            meta: {
+                tokenRequired: true
+            }
+        },
+        {
+            path: '/logs',
+            name: 'logs',
+            component: resolve => require(['@/js/modules/logs/log'], resolve),
             meta: {
                 tokenRequired: true
             }

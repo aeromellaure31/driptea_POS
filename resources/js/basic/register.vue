@@ -15,7 +15,7 @@
             flat
             solo-inverted
             prepend-inner-icon="mdi-magnify"
-            class="mt-7"
+            class="mt-10"
             label="Search"
           ></v-text-field>
           <v-divider class="mx-4" vertical></v-divider>

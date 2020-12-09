@@ -31,6 +31,8 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('retrieve', 'App\Http\Controllers\UserController@retrieve');
     Route::post('getImage', 'App\Http\Controllers\UserController@getImage');
 
+    Route::post('getActivityLog', 'App\Http\Controllers\ActivityLogController@getActivityLog');
+
     Route::post('formSubmit','App\Http\Controllers\ProductController@formSubmit');
     Route::post('updateProduct','App\Http\Controllers\ProductController@updateProduct');
     Route::post('retrieveProduct','App\Http\Controllers\ProductController@retrieveProduct');
@@ -63,9 +65,10 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('deleteOrder','App\Http\Controllers\OrderController@deleteOrder');
     Route::post('updateCustomerOrder','App\Http\Controllers\OrderController@updateCustomerOrder');
     Route::post('retrieveCancelled','App\Http\Controllers\OrderController@retrieveCancelled');
+    Route::post('retrieveAllCancelled','App\Http\Controllers\OrderController@retrieveAllCancelled');
     Route::post('retrieveOrder','App\Http\Controllers\OrderController@retrieveOrder');
     Route::post('retrieveCustomerOrder','App\Http\Controllers\OrderController@retrieveCustomerOrder');
-    Route::post('retrieveOnlineOrder','App\Http\Controllers\OrderController@retrieveOnlineOrder');
+    Route::post('retrieveOnlineOrder','App\Http\Controllers\OrderController@retrieveCustomerPending');
     Route::post('retrieveWholeOrder','App\Http\Controllers\OrderController@retrieveWholeOrder');
     Route::post('getOrder','App\Http\Controllers\OrderController@getOrder');
     Route::post('getDailyProductSales','App\Http\Controllers\OrderController@DailyProductSales');

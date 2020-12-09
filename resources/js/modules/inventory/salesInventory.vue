@@ -29,14 +29,6 @@
                             ></v-date-picker>
                         </v-menu>
                         <v-btn color="success" class="mr-6" @click="showModal()">Find</v-btn>
-                        <!-- <VueJsonToCsv
-                        :json-data="toDownload"
-                        :csv-title="formatDate + ' Sales'"
-                        >
-                            <v-btn color="success" class="mr-6" @click="excelDownload()">
-                                Export <i class="mdi mdi-export-variant" aria-hidden="true"></i>
-                            </v-btn>
-                        </VueJsonToCsv> -->
                     </v-toolbar>
                 </template>
                 <thead >
@@ -183,7 +175,7 @@ export default {
                 let excelExportProperties = {
                     fileName: this.formatDate + ' Sales.xlsx',
                     header: {
-                        headerRows: 10,
+                        headerRows: 7,
                         rows: [
                             { cells: [{ colSpan: 6, value: "Driptea System", style: { fontColor: '#C67878', fontSize: 20, hAlign: 'Center', bold: true, } }] },
                             { cells: [{ colSpan: 6, value: "A.C. Cortes Ave., Looc", style: { fontColor: '#C67878', fontSize: 15, hAlign: 'Center', bold: true, } }] },
@@ -191,15 +183,13 @@ export default {
                             { cells: [{ colSpan: 6, value: "0917 329 7269", style: { fontColor: '#C67878', fontSize: 15, hAlign: 'Center', bold: true, } }] },
                             { cells: [{ colSpan: 6, hyperlink: { target: 'https://www.facebook.com/driptealoocmandaue/', displayText: 'www.facebook.com/driptealoocmandaue' }, style: { hAlign: 'Center' } }] },
                             { cells: [{ colSpan: 6, hyperlink: { target: 'samuelazurajr@gmail.com' }, style: { hAlign: 'Center' } }] },
-                            { cells:  [{ colSpan: 6, value: ""}]},
-                            { cells:  [{ colSpan: 2, value: "Download By: " + this.adminName, style: {fontSize: 15, hAlign: 'Left', bold: true, }},]},
-                            { cells:  [{ colSpan: 2, value: "Date Downloaded: " + moment(new Date()).format('MM/DD/YYYY'), style: {fontSize: 15, hAlign: 'Left', bold: true,} }]},
                         ]
                     },
                     footer: {
                         footerRows: 3,
                         rows: [
-                            { cells: [{ colSpan: 6, value: ("Total Sales: " + this.overAllTotal), style: { hAlign: 'Center', bold: true } }] },
+                            { cells: [{ colSpan: 6, value: ("Total Sales: " + this.overAllTotal), style: { hAlign: 'Right', bold: true } }] },
+                            { cells:  [{ colSpan: 2, value: "Print By: " + this.adminName + '  ' +  moment(new Date()).format('MM/DD/YYYY'), style: {fontSize: 15, hAlign: 'Left', bold: true, }},]},
                         ]
                     }
                 };

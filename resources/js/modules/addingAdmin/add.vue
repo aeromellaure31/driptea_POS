@@ -2,9 +2,6 @@
   <div>
     <center>
     <v-toolbar flat>
-       <v-toolbar-title >
-        
-       </v-toolbar-title>
       <template v-slot:extension>
         <v-tabs dark background-color="#ff5b04" fixed-tabs>
           <v-tabs-slider></v-tabs-slider>

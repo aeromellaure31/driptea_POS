@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\AddOns;
+use App\Models\ActivityLog;
 use App\Models\StoreOrder;
 use Illuminate\Support\Facades\DB;
 use App\Events\pusherEvent;
@@ -64,6 +65,11 @@ class OrderController extends Controller
         return response()->json(compact('order'));
     }
 
+    public function retrieveCustomerPending(Request $request){
+        $order = Order::with('getCustomer')->with('orderProduct')->with('sameOrder')->where('status', '=', 'pendingCustomer')->where('deleted_at', null)->orderBy('id','ASC')->get()->groupBy('customerId');
+        return response()->json(compact('order'));
+    }
+
     public function retrieveOneOnlineOrder(Request $request){
         $order = Order::with('getCustomer')->with('orderProduct')->with('sameOrder')->where('onlineId', $request->id)->where('status', '!=', 'complete')->where('status', '!=', 'cancel')->where('deleted_at', null)->orderBy('id','DESC')->get()->groupBy('customerId');
         return response()->json(compact('order'));
@@ -71,6 +77,11 @@ class OrderController extends Controller
 
     public function retrieveCancelled(Request $request){
         $order = Order::with('getCustomer')->with('orderProduct')->with('sameOrder')->where('onlineId', $request->id)->where('status', '=', 'cancel')->where('deleted_at', null)->orderBy('id','DESC')->get()->groupBy('customerId');
+        return response()->json(compact('order'));
+    }
+
+    public function retrieveAllCancelled(Request $request){
+        $order = Order::with('getCustomer')->with('orderProduct')->with('sameOrder')->where('status', '=', 'cancel')->where('deleted_at', null)->orderBy('id','DESC')->get()->groupBy('customerId');
         return response()->json(compact('order'));
     }
 
@@ -119,6 +130,14 @@ class OrderController extends Controller
             $ord->status = $request['status'];
             $ord->save();
         }
+        
+        if($request['status'] === 'cancel'){
+            $activityLog = new ActivityLog();
+            $activityLog->cashierId = $request['cashierId'];
+            $activityLog->activity = 'Cancel Order';
+            $activityLog->save();
+        }
+
         event(new pusherEvent($request['status']));
         return response()->json(['success' => 'successfully updated!']);
     }
@@ -129,6 +148,12 @@ class OrderController extends Controller
             $ord->status = $request['status'];
             $ord->save();
         }
+
+        $activityLog = new ActivityLog();
+        $activityLog->cashierId = $request['cashierId'];
+        $activityLog->activity = 'Cancel Order';
+        $activityLog->save();
+
         event(new pusherEvent($request['status']));
         return response()->json(['success' => 'successfully updated!']);
     }

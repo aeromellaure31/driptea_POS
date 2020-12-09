@@ -59,51 +59,35 @@
         <v-dialog v-model="dialogForCupSize" persistent max-width="1000px">
           <v-card>
             <div class="modal-header">
-              <span class="headline">Export as Excel</span>
-              <button type="button" class="close" @click="close">&times;</button>
-              <br>
+                <span class="headline">Export as Excel</span>
+                <button type="button" class="close" @click="dialogForCupSize = false">&times;</button><br>
             </div>
             <v-card-text>
-              <div class="my-custom-scrollbar">
-                <v-toolbar-title
-                  class="col pa-3 py-4 black--text"
-                >Cups Inventory ({{dates[0]}} ~ {{dates[1] ? dates[1] : dates[0]}})</v-toolbar-title>
-                <v-data-table
-                  :headers="headersForCup"
-                  :items="modalData"
-                  :search="search"
-                  :items-per-page="5"
-                  class="elevation-3"
-                >
-                  <template v-slot:item.created_at="{ item }">
-                    <span>{{getDate(item.created_at)}}</span>
-                  </template>
-                  <template v-slot:item.totalIncoming="{ item }">
-                    <span>{{getTotal(item)}}</span>
-                  </template>
-                  <template v-slot:top>
-                    <v-toolbar class="mb-2" color="#ff5b04" dark flat>
-                      <v-tabs dark background-color="#ff5b04" fixed-tabs>
-                        <v-tabs-slider></v-tabs-slider>
-                        <v-tab @click="tableForUpcomingCupsModal">Incoming Cups</v-tab>
-                        <v-tab @click="tableForCupsOnrackModal">Cups Onrack</v-tab>
-                        <v-tab @click="tableForUsedCupsModal">Used Cups</v-tab>
-                        <v-tab @click="tableForRemainingCupsModal">Remaining Cups</v-tab>
-                      </v-tabs>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                      <VueJsonToCsv :json-data="toCsv" F :csv-title="formatDate + ' Sales'">
-                        <v-btn color="success" class="mr-6">
-                          Export
-                          <i class="mdi mdi-export-variant" aria-hidden="true"></i>
-                        </v-btn>
-                      </VueJsonToCsv>
-                    </v-toolbar>
-                  </template>
-                </v-data-table>
-              </div>
+                <ejs-grid ref='grid' id='Grid' :dataSource='dataInDB' :toolbar='toolbarOptions' height='270px' :allowPaging='true' :allowExcelExport='true' :toolbarClick='toolbarClick'>
+                    <e-columns>
+                        <e-column field='Date' headerText='Date' width=120></e-column>
+                        <e-column field='incomingLowDose' headerText='Incoming (LD)' width=150></e-column>
+                        <e-column field='incomingHighDose' headerText='Incoming (HD)' width=150></e-column>
+                        <e-column field='incomingOverDose' headerText='Incoming (OD)' width=150></e-column>
+                        <e-column field='TotalIncoming' headerText='Total Incoming Cups' width=180></e-column>
+
+                        <e-column field='onRockLowDose' headerText='Cups Onrack (LD)' width=150></e-column>
+                        <e-column field='onRockHighDose' headerText='Cups Onrack (HD)' width=150></e-column>
+                        <e-column field='onRockOverDose' headerText='Cups Onrack (OD)' width=150></e-column>
+                        <e-column field='TotalOnRock' headerText='Total Cups Onrack' width=150></e-column>
+
+                        <e-column field='usedCupsLowDose' headerText='Used Cups (LD)' width=150></e-column>
+                        <e-column field='usedCupsHighDose' headerText='Used Cups (HD)' width=150></e-column>
+                        <e-column field='usedCupsOverDose' headerText='Used Cups (OD)' width=150></e-column>
+                        <e-column field='TotalUsed' headerText='Total Used Cups' width=150></e-column>
+
+                        <e-column field='remainingLowDose' headerText='Remaining Cups (LD)' width=180></e-column>
+                        <e-column field='remainingHighDose' headerText='Remaining Cups (HD)' width=180></e-column>
+                        <e-column field='remainingOverDose' headerText='Remaining Cups (OD)' width=180></e-column>
+                        <e-column field='TotalRemaining' headerText='Total Remaining Cups' width=180></e-column>
+                    </e-columns>
+                </ejs-grid>
             </v-card-text>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-            </v-card-actions>
           </v-card>
         </v-dialog>
       </v-row>
@@ -114,59 +98,109 @@
 </template>
 <script>
 import AUTH from "../../services/auth";
-import VueJsonToCsv from "vue-json-to-csv";
 import loading from "../../basic/loading.vue";
+import image from "../../../assets/logo.png";
 import moment from "moment";
+import { GridPlugin, Toolbar, ExcelExport } from "@syncfusion/ej2-vue-grids";
 export default {
   data() {
     return {
+            toolbarOptions: ['ExcelExport', 'Search'],
+
       formatDate: moment(new Date()).format("MM/DD/YYYY Hh:mm"),
       modalData: [],
+      downLoadData: [],
       dataInDB: [],
       search: null,
       cupName: null,
       headersForCup: [],
       loadingShow: false,
-      toCsv: [],
       dialogForCupSize: false,
-
-      dates: []
+      adminName: '',
+      dates: [new Date().toISOString().substr(0, 10), ]
     };
   },
   components: {
-    VueJsonToCsv,
     loading
   },
   mounted() {
+    this.tableForUpcomingCups();
     this.tableForAllCups();
+    this.getAdmin();
   },
   computed: {
     dateRangeText() {
       return this.dates.join(" ~ ");
     }
   },
+   provide: {
+        grid: [Toolbar, ExcelExport]
+    },
 
   methods: {
+    getAdmin(){
+      this.loadingShow = true
+      let params = {
+        uname: localStorage.getItem('adminId')
+      };
+      this.$axios.post(AUTH.url + "getUserData", params, AUTH.config).then(response => {
+        this.loadingShow = false
+        if(response.data.status){
+            AUTH.deauthenticate()
+        }
+        this.adminName = response.data.userdata[0].fname + ' ' + response.data.userdata[0].lname
+      })
+    },
+    toolbarClick(args) {
+      if (args.item.id === 'Grid_excelexport') { // 'Grid_excelexport' -> Grid component id + _ + toolbar item name
+        let excelExportProperties = {
+          fileName: this.formatDate + ' Cups.xlsx',
+          header: {
+            fromTop: 0,
+            height: 130,
+            contents: [
+              {
+                type: 'Image',
+                src: this.image,
+                position: { x: 435, y: 10 },
+                size: { height: 100, width: 250 },
+              }
+            ],
+            headerRows: 7,
+            rows: [
+              { cells: [{ colSpan: 17, value: "Driptea System", style: { fontColor: '#C67878', fontSize: 25, hAlign: 'Center', bold: true, } }] },
+              { cells: [{ colSpan: 17, value: "A.C. Cortes Ave., Looc", style: { fontColor: '#C67878', fontSize: 20, hAlign: 'Center', bold: true, } }] },
+              { cells: [{ colSpan: 17, value: "6014 Mandaue City, Philippine", style: { fontColor: '#C67878', fontSize: 20, hAlign: 'Center', bold: true, } }] },
+              { cells: [{ colSpan: 17, value: "0917 329 7269", style: { fontColor: '#C67878', fontSize: 20, hAlign: 'Center', bold: true, } }] },
+              { cells: [{ colSpan: 17, hyperlink: { target: 'https://www.facebook.com/driptealoocmandaue/', displayText: 'www.facebook.com/driptealoocmandaue' }, style: { hAlign: 'Center' } }] },
+              { cells: [{ colSpan: 17, hyperlink: { target: 'samuelazurajr@gmail.com' }, style: { hAlign: 'Center' } }] },
+            ]
+          },
+          footer: {
+            footerRows: 2,
+            rows: [
+              { cells:  [{ colSpan: 2, value: "Print By: " + this.adminName + '  ' +  moment(new Date()).format('MM/DD/YYYY'), style: {fontSize: 15, hAlign: 'Left', bold: true, }},]},
+            ]
+          }
+        };
+        this.$refs.grid.excelExport(excelExportProperties);
+      }
+    },
     close() {
       this.dialogForCupSize = false;
       this.tableForAllCups();
     },
     searchData() {
-      (this.toCsv = []),
-        (this.dialogForCupSize = true),
-        this.tableForUpcomingCups();
-    },
-    tableForCupsOnrackModal() {
-      this.tableForCupsOnrack();
-    },
-    tableForUpcomingCupsModal() {
-      this.tableForUpcomingCups();
-    },
-    tableForUsedCupsModal() {
-      this.tableForUsedCups();
-    },
-    tableForRemainingCupsModal() {
-      this.tableForRemainingCups();
+      this.dialogForCupSize = true
+      this.downLoadData = this.dataInDB
+      this.downLoadData[0]['Date'] = moment(this.dataInDB[0]['created_at']).format('MM/DD/YYYY')
+      this.downLoadData.forEach((el, index) => {
+        this.downLoadData[index]['Date'] = moment(el.created_at).format('MM/DD/YYYY')
+        this.downLoadData[index]['TotalOnRock'] = el.onRockLowDose + el.onRockHighDose + el.onRockOverDose
+        this.downLoadData[index]['TotalIncoming'] = el.incomingHighDose + el.incomingLowDose + el.incomingOverDose
+        this.downLoadData[index]['TotalRemaining'] = el.remainingLowDose + el.remainingHighDose + el.remainingOverDose
+        this.downLoadData[index]['TotalUsed'] = el.usedCupsLowDose + el.usedCupsHighDose + el.usedCupsLowDose
+      })
     },
     tableForAllCups() {
       this.loadingShow = true;
@@ -223,45 +257,12 @@ export default {
       this.$axios
         .post(AUTH.url + "retrieveCupForInventory", params, AUTH.config)
         .then(response => {
-          console.log(this.dates[0], this.dates[1]);
-
           if (response.data.status) {
             AUTH.deauthenticate();
           }
           this.modalData = response.data.quantityCupsInDB.reverse();
           response.data.quantityCupsInDB.forEach(element => {
             let thisDate = this.getDate(element.created_at);
-            this.toCsv.push({
-              Date: thisDate,
-              "Incoming Low Dose": element.incomingLowDose,
-              "Incoming High Dose": element.incomingHighDose,
-              "Incoming Over Dose": element.incomingOverDose,
-              "Total Incoming Cups":
-                element.incomingLowDose +
-                element.incomingHighDose +
-                element.incomingOverDose,
-              "Cups Onrack Low Dose": element.onRockLowDose,
-              "Cups Onrack High Dose": element.onRockHighDose,
-              "Cups Onrack Over Dose": element.onRockOverDose,
-              "Total Cups Onrack":
-                element.onRockLowDose +
-                element.onRockHighDose +
-                element.onRockOverDose,
-              "Used Cups Low Dose": element.usedCupsLowDose,
-              "Used Cups High Dose": element.usedCupsHighDose,
-              "Used Cups Over Dose": element.usedCupsOverDose,
-              "Total Used Cups":
-                element.usedCupsLowDose +
-                element.usedCupsHighDose +
-                element.usedCupsOverDose,
-              "Remaining Cups Low Dose": element.remainingLowDose,
-              "Remaining Cups High Dose": element.remainingHighDose,
-              "Remaining Cups Over Dose": element.remainingOverDose,
-              "Total Remaining Cups":
-                element.remainingLowDose +
-                element.remainingHighDose +
-                element.remainingOverDose
-            });
           });
           this.headersForCup = [
             { text: "Date", value: "created_at" },
@@ -365,11 +366,17 @@ export default {
 };
 </script>
 <style scoped>
+@import url("https://cdn.syncfusion.com/ej2/material.css");
 .table {
   margin-left: 50px;
   width: 90%;
 }
 td {
   text-align: center;
+}
+.calendarDate{
+  width: 0%;
+  margin-top: 2.3%;
+  margin-right: 3%;
 }
 </style>

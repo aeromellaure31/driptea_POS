@@ -7,9 +7,10 @@
                 color="white accent-4"
                 right
                 >
-                    <v-tab @click="tableDataCompleteOrder=true,tableDataPendingOrders=false,tableProcessOrders=false">Completed Orders</v-tab>
-                    <v-tab @click="tableDataCompleteOrder=false,tableDataPendingOrders=false,tableProcessOrders=true">Processing Orders</v-tab>
-                    <v-tab @click="tableDataCompleteOrder=false,tableDataPendingOrders=true,tableProcessOrders=false">Pending Orders</v-tab>
+                    <v-tab @click="tableDataCompleteOrder=true,tableDataPendingOrders=false,tableProcessOrders=false,tableCancelled=false">Completed Orders</v-tab>
+                    <v-tab @click="tableDataCompleteOrder=false,tableDataPendingOrders=false,tableProcessOrders=true,tableCancelled=false">Processing Orders</v-tab>
+                    <v-tab @click="tableDataCompleteOrder=false,tableDataPendingOrders=true,tableProcessOrders=false,tableCancelled=false">Pending Orders</v-tab>
+                    <v-tab @click="tableDataCompleteOrder=false,tableDataPendingOrders=false,tableProcessOrders=false,tableCancelled=true">Cancelled Orders</v-tab>
                 </v-tabs>
             </v-card>
  
@@ -127,6 +128,44 @@
                    </tbody>
                </v-simple-table>
                </div>
+           <div v-if="tableCancelled">
+                <v-simple-table
+               :items-per-page="5"
+               class="elevation-3"
+               >
+                    <thead>
+                        <tr v-if="tableDataCancelled !== null && tableDataCancelled.length > 0">
+                            <th>Date</th>
+                            <th>Customer Name</th>
+                            <th>Address</th>
+                            <th>Contact#</th>
+                            <th>Order #</th>
+                            <th>Product&nbsp;Ordered</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                            <th style="width: 15px;">Action</th>
+                        </tr>
+                            <div v-else>
+                            <empty :title="'No Cancelled Orders!'"></empty>
+                        </div>
+                   </thead>
+                    <tbody>
+                        <tr v-for="(items, index) in tableDataCancelled" :key="index">
+                            <td>{{getDate(items[0])}}</td>
+                            <td>{{items[0].get_customer ? items[0].get_customer[0].customerName : ''}}</td>
+                            <td>{{items[0].get_customer ? items[0].get_customer[0].customerAddress : ''}}</td>
+                            <td>{{items[0].get_customer ? items[0].get_customer[0].customerContactNumber : ''}}</td>
+                            <td>{{items[0].id}}</td>
+                            <td>{{getProduct(items)}}</td>
+                            <td>₱ {{getTotal(items)}}</td>
+                            <td>Cancelled Order</td>
+                            <td style="width: 10%;">
+                                <v-icon medium data-toggle="modal" data-target="#myModal" @click="viewOrder(items), title = 'Cancelled Orders'">mdi-eye</v-icon>
+                            </td>
+                        </tr>
+                    </tbody>
+                </v-simple-table>
+            </div>
        </center>
        <div class="modal fade" id="myModal" role="dialog">
             <div class="modal-dialog modal-lg">
@@ -203,9 +242,11 @@ export default {
       tableDataCompleteOrder: true,
       tableDataPendingOrders: false,
       tableProcessOrders: false,
+      tableCancelled: false,
       config: config,
       loadingShow: false,
       tableDataPending: [],
+      tableDataCancelled: [],
       search: null,
       productName: null,
       description: null,
@@ -233,6 +274,7 @@ export default {
     this.retrieveAddOns();
     this.retrieveCupType();
     this.retrieveProcessed();
+    this.retrieveCancelled();
     this.tableDataCompleteOrder = true;
     let pusher = new Pusher(this.config.PUSHER_APP_KEY, {
       cluster: this.config.PUSHER_APP_CLUSTER,
@@ -248,6 +290,7 @@ export default {
         this.retrieveAddOns();
         this.retrieveCupType();
         this.retrieveProcessed();
+        this.retrieveCancelled();
         $("#myModal").modal("hide");
         this.tableDataCompleteOrder = true
         this.tableDataPendingOrders = false
@@ -278,7 +321,8 @@ export default {
             this.loadingShow = true
             let params = {
                 id: id,
-                status: 'cancel'
+                status: 'cancel',
+                cashierId: localStorage.getItem('cashierId') ? localStorage.getItem('cashierId') : localStorage.getItem('adminId'),
             }
             this.$axios.post(AUTH.url + 'updateCancelOrder', params, AUTH.config).then(res => {
                 this.loadingShow = false
@@ -299,40 +343,6 @@ export default {
                     this.tableProcessOrders = false
                 })
             })
-        }else{
-            // let par = {
-            //     usedCupsLowDose: low,
-            //     usedCupsHighDose: high,
-            //     usedCupsOverDose: over
-            // }
-            // this.$axios.post(AUTH.url + 'updateDeletedCups', par, AUTH.config).then(response => {
-            //     let params = {
-            //         id: id,
-            //         checkoutId: item[0].storeCheckoutsId
-            //     }
-            //     this.loadingShow = true;
-            //     this.$axios
-            //         .post(AUTH.url + "deleteCheckout", params, AUTH.config)
-            //         .then(response => {
-            //         if (response.data.status) {
-            //             AUTH.deauthenticate();
-            //         }
-            //         this.loadingShow = false;
-            //         swal({
-            //         title: "You have successfully deleted the order",
-            //         icon: "success"
-            //         }).then(el => {
-            //             this.retrievePending();
-            //             this.retrieve();
-            //             this.retrieveAddOns();
-            //             this.retrieveCupType();
-            //             this.retrieveProcessed();
-            //             this.tableDataCompleteOrder = false
-            //             this.tableDataPendingOrders = false
-            //             this.tableProcessOrders = true
-            //         });
-            //     });
-            // })
         }
     },
     getCup(item) {
@@ -410,7 +420,8 @@ export default {
                 this.loadingShow = true
                 let params = {
                     data: item,
-                    status: 'complete'
+                    status: 'complete',
+                    cashierId: localStorage.getItem('cashierId') ? localStorage.getItem('cashierId') : localStorage.getItem('adminId'),
                 }
                 this.$axios.post(AUTH.url + 'updateStatus', params, AUTH.config).then(res => {
                     this.loadingShow = false
@@ -468,8 +479,7 @@ export default {
     },
     retrievePending() {
         this.loadingShow = true;
-      this.$axios
-        .post(AUTH.url + "retrievePendingOrders", {}, AUTH.config)
+        this.$axios.post(AUTH.url + "retrievePendingOrders", {}, AUTH.config)
         .then(response => {
             if (response.data.status) {
                 AUTH.deauthenticate();
@@ -480,6 +490,21 @@ export default {
                 this.tableDataPending.push(response.data.order[element]);
             });
             this.tableDataPending.reverse()
+        });
+    },
+    retrieveCancelled() {
+        this.loadingShow = true;
+        this.$axios.post(AUTH.url + "retrieveAllCancelled", {}, AUTH.config)
+        .then(response => {
+            if (response.data.status) {
+                AUTH.deauthenticate();
+            }
+            this.tableDataCancelled = []
+            this.loadingShow = false;
+            Object.keys(response.data.order).forEach(element => {
+                this.tableDataCancelled.push(response.data.order[element]);
+            });
+            this.tableDataCancelled.reverse()
         });
     },
     retrieveAddOns() {

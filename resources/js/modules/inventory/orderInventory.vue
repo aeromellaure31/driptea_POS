@@ -277,25 +277,23 @@ export default {
     toolbarClick(args) {
       if (args.item.id === 'Grid_excelexport') {
         let excelExportProperties = {
-          fileName: this.formatDate + ' Sales.xlsx',
+          fileName: this.formatDate + ' Order inventory.xlsx',
           header: {
-            headerRows: 10,
+            headerRows: 7,
             rows: [
-              { cells: [{ colSpan: this.categoryAll.length + 4, value: "Driptea System", style: { fontColor: '#C67878', fontSize: 25, hAlign: 'Center', bold: true, } }] },
-              { cells: [{ colSpan: this.categoryAll.length + 4, value: "A.C. Cortes Ave., Looc", style: { fontColor: '#C67878', fontSize: 20, hAlign: 'Center', bold: true, } }] },
-              { cells: [{ colSpan: this.categoryAll.length + 4, value: "6014 Mandaue City, Philippine", style: { fontColor: '#C67878', fontSize: 20, hAlign: 'Center', bold: true, } }] },
-              { cells: [{ colSpan: this.categoryAll.length + 4, value: "0917 329 7269", style: { fontColor: '#C67878', fontSize: 20, hAlign: 'Center', bold: true, } }] },
+              { cells: [{ colSpan: this.categoryAll.length + 4, value: "Driptea System", style: { fontColor: '#C67878', fontSize: 20, hAlign: 'Center', bold: true, } }] },
+              { cells: [{ colSpan: this.categoryAll.length + 4, value: "A.C. Cortes Ave., Looc", style: { fontColor: '#C67878', fontSize: 15, hAlign: 'Center', bold: true, } }] },
+              { cells: [{ colSpan: this.categoryAll.length + 4, value: "6014 Mandaue City, Philippine", style: { fontColor: '#C67878', fontSize: 15, hAlign: 'Center', bold: true, } }] },
+              { cells: [{ colSpan: this.categoryAll.length + 4, value: "0917 329 7269", style: { fontColor: '#C67878', fontSize: 15, hAlign: 'Center', bold: true, } }] },
               { cells: [{ colSpan: this.categoryAll.length + 4, hyperlink: { target: 'https://www.facebook.com/driptealoocmandaue/', displayText: 'www.facebook.com/driptealoocmandaue' }, style: { hAlign: 'Center' } }] },
               { cells: [{ colSpan: this.categoryAll.length + 4, hyperlink: { target: 'samuelazurajr@gmail.com' }, style: { hAlign: 'Center' } }] },
-              { cells:  [{ colSpan: this.categoryAll.length + 4, value: ""}]},
-              { cells:  [{ colSpan: 2, value: "Download By: " + this.adminName, style: {fontSize: 15, hAlign: 'Left', bold: true, }},]},
-              { cells:  [{ colSpan: 2, value: "Date Downloaded: " + moment(new Date()).format('MM/DD/YYYY'), style: {fontSize: 15, hAlign: 'Left', bold: true,} }]},
             ]
           },
           footer: {
             footerRows: 3,
             rows: [
-              { cells: [{ colSpan: this.categoryAll.length + 4, value: ("Total Quantity Used: " + this.overAllTotal), style: { fontSize: 20, hAlign: 'Center', bold: true } }] },
+              { cells: [{ colSpan: this.categoryAll.length + 4, value: ("Total Quantity Used: " + this.overAllTotal), style: { fontSize: 15, hAlign: 'Right', bold: true } }] },
+              { cells:  [{ colSpan: this.categoryAll.length + 4, value: "Print By: " + this.adminName + '  ' +  moment(new Date()).format('MM/DD/YYYY'), style: {fontSize: 15, hAlign: 'Left', bold: true, }},]},
             ]
           }
         };

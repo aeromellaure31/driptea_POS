@@ -34,7 +34,7 @@
                                     <th>Unit Price</th>
                                     <th>Quantity</th>
                                     <th>Total</th>
-                                    <th>Status Check</th>
+                                    <th v-if="customerType === 'online'">Status Check</th>
                                     <th style="width: 15px;" >❌</th>
                                 </tr>
                                 <tbody class="Caption">
@@ -45,7 +45,7 @@
                                         <td>{{convert(item.choosenPrice)}}</td>
                                         <td>{{item.quantity}}</td>
                                         <td>{{convert(item.subTotal)}}</td>
-                                        <td>
+                                        <td v-if="customerType === 'online'">
                                             <button :class="item.status === 'Not Available' ? 'btnClick' : 'btnAvailability'" @click="checkAvailability('Not Available', item)">N/A</button>
                                             <button :class="item.status === 'Available' ? 'btnClick' : 'btnAvailability'" @click="checkAvailability('Available', item)">Available</button>
                                         </td>
@@ -70,9 +70,9 @@
                                     <input v-if="customerType !== 'fb'  && customerType !== 'online'" style="display: inline;" type="number" placeholder="₱ 0.00" v-model="cash"><br>
                                     <p v-if="customerType !== 'fb'  && customerType !== 'online'" style="display: inline;" class="pStyle">Change:&emsp;&emsp;&emsp;</p>
                                     <p v-if="customerType !== 'fb'  && customerType !== 'online'" style="display: inline;" class="pStyle">₱ {{convertChange()}}</p>
-                                    <div >
-                                    <button class="btn btn-primary checkout overline" @click="checkoutOrder">Checkout</button>
-                                    <button class="btn btn-danger checkout overline" @click="cancelOrder">Cancel</button>
+                                    <div>
+                                        <button class="btn btn-primary checkout overline" @click="checkoutOrder">Checkout</button>
+                                        <button v-if="customerType === 'online'" class="btn btn-danger checkout overline" @click="cancelOrder">Cancel</button>
                                     </div>
                                 </center>
                             </div>
@@ -444,7 +444,8 @@ export default {
                     incash: this.cash,
                     change: parseInt(this.convertChange()),
                     order: this.newTableData,
-                    status: this.customerType === 'online' || this.customerType === 'fb' ? 'processing' : 'complete'
+                    status: this.customerType === 'online' || this.customerType === 'fb' ? 'processing' : 'complete',
+                    orderHistory: this.customerType
                 }
                 this.$axios.post(AUTH.url + 'addCheckout', params, AUTH.config).then(res => {
                     this.loadingShow = true
@@ -501,7 +502,8 @@ export default {
                 this.loadingShow = true
                 let params = {
                     id: localStorage.getItem('customer'),
-                    status: 'cancel'
+                    status: 'cancel',
+                    cashierId: localStorage.getItem('cashierId') ? localStorage.getItem('cashierId') : localStorage.getItem('adminId'),
                 }
                 this.$axios.post(AUTH.url + 'updateStatusOrder', params, AUTH.config).then(res => {
                     this.loadingShow = false

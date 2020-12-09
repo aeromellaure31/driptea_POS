@@ -347,6 +347,11 @@ export default {
         icon: "mdi-account-multiple-plus",
         text: "Register Account",
         route: "/registerAccount"
+      },
+      {
+        icon: "mdi-history",
+        text: "Log Trails",
+        route: "/logs"
       }
     ],
     items: [],

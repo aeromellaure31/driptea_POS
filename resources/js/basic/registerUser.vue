@@ -214,7 +214,7 @@
                   ></v-text-field>
                 </v-flex>
                 <v-btn
-                  type="button"
+                  type="submit"
                   outlined
                   color="orange"
                   @click="register"
