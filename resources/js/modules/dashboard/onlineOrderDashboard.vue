@@ -74,9 +74,9 @@
                                             </i><br>
                                             <label for="size" style="font-size: 15px; font-weight: bold">Size :</label>
                                             <select class="form-control" v-model="size" @change="getSizePrice()">
-                                                <option value="lowDose" selected>Low Dose</option>
-                                                <option value="highDose">High Dose</option>
-                                                <option value="overDose">Over Dose</option>
+                                                <option v-if="lowdoseQuantity > 5" value="lowDose" selected>Low Dose ({{lowdoseQuantity}} available quantity)</option>
+                                                <option v-if="highdoseQuantity > 5" value="highDose">High Dose ({{highdoseQuantity}} available quantity)</option>
+                                                <option v-if="overdoseQuantity > 5" value="overDose">Over Dose ({{overdoseQuantity}} available quantity)</option>
                                             </select>
                                         </div>
                                         <div class="form-group">
@@ -245,6 +245,10 @@ export default {
             errorMessage1: null,
             errorMessage2: null,
             errorMessage3: null,
+            lowdoseQuantity: 0,
+            highdoseQuantity: 0,
+            overdoseQuantity: 0,
+            buySize: 0
         }
     },
     components:{
@@ -256,18 +260,32 @@ export default {
         this.retrieveProduct()
         this.retrieveAddOns()
         this.retrieveCupType()
+        this.retrieveCupsQuantity()
     },
     methods: {
+        retrieveCupsQuantity(){
+            this.$axios.post(AUTH.url + 'retrieveCupSize', {}, AUTH.config).then(res => {
+                if(res.data.status){
+                    AUTH.deauthenticate()
+                }
+                this.lowdoseQuantity = res.data.quantityCupsInDB[0].remainingLowDose
+                this.highdoseQuantity = res.data.quantityCupsInDB[0].remainingHighDose
+                this.overdoseQuantity = res.data.quantityCupsInDB[0].remainingOverDose
+            })
+        },
         direct(){
             ROUTER.push('/customerCart').catch(()=>{})
         },
         getSizePrice(){
             if(this.size === 'highDose'){
                 this.total = this.highprice
+                this.buySize = this.highdoseQuantity
             }else if(this.size === 'overDose'){
                 this.total = this.overprice
+                this.buySize = this.overdoseQuantity
             }else if(this.size === 'lowDose'){
                 this.total = this.price
+                this.buySize = this.lowdoseQuantity
             }
             this.priceShown = parseInt(this.quantity) * (parseInt(this.total) + parseInt(this.totalAddOns) + parseInt(this.cupTypePrice))
         },
@@ -338,26 +356,30 @@ export default {
         },
         addToCart(){
             if(this.quantity <= 0){
-                this.errorMessage3 = 'quantity must be greater than 0!'
+                this.errorMessage3 = 'quantity must be greater than 0'
+            }else if(this.quantity > this.buySize){
+                this.errorMessage3 = 'quantity is too much'
             }else{
                 this.errorMessage3 = null
             }
             if(this.size === null){
-                this.errorMessage = 'cup size is required!'
+                this.errorMessage = 'cup size is required'
             }else{
                 this.errorMessage = null
             }
             if(this.sugarLevel === null){
-                this.errorMessage2 = 'sugar level is required!'
+                this.errorMessage2 = 'sugar level is required'
             }else{
                 this.errorMessage2 = null
             }
             if(this.cupType === null){
-                this.errorMessage1 = 'cup type is required!'
+                this.errorMessage1 = 'cup type is required'
             }else{
                 this.errorMessage1 = null
             }
-            if(this.quantity > 0 && this.size !== null && this.sugarLevel !== null && this.cupType !== null){
+            if(this.errorMessage === null && this.errorMessage1 === null &&  this.errorMessage2 === null && 
+            this.errorMessage3 === null && this.quantity > 0 && this.size !== null &&
+            this.sugarLevel !== null && this.cupType !== null){
                 if(localStorage.getItem('customerOnlineId') === null){
                     let param = {
                         customerType: "onlineOrder",
@@ -427,6 +449,10 @@ export default {
             this.addOns = []
         },
         showModal(item){
+            this.errorMessage = null
+            this.errorMessage1 = null
+            this.errorMessage2 = null
+            this.errorMessage3 = null
             this.size = 'lowDose'
             this.sugarLevel = null
             this.cupType = null

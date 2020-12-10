@@ -262,7 +262,11 @@ __webpack_require__.r(__webpack_exports__);
       errorMessage: null,
       errorMessage1: null,
       errorMessage2: null,
-      errorMessage3: null
+      errorMessage3: null,
+      lowdoseQuantity: 0,
+      highdoseQuantity: 0,
+      overdoseQuantity: 0,
+      buySize: 0
     };
   },
   components: {
@@ -274,24 +278,41 @@ __webpack_require__.r(__webpack_exports__);
     this.retrieveProduct();
     this.retrieveAddOns();
     this.retrieveCupType();
+    this.retrieveCupsQuantity();
   },
   methods: {
+    retrieveCupsQuantity: function retrieveCupsQuantity() {
+      var _this = this;
+
+      this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_1__["default"].url + 'retrieveCupSize', {}, _services_auth__WEBPACK_IMPORTED_MODULE_1__["default"].config).then(function (res) {
+        if (res.data.status) {
+          _services_auth__WEBPACK_IMPORTED_MODULE_1__["default"].deauthenticate();
+        }
+
+        _this.lowdoseQuantity = res.data.quantityCupsInDB[0].remainingLowDose;
+        _this.highdoseQuantity = res.data.quantityCupsInDB[0].remainingHighDose;
+        _this.overdoseQuantity = res.data.quantityCupsInDB[0].remainingOverDose;
+      });
+    },
     direct: function direct() {
       _router__WEBPACK_IMPORTED_MODULE_2__["default"].push('/customerCart')["catch"](function () {});
     },
     getSizePrice: function getSizePrice() {
       if (this.size === 'highDose') {
         this.total = this.highprice;
+        this.buySize = this.highdoseQuantity;
       } else if (this.size === 'overDose') {
         this.total = this.overprice;
+        this.buySize = this.overdoseQuantity;
       } else if (this.size === 'lowDose') {
         this.total = this.price;
+        this.buySize = this.lowdoseQuantity;
       }
 
       this.priceShown = parseInt(this.quantity) * (parseInt(this.total) + parseInt(this.totalAddOns) + parseInt(this.cupTypePrice));
     },
     getCupPrice: function getCupPrice() {
-      var _this = this;
+      var _this2 = this;
 
       this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_1__["default"].url + 'retrieveOneCupType', {
         cupType: this.cupType
@@ -300,37 +321,37 @@ __webpack_require__.r(__webpack_exports__);
           _services_auth__WEBPACK_IMPORTED_MODULE_1__["default"].deauthenticate();
         }
 
-        _this.cupTypePrice = parseInt(res.data.cupType[0].inputCupOnlinePrice);
-        _this.priceShown = parseInt(_this.quantity) * (parseInt(_this.total) + parseInt(_this.totalAddOns) + parseInt(_this.cupTypePrice));
+        _this2.cupTypePrice = parseInt(res.data.cupType[0].inputCupOnlinePrice);
+        _this2.priceShown = parseInt(_this2.quantity) * (parseInt(_this2.total) + parseInt(_this2.totalAddOns) + parseInt(_this2.cupTypePrice));
       });
     },
     getQuantity: function getQuantity() {
       this.priceShown = parseInt(this.quantity) * (parseInt(this.total) + parseInt(this.totalAddOns) + parseInt(this.cupTypePrice));
     },
     retrieveCupType: function retrieveCupType() {
-      var _this2 = this;
+      var _this3 = this;
 
       this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_1__["default"].url + "retrieveCupType", {}, _services_auth__WEBPACK_IMPORTED_MODULE_1__["default"].config).then(function (response) {
         if (response.data.status) {
           _services_auth__WEBPACK_IMPORTED_MODULE_1__["default"].deauthenticate();
         }
 
-        _this2.cupData = response.data.cupType;
+        _this3.cupData = response.data.cupType;
       });
     },
     retrieveAddOns: function retrieveAddOns() {
-      var _this3 = this;
+      var _this4 = this;
 
       this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_1__["default"].url + "retrievingAddOns", {}, _services_auth__WEBPACK_IMPORTED_MODULE_1__["default"].config).then(function (response) {
         if (response.data.status) {
           _services_auth__WEBPACK_IMPORTED_MODULE_1__["default"].deauthenticate();
         }
 
-        _this3.addOnsData = response.data.addons;
+        _this4.addOnsData = response.data.addons;
       });
     },
     retrieveCategory: function retrieveCategory() {
-      var _this4 = this;
+      var _this5 = this;
 
       this.loadingShow = true;
       this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_1__["default"].url + 'retrieveCategoryAscending', {}, _services_auth__WEBPACK_IMPORTED_MODULE_1__["default"].config).then(function (res) {
@@ -338,15 +359,15 @@ __webpack_require__.r(__webpack_exports__);
           _services_auth__WEBPACK_IMPORTED_MODULE_1__["default"].deauthenticate();
         }
 
-        _this4.data = res.data.addCategory;
-        _this4.loadingShow = false;
+        _this5.data = res.data.addCategory;
+        _this5.loadingShow = false;
       });
     },
     redirect: function redirect(param) {
       _router__WEBPACK_IMPORTED_MODULE_2__["default"].push('/productOnline/' + param)["catch"](function () {});
     },
     retrieveProduct: function retrieveProduct() {
-      var _this5 = this;
+      var _this6 = this;
 
       this.loadingShow = true;
       this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_1__["default"].url + "retrieveAllProductAscending", {}, _services_auth__WEBPACK_IMPORTED_MODULE_1__["default"].config).then(function (res) {
@@ -354,12 +375,12 @@ __webpack_require__.r(__webpack_exports__);
           _services_auth__WEBPACK_IMPORTED_MODULE_1__["default"].deauthenticate();
         }
 
-        _this5.productData = res.data.product;
-        _this5.loadingShow = false;
+        _this6.productData = res.data.product;
+        _this6.loadingShow = false;
       });
     },
     addTotalPrice: function addTotalPrice(item, event) {
-      var _this6 = this;
+      var _this7 = this;
 
       this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_1__["default"].url + "retrieveOneAddOn", {
         id: item.id
@@ -368,45 +389,47 @@ __webpack_require__.r(__webpack_exports__);
           _services_auth__WEBPACK_IMPORTED_MODULE_1__["default"].deauthenticate();
         }
 
-        _this6.addOnsPrice = parseInt(response.data.addons.onlineAddOnsPrice);
+        _this7.addOnsPrice = parseInt(response.data.addons.onlineAddOnsPrice);
 
         if (event.target.checked) {
-          _this6.totalAddOns += _this6.addOnsPrice;
+          _this7.totalAddOns += _this7.addOnsPrice;
         } else {
-          _this6.totalAddOns -= _this6.addOnsPrice;
+          _this7.totalAddOns -= _this7.addOnsPrice;
         }
 
-        _this6.priceShown = parseInt(_this6.quantity) * (parseInt(_this6.total) + parseInt(_this6.totalAddOns) + parseInt(_this6.cupTypePrice));
+        _this7.priceShown = parseInt(_this7.quantity) * (parseInt(_this7.total) + parseInt(_this7.totalAddOns) + parseInt(_this7.cupTypePrice));
       });
     },
     addToCart: function addToCart() {
-      var _this7 = this;
+      var _this8 = this;
 
       if (this.quantity <= 0) {
-        this.errorMessage3 = 'quantity must be greater than 0!';
+        this.errorMessage3 = 'quantity must be greater than 0';
+      } else if (this.quantity > this.buySize) {
+        this.errorMessage3 = 'quantity is too much';
       } else {
         this.errorMessage3 = null;
       }
 
       if (this.size === null) {
-        this.errorMessage = 'cup size is required!';
+        this.errorMessage = 'cup size is required';
       } else {
         this.errorMessage = null;
       }
 
       if (this.sugarLevel === null) {
-        this.errorMessage2 = 'sugar level is required!';
+        this.errorMessage2 = 'sugar level is required';
       } else {
         this.errorMessage2 = null;
       }
 
       if (this.cupType === null) {
-        this.errorMessage1 = 'cup type is required!';
+        this.errorMessage1 = 'cup type is required';
       } else {
         this.errorMessage1 = null;
       }
 
-      if (this.quantity > 0 && this.size !== null && this.sugarLevel !== null && this.cupType !== null) {
+      if (this.errorMessage === null && this.errorMessage1 === null && this.errorMessage2 === null && this.errorMessage3 === null && this.quantity > 0 && this.size !== null && this.sugarLevel !== null && this.cupType !== null) {
         if (localStorage.getItem('customerOnlineId') === null) {
           var param = {
             customerType: "onlineOrder",
@@ -423,19 +446,19 @@ __webpack_require__.r(__webpack_exports__);
             var parameter = {
               customerId: res.data.customerDetails.id,
               onlineId: localStorage.getItem('customerId'),
-              productId: _this7.itemId,
-              quantity: _this7.quantity,
+              productId: _this8.itemId,
+              quantity: _this8.quantity,
               customerType: 'online',
-              size: _this7.size,
-              sugarLevel: _this7.sugarLevel,
-              choosenPrice: _this7.total,
-              cupType: _this7.cupType,
+              size: _this8.size,
+              sugarLevel: _this8.sugarLevel,
+              choosenPrice: _this8.total,
+              cupType: _this8.cupType,
               status: 'incart',
-              addOns: _this7.addOns,
-              subTotal: _this7.priceShown
+              addOns: _this8.addOns,
+              subTotal: _this8.priceShown
             };
 
-            _this7.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_1__["default"].url + 'addOrder', parameter, _services_auth__WEBPACK_IMPORTED_MODULE_1__["default"].config).then(function (response) {
+            _this8.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_1__["default"].url + 'addOrder', parameter, _services_auth__WEBPACK_IMPORTED_MODULE_1__["default"].config).then(function (response) {
               if (response.data.status) {
                 _services_auth__WEBPACK_IMPORTED_MODULE_1__["default"].deauthenticate();
               }
@@ -480,6 +503,10 @@ __webpack_require__.r(__webpack_exports__);
       this.addOns = [];
     },
     showModal: function showModal(item) {
+      this.errorMessage = null;
+      this.errorMessage1 = null;
+      this.errorMessage2 = null;
+      this.errorMessage3 = null;
       this.size = 'lowDose';
       this.sugarLevel = null;
       this.cupType = null;
@@ -817,19 +844,52 @@ var render = function() {
                                 }
                               },
                               [
-                                _c(
-                                  "option",
-                                  { attrs: { value: "lowDose", selected: "" } },
-                                  [_vm._v("Low Dose")]
-                                ),
+                                _vm.lowdoseQuantity > 5
+                                  ? _c(
+                                      "option",
+                                      {
+                                        attrs: {
+                                          value: "lowDose",
+                                          selected: ""
+                                        }
+                                      },
+                                      [
+                                        _vm._v(
+                                          "Low Dose (" +
+                                            _vm._s(_vm.lowdoseQuantity) +
+                                            " available quantity)"
+                                        )
+                                      ]
+                                    )
+                                  : _vm._e(),
                                 _vm._v(" "),
-                                _c("option", { attrs: { value: "highDose" } }, [
-                                  _vm._v("High Dose")
-                                ]),
+                                _vm.highdoseQuantity > 5
+                                  ? _c(
+                                      "option",
+                                      { attrs: { value: "highDose" } },
+                                      [
+                                        _vm._v(
+                                          "High Dose (" +
+                                            _vm._s(_vm.highdoseQuantity) +
+                                            " available quantity)"
+                                        )
+                                      ]
+                                    )
+                                  : _vm._e(),
                                 _vm._v(" "),
-                                _c("option", { attrs: { value: "overDose" } }, [
-                                  _vm._v("Over Dose")
-                                ])
+                                _vm.overdoseQuantity > 5
+                                  ? _c(
+                                      "option",
+                                      { attrs: { value: "overDose" } },
+                                      [
+                                        _vm._v(
+                                          "Over Dose (" +
+                                            _vm._s(_vm.overdoseQuantity) +
+                                            " available quantity)"
+                                        )
+                                      ]
+                                    )
+                                  : _vm._e()
                               ]
                             )
                           ]),
