@@ -355,6 +355,9 @@ export default {
             })
         },
         addToCart(){
+            if(this.lowdoseQuantity <= 5){
+                this.size = null
+            }
             if(this.quantity <= 0){
                 this.errorMessage3 = 'quantity must be greater than 0'
             }else if(this.quantity > this.buySize){

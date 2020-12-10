@@ -403,6 +403,10 @@ __webpack_require__.r(__webpack_exports__);
     addToCart: function addToCart() {
       var _this8 = this;
 
+      if (this.lowdoseQuantity <= 5) {
+        this.size = null;
+      }
+
       if (this.quantity <= 0) {
         this.errorMessage3 = 'quantity must be greater than 0';
       } else if (this.quantity > this.buySize) {
