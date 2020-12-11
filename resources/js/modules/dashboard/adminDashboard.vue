@@ -511,7 +511,6 @@ export default {
       let forSeries = [];
       Axios.post(AUTH.url + "getDailyProductSales", params, AUTH.config)
         .then(response => {
-          // console.log("heloooooooo ", response);
           if (response.data.status) {
             AUTH.deauthenticate();
           }
@@ -912,7 +911,6 @@ export default {
                     name: PRODUCT,
                     data: this.secondpoints
                   });
-                  // console.log("secondpoints ===", this.secondpoints);
                   PRODUCT = "";
                   this.secondpoints = [];
                 }
@@ -1029,20 +1027,16 @@ export default {
         from: null
       };
       let datas = [];
-      // console.log("hey bb ");
       Axios.post(AUTH.url + "getAnnualProductSales", params, AUTH.config)
         .then(response => {
-          console.log("ang response bb ", response);
           if (response.data.status) {
             AUTH.deauthenticate();
           }
           for (var i = startingYR; i <= endYear; i++) {
             labelsArr.push(i);
           }
-          // console.log("year labels bruh ",labelsArr)
           labelsArr.forEach(label => {
             response.data.prods.forEach(element => {
-              // console.log("ang element bb ",element.year);
               Product = element.ProductName;
               if (element.year === label) {
                 pointsArr.push(element.quan);
@@ -1056,50 +1050,13 @@ export default {
             });
             let pointsArr = [];
             let Product = "";
-            console.log("the series ... ", Seriesarray);
           });
-          // this.loadingShow = false;
-          // response.data.prods.forEach(element => {
-          //   if (element.year <= endYear && element.year == startingYR) {
-          //     array.push(element.year);
-          //     labelsArr.push(startingYR);
-          //     startingYR++;
-          //     datas.push(element.quan)
-          //     pointsArr.push({
-          //       name: element.ProductName,
-          //       data: datas
-          //     })
-          //   }
-          // });
-          // // for(var i = 0; i < this.array.length; i++){
-          // // }
-          // this.secondpoints = pointsArr ;
-          // console.log("ang points bb", this.secondpoints)
-          // this.annualLabels = labelsArr;
-          // this.series2 = pointsArr;
-          // this.options2 = {
-          //   colors: ["#ff5b04"],
-          //   chart: {
-          //     id: "product-summary"
-          //   },
-          //   xaxis: {
-          //     categories: this.annualLabels
-          //   },
-          //   stroke: {
-          //     width: 2,
-          //     curve: "smooth"
-          //   }
-          // };
         })
-        .catch(error => {
-          console.log("ang mahiwagang mensahe ", error);
-        });
     },
     onFilter2() {
       if (this.thefilter2 == "Daily") {
         this.options2.xaxis.categories = [];
         this.MonthLabel2 = this.mnths[this.theMonth - 1];
-        // this.options2.xaxis.categories = this.xlabels;
         this.dailyProductSale();
         this.ok4 = true;
         this.ok5 = false;
@@ -1107,22 +1064,18 @@ export default {
       } else if (this.thefilter2 == "Weekly") {
       } else if (this.thefilter2 == "Monthly") {
         this.MonthLabel2 = new Date(this.thedate2).getFullYear();
-        // this.options2.xaxis.categories = this.mnths;
         this.ok4 = false;
         this.ok5 = true;
         this.ok6 = false;
         this.MonthlyProductSale(this.yrvalueS);
-        // console.log("ang colors bruh ", this.options2.colors);
       } else if (this.thefilter2 == "Quarterly") {
         this.MonthLabel2 = new Date(this.thedate2).getFullYear();
-        // this.options2.xaxis.categories = this.quarter;
         this.QuarterlyProductSale(this.yrvalueS);
         this.ok4 = false;
         this.ok5 = true;
         this.ok6 = false;
       } else if (this.thefilter2 == "Semi-Annual") {
         this.MonthLabel2 = new Date(this.thedate2).getFullYear();
-        // this.options2.xaxis.categories = this.semi;
         this.SemiProductSale(this.yrvalueS);
         this.ok4 = false;
         this.ok5 = true;

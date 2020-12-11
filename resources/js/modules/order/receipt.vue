@@ -26,20 +26,25 @@
             </tr>
         </table>
         <div class="col-md-6" id="summary"></div>
-
         <div style="font-size:12px;" class="text-end  display:block">
-            <p v-if="customerType === 'fb'"><b>Subtotal: {{Subtotal}}</b></p>
-            <p v-if="customerType === 'fb'"><b>Delivery Fee: {{Delivery_Fee}}</b></p>
-            <p><b>Total: {{Total}}</b></p>
-            <p v-if="customerType !== 'fb'"><b>Amount: {{Amount}}</b></p>
-            <p v-if="customerType !== 'fb'"><b>Change: {{Change}}</b></p>
+            <p class="styleReceipt" v-if="customerType === 'fb' || customerType === 'online'"><b>Subtotal: ₱ {{Subtotal}}.00</b></p>
+            <p class="styleReceipt" v-if="customerType === 'fb' || customerType === 'online'"><b>Delivery Fee: ₱ {{Delivery_Fee}}.00</b></p>
+            <p class="styleTotal">Total: ₱ {{Total}}.00</p>
+            <p class="styleReceipt" v-if="customerType !== 'fb' && customerType !== 'online'"><b>Amount: ₱ {{Amount}}.00</b></p>
+            <p class="styleReceipt" v-if="customerType !== 'fb' && customerType !== 'online'"><b>Change: ₱ {{Change}}.00</b></p>
         </div>
-        <button type="button" class="btn btn-primary float-right" @click="hide()">OK</button>
-
+        <button type="button" class="btn btn-primary float-right" style="width:100px" @click="hide()">OK</button>
     </div>
 </div>
 </template>
 <style scoped>
+.styleReceipt{
+    font-weight: bold;
+}
+.styleTotal{
+    font-weight: bold;
+    font-size: 15px;
+}
 hr {
     border: 1px solid gray;
 }

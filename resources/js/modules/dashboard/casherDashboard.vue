@@ -107,67 +107,7 @@
               </v-card>
           </v-dialog>
       </v-row>
-  </template>
-
-
-    <!-- <div class="modal fade" id="viewDetails" role="dialog">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h3>Customer's Information</h3>
-            <button type="button" class="close" data-dismiss="modal">
-              &times;</button
-            ><br />
-          </div>
-          <div class="modal-body">
-            <div>
-              <form>
-                <div class="form-group">
-                  <label for="fName" style="font-size: 15px; font-weight: bold"
-                    >Full name:</label
-                  >
-                  <i><span v-if="error !== null" class="text-danger text-center">{{error}}</span></i>
-                  <input class="form-control" type="text" @change="validate('fullname')" v-model="fullName" />
-                </div>
-                <div class="form-group">
-                  <label
-                    for="address"
-                    style="font-size: 15px; font-weight: bold"
-                    >Address:</label
-                  >
-                  <i><span v-if="error2 !== null" class="text-danger text-center">{{error2}}</span></i>
-                  <input class="form-control" type="text" @change="validate('address')" v-model="address" />
-                </div>
-                <div class="form-group">
-                  <label
-                    for="contactNumber"
-                    style="font-size: 15px; font-weight: bold"
-                    >Phone Number:</label
-                  >
-                  <i><span v-if="error3 !== null" class="text-danger text-center">{{error3}}</span></i>
-                  <input
-                    class="form-control"
-                    type="text"
-                    @change="validate('contactNumber')"
-                    v-model="contactNumber"
-                  />
-                </div>
-              </form>
-            </div>
-          </div><hr>
-          <div>
-            <button
-              type="button"
-              class="btn btn-primary"
-              @click="continueFb()"
-            >
-              Continue
-            </button>
-          </div>
-        </div>
-      </div>
-    </div> -->
-
+    </template>
     <loading v-if="loadingShow"></loading>
   </v-container>
 </template>

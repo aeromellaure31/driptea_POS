@@ -431,7 +431,6 @@ export default {
                 status: 'complete'
             }
             this.$axios.post(AUTH.url + 'updateStatusOrder', params, AUTH.config).then(res => {
-                this.loadingShow = true
                 if(res.data.status){
                     AUTH.deauthenticate()
                 }
@@ -448,7 +447,6 @@ export default {
                     orderHistory: this.customerType
                 }
                 this.$axios.post(AUTH.url + 'addCheckout', params, AUTH.config).then(res => {
-                    this.loadingShow = true
                     if(res.data.status){
                         AUTH.deauthenticate()
                     }
@@ -470,7 +468,6 @@ export default {
                         usedCupsOverDose: over
                     }
                     this.$axios.post(AUTH.url + 'updateRemainingCups', param, AUTH.config).then(response => {
-                        this.loadingShow = true
                         if(response.data.status){
                             AUTH.deauthenticate()
                         }
@@ -546,7 +543,6 @@ export default {
                         this.error = 'All data is required'
                     }
                 }else{
-                    console.log('asdfasfsafsadf', this.getSubTotal, this.convertTotalPrice())
                     if(parseInt(this.getSubTotal()) > 0 && this.fee !== '' && parseInt(this.convertTotalPrice()) >= 0){
                         this.error = null
                         this.checkoutMethod()

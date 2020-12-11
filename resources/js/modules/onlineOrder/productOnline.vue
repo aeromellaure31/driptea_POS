@@ -85,9 +85,6 @@ export default {
                 // window.location.href = "/productOnline";
                 this.redirect('/productOnline')
             },
-            onError: err => {
-                console.log(err);
-            }
             })
             .render(this.$refs.paypal);
         },

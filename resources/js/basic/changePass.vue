@@ -176,7 +176,6 @@ export default {
           .post(AUTH.url + "reset", params)
           .then(res => {
             this.loadingShow = false;
-            console.log(res.data)
             if(res.data.data === 'true'){
               swal({
                 text: "Successfully Changed Password",

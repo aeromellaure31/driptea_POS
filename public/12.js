@@ -193,7 +193,6 @@ __webpack_require__.r(__webpack_exports__);
         };
         this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_1__["default"].url + "reset", params).then(function (res) {
           _this.loadingShow = false;
-          console.log(res.data);
 
           if (res.data.data === 'true') {
             sweetalert__WEBPACK_IMPORTED_MODULE_4___default()({

@@ -126,10 +126,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
 
           return onApprove;
-        }(),
-        onError: function onError(err) {
-          console.log(err);
-        }
+        }()
       }).render(this.$refs.paypal);
     },
     redirect: function redirect(param) {
