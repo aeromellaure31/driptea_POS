@@ -436,8 +436,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this5 = this;
 
       sweetalert__WEBPACK_IMPORTED_MODULE_1___default()({
-        title: "Are you sure you want to delete?",
-        text: "Once deleted, you will not be able to recover this order!",
+        title: "Are you sure you want to remove in you Cart?",
         icon: "warning",
         buttons: true,
         dangerMode: true

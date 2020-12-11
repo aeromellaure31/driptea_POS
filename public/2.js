@@ -398,41 +398,52 @@ __webpack_require__.r(__webpack_exports__);
           over += element.quantity;
         }
       });
+      sweetalert__WEBPACK_IMPORTED_MODULE_6___default()({
+        text: "Are you sure you want to Cancel this order?",
+        icon: "warning",
+        buttons: {
+          no: 'No',
+          yes: 'Yes'
+        }
+      }).then(function (el) {
+        if (el === 'yes') {
+          if (param === 'pending') {
+            _this2.loadingShow = true;
+            var params = {
+              id: id,
+              status: 'cancel',
+              cashierId: localStorage.getItem('cashierId') ? localStorage.getItem('cashierId') : localStorage.getItem('adminId')
+            };
 
-      if (param === 'pending') {
-        this.loadingShow = true;
-        var params = {
-          id: id,
-          status: 'cancel',
-          cashierId: localStorage.getItem('cashierId') ? localStorage.getItem('cashierId') : localStorage.getItem('adminId')
-        };
-        this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + 'updateCancelOrder', params, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (res) {
-          _this2.loadingShow = false;
+            _this2.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + 'updateCancelOrder', params, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (res) {
+              _this2.loadingShow = false;
 
-          if (res.data.status) {
-            _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
+              if (res.data.status) {
+                _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
+              }
+
+              sweetalert__WEBPACK_IMPORTED_MODULE_6___default()({
+                title: "Order successfully Cancelled",
+                icon: "success"
+              }).then(function (e) {
+                _this2.retrievePending();
+
+                _this2.retrieve();
+
+                _this2.retrieveAddOns();
+
+                _this2.retrieveCupType();
+
+                _this2.retrieveProcessed();
+
+                _this2.tableDataCompleteOrder = false;
+                _this2.tableDataPendingOrders = true;
+                _this2.tableProcessOrders = false;
+              });
+            });
           }
-
-          sweetalert__WEBPACK_IMPORTED_MODULE_6___default()({
-            title: "Order successfully Cancelled",
-            icon: "success"
-          }).then(function (e) {
-            _this2.retrievePending();
-
-            _this2.retrieve();
-
-            _this2.retrieveAddOns();
-
-            _this2.retrieveCupType();
-
-            _this2.retrieveProcessed();
-
-            _this2.tableDataCompleteOrder = false;
-            _this2.tableDataPendingOrders = true;
-            _this2.tableProcessOrders = false;
-          });
-        });
-      }
+        }
+      });
     },
     getCup: function getCup(item) {
       var cup = "";

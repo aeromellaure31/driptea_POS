@@ -403,32 +403,45 @@ __webpack_require__.r(__webpack_exports__);
     addToCart: function addToCart() {
       var _this8 = this;
 
-      if (this.lowdoseQuantity <= 5) {
+      jquery__WEBPACK_IMPORTED_MODULE_3___default()('#addCart').prop('disabled', true);
+      jquery__WEBPACK_IMPORTED_MODULE_3___default()('#addCart').prop('cancel', true);
+
+      if (this.size === 'lowDose' && this.lowdoseQuantity <= 5) {
         this.size = null;
       }
 
       if (this.quantity <= 0) {
         this.errorMessage3 = 'quantity must be greater than 0';
+        jquery__WEBPACK_IMPORTED_MODULE_3___default()('#addCart').prop('disabled', false);
+        jquery__WEBPACK_IMPORTED_MODULE_3___default()('#addCart').prop('cancel', false);
       } else if (this.quantity > this.buySize) {
         this.errorMessage3 = 'quantity is too much';
+        jquery__WEBPACK_IMPORTED_MODULE_3___default()('#addCart').prop('disabled', false);
+        jquery__WEBPACK_IMPORTED_MODULE_3___default()('#addCart').prop('cancel', false);
       } else {
         this.errorMessage3 = null;
       }
 
       if (this.size === null) {
         this.errorMessage = 'cup size is required';
+        jquery__WEBPACK_IMPORTED_MODULE_3___default()('#addCart').prop('disabled', false);
+        jquery__WEBPACK_IMPORTED_MODULE_3___default()('#addCart').prop('cancel', false);
       } else {
         this.errorMessage = null;
       }
 
       if (this.sugarLevel === null) {
         this.errorMessage2 = 'sugar level is required';
+        jquery__WEBPACK_IMPORTED_MODULE_3___default()('#addCart').prop('disabled', false);
+        jquery__WEBPACK_IMPORTED_MODULE_3___default()('#addCart').prop('cancel', false);
       } else {
         this.errorMessage2 = null;
       }
 
       if (this.cupType === null) {
         this.errorMessage1 = 'cup type is required';
+        jquery__WEBPACK_IMPORTED_MODULE_3___default()('#addCart').prop('disabled', false);
+        jquery__WEBPACK_IMPORTED_MODULE_3___default()('#addCart').prop('cancel', false);
       } else {
         this.errorMessage1 = null;
       }
@@ -468,6 +481,8 @@ __webpack_require__.r(__webpack_exports__);
               }
 
               jquery__WEBPACK_IMPORTED_MODULE_3___default()('#viewDetails').modal('hide');
+              jquery__WEBPACK_IMPORTED_MODULE_3___default()('#addCart').prop('disabled', false);
+              jquery__WEBPACK_IMPORTED_MODULE_3___default()('#addCart').prop('cancel', false);
               sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
                 title: "Order successfully added to cart",
                 icon: "success"
@@ -495,6 +510,8 @@ __webpack_require__.r(__webpack_exports__);
             }
 
             jquery__WEBPACK_IMPORTED_MODULE_3___default()('#viewDetails').modal('hide');
+            jquery__WEBPACK_IMPORTED_MODULE_3___default()('#addCart').prop('disabled', false);
+            jquery__WEBPACK_IMPORTED_MODULE_3___default()('#addCart').prop('cancel', false);
             sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
               title: "Order successfully added to cart",
               icon: "success"
@@ -770,7 +787,7 @@ var render = function() {
                             _c("br"),
                             _vm._v(" "),
                             _c("h3", [
-                              _vm._v("Base Price (₱" + _vm._s(_vm.price) + ")")
+                              _vm._v("Price (₱ " + _vm._s(_vm.total) + ".00)")
                             ]),
                             _vm._v(" "),
                             _c("h3", [_vm._v(_vm._s(_vm.productName))]),
@@ -1221,7 +1238,11 @@ var render = function() {
                     "button",
                     {
                       staticClass: "btn btn-danger",
-                      attrs: { type: "button", "data-dismiss": "modal" },
+                      attrs: {
+                        type: "button",
+                        id: "cancel",
+                        "data-dismiss": "modal"
+                      },
                       on: { click: _vm.cancel }
                     },
                     [_vm._v("Cancel")]
@@ -1232,7 +1253,7 @@ var render = function() {
                       "button",
                       {
                         staticClass: "btn btn-success btnRegister",
-                        attrs: { type: "submit" },
+                        attrs: { type: "submit", id: "addCart" },
                         on: {
                           click: function($event) {
                             return _vm.addToCart()

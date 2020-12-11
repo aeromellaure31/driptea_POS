@@ -358,8 +358,7 @@ export default {
     },
     deleteOrder(prodId) {
       swal({
-        title: "Are you sure you want to delete?",
-        text: "Once deleted, you will not be able to recover this order!",
+        title: "Are you sure you want to remove in you Cart?",
         icon: "warning",
         buttons: true,
         dangerMode: true

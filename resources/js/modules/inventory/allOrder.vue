@@ -317,33 +317,44 @@ export default {
                 over += element.quantity
             }
         });
-        if(param === 'pending'){
-            this.loadingShow = true
-            let params = {
-                id: id,
-                status: 'cancel',
-                cashierId: localStorage.getItem('cashierId') ? localStorage.getItem('cashierId') : localStorage.getItem('adminId'),
+        swal({
+            text: "Are you sure you want to Cancel this order?",
+            icon: "warning",
+            buttons: {
+                no: 'No',
+                yes: 'Yes'
             }
-            this.$axios.post(AUTH.url + 'updateCancelOrder', params, AUTH.config).then(res => {
-                this.loadingShow = false
-                if(res.data.status){
-                    AUTH.deauthenticate()
+        }).then(el => {
+            if(el === 'yes'){
+                if(param === 'pending'){
+                    this.loadingShow = true
+                    let params = {
+                        id: id,
+                        status: 'cancel',
+                        cashierId: localStorage.getItem('cashierId') ? localStorage.getItem('cashierId') : localStorage.getItem('adminId'),
+                    }
+                    this.$axios.post(AUTH.url + 'updateCancelOrder', params, AUTH.config).then(res => {
+                        this.loadingShow = false
+                        if(res.data.status){
+                            AUTH.deauthenticate()
+                        }
+                        swal({
+                            title: "Order successfully Cancelled",
+                            icon: "success",
+                        }).then(e => {
+                            this.retrievePending();
+                            this.retrieve();
+                            this.retrieveAddOns();
+                            this.retrieveCupType();
+                            this.retrieveProcessed();
+                            this.tableDataCompleteOrder = false
+                            this.tableDataPendingOrders = true
+                            this.tableProcessOrders = false
+                        })
+                    })
                 }
-                swal({
-                    title: "Order successfully Cancelled",
-                    icon: "success",
-                }).then(e => {
-                    this.retrievePending();
-                    this.retrieve();
-                    this.retrieveAddOns();
-                    this.retrieveCupType();
-                    this.retrieveProcessed();
-                    this.tableDataCompleteOrder = false
-                    this.tableDataPendingOrders = true
-                    this.tableProcessOrders = false
-                })
-            })
-        }
+            }
+        })
     },
     getCup(item) {
         let cup = "";

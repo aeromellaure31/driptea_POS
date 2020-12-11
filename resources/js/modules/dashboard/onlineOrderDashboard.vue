@@ -56,7 +56,7 @@
                                 <center>
                                     <img class="imageSize2" :src="image">
                                     <div><br>
-                                        <h3>Base Price (₱{{price}})</h3>
+                                        <h3>Price (₱ {{total}}.00)</h3>
                                         <h3>{{productName}}</h3>
                                         <p class="productDescription">{{description}}</p>
                                     </div>
@@ -137,8 +137,8 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal" @click="cancel">Cancel</button>
-                        <center><button type="submit" class="btn btn-success btnRegister" @click="addToCart()">Add to Cart</button></center>                        
+                        <button type="button" id="cancel" class="btn btn-danger" data-dismiss="modal" @click="cancel">Cancel</button>
+                        <center><button type="submit" id="addCart" class="btn btn-success btnRegister" @click="addToCart()">Add to Cart</button></center>                        
                     </div>
                 </div>
             </div>
@@ -355,28 +355,40 @@ export default {
             })
         },
         addToCart(){
-            if(this.lowdoseQuantity <= 5){
+            $('#addCart').prop('disabled', true)
+            $('#addCart').prop('cancel', true)
+            if(this.size === 'lowDose' && this.lowdoseQuantity <= 5){
                 this.size = null
             }
             if(this.quantity <= 0){
                 this.errorMessage3 = 'quantity must be greater than 0'
+                $('#addCart').prop('disabled', false)
+                $('#addCart').prop('cancel', false)
             }else if(this.quantity > this.buySize){
                 this.errorMessage3 = 'quantity is too much'
+                $('#addCart').prop('disabled', false)
+                $('#addCart').prop('cancel', false)
             }else{
                 this.errorMessage3 = null
             }
             if(this.size === null){
                 this.errorMessage = 'cup size is required'
+                $('#addCart').prop('disabled', false)
+                $('#addCart').prop('cancel', false)
             }else{
                 this.errorMessage = null
             }
             if(this.sugarLevel === null){
                 this.errorMessage2 = 'sugar level is required'
+                $('#addCart').prop('disabled', false)
+                $('#addCart').prop('cancel', false)
             }else{
                 this.errorMessage2 = null
             }
             if(this.cupType === null){
                 this.errorMessage1 = 'cup type is required'
+                $('#addCart').prop('disabled', false)
+                $('#addCart').prop('cancel', false)
             }else{
                 this.errorMessage1 = null
             }
@@ -414,6 +426,8 @@ export default {
                                 AUTH.deauthenticate()
                             }
                             $('#viewDetails').modal('hide')
+                            $('#addCart').prop('disabled', false)
+                            $('#addCart').prop('cancel', false)
                             swal({
                                 title: "Order successfully added to cart",
                                 icon: "success"
@@ -440,6 +454,8 @@ export default {
                             AUTH.deauthenticate()
                         }
                         $('#viewDetails').modal('hide')
+                        $('#addCart').prop('disabled', false)
+                        $('#addCart').prop('cancel', false)
                         swal({
                             title: "Order successfully added to cart",
                             icon: "success"
