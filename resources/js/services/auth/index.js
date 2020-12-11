@@ -51,26 +51,22 @@ export default {
                 }
             }).then(res => {
                 if(res.data.user.account_type.toUpperCase() === 'ADMIN'){
-                    this.setUser(res.data.user.id, res.data.user.name, res.data.user.account_type)
-                    ROUTER.push('/adminDashboard')
+                    this.setUser(res.data.user.id, res.data.user.name, res.data.user.account_type, '/adminDashboard')
                 }else if(res.data.user.account_type.toUpperCase() === 'CASHIER'){
-                    this.setUser(res.data.user.id, res.data.user.name, res.data.user.account_type)
-                    ROUTER.push('/casherDashboard')
+                    this.setUser(res.data.user.id, res.data.user.name, res.data.user.account_type, '/casherDashboard')
                 }else{
                     localStorage.setItem('fullName', res.data.user.firstname+" "+ res.data.user.lastname )
                     localStorage.setItem('address', res.data.user.address)
                     localStorage.setItem('contactNumber', res.data.user.contactNumber)
-                    this.setUser(res.data.user.id, res.data.user.name, res.data.user.account_type)
-                    ROUTER.push('/onlineDashboard')
+                    this.setUser(res.data.user.id, res.data.user.name, res.data.user.account_type, '/onlineDashboard')
                 }
-                window.location.reload()
             })
             return true
         } else {
             return false    
         }
     },
-    setUser(cashierId, fullname, userType) {
+    setUser(cashierId, fullname, userType, route) {
         if(userType.toUpperCase() === 'ADMIN'){
             localStorage.setItem('adminId', cashierId)
         }else if(userType.toUpperCase() === 'CASHIER'){
@@ -81,6 +77,8 @@ export default {
         this.user.cashierId = cashierId
         this.user.fullname = fullname
         this.user.userType = userType
+        ROUTER.push(route)
+        window.location.reload()
     },
     setToken(token){
         this.token = token
