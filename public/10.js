@@ -404,7 +404,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this8 = this;
 
       jquery__WEBPACK_IMPORTED_MODULE_3___default()('#addCart').prop('disabled', true);
-      jquery__WEBPACK_IMPORTED_MODULE_3___default()('#addCart').prop('cancel', true);
+      jquery__WEBPACK_IMPORTED_MODULE_3___default()('#cancel').prop('disabled', true);
 
       if (this.size === 'lowDose' && this.lowdoseQuantity <= 5) {
         this.size = null;
@@ -413,11 +413,11 @@ __webpack_require__.r(__webpack_exports__);
       if (this.quantity <= 0) {
         this.errorMessage3 = 'quantity must be greater than 0';
         jquery__WEBPACK_IMPORTED_MODULE_3___default()('#addCart').prop('disabled', false);
-        jquery__WEBPACK_IMPORTED_MODULE_3___default()('#addCart').prop('cancel', false);
+        jquery__WEBPACK_IMPORTED_MODULE_3___default()('#cancel').prop('disabled', false);
       } else if (this.quantity > this.buySize) {
         this.errorMessage3 = 'quantity is too much';
         jquery__WEBPACK_IMPORTED_MODULE_3___default()('#addCart').prop('disabled', false);
-        jquery__WEBPACK_IMPORTED_MODULE_3___default()('#addCart').prop('cancel', false);
+        jquery__WEBPACK_IMPORTED_MODULE_3___default()('#cancel').prop('disabled', false);
       } else {
         this.errorMessage3 = null;
       }
@@ -425,7 +425,7 @@ __webpack_require__.r(__webpack_exports__);
       if (this.size === null) {
         this.errorMessage = 'cup size is required';
         jquery__WEBPACK_IMPORTED_MODULE_3___default()('#addCart').prop('disabled', false);
-        jquery__WEBPACK_IMPORTED_MODULE_3___default()('#addCart').prop('cancel', false);
+        jquery__WEBPACK_IMPORTED_MODULE_3___default()('#cancel').prop('disabled', false);
       } else {
         this.errorMessage = null;
       }
@@ -433,7 +433,7 @@ __webpack_require__.r(__webpack_exports__);
       if (this.sugarLevel === null) {
         this.errorMessage2 = 'sugar level is required';
         jquery__WEBPACK_IMPORTED_MODULE_3___default()('#addCart').prop('disabled', false);
-        jquery__WEBPACK_IMPORTED_MODULE_3___default()('#addCart').prop('cancel', false);
+        jquery__WEBPACK_IMPORTED_MODULE_3___default()('#cancel').prop('disabled', false);
       } else {
         this.errorMessage2 = null;
       }
@@ -441,7 +441,7 @@ __webpack_require__.r(__webpack_exports__);
       if (this.cupType === null) {
         this.errorMessage1 = 'cup type is required';
         jquery__WEBPACK_IMPORTED_MODULE_3___default()('#addCart').prop('disabled', false);
-        jquery__WEBPACK_IMPORTED_MODULE_3___default()('#addCart').prop('cancel', false);
+        jquery__WEBPACK_IMPORTED_MODULE_3___default()('#cancel').prop('disabled', false);
       } else {
         this.errorMessage1 = null;
       }
@@ -482,7 +482,7 @@ __webpack_require__.r(__webpack_exports__);
 
               jquery__WEBPACK_IMPORTED_MODULE_3___default()('#viewDetails').modal('hide');
               jquery__WEBPACK_IMPORTED_MODULE_3___default()('#addCart').prop('disabled', false);
-              jquery__WEBPACK_IMPORTED_MODULE_3___default()('#addCart').prop('cancel', false);
+              jquery__WEBPACK_IMPORTED_MODULE_3___default()('#cancel').prop('disabled', false);
               sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
                 title: "Order successfully added to cart",
                 icon: "success"
@@ -511,7 +511,7 @@ __webpack_require__.r(__webpack_exports__);
 
             jquery__WEBPACK_IMPORTED_MODULE_3___default()('#viewDetails').modal('hide');
             jquery__WEBPACK_IMPORTED_MODULE_3___default()('#addCart').prop('disabled', false);
-            jquery__WEBPACK_IMPORTED_MODULE_3___default()('#addCart').prop('cancel', false);
+            jquery__WEBPACK_IMPORTED_MODULE_3___default()('#cancel').prop('disabled', false);
             sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
               title: "Order successfully added to cart",
               icon: "success"

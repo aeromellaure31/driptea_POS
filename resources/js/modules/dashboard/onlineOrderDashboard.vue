@@ -356,39 +356,39 @@ export default {
         },
         addToCart(){
             $('#addCart').prop('disabled', true)
-            $('#addCart').prop('cancel', true)
+            $('#cancel').prop('disabled', true)
             if(this.size === 'lowDose' && this.lowdoseQuantity <= 5){
                 this.size = null
             }
             if(this.quantity <= 0){
                 this.errorMessage3 = 'quantity must be greater than 0'
                 $('#addCart').prop('disabled', false)
-                $('#addCart').prop('cancel', false)
+                $('#cancel').prop('disabled', false)
             }else if(this.quantity > this.buySize){
                 this.errorMessage3 = 'quantity is too much'
                 $('#addCart').prop('disabled', false)
-                $('#addCart').prop('cancel', false)
+                $('#cancel').prop('disabled', false)
             }else{
                 this.errorMessage3 = null
             }
             if(this.size === null){
                 this.errorMessage = 'cup size is required'
                 $('#addCart').prop('disabled', false)
-                $('#addCart').prop('cancel', false)
+                $('#cancel').prop('disabled', false)
             }else{
                 this.errorMessage = null
             }
             if(this.sugarLevel === null){
                 this.errorMessage2 = 'sugar level is required'
                 $('#addCart').prop('disabled', false)
-                $('#addCart').prop('cancel', false)
+                $('#cancel').prop('disabled', false)
             }else{
                 this.errorMessage2 = null
             }
             if(this.cupType === null){
                 this.errorMessage1 = 'cup type is required'
                 $('#addCart').prop('disabled', false)
-                $('#addCart').prop('cancel', false)
+                $('#cancel').prop('disabled', false)
             }else{
                 this.errorMessage1 = null
             }
@@ -427,7 +427,7 @@ export default {
                             }
                             $('#viewDetails').modal('hide')
                             $('#addCart').prop('disabled', false)
-                            $('#addCart').prop('cancel', false)
+                            $('#cancel').prop('disabled', false)
                             swal({
                                 title: "Order successfully added to cart",
                                 icon: "success"
@@ -455,7 +455,7 @@ export default {
                         }
                         $('#viewDetails').modal('hide')
                         $('#addCart').prop('disabled', false)
-                        $('#addCart').prop('cancel', false)
+                        $('#cancel').prop('disabled', false)
                         swal({
                             title: "Order successfully added to cart",
                             icon: "success"

@@ -805,8 +805,8 @@ export default {
         { text: "High Dose Price", value: "highPrice" },
         { text: "Over Dose Price", value: "overPrice" },
         { text: "Low Dose Online Price", value: "onlinelowPrice" },
-        { text: "High Dose Online Price", value: "onlineoverPrice" },
-        { text: "Over Dose Online Price", value: "overPrice" },
+        { text: "High Dose Online Price", value: "onlinehighPrice" },
+        { text: "Over Dose Online Price", value: "onlineoverPrice" },
         { text: "Status", value: "status" },
         { text: "ACTION", value: "actions", sortable: false }
       ],

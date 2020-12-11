@@ -862,10 +862,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       value: "onlinelowPrice"
     }, {
       text: "High Dose Online Price",
-      value: "onlineoverPrice"
+      value: "onlinehighPrice"
     }, {
       text: "Over Dose Online Price",
-      value: "overPrice"
+      value: "onlineoverPrice"
     }, {
       text: "Status",
       value: "status"
