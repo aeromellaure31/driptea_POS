@@ -74,10 +74,10 @@ export default {
         }else{
             localStorage.setItem('customerId', cashierId)
         }
+        ROUTER.push(route)
         this.user.cashierId = cashierId
         this.user.fullname = fullname
         this.user.userType = userType
-        ROUTER.push(route)
         window.location.reload()
     },
     setToken(token){
