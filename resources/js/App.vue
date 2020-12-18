@@ -334,7 +334,7 @@ export default {
         route: "/cupsInventory"
       },
       {
-        icon: "mdi-cup",
+        icon: "mdi-silverware",
         text: "Ingredients Inventory",
         route: "/ingredientsInventory"
       },

@@ -12,7 +12,7 @@
                             <i><span class="errorColor" v-if="errorMessage1 !== null">{{errorMessage1}}</span></i>
                             <v-row>
                                 <v-col cols="12" md="6" v-for="(item, index) in ingredientsData" :key="index">
-                                    <v-text-field :label="item.ingredientsName" outlined dense v-model="ingredientsData[index].onRockQuantity" type="number" :id="item.ingredientsName" @keyup="validate(ingredientsData[index].onRockQuantity)"></v-text-field>
+                                    <v-text-field :label="item.ingredientsName + ' (' + item.type + ')'" outlined dense v-model="ingredientsData[index].onRockQuantity" type="number" :id="item.ingredientsName" @keyup="validate(ingredientsData[index].onRockQuantity)"></v-text-field>
                                 </v-col>
                             </v-row>
                         </v-container>

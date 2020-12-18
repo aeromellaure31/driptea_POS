@@ -5930,7 +5930,11 @@ var render = function() {
                                 [
                                   _c("v-text-field", {
                                     attrs: {
-                                      label: item.ingredientsName,
+                                      label:
+                                        item.ingredientsName +
+                                        " (" +
+                                        item.type +
+                                        ")",
                                       outlined: "",
                                       dense: "",
                                       type: "number",
