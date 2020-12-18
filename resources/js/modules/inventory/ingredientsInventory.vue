@@ -57,28 +57,13 @@
                             <button type="button" class="close" @click="dialogForCupSize = false">&times;</button><br>
                         </div>
                         <v-card-text>
-                            <ejs-grid ref='grid' id='Grid' :dataSource='dataInDB' :toolbar='toolbarOptions' height='270px' :allowPaging='true' :allowExcelExport='true' :toolbarClick='toolbarClick'>
+                            <ejs-grid ref='grid' id='Grid' :dataSource='downloadData' :toolbar='toolbarOptions' height='270px' :allowPaging='true' :allowExcelExport='true' :toolbarClick='toolbarClick'>
                                 <e-columns>
-                                    <e-column field='Date' headerText='Date' width=120></e-column>
-                                    <e-column field='incomingLowDose' headerText='Incoming (LD)' width=150></e-column>
-                                    <e-column field='incomingHighDose' headerText='Incoming (HD)' width=150></e-column>
-                                    <e-column field='incomingOverDose' headerText='Incoming (OD)' width=150></e-column>
-                                    <e-column field='TotalIncoming' headerText='Total Incoming Cups' width=180></e-column>
-
-                                    <e-column field='onRockLowDose' headerText='Cups Onrack (LD)' width=150></e-column>
-                                    <e-column field='onRockHighDose' headerText='Cups Onrack (HD)' width=150></e-column>
-                                    <e-column field='onRockOverDose' headerText='Cups Onrack (OD)' width=150></e-column>
-                                    <e-column field='TotalOnRock' headerText='Total Cups Onrack' width=150></e-column>
-
-                                    <e-column field='usedCupsLowDose' headerText='Used Cups (LD)' width=150></e-column>
-                                    <e-column field='usedCupsHighDose' headerText='Used Cups (HD)' width=150></e-column>
-                                    <e-column field='usedCupsOverDose' headerText='Used Cups (OD)' width=150></e-column>
-                                    <e-column field='TotalUsed' headerText='Total Used Cups' width=150></e-column>
-
-                                    <e-column field='remainingLowDose' headerText='Remaining Cups (LD)' width=180></e-column>
-                                    <e-column field='remainingHighDose' headerText='Remaining Cups (HD)' width=180></e-column>
-                                    <e-column field='remainingOverDose' headerText='Remaining Cups (OD)' width=180></e-column>
-                                    <e-column field='TotalRemaining' headerText='Total Remaining Cups' width=180></e-column>
+                                    <e-column field='date' headerText='Date' width=120></e-column>
+                                    <e-column field='ingredient' headerText='Ingredients name' width=150></e-column>
+                                    <e-column field='quantity' headerText='On store Ingredients' width=150></e-column>
+                                    <e-column field='used' headerText='Used Ingredients' width=150></e-column>
+                                    <e-column field='remaining' headerText='Remaining Ingredients' width=180></e-column>
                                 </e-columns>
                             </ejs-grid>
                         </v-card-text>
@@ -100,11 +85,9 @@ export default {
         return {
             toolbarOptions: ['ExcelExport', 'Search'],
             formatDate: moment(new Date()).format("MM/DD/YYYY Hh:mm"),
-            modalData: [],
-            downLoadData: [],
             dataInDB: [],
+            downloadData: [],
             search: null,
-            cupName: null,
             headersForCup: [],
             loadingShow: false,
             dialogForCupSize: false,
@@ -263,24 +246,14 @@ export default {
                 let excelExportProperties = {
                     fileName: this.formatDate + ' Cups.xlsx',
                     header: {
-                        fromTop: 0,
-                        height: 130,
-                        contents: [
-                        {
-                            type: 'Image',
-                            src: this.image,
-                            position: { x: 435, y: 10 },
-                            size: { height: 100, width: 250 },
-                        }
-                        ],
                         headerRows: 7,
                         rows: [
-                        { cells: [{ colSpan: 17, value: "Driptea System", style: { fontColor: '#C67878', fontSize: 25, hAlign: 'Center', bold: true, } }] },
-                        { cells: [{ colSpan: 17, value: "A.C. Cortes Ave., Looc", style: { fontColor: '#C67878', fontSize: 20, hAlign: 'Center', bold: true, } }] },
-                        { cells: [{ colSpan: 17, value: "6014 Mandaue City, Philippine", style: { fontColor: '#C67878', fontSize: 20, hAlign: 'Center', bold: true, } }] },
-                        { cells: [{ colSpan: 17, value: "0917 329 7269", style: { fontColor: '#C67878', fontSize: 20, hAlign: 'Center', bold: true, } }] },
-                        { cells: [{ colSpan: 17, hyperlink: { target: 'https://www.facebook.com/driptealoocmandaue/', displayText: 'www.facebook.com/driptealoocmandaue' }, style: { hAlign: 'Center' } }] },
-                        { cells: [{ colSpan: 17, hyperlink: { target: 'samuelazurajr@gmail.com' }, style: { hAlign: 'Center' } }] },
+                            { cells: [{ colSpan: 17, value: "Driptea System", style: { fontColor: '#C67878', fontSize: 25, hAlign: 'Center', bold: true, } }] },
+                            { cells: [{ colSpan: 17, value: "A.C. Cortes Ave., Looc", style: { fontColor: '#C67878', fontSize: 20, hAlign: 'Center', bold: true, } }] },
+                            { cells: [{ colSpan: 17, value: "6014 Mandaue City, Philippine", style: { fontColor: '#C67878', fontSize: 20, hAlign: 'Center', bold: true, } }] },
+                            { cells: [{ colSpan: 17, value: "0917 329 7269", style: { fontColor: '#C67878', fontSize: 20, hAlign: 'Center', bold: true, } }] },
+                            { cells: [{ colSpan: 17, hyperlink: { target: 'https://www.facebook.com/driptealoocmandaue/', displayText: 'www.facebook.com/driptealoocmandaue' }, style: { hAlign: 'Center' } }] },
+                            { cells: [{ colSpan: 17, hyperlink: { target: 'samuelazurajr@gmail.com' }, style: { hAlign: 'Center' } }] },
                         ]
                     },
                     footer: {
@@ -296,17 +269,52 @@ export default {
         getDate(date) {
             return moment(date).format("LLL");
         },
-        tableOnstore(){
-
-        },
-        tableUsedIngredients(){
-
-        },
-        tableRemainingIngredients(){
-
-        },
         searchData() {
-
+            this.dialogForCupSize = true
+            this.loadingShow = true
+            let params = {
+                start: this.dates[0] > this.dates[1] ? this.dates[1] : this.dates[0],
+                end: this.dates[1] ? (this.dates[0] > this.dates[1] ? this.dates[0] : this.dates[1]) : this.dates[0]
+            }
+            this.$axios.post(AUTH.url + "retrieveDataChosen", params, AUTH.config).then(response => {
+                this.loadingShow = false
+                if(response.data.status){
+                    AUTH.deauthenticate()
+                }
+                var list = []
+                var a = [], b = [], c = [], d = [], f = []
+                response.data.addIngredient.forEach(el => {
+                    var w = el.usedQuantity
+                    var x = el.ingredients
+                    var y = el.quantity
+                    var z = el.remainingQuantity
+                    if(el.usedQuantity){
+                        JSON.parse(w).forEach(e => {
+                            f.push(e)
+                        })
+                    }
+                    JSON.parse(x).forEach(e => {
+                        a.push(e)
+                        d.push(el.created_at)
+                    })
+                    JSON.parse(y).forEach(e => {
+                        b.push(e)
+                    })
+                    JSON.parse(z).forEach(e => {
+                        c.push(e)
+                    })
+                })
+                a.forEach((el, index) => {
+                    list.push({
+                        date: moment(d[index]).format('MM/DD/YYYY'),
+                        ingredient: el,
+                        used: f[index],
+                        quantity: b[index],
+                        remaining: c[index]
+                    })
+                })
+                this.downloadData = list.reverse()
+            });
         },
     }
 };

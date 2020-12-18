@@ -137,6 +137,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
     Route::post('addIngredientQuantity','App\Http\Controllers\AddIngredientController@addIngredientQuantity');
     Route::post('retrieveData','App\Http\Controllers\AddIngredientController@retrieveData');
+    Route::post('retrieveDataChosen','App\Http\Controllers\AddIngredientController@retrieveDataChosen');
     Route::post('retrieveRemainingData','App\Http\Controllers\AddIngredientController@retrieveRemainingData');
     Route::post('updateUsedIngredients','App\Http\Controllers\AddIngredientController@updateUsedIngredients');
 });

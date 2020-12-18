@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Validator;
 use App\Models\AddIngredients;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AddIngredientController extends Controller
 {
@@ -52,6 +53,11 @@ class AddIngredientController extends Controller
         return response()->json(compact('addIngredient'));
     }
 
+    public function retrieveDataChosen(Request $request){
+        $addIngredient = AddIngredients::where('deleted_at', null)->whereBetween(DB::raw('DATE(created_at)'), array($request->start, $request->end))->get();
+        return response()->json(compact('addIngredient'));
+    }
+
     public function retrieveRemainingData(Request $request){
         $id = $this->getId();
         $addIngredient = AddIngredients::where('id', $id)->where('deleted_at', null)->get();
@@ -60,7 +66,6 @@ class AddIngredientController extends Controller
 
     public function updateUsedIngredients(Request $request){
         $id = $this->getId();
-        // dd($request->remaining, $request->usedQuantity);
         $addIng = AddIngredients::where('id', $id)->get();
         $addIngredient = AddIngredients::firstOrCreate(['id' => $id]);
         $addIngredient['remainingQuantity'] = json_encode($request->remaining);
@@ -76,10 +81,8 @@ class AddIngredientController extends Controller
                 }
                 $count++;
             }
-            // dd('test', json_decode($a));
             $addIngredient['usedQuantity'] = json_encode($a);
         }else{
-            // dd('testing', json_encode($request->usedQuantity));
             $addIngredient['usedQuantity'] = json_encode($request->usedQuantity);
         }
         $addIngredient->save();

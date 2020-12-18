@@ -92,21 +92,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -117,11 +102,9 @@ __webpack_require__.r(__webpack_exports__);
     return {
       toolbarOptions: ['ExcelExport', 'Search'],
       formatDate: moment__WEBPACK_IMPORTED_MODULE_3___default()(new Date()).format("MM/DD/YYYY Hh:mm"),
-      modalData: [],
-      downLoadData: [],
       dataInDB: [],
+      downloadData: [],
       search: null,
-      cupName: null,
       headersForCup: [],
       loadingShow: false,
       dialogForCupSize: false,
@@ -304,20 +287,6 @@ __webpack_require__.r(__webpack_exports__);
         var excelExportProperties = {
           fileName: this.formatDate + ' Cups.xlsx',
           header: {
-            fromTop: 0,
-            height: 130,
-            contents: [{
-              type: 'Image',
-              src: this.image,
-              position: {
-                x: 435,
-                y: 10
-              },
-              size: {
-                height: 100,
-                width: 250
-              }
-            }],
             headerRows: 7,
             rows: [{
               cells: [{
@@ -407,10 +376,63 @@ __webpack_require__.r(__webpack_exports__);
     getDate: function getDate(date) {
       return moment__WEBPACK_IMPORTED_MODULE_3___default()(date).format("LLL");
     },
-    tableOnstore: function tableOnstore() {},
-    tableUsedIngredients: function tableUsedIngredients() {},
-    tableRemainingIngredients: function tableRemainingIngredients() {},
-    searchData: function searchData() {}
+    searchData: function searchData() {
+      var _this3 = this;
+
+      this.dialogForCupSize = true;
+      this.loadingShow = true;
+      var params = {
+        start: this.dates[0] > this.dates[1] ? this.dates[1] : this.dates[0],
+        end: this.dates[1] ? this.dates[0] > this.dates[1] ? this.dates[0] : this.dates[1] : this.dates[0]
+      };
+      this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "retrieveDataChosen", params, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
+        _this3.loadingShow = false;
+
+        if (response.data.status) {
+          _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
+        }
+
+        var list = [];
+        var a = [],
+            b = [],
+            c = [],
+            d = [],
+            f = [];
+        response.data.addIngredient.forEach(function (el) {
+          var w = el.usedQuantity;
+          var x = el.ingredients;
+          var y = el.quantity;
+          var z = el.remainingQuantity;
+
+          if (el.usedQuantity) {
+            JSON.parse(w).forEach(function (e) {
+              f.push(e);
+            });
+          }
+
+          JSON.parse(x).forEach(function (e) {
+            a.push(e);
+            d.push(el.created_at);
+          });
+          JSON.parse(y).forEach(function (e) {
+            b.push(e);
+          });
+          JSON.parse(z).forEach(function (e) {
+            c.push(e);
+          });
+        });
+        a.forEach(function (el, index) {
+          list.push({
+            date: moment__WEBPACK_IMPORTED_MODULE_3___default()(d[index]).format('MM/DD/YYYY'),
+            ingredient: el,
+            used: f[index],
+            quantity: b[index],
+            remaining: c[index]
+          });
+        });
+        _this3.downloadData = list.reverse();
+      });
+    }
   }
 });
 
@@ -672,7 +694,7 @@ var render = function() {
                             ref: "grid",
                             attrs: {
                               id: "Grid",
-                              dataSource: _vm.dataInDB,
+                              dataSource: _vm.downloadData,
                               toolbar: _vm.toolbarOptions,
                               height: "270px",
                               allowPaging: true,
@@ -686,7 +708,7 @@ var render = function() {
                               [
                                 _c("e-column", {
                                   attrs: {
-                                    field: "Date",
+                                    field: "date",
                                     headerText: "Date",
                                     width: "120"
                                   }
@@ -694,128 +716,32 @@ var render = function() {
                                 _vm._v(" "),
                                 _c("e-column", {
                                   attrs: {
-                                    field: "incomingLowDose",
-                                    headerText: "Incoming (LD)",
+                                    field: "ingredient",
+                                    headerText: "Ingredients name",
                                     width: "150"
                                   }
                                 }),
                                 _vm._v(" "),
                                 _c("e-column", {
                                   attrs: {
-                                    field: "incomingHighDose",
-                                    headerText: "Incoming (HD)",
+                                    field: "quantity",
+                                    headerText: "On store Ingredients",
                                     width: "150"
                                   }
                                 }),
                                 _vm._v(" "),
                                 _c("e-column", {
                                   attrs: {
-                                    field: "incomingOverDose",
-                                    headerText: "Incoming (OD)",
+                                    field: "used",
+                                    headerText: "Used Ingredients",
                                     width: "150"
                                   }
                                 }),
                                 _vm._v(" "),
                                 _c("e-column", {
                                   attrs: {
-                                    field: "TotalIncoming",
-                                    headerText: "Total Incoming Cups",
-                                    width: "180"
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c("e-column", {
-                                  attrs: {
-                                    field: "onRockLowDose",
-                                    headerText: "Cups Onrack (LD)",
-                                    width: "150"
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c("e-column", {
-                                  attrs: {
-                                    field: "onRockHighDose",
-                                    headerText: "Cups Onrack (HD)",
-                                    width: "150"
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c("e-column", {
-                                  attrs: {
-                                    field: "onRockOverDose",
-                                    headerText: "Cups Onrack (OD)",
-                                    width: "150"
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c("e-column", {
-                                  attrs: {
-                                    field: "TotalOnRock",
-                                    headerText: "Total Cups Onrack",
-                                    width: "150"
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c("e-column", {
-                                  attrs: {
-                                    field: "usedCupsLowDose",
-                                    headerText: "Used Cups (LD)",
-                                    width: "150"
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c("e-column", {
-                                  attrs: {
-                                    field: "usedCupsHighDose",
-                                    headerText: "Used Cups (HD)",
-                                    width: "150"
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c("e-column", {
-                                  attrs: {
-                                    field: "usedCupsOverDose",
-                                    headerText: "Used Cups (OD)",
-                                    width: "150"
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c("e-column", {
-                                  attrs: {
-                                    field: "TotalUsed",
-                                    headerText: "Total Used Cups",
-                                    width: "150"
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c("e-column", {
-                                  attrs: {
-                                    field: "remainingLowDose",
-                                    headerText: "Remaining Cups (LD)",
-                                    width: "180"
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c("e-column", {
-                                  attrs: {
-                                    field: "remainingHighDose",
-                                    headerText: "Remaining Cups (HD)",
-                                    width: "180"
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c("e-column", {
-                                  attrs: {
-                                    field: "remainingOverDose",
-                                    headerText: "Remaining Cups (OD)",
-                                    width: "180"
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c("e-column", {
-                                  attrs: {
-                                    field: "TotalRemaining",
-                                    headerText: "Total Remaining Cups",
+                                    field: "remaining",
+                                    headerText: "Remaining Ingredients",
                                     width: "180"
                                   }
                                 })
