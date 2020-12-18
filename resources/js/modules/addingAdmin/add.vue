@@ -6,25 +6,76 @@
         <v-tabs dark background-color="#ff5b04" fixed-tabs>
           <v-tabs-slider></v-tabs-slider>
           <v-tab
-            @click="changeName('category'), tableForAddOns = false, tableForCupSize = false, tableForProduct = false, tableForCategory = true, tableForCupType = false"
+            @click="changeName('category'), tableForAddOns = false, tableForCupSize = false, tableForProduct = false, tableForCategory = true, tableForCupType = false, tableForIngredients = false"
           >Category</v-tab>
           <v-tab
-            @click="changeName('product'), tableForAddOns = false, tableForCupSize = false, tableForProduct = true, tableForCategory = false, tableForCupType = false"
+            @click="changeName('product'), tableForAddOns = false, tableForCupSize = false, tableForProduct = true, tableForCategory = false, tableForCupType = false, tableForIngredients = false"
           >Product</v-tab>
           <v-tab
-            @click="changeName('addOns'), tableForAddOns = true, tableForCupSize = false, tableForProduct = false, tableForCategory = false, tableForCupType = false"
+            @click="changeName('addOns'), tableForAddOns = true, tableForCupSize = false, tableForProduct = false, tableForCategory = false, tableForCupType = false, tableForIngredients = false"
           >Add Ons</v-tab>
           <v-tab
-            @click="changeName('cupType'), tableForAddOns = false, tableForCupSize = false, tableForProduct = false, tableForCategory = false, tableForCupType = true"
+            @click="changeName('cupType'), tableForAddOns = false, tableForCupSize = false, tableForProduct = false, tableForCategory = false, tableForCupType = true, tableForIngredients = false"
           >Cup Type</v-tab>
           <v-tab
-            @click="changeName('cupSize'), tableForAddOns = false, tableForCupSize = true, tableForProduct = false, tableForCategory = false, tableForCupType = false"
-          >Cup Size</v-tab>
+            @click="changeName('cupSize'), tableForAddOns = false, tableForCupSize = true, tableForProduct = false, tableForCategory = false, tableForCupType = false, tableForIngredients = false"
+          >Cup Size Quantity</v-tab>
+          <v-tab
+            @click="changeName('ingredients'), tableForAddOns = false, tableForCupSize = false, tableForProduct = false, tableForCategory = false, tableForCupType = false, tableForIngredients = true"
+          >Ingredients</v-tab>
         </v-tabs>
       </template>
     </v-toolbar>
     </center>
 
+    <!-- Table for Ingredients -->
+    <v-data-table
+      v-if="tableForIngredients"
+      :headers="headersForIngredients"
+      :items="ingredientsData"
+      :search="search"
+      :items-per-page="10"
+      style="text-align: center"
+      class="elevation-3">
+      <template v-slot:top>
+        <v-toolbar class="mb-2" color="#ff5b04" dark flat>
+          <v-toolbar-title class="col pa-3 py-4 white--text">Ingredients</v-toolbar-title>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <v-text-field
+            v-model="search"
+            clearable
+            flat
+            solo-inverted
+            prepend-inner-icon="mdi-magnify"
+            class="mt-7"
+            label="Search"
+          ></v-text-field>
+          <v-divider class="mx-4" vertical></v-divider>
+          <v-btn
+            color="primary"
+            type="button"
+            class="btn btn-primary btnModal"
+            dark
+            @click="showCalculation"
+          >Calculation</v-btn>
+          <v-btn
+            color="primary"
+            type="button"
+            class="btn btn-primary btnModal"
+            dark
+            @click="showIngredients"
+          >+Quantity Ing</v-btn>
+          <v-btn
+            color="primary"
+            type="button"
+            class="btn btn-primary btnModal"
+            dark
+            @click="showNewIngredients"
+          >+Ingredients</v-btn>
+        </v-toolbar>
+      </template>
+      <template v-slot:item.id="{ item }"><span>{{getNumberDate(item.created_at, item.id)}}</span></template>
+      <template v-slot:item.onRockQuantity="{ item }"><span>{{getData(item)}}</span></template>
+    </v-data-table>
 
     <!-- Table for Category -->
     <v-data-table
@@ -32,7 +83,7 @@
       :headers="headersForCategory"
       :items="categoryData"
       :search="search"
-      :items-per-page="5"
+      :items-per-page="10"
       class="elevation-3">
       <template v-slot:top>
         <v-toolbar class="mb-2" color="#ff5b04" dark flat>
@@ -72,7 +123,7 @@
       :headers="headersForProduct"
       :items="productData"
       :search="search"
-      :items-per-page="5"
+      :items-per-page="10"
       class="elevation-3">
       <template v-slot:top>
         <v-toolbar class="mb-2" color="#ff5b04" dark flat>
@@ -122,7 +173,7 @@
       :headers="headersForAddOns"
       :items="datas"
       :search="search"
-      :items-per-page="5"
+      :items-per-page="10"
       class="elevation-3">
       <template v-slot:top>
         <v-toolbar class="mb-2" color="#ff5b04" dark flat>
@@ -170,7 +221,7 @@
       :headers="headersForCupType"
       :items="cupData"
       :search="search"
-      :items-per-page="5"
+      :items-per-page="10"
       class="elevation-3">
       <template v-slot:top>
         <v-toolbar class="mb-2" color="#ff5b04" dark flat>
@@ -213,7 +264,7 @@
       :headers="headersForCupSize"
       :items="cupSizeData"
       :search="search"
-      :items-per-page="5"
+      :items-per-page="10"
       class="elevation-3"
     >
       <template v-slot:top>
@@ -298,7 +349,6 @@
                           <v-container>
                             <v-row>
                                 <v-col cols="12" sm="6"> 
-                                    
                                     <v-select
                                     :items="categoryName"
                                     label="Product Category"
@@ -307,10 +357,18 @@
                                     v-model="prodType"
                                     ></v-select>
                                 </v-col>
+                                <v-col cols="12" sm="6">
+                                    <i><span class="errorColor" v-if="errorMessage9 !== null">{{errorMessage9}}</span></i>
+                                    <div>
+                                      <multiselect class="multiSelectDesign" v-on:change="validate('multiSelect')" v-model="value" :options="options" :multiple="true" :close-on-select="false" :clear-on-select="false" :preserve-search="true" placeholder="Choose Ingredients" label="ingredientsName" track-by="ingredientsName">
+                                        <template slot="selection" slot-scope="{ values, search, isOpen }"><span class="multiselect__single" v-if="values.length &amp;&amp; !isOpen">{{ values.length }} options selected</span></template>
+                                      </multiselect>
+                                    </div>
+                                </v-col>
                                 <v-col cols="12" sm="6"> 
                                     <v-text-field  label="Product Name" outlined  v-model="productName"></v-text-field>
                                 </v-col>
-                                <v-col>
+                                <v-col cols="12" sm="6">
                                     <v-text-field label="Description" outlined  v-model="description"></v-text-field>
                                 </v-col>
                             </v-row>
@@ -329,15 +387,11 @@
                                 <i><span class="errorColor" v-if="errorMessage1 !== null">{{errorMessage1}}</span></i>
                                 <v-row>
                                     <v-col cols="12" sm="6" >
-                                    <v-text-field v-model="lowPrice" label="Low Dose Price" outlined v-on:keyup="validate('lowDose')" min="1" type="number" required ></v-text-field>
+                                      <v-text-field v-model="lowPrice" label="Low Dose Price" outlined v-on:keyup="validate('lowDose')" min="1" type="number" required ></v-text-field>
+                                      <v-text-field v-model="overPrice" label="Over Dose Price" outlined v-on:keyup="validate('overDose')" min="1"  type="number" required></v-text-field>
                                     </v-col>
                                     <v-col cols="12" sm="6" >
-                                    <v-text-field v-model="highPrice" label="High Dose Price" outlined v-on:keyup="validate('highDose')" min="1"  type="number" required></v-text-field>
-                                    </v-col>
-                                </v-row>
-                                <v-row>
-                                    <v-col cols="12" sm="6">
-                                    <v-text-field v-model="overPrice" label="Over Dose Price" outlined v-on:keyup="validate('overDose')" min="1"  type="number" required></v-text-field>
+                                      <v-text-field v-model="highPrice" label="High Dose Price" outlined v-on:keyup="validate('highDose')" min="1"  type="number" required></v-text-field>
                                     </v-col>
                                 </v-row>
                             </div>
@@ -345,15 +399,11 @@
                                 <i><span class="errorColor" v-if="errorMessage1 !== null">{{errorMessage1}}</span></i>
                                 <v-row>
                                     <v-col cols="12" sm="6" >
-                                    <v-text-field v-model="onlinelowPrice" label="Online Low Dose Price" v-on:keyup="validate('onlineLowDose')" min="1" outlined type="number" required ></v-text-field>
+                                      <v-text-field v-model="onlinelowPrice" label="Online Low Dose Price" v-on:keyup="validate('onlineLowDose')" min="1" outlined type="number" required ></v-text-field>
+                                      <v-text-field v-model="onlineoverPrice" label="Online Over Dose Price" v-on:keyup="validate('onlineOverDose')" min="1" outlined  type="number" required></v-text-field>
                                     </v-col>
                                     <v-col cols="12" sm="6" >
-                                    <v-text-field v-model="onlinehighPrice" label="Online High Dose Price" v-on:keyup="validate('onlineHighDose')" min="1" outlined  type="number" required></v-text-field>
-                                    </v-col>
-                                </v-row>
-                                <v-row>
-                                    <v-col cols="12" sm="6">
-                                    <v-text-field v-model="onlineoverPrice" label="Online Over Dose Price" v-on:keyup="validate('onlineOverDose')" min="1" outlined  type="number" required></v-text-field>
+                                      <v-text-field v-model="onlinehighPrice" label="Online High Dose Price" v-on:keyup="validate('onlineHighDose')" min="1" outlined  type="number" required></v-text-field>
                                     </v-col>
                                 </v-row>
                             </div>
@@ -513,11 +563,34 @@
                 </v-dialog>
             </v-row>
         </template>
+        <calculation v-if="dialogForCalculation"></calculation>
+        <addingIngredients v-if="dialogForIngredients"></addingIngredients>
+        <newIngredients v-if="dialogForNewIngredients"></newIngredients>
         <loading v-if="loadingShow"></loading>
   </div>
 </template>
-
+<style src="vue-multiselect/dist/vue-multiselect.min.css">
+.multiselect__tags [data-v-0e00f27e] {
+    min-height: 40px;
+    display: block;
+    padding: 8px 40px 0 8px;
+    border-radius: 5px;
+    border: 1px solid #9e9e9e !important;
+    background: #fff;
+    font-size: 14px;
+}
+</style>
 <style scoped>
+.multiSelectDesign >>> .multiselect__tags{
+  border: 1px solid #9e9e9e !important;
+}
+.ingredientSpan{
+  font-style: italic;
+  color: blue;
+  text-align: center;
+  cursor: pointer;
+  padding: 5%;
+}
 .v-input__slot {
   margin-bottom: -35px;
 }
@@ -689,6 +762,10 @@ label {
 import AUTH from "../../services/auth";
 import ROUTER from "../../router";
 import loading from '../../basic/loading.vue';
+import addingIngredients from './addingQuantityIngredients.vue';
+import Multiselect from 'vue-multiselect'
+import newIngredients from './ingredients.vue';
+import calculation from './calculation.vue';
 import swal from "sweetalert";
 import noImage from '../../../assets/noImage.jpg'
 import moment from 'moment'
@@ -706,6 +783,7 @@ export default {
       tableForAddOns: false,
       tableForCupType: false,
       tableForCupSize: false,
+      tableForIngredients: false,
       normal:true,
       online:false,
       productName: null,
@@ -732,6 +810,7 @@ export default {
       datas: [],
       productData: [],
       categoryData: [],
+      ingredientsData: [],
       categoryName: [],
       btnCupType: false,
       btnEditCupType: false,
@@ -767,6 +846,9 @@ export default {
       dialogForCategory: false,
       dialogForAddOns: false,
       dialogForCupSize: false,
+      dialogForIngredients: false,
+      dialogForNewIngredients: false,
+      dialogForCalculation: false,
       dataHeader: null,
       catId: null,
       exampleRules : {
@@ -792,8 +874,16 @@ export default {
         { text: "#", value: "id" },
         { text: "images", value: "image" },
         { text: "Product Category", value: "productCategory" },
-        // { text: "Status", value: "status" },
         { text: "ACTION", value: "actions", sortable: false }
+      ],
+      headersForIngredients: [
+        { text: "", value: "", sortable: false },
+        { text: "", value: "", sortable: false },
+        { text: "", value: "", sortable: false },
+        { text: "#", value: "id" },
+        { text: "Ingredients", value: "ingredientsName" },
+        { text: "Quantity", value: "onRockQuantity" },
+        { text: "", value: "", sortable: false },
       ],
       headersForProduct: [
         { text: "#", value: "id" },
@@ -826,8 +916,19 @@ export default {
       errorMessage6: null,
       errorMessage7: null,
       errorMessage8: null,
+      errorMessage9: null,
       deleteID: null,
       deleteParam: null,
+      quantityRetrieve: [],
+      packOfPearl: '',
+      canOfFructose: '',
+      bottleSyrup: '',
+      packOfTea: '',
+      canOfWintermelon: '',
+      bottleCreamMilk: '',
+      packOfPowder: '',
+      value: [],
+      options: []
     };
   },
   mounted() {
@@ -836,11 +937,81 @@ export default {
     this.retrieveAddOns();
     this.retrieveCupType();
     this.retrieveCupSize();
+    this.retrieveIngredients();
+    this.retrieveAddedIngredients();
   },
   components: {
-    loading
+    loading,
+    addingIngredients,
+    calculation,
+    newIngredients,
+    Multiselect
   },
   methods: {
+    getData(param){
+      if(param.type === 'Pack of Pearl'){
+        return this.quantityRetrieve[param.id-1] ? this.quantityRetrieve[param.id-1] + ' scopes of pearl available' : 'No available scopes of powder'
+      }else if(param.type === 'Can of Fructose'){
+        return this.quantityRetrieve[param.id-1] ? this.quantityRetrieve[param.id-1] + ' ml of fructose available' : 'No available scopes of powder'
+      }else if(param.type === 'Bottle of Dough Syrup'){
+        return this.quantityRetrieve[param.id-1] ? this.quantityRetrieve[param.id-1] + ' ml of cookie dough syrup available' : 'No available scopes of powder'
+      }else if(param.type === 'Pack of Tea'){
+        return this.quantityRetrieve[param.id-1] ? this.quantityRetrieve[param.id-1] + ' ml of tea available' : 'No available scopes of powder'
+      }else if(param.type === 'Can of Wintermelon Syrup'){
+        return this.quantityRetrieve[param.id-1] ? this.quantityRetrieve[param.id-1] + ' ml of wintermelon syrup available' : 'No available scopes of powder'
+      }else if(param.type === 'Bottle of Cream Milk'){
+        return this.quantityRetrieve[param.id-1] ? this.quantityRetrieve[param.id-1] + ' ml of cream milk available' : 'No available scopes of powder'
+      }else if(param.type === 'Pack of Powder'){
+        return this.quantityRetrieve[param.id-1] ? this.quantityRetrieve[param.id-1] + ' scopes of powder available' : 'No available scopes of powder'
+      }else{
+        return 0
+      }
+    },
+    retrieveCalculation(){
+      this.loadingShow = true
+      this.$axios.post(AUTH.url + "retrieveCalculation", {}, AUTH.config).then(response => {
+          this.loadingShow = false
+          if(response.data.status === 'Token is Expired'){
+              AUTH.deauthenticate()
+          }
+          this.packOfPearl = response.data.calculations[0].packOfPearl
+          this.canOfFructose = response.data.calculations[0].canOfFructose
+          this.bottleSyrup = response.data.calculations[0].bottleSyrup
+          this.packOfTea = response.data.calculations[0].packOfTea
+          this.canOfWintermelon = response.data.calculations[0].canOfWintermelon
+          this.bottleCreamMilk = response.data.calculations[0].bottleCreamMilk
+          this.packOfPowder = response.data.calculations[0].packOfPowder
+      });
+    },
+    retrieveAddedIngredients(){
+      this.loadingShow = true
+      this.$axios.post(AUTH.url + "retrieveRemainingData", {}, AUTH.config).then(response => {
+        this.loadingShow = false
+        if(response.data.status === 'Token is Expired'){
+          AUTH.deauthenticate()
+        }
+        this.quantityRetrieve = JSON.parse(response.data.addIngredient[0].remainingQuantity)
+      });
+    },
+    retrieveIngredients(){
+      this.loadingShow = true
+      this.$axios.post(AUTH.url + "retrieveIngredients", {}, AUTH.config).then(response => {
+        this.loadingShow = false
+        if(response.data.status === 'Token is Expired'){
+          AUTH.deauthenticate()
+        }
+        this.ingredientsData = response.data.ingredients
+        this.ingredientsData.forEach(el => {
+          this.options.push({ingredientsName: el.ingredientsName})
+        })
+      });
+    },
+    closeModal(){
+      this.dialogForCalculation = false
+      this.dialogForIngredients = false
+      this.dialogForNewIngredients = false
+      // this.ingredientsToAdd = false
+    },
     deleteNow(){
       if(this.deleteParam === 'category'){
         this.deleteCategory(this.deleteID)
@@ -923,6 +1094,12 @@ export default {
           this.errorMessage6 = 'Cup Size Quantity must be greater than 0'
         }else{
           this.errorMessage6 = null
+        }
+      }else if(param === 'multiSelect'){
+        if(this.value === [] && this.value.length <= 0){
+          this.errorMessage9 = 'Ingredients is required'
+        }else{
+          this.errorMessage9 = null
         }
       }
     },
@@ -1256,6 +1433,7 @@ export default {
     formSubmitProduct(e) {
       e.preventDefault();
       this.loadingShow = true
+      this.validate('multiSelect')
       if (this.toSaveImage !== '' && this.prodType !== '' && this.productName !== '' &&
         this.lowPrice !== '' && this.highPrice !== '' && this.overPrice !== '' &&
         this.onlinelowPrice !== '' && this.onlinehighPrice !== '' & this.onlineoverPrice !== '' &&
@@ -1263,22 +1441,26 @@ export default {
         this.onlinelowPrice !== '' && this.onlinehighPrice !== '' && this.onlineoverPrice !== '' &&
         this.toSaveImage !== null && this.prodType !== null && this.productName !== null &&
         this.lowPrice !== null && this.highPrice !== null && this.overPrice !== null &&
-        this.onlinelowPrice !== null && this.onlinehighPrice !== null & this.onlineoverPrice !== null &&
-        this.lowPrice > 0 && this.highPrice > 0 && this.overPrice > 0 &&
-        this.onlinelowPrice > 0 && this.onlinehighPrice > 0 && this.onlineoverPrice > 0 && this.errorMessage1 === null &&
-        this.errorMessage7 === null && this.errorMessage8 === null){
+        this.onlinelowPrice !== null && this.onlinehighPrice !== null && this.onlineoverPrice !== null &&
+        parseInt(this.lowPrice) > 0 && parseInt(this.highPrice) > 0 && parseInt(this.overPrice) > 0 &&
+        parseInt(this.onlinelowPrice) > 0 && parseInt(this.onlinehighPrice) > 0 && parseInt(this.onlineoverPrice) > 0 && this.errorMessage1 === null &&
+        this.errorMessage7 === null && this.errorMessage8 === null && this.errorMessage9 === null){
+          var value = []
+          this.value.forEach(el => {
+            value.push(el.ingredientsName)
+          })
           let currentObj = this;
           const config = {
-              headers: {
+            headers: {
                 'content-type': 'multipart/form-data',
                 Authorization: 'Bearer ' + localStorage.getItem('userToken')
               }
           }
           let formData = new FormData();
-          // formData.append('image', this.img)
           formData.append('image', this.toSaveImage)
           formData.append('productCategory', this.prodType)
           formData.append('productName', this.productName)
+          formData.append('ingredients', value)
           formData.append('description', this.description)
           formData.append('status', 'Available')
           formData.append('lowPrice', this.lowPrice)
@@ -1311,13 +1493,17 @@ export default {
       }
     },
     editProduct(item) {
+      this.value = []
+      var selected = JSON.parse(item.ingredients).split(',')
+      selected.forEach(el => {
+        this.value.push({ingredientsName: el})
+      })
       this.errorMessage = null;
       this.dialogForProduct = true;
       this.productName = item.productName
       this.description = item.description
       this.prodType = item.productCategory
       this.toSaveImage = item.image
-      // this.img = item.image
       this.lowPrice = item.lowPrice
       this.highPrice = item.highPrice
       this.overPrice = item.overPrice
@@ -1344,6 +1530,10 @@ export default {
         this.onlinelowPrice > 0 && this.onlinehighPrice > 0 && this.onlineoverPrice > 0 && this.errorMessage1 === null &&
         this.errorMessage7 === null && this.errorMessage8 === null){
           e.preventDefault();
+          var value = []
+          this.value.forEach(el => {
+            value.push(el.ingredientsName)
+          })
           let currentObj = this;
           const config = {
               headers: {
@@ -1354,7 +1544,7 @@ export default {
           let formData = new FormData();
           formData.append('id', this.prodId)
           formData.append('image', this.toSaveImage)
-          // formData.append('image', this.img)
+          formData.append('ingredients', value)
           formData.append('status', this.status)
           formData.append('productCategory', this.prodType)
           formData.append('productName', this.productName)
@@ -1518,7 +1708,6 @@ export default {
             }
         }
         let formData = new FormData();
-        // formData.append("image", this.image);
         formData.append("image", this.toSaveImage2);
         formData.append("productCategory", this.productType);
         axios
@@ -1665,6 +1854,16 @@ export default {
       this.onlineoverPrice = null;
       this.imgURL = this.noImage;
       this.img = null;
+      this.value = []
+    },
+    showIngredients() {
+      this.dialogForIngredients = true;
+    },
+    showNewIngredients() {
+      this.dialogForNewIngredients = true;
+    },
+    showCalculation() {
+      this.dialogForCalculation = true;
     },
     showCategory() {
       this.editCat = false
@@ -1704,6 +1903,7 @@ export default {
       this.dialogForCupSize = false;
       this.showProductModal = false;
       this.showCategoryModal = false;
+      this.showIngredientsModal = false;
       this.editAddOnsShow = false;
       this.addonsShow = false;
       this.showCupTypeModal = false;

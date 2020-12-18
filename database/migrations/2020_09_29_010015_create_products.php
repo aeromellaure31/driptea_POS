@@ -17,6 +17,7 @@ class CreateProducts extends Migration
             $table->increments('id');
             $table->string('productCategory');
             $table->string('productName');
+            $table->longText('ingredients');
             $table->string('description');
             $table->string('status');
             $table->double('lowPrice');

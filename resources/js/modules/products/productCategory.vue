@@ -204,7 +204,21 @@ export default {
             cupData: [],
             notAvailable: null,
             feeDeliver: 0,
-            btnClick: false
+            btnClick: false,
+            packOfPearl: 0,
+            canOfFructose: 0,
+            bottleSyrup: 0,
+            packOfTea: 0,
+            canOfWintermelon: 0,
+            bottleCreamMilk: 0,
+            packOfPowder: 0,
+            ingredientsAvailable: [],
+            quantityAvailable: [],
+            ingredientsData: [],
+            storeData: [],
+            modifyFinalData: [],
+            finalData: [],
+            finalQuantity: [],
         }
     },
     components: {
@@ -212,6 +226,9 @@ export default {
         loading
     },
     mounted(){
+        this.retrieveCalculation()
+        this.retrieveIngredients()
+        this.retrieveAddedIngredients()
         this.retrieveCategory()
         this.retrieveProduct()
         this.retrieveAddOns()
@@ -225,6 +242,9 @@ export default {
         let obj = this;
         pusher.logToConsole = true;
         channel.bind("driptea-data", data => {
+            this.retrieveCalculation()
+            this.retrieveIngredients()
+            this.retrieveAddedIngredients()
             this.retrieveCategory()
             this.retrieveProduct()
             this.retrieveAddOns()
@@ -453,6 +473,7 @@ export default {
                     let low = 0
                     let high = 0
                     let over = 0
+                    let store = []
                     this.newTableData.forEach(el => {
                         if(el.size === 'lowDose'){
                             low += el.quantity
@@ -461,7 +482,59 @@ export default {
                         }else if(el.size === 'overDose'){
                             over += el.quantity
                         }
+                        var ing = JSON.parse(el.order_product[0].ingredients).split(',')
+                        ing.forEach(element => {
+                            this.storeData.forEach(elem => {
+                                if(element === elem.name){
+                                    this.ingredientsData.forEach(e => {
+                                        if(elem.name === e.ingredientsName){
+                                            let quantConsume = 0
+                                            if(el.size === 'lowDose'){
+                                                quantConsume = (el.quantity * e.lowdoseQuantity)
+                                            }else if(el.size === 'highDose'){
+                                                quantConsume = (el.quantity * e.highdoseQuantity)
+                                            }else if(el.size === 'overDose'){
+                                                quantConsume = (el.quantity * e.overdoseQuantity)
+                                            }
+                                            store.push({name: elem.name, quantityConsume: quantConsume})
+                                            this.modifyFinalData = store
+                                        }
+                                    })
+                                }
+                            })
+                        })
                     })
+                    this.finalData = []
+                    this.finalQuantity = []
+                    var a = [], b = []
+                    this.modifyFinalData.forEach((el, index) => {
+                        this.storeData.forEach(element => {
+                            if(element.name === el.name){
+                                if(a.includes(element.name)){
+                                    a[a.indexOf(element.name) + 1] = a[a.indexOf(element.name) + 1] - el.quantityConsume
+                                    b[b.indexOf(element.name) + 1] = b[b.indexOf(element.name) + 1] + el.quantityConsume
+                                }else{
+                                    a.push(element.name)
+                                    b.push(element.name)
+                                    a[a.indexOf(element.name) + 1] = element.quantity - el.quantityConsume
+                                    b[b.indexOf(element.name) + 1] = el.quantityConsume
+                                }
+                            }else{
+                                if(a.includes(element.name)){
+                                    a[a.indexOf(element.name) + 1] = a[a.indexOf(element.name) + 1]
+                                    b[b.indexOf(element.name) + 1] = b[b.indexOf(element.name) + 1]
+                                }else{
+                                    a.push(element.name)
+                                    b.push(element.name)
+                                    a[a.indexOf(element.name) + 1] = element.quantity
+                                    b[b.indexOf(element.name) + 1] = 0
+                                }
+                            }
+                        })
+                    })
+                    this.finalData = b
+                    this.finalQuantity = a
+                    this.updateUsedIngredients()
                     let param = {
                         usedCupsLowDose: low,
                         usedCupsHighDose: high,
@@ -486,6 +559,70 @@ export default {
                     })
                 })
             })
+        },
+        updateUsedIngredients(){
+            this.loadingShow = true
+            var used = [], remain = []
+            this.finalData.forEach((el, index) => {
+                if(index % 2 !== 0){
+                    used.push(el)
+                    remain.push(this.finalQuantity[index])
+                }
+            })
+            var params = {
+                usedQuantity: used,
+                remaining: remain
+            }
+            this.$axios.post(AUTH.url + "updateUsedIngredients", params, AUTH.config).then(response => {
+                this.loadingShow = false
+                if(response.data.status === 'Token is Expired'){
+                    AUTH.deauthenticate()
+                }
+                this.retrieveIngredients()
+                this.retrieveAddedIngredients()
+                this.retrieveCalculation()
+            });
+        },
+        retrieveCalculation(){
+            this.loadingShow = true
+            this.$axios.post(AUTH.url + "retrieveCalculation", {}, AUTH.config).then(response => {
+                this.loadingShow = false
+                if(response.data.status === 'Token is Expired'){
+                    AUTH.deauthenticate()
+                }
+                this.packOfPearl = response.data.calculations[0].packOfPearl
+                this.canOfFructose = response.data.calculations[0].canOfFructose
+                this.bottleSyrup = response.data.calculations[0].bottleSyrup
+                this.packOfTea = response.data.calculations[0].packOfTea
+                this.canOfWintermelon = response.data.calculations[0].canOfWintermelon
+                this.bottleCreamMilk = response.data.calculations[0].bottleCreamMilk
+                this.packOfPowder = response.data.calculations[0].packOfPowder
+            });
+        },
+        retrieveAddedIngredients(){
+            this.loadingShow = true
+            this.$axios.post(AUTH.url + "retrieveData", {}, AUTH.config).then(response => {
+                this.loadingShow = false
+                if(response.data.status === 'Token is Expired'){
+                    AUTH.deauthenticate()
+                }
+                this.ingredientsAvailable = JSON.parse(response.data.addIngredient[0].ingredients)
+                this.quantityAvailable = JSON.parse(response.data.addIngredient[0].remainingQuantity)
+                this.storeData = []
+                this.ingredientsAvailable.forEach((el, index) => {
+                    this.storeData.push({name: el, quantity: this.quantityAvailable[index]})
+                })
+            });
+        },
+        retrieveIngredients(){
+            this.loadingShow = true
+            this.$axios.post(AUTH.url + "retrieveIngredients", {}, AUTH.config).then(response => {
+                this.loadingShow = false
+                if(response.data.status === 'Token is Expired'){
+                    AUTH.deauthenticate()
+                }
+                this.ingredientsData = response.data.ingredients
+            });
         },
         cancelOrder(){
             this.tableData.forEach(el => {

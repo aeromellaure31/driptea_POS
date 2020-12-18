@@ -28,6 +28,7 @@ class ProductController extends Controller
         $product->onlinehighPrice = $data['onlinehighPrice'];
         $product->onlineoverPrice = $data['onlineoverPrice'];
         $product->productCategory = $data['productCategory'];
+        $product->ingredients = json_encode($data['ingredients']);
         $product->description = $data['description'];
         $product->productName = $data['productName'];
         $product->status = 'Available';
@@ -48,6 +49,7 @@ class ProductController extends Controller
         $product->onlinehighPrice = $data['onlinehighPrice'];
         $product->onlineoverPrice = $data['onlineoverPrice'];
         $product->productCategory = $data['productCategory'];
+        $product->ingredients = json_encode($data['ingredients']);
         $product->description = $data['description'];
         $product->productName = $data['productName'];
         $product->status = $data['status'];

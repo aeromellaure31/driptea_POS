@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Validator;
 use App\Models\AddCategory;
-
 use Illuminate\Http\Request;
 
 class AddCategoryController extends Controller

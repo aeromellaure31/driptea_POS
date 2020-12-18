@@ -145,6 +145,14 @@ export default {
             }
         },
         {
+            path: '/ingredientsInventory',
+            name: 'ingredientsInventory',
+            component: resolve => require(['@/js/modules/inventory/ingredientsInventory'], resolve),
+            meta: {
+                tokenRequired: true
+            }
+        },
+        {
             path: '/logs',
             name: 'logs',
             component: resolve => require(['@/js/modules/logs/log'], resolve),

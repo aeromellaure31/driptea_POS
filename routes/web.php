@@ -126,5 +126,18 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('updateDeletedCups','App\Http\Controllers\QuantityCupsController@updateDeletedCups');
     Route::post('retrieveCupSize','App\Http\Controllers\QuantityCupsController@retrieveCupSize');
     Route::post('retrieveCupForInventory','App\Http\Controllers\QuantityCupsController@retrieveCupForInventory');
+
+    Route::post('updateCalculation','App\Http\Controllers\CalculationsController@updateCalculation');
+    Route::post('retrieveCalculation','App\Http\Controllers\CalculationsController@retrieveCalculation');
+
+    Route::post('addIngredients','App\Http\Controllers\IngredientController@addIngredients');
+    Route::post('updateOnRockQuantityQuantity','App\Http\Controllers\IngredientController@updateOnRockQuantityQuantity');
+    Route::post('updateIngredients','App\Http\Controllers\IngredientController@updateIngredients');
+    Route::post('retrieveIngredients','App\Http\Controllers\IngredientController@retrieveIngredients');
+
+    Route::post('addIngredientQuantity','App\Http\Controllers\AddIngredientController@addIngredientQuantity');
+    Route::post('retrieveData','App\Http\Controllers\AddIngredientController@retrieveData');
+    Route::post('retrieveRemainingData','App\Http\Controllers\AddIngredientController@retrieveRemainingData');
+    Route::post('updateUsedIngredients','App\Http\Controllers\AddIngredientController@updateUsedIngredients');
 });
  

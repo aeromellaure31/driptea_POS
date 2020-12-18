@@ -334,6 +334,11 @@ export default {
         route: "/cupsInventory"
       },
       {
+        icon: "mdi-cup",
+        text: "Ingredients Inventory",
+        route: "/ingredientsInventory"
+      },
+      {
         icon: "mdi-plus-box",
         text: "Adding",
         route: "/addProductCategoryAddOns"
@@ -386,9 +391,9 @@ export default {
     channel.bind("driptea-data", data => {
       if (data.order !== "complete") {
         // this.playSound('file://resources/audio/notify.mp3')
-        this.playSound(
-          "http://soundbible.com/mp3/Air Plane Ding-SoundBible.com-496729130.mp3"
-        );
+        // this.playSound(
+        //   "http://soundbible.com/mp3/Air Plane Ding-SoundBible.com-496729130.mp3"
+        // );
         this.retrieve();
       }
       if (data.order.image) {
