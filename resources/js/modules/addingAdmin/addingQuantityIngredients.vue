@@ -41,15 +41,6 @@ export default {
         return {
             dialogForCupSize: false,
             errorMessage1: null,
-            errorMessage2: null,
-            errorMessage3: null,
-            errorMessage4: null,
-            errorMessage5: null,
-            errorMessage6: null,
-            errorMessage7: null,
-            errorMessage8: null,
-            errorMessage9: null,
-            errorMessage10: null,
             packPearl: '',
             packTea: '',
             canMilktea: '',
@@ -65,15 +56,6 @@ export default {
     },
     mounted(){
         this.errorMessage1 =  null
-        this.errorMessage2 =  null
-        this.errorMessage3 =  null
-        this.errorMessage4 =  null
-        this.errorMessage5 =  null
-        this.errorMessage6 =  null
-        this.errorMessage7 =  null
-        this.errorMessage8 =  null
-        this.errorMessage9 =  null
-        this.errorMessage10 =  null
         this.packPearl =  ''
         this.packTea =  ''
         this.canMilktea =  ''

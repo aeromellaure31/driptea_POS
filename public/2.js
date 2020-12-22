@@ -1079,6 +1079,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
+        _this3.options = [];
         _this3.ingredientsData = response.data.ingredients;
 
         _this3.ingredientsData.forEach(function (el) {
@@ -2236,15 +2237,6 @@ __webpack_require__.r(__webpack_exports__);
     return {
       dialogForCupSize: false,
       errorMessage1: null,
-      errorMessage2: null,
-      errorMessage3: null,
-      errorMessage4: null,
-      errorMessage5: null,
-      errorMessage6: null,
-      errorMessage7: null,
-      errorMessage8: null,
-      errorMessage9: null,
-      errorMessage10: null,
       packPearl: '',
       packTea: '',
       canMilktea: '',
@@ -2260,15 +2252,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.errorMessage1 = null;
-    this.errorMessage2 = null;
-    this.errorMessage3 = null;
-    this.errorMessage4 = null;
-    this.errorMessage5 = null;
-    this.errorMessage6 = null;
-    this.errorMessage7 = null;
-    this.errorMessage8 = null;
-    this.errorMessage9 = null;
-    this.errorMessage10 = null;
     this.packPearl = '';
     this.packTea = '';
     this.canMilktea = '';

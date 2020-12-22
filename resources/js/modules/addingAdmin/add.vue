@@ -1000,6 +1000,7 @@ export default {
         if(response.data.status === 'Token is Expired'){
           AUTH.deauthenticate()
         }
+        this.options = []
         this.ingredientsData = response.data.ingredients
         this.ingredientsData.forEach(el => {
           this.options.push({ingredientsName: el.ingredientsName})
@@ -1445,7 +1446,7 @@ export default {
         parseInt(this.lowPrice) > 0 && parseInt(this.highPrice) > 0 && parseInt(this.overPrice) > 0 &&
         parseInt(this.onlinelowPrice) > 0 && parseInt(this.onlinehighPrice) > 0 && parseInt(this.onlineoverPrice) > 0 && this.errorMessage1 === null &&
         this.errorMessage7 === null && this.errorMessage8 === null && this.errorMessage9 === null){
-          var value = []
+          let value = []
           this.value.forEach(el => {
             value.push(el.ingredientsName)
           })
