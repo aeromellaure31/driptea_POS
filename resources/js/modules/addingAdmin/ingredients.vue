@@ -28,7 +28,7 @@
                                     <v-btn v-if="addShow" color="blue darken-1" type="button" class="btn btn-primary white--text addStyle" @click="clear">Clear</v-btn>
                                     <v-btn v-if="!addShow" color="blue darken-1" type="button" class="btn btn-primary white--text addStyle" @click="cancelUpdate">Cancel</v-btn>
                                 </v-col>
-                                <v-col cols="12"  md="4">
+                                <!-- <v-col cols="12"  md="4">
                                     <v-text-field label="Lowdose(scope/ml)" outlined dense v-model="lowdose" type="number" @keyup="validate('lowdose')" id="lowdose"></v-text-field>
                                     <i><span class="errorColor" v-if="errorMessage2 !== null">{{errorMessage2}}</span></i>
                                 </v-col>
@@ -39,7 +39,7 @@
                                 <v-col cols="12"  md="4">
                                     <v-text-field label="Overdose(scope/ml)" outlined dense v-model="overdose" type="number" @keyup="validate('overdose')" id="overdose"></v-text-field>
                                     <i><span class="errorColor" v-if="errorMessage4 !== null">{{errorMessage4}}</span></i>
-                                </v-col>
+                                </v-col> -->
                             </v-row>
                         </v-container>
                     </v-form>
@@ -97,16 +97,16 @@ export default {
             addShow: true,
             ingredientsName: '',
             ingredientsType: '',
-            lowdose: '',
-            highdose: '',
-            overdose: '',
+            // lowdose: '',
+            // highdose: '',
+            // overdose: '',
             search: '',
             headersForIngredients: [
                 { text: "Ingredient's Name", value: "ingredientsName" },
                 { text: "Ingredient's Type", value: "type" },
-                { text: "Lowdose Quantity", value: "lowdoseQuantity" },
-                { text: "Highdose Quantity", value: "highdoseQuantity" },
-                { text: "Overdose Quantity", value: "overdoseQuantity" },
+                // { text: "Lowdose Quantity", value: "lowdoseQuantity" },
+                // { text: "Highdose Quantity", value: "highdoseQuantity" },
+                // { text: "Overdose Quantity", value: "overdoseQuantity" },
                 { text: "ACTION", value: "actions", sortable: false }
             ],
             ingredientsData: [],
@@ -133,9 +133,9 @@ export default {
             this.errorMessage5 =  null
             this.ingredientsName = ''
             this.ingredientsType = ''
-            this.lowdose = ''
-            this.highdose = ''
-            this.overdose = ''
+            // this.lowdose = ''
+            // this.highdose = ''
+            // this.overdose = ''
         },
         retrieve(){
             this.loadingShow = true
@@ -151,25 +151,25 @@ export default {
             this.addShow = false
             this.ingredientsName = item.ingredientsName
             this.ingredientsType = item.type
-            this.lowdose = item.lowdoseQuantity
-            this.highdose = item.highdoseQuantity
-            this.overdose = item.overdoseQuantity
+            // this.lowdose = item.lowdoseQuantity
+            // this.highdose = item.highdoseQuantity
+            // this.overdose = item.overdoseQuantity
         },
         updateIngredient(){
             this.validate('ingredientsName')
             this.validate('ingredientsType')
-            this.validate('lowdose')
-            this.validate('highdose')
-            this.validate('overdose')
+            // this.validate('lowdose')
+            // this.validate('highdose')
+            // this.validate('overdose')
             if(this.errorMessage1 === null && this.errorMessage2 === null  && this.errorMessage3 === null  && this.errorMessage4 === null  && this.errorMessage5 === null){
                 this.loadingShow = true
                 let param = {
                     id: localStorage.getItem('adminId'),
                     ingredientsName: this.ingredientsName,
                     type: this.ingredientsType,
-                    lowdoseQuantity: this.lowdose,
-                    highdoseQuantity: this.highdose,
-                    overdoseQuantity: this.overdose,
+                    // lowdoseQuantity: this.lowdose,
+                    // highdoseQuantity: this.highdose,
+                    // overdoseQuantity: this.overdose,
                 };
                 this.$axios.post(AUTH.url + "updateIngredients", param, AUTH.config).then(response => {
                     this.loadingShow = false
@@ -190,18 +190,18 @@ export default {
         addIngredient(){
             this.validate('ingredientsName')
             this.validate('ingredientsType')
-            this.validate('lowdose')
-            this.validate('highdose')
-            this.validate('overdose')
+            // this.validate('lowdose')
+            // this.validate('highdose')
+            // this.validate('overdose')
             if(this.errorMessage1 === null && this.errorMessage2 === null  && this.errorMessage3 === null  && this.errorMessage4 === null  && this.errorMessage5 === null){
                 this.loadingShow = true
                 let param = {
                     id: localStorage.getItem('adminId'),
                     ingredientsName: this.ingredientsName,
                     type: this.ingredientsType,
-                    lowdoseQuantity: this.lowdose,
-                    highdoseQuantity: this.highdose,
-                    overdoseQuantity: this.overdose,
+                    // lowdoseQuantity: this.lowdose,
+                    // highdoseQuantity: this.highdose,
+                    // overdoseQuantity: this.overdose,
                 };
                 this.$axios.post(AUTH.url + "addIngredients", param, AUTH.config).then(response => {
                     this.loadingShow = false
@@ -228,30 +228,30 @@ export default {
                 }else{
                     this.errorMessage1 = null
                 }
-            }else if(param === 'lowdose'){
-                if(this.lowdose ===  ''){
-                    this.errorMessage2 = 'Lowdose Quantity is required'
-                }else if(this.lowdose < 1){
-                    this.errorMessage2 = 'Lowdose Quantity must be grater than 1'
-                }else{
-                    this.errorMessage2 = null
-                }
-            }else if(param === 'highdose'){
-                if(this.highdose ===  ''){
-                    this.errorMessage3 = 'Highdose Quantity is required'
-                }else if(this.highdose < 1){
-                    this.errorMessage3 = 'Highdose Quantity must be grater than 1'
-                }else{
-                    this.errorMessage3 = null
-                }
-            }else if(param === 'overdose'){
-                if(this.overdose ===  ''){
-                    this.errorMessage4 = 'Overdose Quantity is required'
-                }else if(this.overdose < 1){
-                    this.errorMessage4 = 'Overdose Quantity must be grater than 1'
-                }else{
-                    this.errorMessage4 = null
-                }
+            // }else if(param === 'lowdose'){
+            //     if(this.lowdose ===  ''){
+            //         this.errorMessage2 = 'Lowdose Quantity is required'
+            //     }else if(this.lowdose < 1){
+            //         this.errorMessage2 = 'Lowdose Quantity must be grater than 1'
+            //     }else{
+            //         this.errorMessage2 = null
+            //     }
+            // }else if(param === 'highdose'){
+            //     if(this.highdose ===  ''){
+            //         this.errorMessage3 = 'Highdose Quantity is required'
+            //     }else if(this.highdose < 1){
+            //         this.errorMessage3 = 'Highdose Quantity must be grater than 1'
+            //     }else{
+            //         this.errorMessage3 = null
+            //     }
+            // }else if(param === 'overdose'){
+            //     if(this.overdose ===  ''){
+            //         this.errorMessage4 = 'Overdose Quantity is required'
+            //     }else if(this.overdose < 1){
+            //         this.errorMessage4 = 'Overdose Quantity must be grater than 1'
+            //     }else{
+            //         this.errorMessage4 = null
+            //     }
             }else if(param === 'ingredientsType'){
                 if(this.ingredientsType ===  ''){
                     this.errorMessage5 = 'ingredients Type is required'

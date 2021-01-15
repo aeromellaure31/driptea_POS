@@ -75,6 +75,10 @@
       </template>
       <template v-slot:item.id="{ item }"><span>{{getNumberDate(item.created_at, item.id)}}</span></template>
       <template v-slot:item.onRockQuantity="{ item }"><span>{{getData(item)}}</span></template>
+      <template v-slot:item.actions="{ item }">
+        <v-icon small class="mr-2" @click="showEditIngredients(item)">mdi-pencil</v-icon>
+        <v-icon small @click="showDelete(item.id, 'category')">mdi-delete</v-icon>
+      </template>
     </v-data-table>
 
     <!-- Table for Category -->
@@ -336,7 +340,7 @@
         <!-- Dialog for Product -->
          <template>
             <v-row justify="center">
-                <v-dialog v-model="dialogForProduct" persistent max-width="600px">
+                <v-dialog v-model="dialogForProduct" persistent max-width="800px">
                     <v-card>
                         <div class="modal-header">
                           <span class="headline">PRODUCT</span>
@@ -348,8 +352,10 @@
                           <i><span class="errorColor" v-if="errorMessage !== null">{{errorMessage}}</span></i>
                           <v-container>
                             <v-row>
-                                <v-col cols="12" sm="6"> 
+                                <v-col cols="12" sm="4"> 
                                     <v-select
+                                    solo
+                                    height="55"
                                     :items="categoryName"
                                     label="Product Category"
                                     dense
@@ -357,53 +363,58 @@
                                     v-model="prodType"
                                     ></v-select>
                                 </v-col>
-                                <v-col cols="12" sm="6">
+                                <v-col cols="12" sm="4"> 
+                                    <v-text-field label="Product Name" outlined  v-model="productName"></v-text-field>
                                     <i><span class="errorColor" v-if="errorMessage9 !== null">{{errorMessage9}}</span></i>
+                                    <v-btn class="btn btn-primary" style="width: 100%" @click="dialogQuantityIngredients = true, dialogForProduct = false">Add Ingredients</v-btn>
+                                </v-col>
+                                <v-col cols="12" sm="4">
+                                    <v-text-field label="Description" outlined  v-model="description"></v-text-field>
+                                </v-col>
+                                <!-- <v-col cols="12" sm="6">
                                     <div>
                                       <multiselect class="multiSelectDesign" v-on:change="validate('multiSelect')" v-model="value" :options="options" :multiple="true" :close-on-select="false" :clear-on-select="false" :preserve-search="true" placeholder="Choose Ingredients" label="ingredientsName" track-by="ingredientsName">
                                         <template slot="selection" slot-scope="{ values, search, isOpen }"><span class="multiselect__single" v-if="values.length &amp;&amp; !isOpen">{{ values.length }} options selected</span></template>
                                       </multiselect>
                                     </div>
-                                </v-col>
-                                <v-col cols="12" sm="6"> 
-                                    <v-text-field  label="Product Name" outlined  v-model="productName"></v-text-field>
-                                </v-col>
-                                <v-col cols="12" sm="6">
-                                    <v-text-field label="Description" outlined  v-model="description"></v-text-field>
-                                </v-col>
+                                </v-col> -->
                             </v-row>
-                            <v-row>
-                                <v-tabs dark background-color="secondary" fixed-tabs >
-                            <v-tabs-slider></v-tabs-slider>
-                            <v-tab @click="normal = true, online = false">
-                                Normal Price
-                            </v-tab>
-                            <v-tab @click="online = true, normal = false">
-                                Online Price 
-                            </v-tab>
-                            </v-tabs>                            
+                            <v-row style="margin-top: 5%;">
+                              <v-tabs dark background-color="secondary" fixed-tabs >
+                                <v-tabs-slider></v-tabs-slider>
+                                <v-tab @click="normal = true, online = false">
+                                    Normal Price
+                                </v-tab>
+                                <v-tab @click="online = true, normal = false">
+                                    Online Price 
+                                </v-tab>
+                              </v-tabs>                            
                             </v-row>
-                            <div v-if="normal" style="border: 1px solid #d8dce3; margin-top: -0.5%;"> 
+                            <div v-if="normal" style="border: 1px solid #d8dce3; margin-top: 5%;"> 
                                 <i><span class="errorColor" v-if="errorMessage1 !== null">{{errorMessage1}}</span></i>
                                 <v-row>
-                                    <v-col cols="12" sm="6" >
+                                    <v-col cols="12" sm="4" >
                                       <v-text-field v-model="lowPrice" label="Low Dose Price" outlined v-on:keyup="validate('lowDose')" min="1" type="number" required ></v-text-field>
-                                      <v-text-field v-model="overPrice" label="Over Dose Price" outlined v-on:keyup="validate('overDose')" min="1"  type="number" required></v-text-field>
                                     </v-col>
-                                    <v-col cols="12" sm="6" >
+                                    <v-col cols="12" sm="4" >
                                       <v-text-field v-model="highPrice" label="High Dose Price" outlined v-on:keyup="validate('highDose')" min="1"  type="number" required></v-text-field>
+                                    </v-col>
+                                    <v-col cols="12" sm="4" >
+                                      <v-text-field v-model="overPrice" label="Over Dose Price" outlined v-on:keyup="validate('overDose')" min="1"  type="number" required></v-text-field>
                                     </v-col>
                                 </v-row>
                             </div>
-                              <div v-if="online" style="border: 1px solid #d8dce3; margin-top: -0.5%;"> 
+                              <div v-if="online" style="border: 1px solid #d8dce3; margin-top: 5%;"> 
                                 <i><span class="errorColor" v-if="errorMessage1 !== null">{{errorMessage1}}</span></i>
                                 <v-row>
-                                    <v-col cols="12" sm="6" >
+                                    <v-col cols="12" sm="4" >
                                       <v-text-field v-model="onlinelowPrice" label="Online Low Dose Price" v-on:keyup="validate('onlineLowDose')" min="1" outlined type="number" required ></v-text-field>
-                                      <v-text-field v-model="onlineoverPrice" label="Online Over Dose Price" v-on:keyup="validate('onlineOverDose')" min="1" outlined  type="number" required></v-text-field>
                                     </v-col>
-                                    <v-col cols="12" sm="6" >
+                                    <v-col cols="12" sm="4" >
                                       <v-text-field v-model="onlinehighPrice" label="Online High Dose Price" v-on:keyup="validate('onlineHighDose')" min="1" outlined  type="number" required></v-text-field>
+                                    </v-col>
+                                    <v-col cols="12" sm="4" >
+                                      <v-text-field v-model="onlineoverPrice" label="Online Over Dose Price" v-on:keyup="validate('onlineOverDose')" min="1" outlined  type="number" required></v-text-field>
                                     </v-col>
                                 </v-row>
                             </div>
@@ -563,9 +574,49 @@
                 </v-dialog>
             </v-row>
         </template>
+        <template>
+            <v-row justify="center">
+                <v-dialog v-model="dialogQuantityIngredients" persistent max-width="700px">
+                    <v-card>
+                        <div class="modal-header">
+                          <span class="headline">Ingredients for {{productName}}</span>
+                          <button type="button" class="close" @click="dialogQuantityIngredients = false, dialogForProduct = true, storeIngredients.length > 0 ? '' : storeIngredients = []">&times;</button><br>
+                        </div>
+                        <v-card-text style="margin-top: 5%;">
+                          <form>
+                            <div class="form-group">
+                              <div v-for="(item, index) in options" :key="index">
+                                <div class="row">
+                                  <div class="col-md-6">
+                                    <input type="checkbox" :value="item.ingredientsName" v-model="storeIngredients">
+                                    <label :for="item.ingredientsName">{{item.ingredientsName}}</label>
+                                  </div>
+                                  <!-- <div class="col-md-2">
+                                    <v-text-field label="Lowdose Quantity" outlined dense v-model="lowDose" type="number" @keyup="validate('')"></v-text-field> 
+                                  </div>
+                                  <div class="col-md-2">
+                                    <v-text-field label="Highdose Quantity" outlined dense v-model="highDose" type="number" @keyup="validate('')"></v-text-field> 
+                                  </div>
+                                  <div class="col-md-2">
+                                    <v-text-field label="Overdose Quantity" outlined dense v-model="overDose" type="number" @keyup="validate('')"></v-text-field> 
+                                  </div> -->
+                                </div>
+                              </div>
+                            </div>
+                          </form>
+                        </v-card-text>
+                        <v-card-actions>
+                          <v-spacer></v-spacer>
+                          <v-btn color="blue darken-1" text @click="dialogQuantityIngredients = false, dialogForProduct = true, storeIngredients.length > 0 ? '' : storeIngredients = []">Close</v-btn>
+                          <v-btn color="blue darken-1" text  type="button" class="btn btn-primary" @click="dialogQuantityIngredients = false, dialogForProduct = true">Save</v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </v-dialog>
+            </v-row>
+        </template>
         <calculation v-if="dialogForCalculation"></calculation>
         <addingIngredients v-if="dialogForIngredients"></addingIngredients>
-        <newIngredients v-if="dialogForNewIngredients"></newIngredients>
+        <newIngredients ref="show" v-if="dialogForNewIngredients"></newIngredients>
         <loading v-if="loadingShow"></loading>
   </div>
 </template>
@@ -777,6 +828,7 @@ export default {
       toSaveImage2: null,
       auth: AUTH,
       dialogConfirmation: false,
+      dialogQuantityIngredients: false,
       editCat: false,
       tableForCategory: true,
       tableForProduct: false,
@@ -811,6 +863,7 @@ export default {
       productData: [],
       categoryData: [],
       ingredientsData: [],
+      storeIngredients: [],
       categoryName: [],
       btnCupType: false,
       btnEditCupType: false,
@@ -877,12 +930,13 @@ export default {
         { text: "ACTION", value: "actions", sortable: false }
       ],
       headersForIngredients: [
-        { text: "", value: "", sortable: false },
-        { text: "", value: "", sortable: false },
+        // { text: "", value: "", sortable: false },
+        // { text: "", value: "", sortable: false },
         { text: "", value: "", sortable: false },
         { text: "#", value: "id" },
         { text: "Ingredients", value: "ingredientsName" },
-        { text: "Quantity", value: "onRockQuantity" },
+        { text: "Ingredient's Type", value: "type" },
+        { text: "Action", value: "actions", sortable: false },
         { text: "", value: "", sortable: false },
       ],
       headersForProduct: [
@@ -945,9 +999,18 @@ export default {
     addingIngredients,
     calculation,
     newIngredients,
-    Multiselect
+    Multiselect,
+    updateIng
   },
   methods: {
+    showEditIngredients(item){
+      setTimeout(()=> {
+        this.dialogForNewIngredients = true
+        this.$nextTick(() => 
+          this.$refs.show.editIngredient(item)
+        )
+      }, 1000)
+    },
     getData(param){
       if(param.type === 'Pack of Pearl'){
         return this.quantityRetrieve[param.id-1] ? this.quantityRetrieve[param.id-1] + ' scopes of pearl available' : 'No available scopes of powder'
@@ -1005,6 +1068,7 @@ export default {
         this.ingredientsData.forEach(el => {
           this.options.push({ingredientsName: el.ingredientsName})
         })
+        console.log(this.options)
       });
     },
     closeModal(){
@@ -1097,7 +1161,7 @@ export default {
           this.errorMessage6 = null
         }
       }else if(param === 'multiSelect'){
-        if(this.value === [] && this.value.length <= 0){
+        if(this.storeIngredients === [] && this.storeIngredients.length <= 0){
           this.errorMessage9 = 'Ingredients is required'
         }else{
           this.errorMessage9 = null
@@ -1435,6 +1499,11 @@ export default {
       e.preventDefault();
       this.loadingShow = true
       this.validate('multiSelect')
+      if(this.storeIngredients.length < 1){
+        this.errorMessage9 = 'Ingredients is required'
+      }else{
+        this.errorMessage9 = null
+      }
       if (this.toSaveImage !== '' && this.prodType !== '' && this.productName !== '' &&
         this.lowPrice !== '' && this.highPrice !== '' && this.overPrice !== '' &&
         this.onlinelowPrice !== '' && this.onlinehighPrice !== '' & this.onlineoverPrice !== '' &&
@@ -1855,7 +1924,7 @@ export default {
       this.onlineoverPrice = null;
       this.imgURL = this.noImage;
       this.img = null;
-      this.value = []
+      this.storeIngredients = []
     },
     showIngredients() {
       this.dialogForIngredients = true;

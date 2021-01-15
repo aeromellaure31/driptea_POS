@@ -785,6 +785,57 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -805,6 +856,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       toSaveImage2: null,
       auth: _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"],
       dialogConfirmation: false,
+      dialogQuantityIngredients: false,
       editCat: false,
       tableForCategory: true,
       tableForProduct: false,
@@ -839,6 +891,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       productData: [],
       categoryData: [],
       ingredientsData: [],
+      storeIngredients: [],
       categoryName: [],
       btnCupType: false,
       btnEditCupType: false,
@@ -916,15 +969,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       text: "ACTION",
       value: "actions",
       sortable: false
-    }]), _defineProperty(_ref, "headersForIngredients", [{
-      text: "",
-      value: "",
-      sortable: false
-    }, {
-      text: "",
-      value: "",
-      sortable: false
-    }, {
+    }]), _defineProperty(_ref, "headersForIngredients", [// { text: "", value: "", sortable: false },
+    // { text: "", value: "", sortable: false },
+    {
       text: "",
       value: "",
       sortable: false
@@ -935,8 +982,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       text: "Ingredients",
       value: "ingredientsName"
     }, {
-      text: "Quantity",
-      value: "onRockQuantity"
+      text: "Ingredient's Type",
+      value: "type"
+    }, {
+      text: "Action",
+      value: "actions",
+      sortable: false
     }, {
       text: "",
       value: "",
@@ -1012,9 +1063,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     addingIngredients: _addingQuantityIngredients_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
     calculation: _calculation_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
     newIngredients: _ingredients_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
-    Multiselect: vue_multiselect__WEBPACK_IMPORTED_MODULE_4___default.a
+    Multiselect: vue_multiselect__WEBPACK_IMPORTED_MODULE_4___default.a,
+    updateIng: updateIng
   },
   methods: {
+    showEditIngredients: function showEditIngredients(item) {
+      var _this = this;
+
+      setTimeout(function () {
+        _this.dialogForNewIngredients = true;
+
+        _this.$nextTick(function () {
+          return _this.$refs.show.editIngredient(item);
+        });
+      }, 1000);
+    },
     getData: function getData(param) {
       if (param.type === 'Pack of Pearl') {
         return this.quantityRetrieve[param.id - 1] ? this.quantityRetrieve[param.id - 1] + ' scopes of pearl available' : 'No available scopes of powder';
@@ -1035,58 +1098,60 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     retrieveCalculation: function retrieveCalculation() {
-      var _this = this;
-
-      this.loadingShow = true;
-      this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "retrieveCalculation", {}, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
-        _this.loadingShow = false;
-
-        if (response.data.status === 'Token is Expired') {
-          _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
-        }
-
-        _this.packOfPearl = response.data.calculations[0].packOfPearl;
-        _this.canOfFructose = response.data.calculations[0].canOfFructose;
-        _this.bottleSyrup = response.data.calculations[0].bottleSyrup;
-        _this.packOfTea = response.data.calculations[0].packOfTea;
-        _this.canOfWintermelon = response.data.calculations[0].canOfWintermelon;
-        _this.bottleCreamMilk = response.data.calculations[0].bottleCreamMilk;
-        _this.packOfPowder = response.data.calculations[0].packOfPowder;
-      });
-    },
-    retrieveAddedIngredients: function retrieveAddedIngredients() {
       var _this2 = this;
 
       this.loadingShow = true;
-      this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "retrieveRemainingData", {}, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
+      this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "retrieveCalculation", {}, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
         _this2.loadingShow = false;
 
         if (response.data.status === 'Token is Expired') {
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this2.quantityRetrieve = JSON.parse(response.data.addIngredient[0].remainingQuantity);
+        _this2.packOfPearl = response.data.calculations[0].packOfPearl;
+        _this2.canOfFructose = response.data.calculations[0].canOfFructose;
+        _this2.bottleSyrup = response.data.calculations[0].bottleSyrup;
+        _this2.packOfTea = response.data.calculations[0].packOfTea;
+        _this2.canOfWintermelon = response.data.calculations[0].canOfWintermelon;
+        _this2.bottleCreamMilk = response.data.calculations[0].bottleCreamMilk;
+        _this2.packOfPowder = response.data.calculations[0].packOfPowder;
       });
     },
-    retrieveIngredients: function retrieveIngredients() {
+    retrieveAddedIngredients: function retrieveAddedIngredients() {
       var _this3 = this;
 
       this.loadingShow = true;
-      this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "retrieveIngredients", {}, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
+      this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "retrieveRemainingData", {}, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
         _this3.loadingShow = false;
 
         if (response.data.status === 'Token is Expired') {
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this3.options = [];
-        _this3.ingredientsData = response.data.ingredients;
+        _this3.quantityRetrieve = JSON.parse(response.data.addIngredient[0].remainingQuantity);
+      });
+    },
+    retrieveIngredients: function retrieveIngredients() {
+      var _this4 = this;
 
-        _this3.ingredientsData.forEach(function (el) {
-          _this3.options.push({
+      this.loadingShow = true;
+      this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "retrieveIngredients", {}, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
+        _this4.loadingShow = false;
+
+        if (response.data.status === 'Token is Expired') {
+          _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
+        }
+
+        _this4.options = [];
+        _this4.ingredientsData = response.data.ingredients;
+
+        _this4.ingredientsData.forEach(function (el) {
+          _this4.options.push({
             ingredientsName: el.ingredientsName
           });
         });
+
+        console.log(_this4.options);
       });
     },
     closeModal: function closeModal() {
@@ -1178,7 +1243,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           this.errorMessage6 = null;
         }
       } else if (param === 'multiSelect') {
-        if (this.value === [] && this.value.length <= 0) {
+        if (this.storeIngredients === [] && this.storeIngredients.length <= 0) {
           this.errorMessage9 = 'Ingredients is required';
         } else {
           this.errorMessage9 = null;
@@ -1192,7 +1257,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return moment__WEBPACK_IMPORTED_MODULE_9___default()(date).format('MM/DD/YYYY');
     },
     deleteCupType: function deleteCupType(id) {
-      var _this4 = this;
+      var _this5 = this;
 
       this.loadingShow = true;
       var param = {
@@ -1203,20 +1268,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this4.deleteID = null;
-        _this4.deleteParam = null;
-        _this4.dialogConfirmation = false;
-        _this4.loadingShow = false;
+        _this5.deleteID = null;
+        _this5.deleteParam = null;
+        _this5.dialogConfirmation = false;
+        _this5.loadingShow = false;
         sweetalert__WEBPACK_IMPORTED_MODULE_7___default()({
           title: "You successfully deleted the cup type",
           icon: "success"
         });
 
-        _this4.retrieveCupType();
+        _this5.retrieveCupType();
       });
     },
     deleteAddOns: function deleteAddOns(id) {
-      var _this5 = this;
+      var _this6 = this;
 
       this.loadingShow = true;
       var param = {
@@ -1227,20 +1292,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this5.deleteID = null;
-        _this5.deleteParam = null;
-        _this5.dialogConfirmation = false;
-        _this5.loadingShow = false;
+        _this6.deleteID = null;
+        _this6.deleteParam = null;
+        _this6.dialogConfirmation = false;
+        _this6.loadingShow = false;
         sweetalert__WEBPACK_IMPORTED_MODULE_7___default()({
           title: "You successfully deleted the add-ons",
           icon: "success"
         });
 
-        _this5.retrieveAddOns();
+        _this6.retrieveAddOns();
       });
     },
     deleteProduct: function deleteProduct(id) {
-      var _this6 = this;
+      var _this7 = this;
 
       this.loadingShow = true;
       var param = {
@@ -1251,20 +1316,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this6.deleteID = null;
-        _this6.deleteParam = null;
-        _this6.dialogConfirmation = false;
-        _this6.loadingShow = false;
+        _this7.deleteID = null;
+        _this7.deleteParam = null;
+        _this7.dialogConfirmation = false;
+        _this7.loadingShow = false;
         sweetalert__WEBPACK_IMPORTED_MODULE_7___default()({
           title: "You successfully deleted the product",
           icon: "success"
         });
 
-        _this6.retrieveProducts();
+        _this7.retrieveProducts();
       });
     },
     deleteCategory: function deleteCategory(id) {
-      var _this7 = this;
+      var _this8 = this;
 
       this.loadingShow = true;
       var param = {
@@ -1275,16 +1340,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this7.deleteID = null;
-        _this7.deleteParam = null;
-        _this7.dialogConfirmation = false;
-        _this7.loadingShow = false;
+        _this8.deleteID = null;
+        _this8.deleteParam = null;
+        _this8.dialogConfirmation = false;
+        _this8.loadingShow = false;
         sweetalert__WEBPACK_IMPORTED_MODULE_7___default()({
           title: "You successfully deleted the category",
           icon: "success"
         });
 
-        _this7.retrieveCategories();
+        _this8.retrieveCategories();
       });
     },
     changeName: function changeName(param) {
@@ -1321,7 +1386,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     NACupUpdate: function NACupUpdate(id) {
-      var _this8 = this;
+      var _this9 = this;
 
       this.loadingShow = true;
       var param = {
@@ -1329,9 +1394,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         status: "Not Available"
       };
       this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "updateAvailableCupType", param, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
-        _this8.retrieveCupType();
+        _this9.retrieveCupType();
 
-        _this8.loadingShow = false;
+        _this9.loadingShow = false;
 
         if (response.data.status === 'Token is Expired') {
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
@@ -1339,7 +1404,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     availableCupUpdate: function availableCupUpdate(id) {
-      var _this9 = this;
+      var _this10 = this;
 
       this.loadingShow = true;
       var param = {
@@ -1351,13 +1416,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this9.retrieveCupType();
+        _this10.retrieveCupType();
 
-        _this9.loadingShow = false;
+        _this10.loadingShow = false;
       });
     },
     retrieveCupType: function retrieveCupType() {
-      var _this10 = this;
+      var _this11 = this;
 
       this.loadingShow = true;
       this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "retrieveAllCupType", {}, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
@@ -1365,12 +1430,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this10.cupData = response.data.cupType;
-        _this10.loadingShow = false;
+        _this11.cupData = response.data.cupType;
+        _this11.loadingShow = false;
       });
     },
     retrieveCupSize: function retrieveCupSize() {
-      var _this11 = this;
+      var _this12 = this;
 
       this.loadingShow = true;
       this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "retrieveCupSize", {}, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
@@ -1378,14 +1443,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this11.loadingShow = false;
-        _this11.cupSizeData = response.data.quantityCupsInDB.reverse();
+        _this12.loadingShow = false;
+        _this12.cupSizeData = response.data.quantityCupsInDB.reverse();
         response.data.quantityCupsInDB.forEach(function (element) {});
         var totalCup = response.data.quantityCupsInDB.incomingOverDose;
       });
     },
     addingCupType: function addingCupType() {
-      var _this12 = this;
+      var _this13 = this;
 
       this.loadingShow = true;
 
@@ -1401,15 +1466,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
           }
 
-          _this12.loadingShow = false;
+          _this13.loadingShow = false;
           sweetalert__WEBPACK_IMPORTED_MODULE_7___default()({
             title: "You have successfully added a cup type",
             icon: "success"
           });
 
-          _this12.retrieveCupType();
+          _this13.retrieveCupType();
 
-          _this12.dialogForCupType = false;
+          _this13.dialogForCupType = false;
         });
       } else {
         this.errorMessage = "Please fill up all fields";
@@ -1417,7 +1482,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     addingCupSize: function addingCupSize() {
-      var _this13 = this;
+      var _this14 = this;
 
       this.loadingShow = true;
 
@@ -1432,15 +1497,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
           }
 
-          _this13.loadingShow = false;
+          _this14.loadingShow = false;
           sweetalert__WEBPACK_IMPORTED_MODULE_7___default()({
             title: "You have successfully added cups",
             icon: "success"
           });
 
-          _this13.retrieveCupSize();
+          _this14.retrieveCupSize();
 
-          _this13.hide();
+          _this14.hide();
         });
       } else if (this.lowDoseCup < 0 && this.highDoseCup < 0 && this.overDoseCup < 0) {
         this.loadingShow = false;
@@ -1451,7 +1516,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     editingCupType: function editingCupType() {
-      var _this14 = this;
+      var _this15 = this;
 
       this.loadingShow = true;
 
@@ -1468,15 +1533,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
           }
 
-          _this14.loadingShow = false;
+          _this15.loadingShow = false;
           sweetalert__WEBPACK_IMPORTED_MODULE_7___default()({
             title: "You have successfully updated the cup type",
             icon: "success"
           });
 
-          _this14.retrieveCupType();
+          _this15.retrieveCupType();
 
-          _this14.hide();
+          _this15.hide();
         });
       } else {
         this.errorMessage = "Please fill up all fields";
@@ -1512,7 +1577,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.priceEvent = event.target;
     },
     onImgChange: function onImgChange(e) {
-      var _this15 = this;
+      var _this16 = this;
 
       this.img = e.target.files[0];
 
@@ -1527,8 +1592,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         var data = new FormData();
         data.append('file', this.img);
         this.$axios.post('http://ec2-34-205-139-231.compute-1.amazonaws.com:3232/api/file/upload', data).then(function (res) {
-          _this15.toSaveImage = res.data.result.body.file_url;
-          _this15.loadingShow = false;
+          _this16.toSaveImage = res.data.result.body.file_url;
+          _this16.loadingShow = false;
         });
       }
     },
@@ -1536,6 +1601,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       e.preventDefault();
       this.loadingShow = true;
       this.validate('multiSelect');
+
+      if (this.storeIngredients.length < 1) {
+        this.errorMessage9 = 'Ingredients is required';
+      } else {
+        this.errorMessage9 = null;
+      }
 
       if (this.toSaveImage !== '' && this.prodType !== '' && this.productName !== '' && this.lowPrice !== '' && this.highPrice !== '' && this.overPrice !== '' && this.onlinelowPrice !== '' && this.onlinehighPrice !== '' & this.onlineoverPrice !== '' && this.lowPrice !== '' && this.highPrice !== '' && this.overPrice !== '' && this.onlinelowPrice !== '' && this.onlinehighPrice !== '' && this.onlineoverPrice !== '' && this.toSaveImage !== null && this.prodType !== null && this.productName !== null && this.lowPrice !== null && this.highPrice !== null && this.overPrice !== null && this.onlinelowPrice !== null && this.onlinehighPrice !== null && this.onlineoverPrice !== null && parseInt(this.lowPrice) > 0 && parseInt(this.highPrice) > 0 && parseInt(this.overPrice) > 0 && parseInt(this.onlinelowPrice) > 0 && parseInt(this.onlinehighPrice) > 0 && parseInt(this.onlineoverPrice) > 0 && this.errorMessage1 === null && this.errorMessage7 === null && this.errorMessage8 === null && this.errorMessage9 === null) {
         var value = [];
@@ -1586,12 +1657,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     editProduct: function editProduct(item) {
-      var _this16 = this;
+      var _this17 = this;
 
       this.value = [];
       var selected = JSON.parse(item.ingredients).split(',');
       selected.forEach(function (el) {
-        _this16.value.push({
+        _this17.value.push({
           ingredientsName: el
         });
       });
@@ -1667,7 +1738,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     productStatusUpdate: function productStatusUpdate(id) {
-      var _this17 = this;
+      var _this18 = this;
 
       this.loadingShow = true;
       var param = {
@@ -1679,13 +1750,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this17.retrieveProducts();
+        _this18.retrieveProducts();
 
-        _this17.loadingShow = false;
+        _this18.loadingShow = false;
       });
     },
     productStatusAvailable: function productStatusAvailable(id) {
-      var _this18 = this;
+      var _this19 = this;
 
       this.loadingShow = true;
       var param = {
@@ -1697,13 +1768,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this18.retrieveProducts();
+        _this19.retrieveProducts();
 
-        _this18.loadingShow = false;
+        _this19.loadingShow = false;
       });
     },
     onImageChange: function onImageChange(e) {
-      var _this19 = this;
+      var _this20 = this;
 
       this.image = e.target.files[0];
 
@@ -1718,8 +1789,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         var data = new FormData();
         data.append('file', this.image);
         this.$axios.post('http://ec2-34-205-139-231.compute-1.amazonaws.com:3232/api/file/upload', data).then(function (res) {
-          _this19.toSaveImage2 = res.data.result.body.file_url;
-          _this19.loadingShow = false;
+          _this20.toSaveImage2 = res.data.result.body.file_url;
+          _this20.loadingShow = false;
         });
       }
     },
@@ -1961,7 +2032,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.onlineoverPrice = null;
       this.imgURL = this.noImage;
       this.img = null;
-      this.value = [];
+      this.storeIngredients = [];
     },
     showIngredients: function showIngredients() {
       this.dialogForIngredients = true;
@@ -2022,7 +2093,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       _router__WEBPACK_IMPORTED_MODULE_1__["default"].push(route)["catch"](function () {});
     },
     addAddOns: function addAddOns() {
-      var _this20 = this;
+      var _this21 = this;
 
       this.loadingShow = true;
 
@@ -2038,15 +2109,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
           }
 
-          _this20.loadingShow = false;
+          _this21.loadingShow = false;
           sweetalert__WEBPACK_IMPORTED_MODULE_7___default()({
             title: "You have successfully added an add-ons",
             icon: "success"
           });
 
-          _this20.retrieveAddOns();
+          _this21.retrieveAddOns();
 
-          _this20.dialogForAddOns = false;
+          _this21.dialogForAddOns = false;
         });
       } else {
         this.errorMessage = "Please fill up all fields";
@@ -2054,7 +2125,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     retrieveAddOns: function retrieveAddOns() {
-      var _this21 = this;
+      var _this22 = this;
 
       this.loadingShow = true;
       this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "retrieveAllAddOns", {}, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
@@ -2062,8 +2133,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this21.datas = response.data.addons;
-        _this21.loadingShow = false;
+        _this22.datas = response.data.addons;
+        _this22.loadingShow = false;
       });
     },
     editAddOns: function editAddOns(item) {
@@ -2079,7 +2150,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.idAddOns = item.id;
     },
     editAddOnsData: function editAddOnsData() {
-      var _this22 = this;
+      var _this23 = this;
 
       this.loadingShow = true;
 
@@ -2096,15 +2167,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
           }
 
-          _this22.loadingShow = false;
+          _this23.loadingShow = false;
           sweetalert__WEBPACK_IMPORTED_MODULE_7___default()({
             title: "You have successfully updated the add-ons",
             icon: "success"
           });
 
-          _this22.retrieveAddOns();
+          _this23.retrieveAddOns();
 
-          _this22.hide();
+          _this23.hide();
         });
       } else {
         this.errorMessage = "Please fill up all fields";
@@ -2112,7 +2183,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     NAStatusUpdate: function NAStatusUpdate(id) {
-      var _this23 = this;
+      var _this24 = this;
 
       this.loadingShow = true;
       var param = {
@@ -2124,13 +2195,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this23.loadingShow = false;
+        _this24.loadingShow = false;
 
-        _this23.retrieveAddOns();
+        _this24.retrieveAddOns();
       });
     },
     availableStatusUpdate: function availableStatusUpdate(id) {
-      var _this24 = this;
+      var _this25 = this;
 
       this.loadingShow = true;
       var param = {
@@ -2142,13 +2213,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this24.loadingShow = false;
+        _this25.loadingShow = false;
 
-        _this24.retrieveAddOns();
+        _this25.retrieveAddOns();
       });
     },
     retrieveProducts: function retrieveProducts() {
-      var _this25 = this;
+      var _this26 = this;
 
       this.loadingShow = true;
       this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "retrieveAllProduct", {}, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
@@ -2156,12 +2227,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this25.loadingShow = false;
-        _this25.productData = response.data.product;
+        _this26.loadingShow = false;
+        _this26.productData = response.data.product;
       });
     },
     retrieveCategories: function retrieveCategories() {
-      var _this26 = this;
+      var _this27 = this;
 
       this.loadingShow = true;
       this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "retrieveCategory", {}, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
@@ -2169,11 +2240,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this26.loadingShow = false;
-        _this26.categoryData = response.data.addCategory;
-        _this26.categoryName = [];
+        _this27.loadingShow = false;
+        _this27.categoryData = response.data.addCategory;
+        _this27.categoryName = [];
         response.data.addCategory.forEach(function (element) {
-          _this26.categoryName.push(element.productCategory);
+          _this27.categoryName.push(element.productCategory);
         });
       });
     }
@@ -2777,9 +2848,9 @@ __webpack_require__.r(__webpack_exports__);
       addShow: true,
       ingredientsName: '',
       ingredientsType: '',
-      lowdose: '',
-      highdose: '',
-      overdose: '',
+      // lowdose: '',
+      // highdose: '',
+      // overdose: '',
       search: '',
       headersForIngredients: [{
         text: "Ingredient's Name",
@@ -2787,16 +2858,10 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         text: "Ingredient's Type",
         value: "type"
-      }, {
-        text: "Lowdose Quantity",
-        value: "lowdoseQuantity"
-      }, {
-        text: "Highdose Quantity",
-        value: "highdoseQuantity"
-      }, {
-        text: "Overdose Quantity",
-        value: "overdoseQuantity"
-      }, {
+      }, // { text: "Lowdose Quantity", value: "lowdoseQuantity" },
+      // { text: "Highdose Quantity", value: "highdoseQuantity" },
+      // { text: "Overdose Quantity", value: "overdoseQuantity" },
+      {
         text: "ACTION",
         value: "actions",
         sortable: false
@@ -2824,10 +2889,9 @@ __webpack_require__.r(__webpack_exports__);
       this.errorMessage4 = null;
       this.errorMessage5 = null;
       this.ingredientsName = '';
-      this.ingredientsType = '';
-      this.lowdose = '';
-      this.highdose = '';
-      this.overdose = '';
+      this.ingredientsType = ''; // this.lowdose = ''
+      // this.highdose = ''
+      // this.overdose = ''
     },
     retrieve: function retrieve() {
       var _this = this;
@@ -2846,29 +2910,27 @@ __webpack_require__.r(__webpack_exports__);
     editIngredient: function editIngredient(item) {
       this.addShow = false;
       this.ingredientsName = item.ingredientsName;
-      this.ingredientsType = item.type;
-      this.lowdose = item.lowdoseQuantity;
-      this.highdose = item.highdoseQuantity;
-      this.overdose = item.overdoseQuantity;
+      this.ingredientsType = item.type; // this.lowdose = item.lowdoseQuantity
+      // this.highdose = item.highdoseQuantity
+      // this.overdose = item.overdoseQuantity
     },
     updateIngredient: function updateIngredient() {
       var _this2 = this;
 
       this.validate('ingredientsName');
-      this.validate('ingredientsType');
-      this.validate('lowdose');
-      this.validate('highdose');
-      this.validate('overdose');
+      this.validate('ingredientsType'); // this.validate('lowdose')
+      // this.validate('highdose')
+      // this.validate('overdose')
 
       if (this.errorMessage1 === null && this.errorMessage2 === null && this.errorMessage3 === null && this.errorMessage4 === null && this.errorMessage5 === null) {
         this.loadingShow = true;
         var param = {
           id: localStorage.getItem('adminId'),
           ingredientsName: this.ingredientsName,
-          type: this.ingredientsType,
-          lowdoseQuantity: this.lowdose,
-          highdoseQuantity: this.highdose,
-          overdoseQuantity: this.overdose
+          type: this.ingredientsType // lowdoseQuantity: this.lowdose,
+          // highdoseQuantity: this.highdose,
+          // overdoseQuantity: this.overdose,
+
         };
         this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "updateIngredients", param, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
           _this2.loadingShow = false;
@@ -2896,20 +2958,19 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
 
       this.validate('ingredientsName');
-      this.validate('ingredientsType');
-      this.validate('lowdose');
-      this.validate('highdose');
-      this.validate('overdose');
+      this.validate('ingredientsType'); // this.validate('lowdose')
+      // this.validate('highdose')
+      // this.validate('overdose')
 
       if (this.errorMessage1 === null && this.errorMessage2 === null && this.errorMessage3 === null && this.errorMessage4 === null && this.errorMessage5 === null) {
         this.loadingShow = true;
         var param = {
           id: localStorage.getItem('adminId'),
           ingredientsName: this.ingredientsName,
-          type: this.ingredientsType,
-          lowdoseQuantity: this.lowdose,
-          highdoseQuantity: this.highdose,
-          overdoseQuantity: this.overdose
+          type: this.ingredientsType // lowdoseQuantity: this.lowdose,
+          // highdoseQuantity: this.highdose,
+          // overdoseQuantity: this.overdose,
+
         };
         this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "addIngredients", param, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
           _this3.loadingShow = false;
@@ -2940,31 +3001,31 @@ __webpack_require__.r(__webpack_exports__);
           this.errorMessage1 = 'Ingredients Name is required';
         } else {
           this.errorMessage1 = null;
-        }
-      } else if (param === 'lowdose') {
-        if (this.lowdose === '') {
-          this.errorMessage2 = 'Lowdose Quantity is required';
-        } else if (this.lowdose < 1) {
-          this.errorMessage2 = 'Lowdose Quantity must be grater than 1';
-        } else {
-          this.errorMessage2 = null;
-        }
-      } else if (param === 'highdose') {
-        if (this.highdose === '') {
-          this.errorMessage3 = 'Highdose Quantity is required';
-        } else if (this.highdose < 1) {
-          this.errorMessage3 = 'Highdose Quantity must be grater than 1';
-        } else {
-          this.errorMessage3 = null;
-        }
-      } else if (param === 'overdose') {
-        if (this.overdose === '') {
-          this.errorMessage4 = 'Overdose Quantity is required';
-        } else if (this.overdose < 1) {
-          this.errorMessage4 = 'Overdose Quantity must be grater than 1';
-        } else {
-          this.errorMessage4 = null;
-        }
+        } // }else if(param === 'lowdose'){
+        //     if(this.lowdose ===  ''){
+        //         this.errorMessage2 = 'Lowdose Quantity is required'
+        //     }else if(this.lowdose < 1){
+        //         this.errorMessage2 = 'Lowdose Quantity must be grater than 1'
+        //     }else{
+        //         this.errorMessage2 = null
+        //     }
+        // }else if(param === 'highdose'){
+        //     if(this.highdose ===  ''){
+        //         this.errorMessage3 = 'Highdose Quantity is required'
+        //     }else if(this.highdose < 1){
+        //         this.errorMessage3 = 'Highdose Quantity must be grater than 1'
+        //     }else{
+        //         this.errorMessage3 = null
+        //     }
+        // }else if(param === 'overdose'){
+        //     if(this.overdose ===  ''){
+        //         this.errorMessage4 = 'Overdose Quantity is required'
+        //     }else if(this.overdose < 1){
+        //         this.errorMessage4 = 'Overdose Quantity must be grater than 1'
+        //     }else{
+        //         this.errorMessage4 = null
+        //     }
+
       } else if (param === 'ingredientsType') {
         if (this.ingredientsType === '') {
           this.errorMessage5 = 'ingredients Type is required';
@@ -3453,11 +3514,45 @@ var render = function() {
                     var item = ref.item
                     return [_c("span", [_vm._v(_vm._s(_vm.getData(item)))])]
                   }
+                },
+                {
+                  key: "item.actions",
+                  fn: function(ref) {
+                    var item = ref.item
+                    return [
+                      _c(
+                        "v-icon",
+                        {
+                          staticClass: "mr-2",
+                          attrs: { small: "" },
+                          on: {
+                            click: function($event) {
+                              return _vm.showEditIngredients(item)
+                            }
+                          }
+                        },
+                        [_vm._v("mdi-pencil")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-icon",
+                        {
+                          attrs: { small: "" },
+                          on: {
+                            click: function($event) {
+                              return _vm.showDelete(item.id, "category")
+                            }
+                          }
+                        },
+                        [_vm._v("mdi-delete")]
+                      )
+                    ]
+                  }
                 }
               ],
               null,
               false,
-              966492396
+              3511265465
             )
           })
         : _vm._e(),
@@ -4391,7 +4486,7 @@ var render = function() {
             _c(
               "v-dialog",
               {
-                attrs: { persistent: "", "max-width": "600px" },
+                attrs: { persistent: "", "max-width": "800px" },
                 model: {
                   value: _vm.dialogForProduct,
                   callback: function($$v) {
@@ -4459,10 +4554,12 @@ var render = function() {
                                   [
                                     _c(
                                       "v-col",
-                                      { attrs: { cols: "12", sm: "6" } },
+                                      { attrs: { cols: "12", sm: "4" } },
                                       [
                                         _c("v-select", {
                                           attrs: {
+                                            solo: "",
+                                            height: "55",
                                             items: _vm.categoryName,
                                             label: "Product Category",
                                             dense: "",
@@ -4482,8 +4579,22 @@ var render = function() {
                                     _vm._v(" "),
                                     _c(
                                       "v-col",
-                                      { attrs: { cols: "12", sm: "6" } },
+                                      { attrs: { cols: "12", sm: "4" } },
                                       [
+                                        _c("v-text-field", {
+                                          attrs: {
+                                            label: "Product Name",
+                                            outlined: ""
+                                          },
+                                          model: {
+                                            value: _vm.productName,
+                                            callback: function($$v) {
+                                              _vm.productName = $$v
+                                            },
+                                            expression: "productName"
+                                          }
+                                        }),
+                                        _vm._v(" "),
                                         _c("i", [
                                           _vm.errorMessage9 !== null
                                             ? _c(
@@ -4499,95 +4610,26 @@ var render = function() {
                                         ]),
                                         _vm._v(" "),
                                         _c(
-                                          "div",
-                                          [
-                                            _c("multiselect", {
-                                              staticClass: "multiSelectDesign",
-                                              attrs: {
-                                                options: _vm.options,
-                                                multiple: true,
-                                                "close-on-select": false,
-                                                "clear-on-select": false,
-                                                "preserve-search": true,
-                                                placeholder:
-                                                  "Choose Ingredients",
-                                                label: "ingredientsName",
-                                                "track-by": "ingredientsName"
-                                              },
-                                              on: {
-                                                change: function($event) {
-                                                  return _vm.validate(
-                                                    "multiSelect"
-                                                  )
-                                                }
-                                              },
-                                              scopedSlots: _vm._u([
-                                                {
-                                                  key: "selection",
-                                                  fn: function(ref) {
-                                                    var values = ref.values
-                                                    var search = ref.search
-                                                    var isOpen = ref.isOpen
-                                                    return [
-                                                      values.length && !isOpen
-                                                        ? _c(
-                                                            "span",
-                                                            {
-                                                              staticClass:
-                                                                "multiselect__single"
-                                                            },
-                                                            [
-                                                              _vm._v(
-                                                                _vm._s(
-                                                                  values.length
-                                                                ) +
-                                                                  " options selected"
-                                                              )
-                                                            ]
-                                                          )
-                                                        : _vm._e()
-                                                    ]
-                                                  }
-                                                }
-                                              ]),
-                                              model: {
-                                                value: _vm.value,
-                                                callback: function($$v) {
-                                                  _vm.value = $$v
-                                                },
-                                                expression: "value"
+                                          "v-btn",
+                                          {
+                                            staticClass: "btn btn-primary",
+                                            staticStyle: { width: "100%" },
+                                            on: {
+                                              click: function($event) {
+                                                ;(_vm.dialogQuantityIngredients = true),
+                                                  (_vm.dialogForProduct = false)
                                               }
-                                            })
-                                          ],
-                                          1
-                                        )
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "v-col",
-                                      { attrs: { cols: "12", sm: "6" } },
-                                      [
-                                        _c("v-text-field", {
-                                          attrs: {
-                                            label: "Product Name",
-                                            outlined: ""
+                                            }
                                           },
-                                          model: {
-                                            value: _vm.productName,
-                                            callback: function($$v) {
-                                              _vm.productName = $$v
-                                            },
-                                            expression: "productName"
-                                          }
-                                        })
+                                          [_vm._v("Add Ingredients")]
+                                        )
                                       ],
                                       1
                                     ),
                                     _vm._v(" "),
                                     _c(
                                       "v-col",
-                                      { attrs: { cols: "12", sm: "6" } },
+                                      { attrs: { cols: "12", sm: "4" } },
                                       [
                                         _c("v-text-field", {
                                           attrs: {
@@ -4611,6 +4653,7 @@ var render = function() {
                                 _vm._v(" "),
                                 _c(
                                   "v-row",
+                                  { staticStyle: { "margin-top": "5%" } },
                                   [
                                     _c(
                                       "v-tabs",
@@ -4636,7 +4679,7 @@ var render = function() {
                                           },
                                           [
                                             _vm._v(
-                                              "\n                              Normal Price\n                          "
+                                              "\n                                  Normal Price\n                              "
                                             )
                                           ]
                                         ),
@@ -4653,7 +4696,7 @@ var render = function() {
                                           },
                                           [
                                             _vm._v(
-                                              "\n                              Online Price \n                          "
+                                              "\n                                  Online Price \n                              "
                                             )
                                           ]
                                         )
@@ -4670,7 +4713,7 @@ var render = function() {
                                       {
                                         staticStyle: {
                                           border: "1px solid #d8dce3",
-                                          "margin-top": "-0.5%"
+                                          "margin-top": "5%"
                                         }
                                       },
                                       [
@@ -4694,7 +4737,7 @@ var render = function() {
                                             _c(
                                               "v-col",
                                               {
-                                                attrs: { cols: "12", sm: "6" }
+                                                attrs: { cols: "12", sm: "4" }
                                               },
                                               [
                                                 _c("v-text-field", {
@@ -4719,30 +4762,6 @@ var render = function() {
                                                     },
                                                     expression: "lowPrice"
                                                   }
-                                                }),
-                                                _vm._v(" "),
-                                                _c("v-text-field", {
-                                                  attrs: {
-                                                    label: "Over Dose Price",
-                                                    outlined: "",
-                                                    min: "1",
-                                                    type: "number",
-                                                    required: ""
-                                                  },
-                                                  on: {
-                                                    keyup: function($event) {
-                                                      return _vm.validate(
-                                                        "overDose"
-                                                      )
-                                                    }
-                                                  },
-                                                  model: {
-                                                    value: _vm.overPrice,
-                                                    callback: function($$v) {
-                                                      _vm.overPrice = $$v
-                                                    },
-                                                    expression: "overPrice"
-                                                  }
                                                 })
                                               ],
                                               1
@@ -4751,7 +4770,7 @@ var render = function() {
                                             _c(
                                               "v-col",
                                               {
-                                                attrs: { cols: "12", sm: "6" }
+                                                attrs: { cols: "12", sm: "4" }
                                               },
                                               [
                                                 _c("v-text-field", {
@@ -4779,6 +4798,39 @@ var render = function() {
                                                 })
                                               ],
                                               1
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "v-col",
+                                              {
+                                                attrs: { cols: "12", sm: "4" }
+                                              },
+                                              [
+                                                _c("v-text-field", {
+                                                  attrs: {
+                                                    label: "Over Dose Price",
+                                                    outlined: "",
+                                                    min: "1",
+                                                    type: "number",
+                                                    required: ""
+                                                  },
+                                                  on: {
+                                                    keyup: function($event) {
+                                                      return _vm.validate(
+                                                        "overDose"
+                                                      )
+                                                    }
+                                                  },
+                                                  model: {
+                                                    value: _vm.overPrice,
+                                                    callback: function($$v) {
+                                                      _vm.overPrice = $$v
+                                                    },
+                                                    expression: "overPrice"
+                                                  }
+                                                })
+                                              ],
+                                              1
                                             )
                                           ],
                                           1
@@ -4794,7 +4846,7 @@ var render = function() {
                                       {
                                         staticStyle: {
                                           border: "1px solid #d8dce3",
-                                          "margin-top": "-0.5%"
+                                          "margin-top": "5%"
                                         }
                                       },
                                       [
@@ -4818,7 +4870,7 @@ var render = function() {
                                             _c(
                                               "v-col",
                                               {
-                                                attrs: { cols: "12", sm: "6" }
+                                                attrs: { cols: "12", sm: "4" }
                                               },
                                               [
                                                 _c("v-text-field", {
@@ -4844,32 +4896,6 @@ var render = function() {
                                                     },
                                                     expression: "onlinelowPrice"
                                                   }
-                                                }),
-                                                _vm._v(" "),
-                                                _c("v-text-field", {
-                                                  attrs: {
-                                                    label:
-                                                      "Online Over Dose Price",
-                                                    min: "1",
-                                                    outlined: "",
-                                                    type: "number",
-                                                    required: ""
-                                                  },
-                                                  on: {
-                                                    keyup: function($event) {
-                                                      return _vm.validate(
-                                                        "onlineOverDose"
-                                                      )
-                                                    }
-                                                  },
-                                                  model: {
-                                                    value: _vm.onlineoverPrice,
-                                                    callback: function($$v) {
-                                                      _vm.onlineoverPrice = $$v
-                                                    },
-                                                    expression:
-                                                      "onlineoverPrice"
-                                                  }
                                                 })
                                               ],
                                               1
@@ -4878,7 +4904,7 @@ var render = function() {
                                             _c(
                                               "v-col",
                                               {
-                                                attrs: { cols: "12", sm: "6" }
+                                                attrs: { cols: "12", sm: "4" }
                                               },
                                               [
                                                 _c("v-text-field", {
@@ -4904,6 +4930,41 @@ var render = function() {
                                                     },
                                                     expression:
                                                       "onlinehighPrice"
+                                                  }
+                                                })
+                                              ],
+                                              1
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "v-col",
+                                              {
+                                                attrs: { cols: "12", sm: "4" }
+                                              },
+                                              [
+                                                _c("v-text-field", {
+                                                  attrs: {
+                                                    label:
+                                                      "Online Over Dose Price",
+                                                    min: "1",
+                                                    outlined: "",
+                                                    type: "number",
+                                                    required: ""
+                                                  },
+                                                  on: {
+                                                    keyup: function($event) {
+                                                      return _vm.validate(
+                                                        "onlineOverDose"
+                                                      )
+                                                    }
+                                                  },
+                                                  model: {
+                                                    value: _vm.onlineoverPrice,
+                                                    callback: function($$v) {
+                                                      _vm.onlineoverPrice = $$v
+                                                    },
+                                                    expression:
+                                                      "onlineoverPrice"
                                                   }
                                                 })
                                               ],
@@ -5813,11 +5874,183 @@ var render = function() {
         )
       ],
       _vm._v(" "),
+      [
+        _c(
+          "v-row",
+          { attrs: { justify: "center" } },
+          [
+            _c(
+              "v-dialog",
+              {
+                attrs: { persistent: "", "max-width": "700px" },
+                model: {
+                  value: _vm.dialogQuantityIngredients,
+                  callback: function($$v) {
+                    _vm.dialogQuantityIngredients = $$v
+                  },
+                  expression: "dialogQuantityIngredients"
+                }
+              },
+              [
+                _c(
+                  "v-card",
+                  [
+                    _c("div", { staticClass: "modal-header" }, [
+                      _c("span", { staticClass: "headline" }, [
+                        _vm._v("Ingredients for " + _vm._s(_vm.productName))
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "close",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              ;(_vm.dialogQuantityIngredients = false),
+                                (_vm.dialogForProduct = true),
+                                _vm.storeIngredients.length > 0
+                                  ? ""
+                                  : (_vm.storeIngredients = [])
+                            }
+                          }
+                        },
+                        [_vm._v("×")]
+                      ),
+                      _c("br")
+                    ]),
+                    _vm._v(" "),
+                    _c("v-card-text", { staticStyle: { "margin-top": "5%" } }, [
+                      _c("form", [
+                        _c(
+                          "div",
+                          { staticClass: "form-group" },
+                          _vm._l(_vm.options, function(item, index) {
+                            return _c("div", { key: index }, [
+                              _c("div", { staticClass: "row" }, [
+                                _c("div", { staticClass: "col-md-6" }, [
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.storeIngredients,
+                                        expression: "storeIngredients"
+                                      }
+                                    ],
+                                    attrs: { type: "checkbox" },
+                                    domProps: {
+                                      value: item.ingredientsName,
+                                      checked: Array.isArray(
+                                        _vm.storeIngredients
+                                      )
+                                        ? _vm._i(
+                                            _vm.storeIngredients,
+                                            item.ingredientsName
+                                          ) > -1
+                                        : _vm.storeIngredients
+                                    },
+                                    on: {
+                                      change: function($event) {
+                                        var $$a = _vm.storeIngredients,
+                                          $$el = $event.target,
+                                          $$c = $$el.checked ? true : false
+                                        if (Array.isArray($$a)) {
+                                          var $$v = item.ingredientsName,
+                                            $$i = _vm._i($$a, $$v)
+                                          if ($$el.checked) {
+                                            $$i < 0 &&
+                                              (_vm.storeIngredients = $$a.concat(
+                                                [$$v]
+                                              ))
+                                          } else {
+                                            $$i > -1 &&
+                                              (_vm.storeIngredients = $$a
+                                                .slice(0, $$i)
+                                                .concat($$a.slice($$i + 1)))
+                                          }
+                                        } else {
+                                          _vm.storeIngredients = $$c
+                                        }
+                                      }
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "label",
+                                    { attrs: { for: item.ingredientsName } },
+                                    [_vm._v(_vm._s(item.ingredientsName))]
+                                  )
+                                ])
+                              ])
+                            ])
+                          }),
+                          0
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "v-card-actions",
+                      [
+                        _c("v-spacer"),
+                        _vm._v(" "),
+                        _c(
+                          "v-btn",
+                          {
+                            attrs: { color: "blue darken-1", text: "" },
+                            on: {
+                              click: function($event) {
+                                ;(_vm.dialogQuantityIngredients = false),
+                                  (_vm.dialogForProduct = true),
+                                  _vm.storeIngredients.length > 0
+                                    ? ""
+                                    : (_vm.storeIngredients = [])
+                              }
+                            }
+                          },
+                          [_vm._v("Close")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "v-btn",
+                          {
+                            staticClass: "btn btn-primary",
+                            attrs: {
+                              color: "blue darken-1",
+                              text: "",
+                              type: "button"
+                            },
+                            on: {
+                              click: function($event) {
+                                ;(_vm.dialogQuantityIngredients = false),
+                                  (_vm.dialogForProduct = true)
+                              }
+                            }
+                          },
+                          [_vm._v("Save")]
+                        )
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ],
+              1
+            )
+          ],
+          1
+        )
+      ],
+      _vm._v(" "),
       _vm.dialogForCalculation ? _c("calculation") : _vm._e(),
       _vm._v(" "),
       _vm.dialogForIngredients ? _c("addingIngredients") : _vm._e(),
       _vm._v(" "),
-      _vm.dialogForNewIngredients ? _c("newIngredients") : _vm._e(),
+      _vm.dialogForNewIngredients
+        ? _c("newIngredients", { ref: "show" })
+        : _vm._e(),
       _vm._v(" "),
       _vm.loadingShow ? _c("loading") : _vm._e()
     ],
@@ -6900,123 +7133,6 @@ var render = function() {
                                         [_vm._v("Cancel")]
                                       )
                                     : _vm._e()
-                                ],
-                                1
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "v-col",
-                                { attrs: { cols: "12", md: "4" } },
-                                [
-                                  _c("v-text-field", {
-                                    attrs: {
-                                      label: "Lowdose(scope/ml)",
-                                      outlined: "",
-                                      dense: "",
-                                      type: "number",
-                                      id: "lowdose"
-                                    },
-                                    on: {
-                                      keyup: function($event) {
-                                        return _vm.validate("lowdose")
-                                      }
-                                    },
-                                    model: {
-                                      value: _vm.lowdose,
-                                      callback: function($$v) {
-                                        _vm.lowdose = $$v
-                                      },
-                                      expression: "lowdose"
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _c("i", [
-                                    _vm.errorMessage2 !== null
-                                      ? _c(
-                                          "span",
-                                          { staticClass: "errorColor" },
-                                          [_vm._v(_vm._s(_vm.errorMessage2))]
-                                        )
-                                      : _vm._e()
-                                  ])
-                                ],
-                                1
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "v-col",
-                                { attrs: { cols: "12", md: "4" } },
-                                [
-                                  _c("v-text-field", {
-                                    attrs: {
-                                      label: "Highdose(scope/ml)",
-                                      outlined: "",
-                                      dense: "",
-                                      type: "number",
-                                      id: "highdose"
-                                    },
-                                    on: {
-                                      keyup: function($event) {
-                                        return _vm.validate("highdose")
-                                      }
-                                    },
-                                    model: {
-                                      value: _vm.highdose,
-                                      callback: function($$v) {
-                                        _vm.highdose = $$v
-                                      },
-                                      expression: "highdose"
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _c("i", [
-                                    _vm.errorMessage3 !== null
-                                      ? _c(
-                                          "span",
-                                          { staticClass: "errorColor" },
-                                          [_vm._v(_vm._s(_vm.errorMessage3))]
-                                        )
-                                      : _vm._e()
-                                  ])
-                                ],
-                                1
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "v-col",
-                                { attrs: { cols: "12", md: "4" } },
-                                [
-                                  _c("v-text-field", {
-                                    attrs: {
-                                      label: "Overdose(scope/ml)",
-                                      outlined: "",
-                                      dense: "",
-                                      type: "number",
-                                      id: "overdose"
-                                    },
-                                    on: {
-                                      keyup: function($event) {
-                                        return _vm.validate("overdose")
-                                      }
-                                    },
-                                    model: {
-                                      value: _vm.overdose,
-                                      callback: function($$v) {
-                                        _vm.overdose = $$v
-                                      },
-                                      expression: "overdose"
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _c("i", [
-                                    _vm.errorMessage4 !== null
-                                      ? _c(
-                                          "span",
-                                          { staticClass: "errorColor" },
-                                          [_vm._v(_vm._s(_vm.errorMessage4))]
-                                        )
-                                      : _vm._e()
-                                  ])
                                 ],
                                 1
                               )

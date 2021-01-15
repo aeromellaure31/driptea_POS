@@ -22,9 +22,6 @@ class IngredientController extends Controller
         $ingredients->adminId = $request->id;
         $ingredients->type = $request->type;
         $ingredients->ingredientsName = $request->ingredientsName;
-        $ingredients->lowdoseQuantity = $request->lowdoseQuantity;
-        $ingredients->highdoseQuantity = $request->highdoseQuantity;
-        $ingredients->overdoseQuantity = $request->overdoseQuantity;
         $ingredients->save();
         return response()->json(compact('ingredients'));
     }
@@ -34,9 +31,6 @@ class IngredientController extends Controller
         $ingredients->adminId = $request->id;
         $ingredients->type = $request->type;
         $ingredients->ingredientsName = $request->ingredientsName;
-        $ingredients->lowdoseQuantity = $request->lowdoseQuantity;
-        $ingredients->highdoseQuantity = $request->highdoseQuantity;
-        $ingredients->overdoseQuantity = $request->overdoseQuantity;
         $ingredients->save();
         return response()->json(compact('ingredients'));
     }

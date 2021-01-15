@@ -12,6 +12,7 @@ class Ingredients extends Model
     use SoftDeletes;
     protected $table = 'ingredients';
     protected $fillable = [
-        'adminId', 'type', 'ingredientsName', 'lowdoseQuantity', 'highdoseQuantity', 'overdoseQuantity', 'onRockQuantity', 'convertionQuantity', 'usedQuantity'
+        // 'adminId', 'type', 'ingredientsName', 'lowdoseQuantity', 'highdoseQuantity', 'overdoseQuantity', 'onRockQuantity', 'convertionQuantity', 'usedQuantity'
+        'adminId', 'type', 'ingredientsName', 'onRockQuantity', 'convertionQuantity'
     ];
 }

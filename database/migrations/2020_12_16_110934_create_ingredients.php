@@ -18,9 +18,6 @@ class CreateIngredients extends Migration
             $table->bigInteger('adminId');
             $table->string('type');
             $table->string('ingredientsName');
-            $table->integer('lowdoseQuantity');
-            $table->integer('highdoseQuantity');
-            $table->integer('overdoseQuantity');
             $table->integer('onRockQuantity')->nullable();
             $table->integer('convertionQuantity')->nullable();
             $table->timestamps();
