@@ -336,6 +336,12 @@ export default {
                 if(res.data.status){
                     AUTH.deauthenticate()
                 }
+                //do something
+                this.$axios.post(AUTH.url + "retrieveRemainingData", {}, AUTH.config).then(response => {
+                    console.log('trial ni cya', response)
+                })
+                let storeProduct = []
+
                 this.productData = res.data.product
                 this.loadingShow = false
             })

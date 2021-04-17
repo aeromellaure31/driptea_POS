@@ -94,8 +94,8 @@ export default {
             });
         },
         addQuantity(){
-            var ing = []
             var quant = []
+            var ing = []
             this.ingredientsData.forEach(el => {
                 ing.push(el.ingredientsName)
                 quant.push(el.convertionQuantity)

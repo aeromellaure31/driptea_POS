@@ -482,31 +482,49 @@ export default {
                         }else if(el.size === 'overDose'){
                             over += el.quantity
                         }
-                        var ing = JSON.parse(el.order_product[0].ingredients).split(',')
+                        //We stop here
+                        // ingredient per order product
+                        // always remember
+                        var ing = JSON.parse(el.order_product[0].ingredients)
+                        console.log('yati na gyd', ing, this.newTableData)
                         ing.forEach(element => {
-                            this.storeData.forEach(elem => {
-                                if(element === elem.name){
-                                    this.ingredientsData.forEach(e => {
-                                        if(elem.name === e.ingredientsName){
-                                            let quantConsume = 0
-                                            if(el.size === 'lowDose'){
-                                                quantConsume = (el.quantity * e.lowdoseQuantity)
-                                            }else if(el.size === 'highDose'){
-                                                quantConsume = (el.quantity * e.highdoseQuantity)
-                                            }else if(el.size === 'overDose'){
-                                                quantConsume = (el.quantity * e.overdoseQuantity)
-                                            }
-                                            store.push({name: elem.name, quantityConsume: quantConsume})
-                                            this.modifyFinalData = store
-                                        }
-                                    })
+                            if(element.ingredient === el.order_product[0].productName){
+                                let quantConsume = 0
+                                if(el.size === 'lowDose'){
+                                    quantConsume = (el.quantity * element.lowDose)
+                                }else if(el.size === 'highDose'){
+                                    quantConsume = (el.quantity * element.highDose)
+                                }else if(el.size === 'overDose'){
+                                    quantConsume = (el.quantity * element.overDose)
                                 }
-                            })
+                                store.push({name: elem.name, quantityConsume: quantConsume})
+                                this.modifyFinalData = store
+                            }
+
+                            // this.storeData.forEach(elem => {
+                            //     if(element === elem.name){
+                            //         this.ingredientsData.forEach(e => {
+                            //             if(elem.name === e.ingredientsName){
+                            //                 let quantConsume = 0
+                            //                 if(el.size === 'lowDose'){
+                            //                     quantConsume = (el.quantity * e.lowdoseQuantity)
+                            //                 }else if(el.size === 'highDose'){
+                            //                     quantConsume = (el.quantity * e.highdoseQuantity)
+                            //                 }else if(el.size === 'overDose'){
+                            //                     quantConsume = (el.quantity * e.overdoseQuantity)
+                            //                 }
+                            //                 store.push({name: elem.name, quantityConsume: quantConsume})
+                            //                 this.modifyFinalData = store
+                            //             }
+                            //         })
+                            //     }
+                            // })
                         })
                     })
                     this.finalData = []
                     this.finalQuantity = []
                     var a = [], b = []
+                    console.log('bolbol', this.storeData, this.modifyFinalData)
                     this.modifyFinalData.forEach((el, index) => {
                         this.storeData.forEach(element => {
                             if(element.name === el.name){
@@ -563,6 +581,7 @@ export default {
         updateUsedIngredients(){
             this.loadingShow = true
             var used = [], remain = []
+            console.log('anhi na sad ta mag focus', this.finalData)
             this.finalData.forEach((el, index) => {
                 if(index % 2 !== 0){
                     used.push(el)
@@ -606,11 +625,10 @@ export default {
                 if(response.data.status === 'Token is Expired'){
                     AUTH.deauthenticate()
                 }
-                this.ingredientsAvailable = JSON.parse(response.data.addIngredient[0].ingredients)
-                this.quantityAvailable = JSON.parse(response.data.addIngredient[0].remainingQuantity)
+                this.ingredientsAvailable = response.data.addIngredient
                 this.storeData = []
                 this.ingredientsAvailable.forEach((el, index) => {
-                    this.storeData.push({name: el, quantity: this.quantityAvailable[index]})
+                    this.storeData.push({'name': el.ingredients, 'quantity': el.remainingQuantity})
                 })
             });
         },

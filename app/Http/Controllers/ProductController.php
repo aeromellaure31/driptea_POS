@@ -20,6 +20,7 @@ class ProductController extends Controller
             return response()->json($validator->errors()->toJson(), 400);
         }
         $data = $request->all();
+        \Log::info($data['ingredients']);
         $product = new Product();
         $product->lowPrice = $data['lowPrice'];
         $product->highPrice = $data['highPrice'];
@@ -28,7 +29,7 @@ class ProductController extends Controller
         $product->onlinehighPrice = $data['onlinehighPrice'];
         $product->onlineoverPrice = $data['onlineoverPrice'];
         $product->productCategory = $data['productCategory'];
-        $product->ingredients = json_encode($data['ingredients']);
+        $product->ingredients = $data['ingredients'];
         $product->description = $data['description'];
         $product->productName = $data['productName'];
         $product->status = 'Available';
@@ -49,7 +50,7 @@ class ProductController extends Controller
         $product->onlinehighPrice = $data['onlinehighPrice'];
         $product->onlineoverPrice = $data['onlineoverPrice'];
         $product->productCategory = $data['productCategory'];
-        $product->ingredients = json_encode($data['ingredients']);
+        $product->ingredients = $data['ingredients'];
         $product->description = $data['description'];
         $product->productName = $data['productName'];
         $product->status = $data['status'];

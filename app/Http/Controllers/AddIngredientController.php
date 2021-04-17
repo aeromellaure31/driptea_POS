@@ -18,33 +18,41 @@ class AddIngredientController extends Controller
     }
 
     public function addIngredientQuantity(Request $request){
-        $id = $this->getId();
-        $addIng = AddIngredients::where('id', $id)->where('deleted_at', null)->get();
+        $addIng = AddIngredients::where('deleted_at', null)->get();
+
         if(sizeof($addIng) > 0){
-            $new = json_decode($addIng[0]['remainingQuantity']);
-            $a = [];
-            $count = 0;
-            foreach ($request->quantity as $val) {
-                if($count < sizeof($new)){
-                    array_push($a, ($val + $new[$count]));
-                }else{
-                    array_push($a, $val);
-                }
-                $count++;
+            $ingredients_array = [];
+            foreach ($addIng as $ingredient){
+                array_push($ingredients_array, $ingredient['ingredients']);
             }
-            $addIngredient = new AddIngredients();
-            $addIngredient->ingredients = json_encode($request->ingredients);
-            $addIngredient->quantity = json_encode($a);
-            $addIngredient->remainingQuantity = json_encode($a);
-            $addIngredient->save();
-            return response()->json(compact('addIngredient'));
+            foreach ($request->ingredients as $key => $value) {
+                foreach ($addIng as $key_ingredients => $ingredients){
+                    if($ingredients['ingredients'] === $value){
+                        \Log::info('naa na daan');
+                        $addIngredient = AddIngredients::firstOrCreate(['id' => $ingredients['id']]);
+                        $addIngredient->quantity = $ingredients['quantity'] + $request->quantity[$key];
+                        $addIngredient->remainingQuantity = $ingredients['remainingQuantity'] + $request->quantity[$key];
+                        $addIngredient->save();
+                    }else if(!in_array($value, $ingredients_array)){
+                        \Log::info('wala pa nasulod');
+                        $addIngredient = new AddIngredients();
+                        $addIngredient->ingredients = $value;
+                        $addIngredient->quantity = $request->quantity[$key];
+                        $addIngredient->remainingQuantity = $request->quantity[$key];
+                        $addIngredient->save();
+                    }
+                }
+            }
+            return response()->json('success');
         }else{
-            $addIngredient = new AddIngredients();
-            $addIngredient->ingredients = json_encode($request->ingredients);
-            $addIngredient->quantity = json_encode($request->quantity);
-            $addIngredient->remainingQuantity = json_encode($request->quantity);
-            $addIngredient->save();
-            return response()->json(compact('addIngredient'));
+            foreach ($request->ingredients as $key => $value) {
+                $addIngredient = new AddIngredients();
+                $addIngredient->ingredients = $value;
+                $addIngredient->quantity = $request->quantity[$key];
+                $addIngredient->remainingQuantity = $request->quantity[$key];
+                $addIngredient->save();
+            }
+            return response()->json('success');
         }
     }
 

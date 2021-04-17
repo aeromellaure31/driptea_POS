@@ -1,18 +1,18 @@
 /* @license
 Papa Parse
-v5.1.1
+v5.3.0
 https://github.com/mholt/PapaParse
 License: MIT
 */
 
 /*!
-  * Bootstrap v4.5.3 (https://getbootstrap.com/)
-  * Copyright 2011-2020 The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
+  * Bootstrap v4.6.0 (https://getbootstrap.com/)
+  * Copyright 2011-2021 The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
   */
 
 /*!
- * Pusher JavaScript Library v7.0.1
+ * Pusher JavaScript Library v7.0.2
  * https://pusher.com/
  *
  * Copyright 2020, Pusher
@@ -181,6 +181,8 @@ License: MIT
 /*! ../../mixins/validatable */
 
 /*! ../../presets/default */
+
+/*! ../../services/goto/easing-patterns */
 
 /*! ../../styles/components/_selection-controls.sass */
 
@@ -373,6 +375,8 @@ License: MIT
 /*! ./VAppBar.sass */
 
 /*! ./VAppBarNavIcon */
+
+/*! ./VAppBarTitle */
 
 /*! ./VAutocomplete */
 
@@ -818,6 +822,10 @@ License: MIT
 
 /*! ./ar */
 
+/*! ./az */
+
+/*! ./bg */
+
 /*! ./breakpoint */
 
 /*! ./ca */
@@ -825,6 +833,8 @@ License: MIT
 /*! ./calendar-base */
 
 /*! ./calendar-with-events.sass */
+
+/*! ./ckb */
 
 /*! ./click-outside */
 
@@ -992,6 +1002,8 @@ License: MIT
 
 /*! ./util/isDateAllowed */
 
+/*! ./util/parser */
+
 /*! ./util/props */
 
 /*! ./util/timestamp */
@@ -1050,11 +1062,11 @@ License: MIT
 
 /*! exports provided: VAlert, default */
 
-/*! exports provided: VApp, VAppBar, VAppBarNavIcon, VAlert, VAutocomplete, VAvatar, VBadge, VBanner, VBottomNavigation, VBottomSheet, VBreadcrumbs, VBreadcrumbsItem, VBreadcrumbsDivider, VBtn, VBtnToggle, VCalendar, VCalendarCategory, VCalendarDaily, VCalendarWeekly, VCalendarMonthly, VCard, VCardActions, VCardSubtitle, VCardText, VCardTitle, VCarousel, VCarouselItem, VCheckbox, VSimpleCheckbox, VChip, VChipGroup, VColorPicker, VColorPickerSwatches, VColorPickerCanvas, VContent, VCombobox, VCounter, VData, VDataIterator, VDataFooter, VDataTable, VEditDialog, VTableOverflow, VDataTableHeader, VSimpleTable, VVirtualTable, VDatePicker, VDatePickerTitle, VDatePickerHeader, VDatePickerDateTable, VDatePickerMonthTable, VDatePickerYears, VDialog, VDivider, VExpansionPanels, VExpansionPanel, VExpansionPanelHeader, VExpansionPanelContent, VFileInput, VFooter, VForm, VContainer, VCol, VRow, VSpacer, VLayout, VFlex, VHover, VIcon, VImg, VInput, VItem, VItemGroup, VLabel, VLazy, VListItemActionText, VListItemContent, VListItemTitle, VListItemSubtitle, VList, VListGroup, VListItem, VListItemAction, VListItemAvatar, VListItemIcon, VListItemGroup, VMain, VMenu, VMessages, VNavigationDrawer, VOverflowBtn, VOverlay, VPagination, VSheet, VParallax, VPicker, VProgressCircular, VProgressLinear, VRadioGroup, VRadio, VRangeSlider, VRating, VResponsive, VSelect, VSkeletonLoader, VSlider, VSlideGroup, VSlideItem, VSnackbar, VSparkline, VSpeedDial, VStepper, VStepperContent, VStepperStep, VStepperHeader, VStepperItems, VSubheader, VSwitch, VSystemBar, VTabs, VTab, VTabItem, VTabsItems, VTabsSlider, VTextarea, VTextField, VThemeProvider, VTimeline, VTimelineItem, VTimePicker, VTimePickerClock, VTimePickerTitle, VToolbar, VToolbarItems, VToolbarTitle, VTooltip, VTreeview, VTreeviewNode, VVirtualScroll, VWindow, VWindowItem, VCarouselTransition, VCarouselReverseTransition, VTabTransition, VTabReverseTransition, VMenuTransition, VFabTransition, VDialogTransition, VDialogBottomTransition, VFadeTransition, VScaleTransition, VScrollXTransition, VScrollXReverseTransition, VScrollYTransition, VScrollYReverseTransition, VSlideXTransition, VSlideXReverseTransition, VSlideYTransition, VSlideYReverseTransition, VExpandTransition, VExpandXTransition */
+/*! exports provided: VApp, VAppBar, VAppBarNavIcon, VAppBarTitle, VAlert, VAutocomplete, VAvatar, VBadge, VBanner, VBottomNavigation, VBottomSheet, VBreadcrumbs, VBreadcrumbsItem, VBreadcrumbsDivider, VBtn, VBtnToggle, VCalendar, VCalendarCategory, VCalendarDaily, VCalendarWeekly, VCalendarMonthly, VCard, VCardActions, VCardSubtitle, VCardText, VCardTitle, VCarousel, VCarouselItem, VCheckbox, VSimpleCheckbox, VChip, VChipGroup, VColorPicker, VColorPickerSwatches, VColorPickerCanvas, VContent, VCombobox, VCounter, VData, VDataIterator, VDataFooter, VDataTable, VEditDialog, VTableOverflow, VDataTableHeader, VSimpleTable, VVirtualTable, VDatePicker, VDatePickerTitle, VDatePickerHeader, VDatePickerDateTable, VDatePickerMonthTable, VDatePickerYears, VDialog, VDivider, VExpansionPanels, VExpansionPanel, VExpansionPanelHeader, VExpansionPanelContent, VFileInput, VFooter, VForm, VContainer, VCol, VRow, VSpacer, VLayout, VFlex, VHover, VIcon, VImg, VInput, VItem, VItemGroup, VLabel, VLazy, VListItemActionText, VListItemContent, VListItemTitle, VListItemSubtitle, VList, VListGroup, VListItem, VListItemAction, VListItemAvatar, VListItemIcon, VListItemGroup, VMain, VMenu, VMessages, VNavigationDrawer, VOverflowBtn, VOverlay, VPagination, VSheet, VParallax, VPicker, VProgressCircular, VProgressLinear, VRadioGroup, VRadio, VRangeSlider, VRating, VResponsive, VSelect, VSkeletonLoader, VSlider, VSlideGroup, VSlideItem, VSnackbar, VSparkline, VSpeedDial, VStepper, VStepperContent, VStepperStep, VStepperHeader, VStepperItems, VSubheader, VSwitch, VSystemBar, VTabs, VTab, VTabItem, VTabsItems, VTabsSlider, VTextarea, VTextField, VThemeProvider, VTimeline, VTimelineItem, VTimePicker, VTimePickerClock, VTimePickerTitle, VToolbar, VToolbarItems, VToolbarTitle, VTooltip, VTreeview, VTreeviewNode, VVirtualScroll, VWindow, VWindowItem, VCarouselTransition, VCarouselReverseTransition, VTabTransition, VTabReverseTransition, VMenuTransition, VFabTransition, VDialogTransition, VDialogBottomTransition, VDialogTopTransition, VFadeTransition, VScaleTransition, VScrollXTransition, VScrollXReverseTransition, VScrollYTransition, VScrollYReverseTransition, VSlideXTransition, VSlideXReverseTransition, VSlideYTransition, VSlideYReverseTransition, VExpandTransition, VExpandXTransition */
 
 /*! exports provided: VApp, default */
 
-/*! exports provided: VAppBar, VAppBarNavIcon, default */
+/*! exports provided: VAppBar, VAppBarNavIcon, VAppBarTitle, default */
 
 /*! exports provided: VAutocomplete, default */
 
@@ -1080,7 +1092,7 @@ License: MIT
 
 /*! exports provided: VCarousel, VCarouselItem, default */
 
-/*! exports provided: VCarouselTransition, VCarouselReverseTransition, VTabTransition, VTabReverseTransition, VMenuTransition, VFabTransition, VDialogTransition, VDialogBottomTransition, VFadeTransition, VScaleTransition, VScrollXTransition, VScrollXReverseTransition, VScrollYTransition, VScrollYReverseTransition, VSlideXTransition, VSlideXReverseTransition, VSlideYTransition, VSlideYReverseTransition, VExpandTransition, VExpandXTransition, default */
+/*! exports provided: VCarouselTransition, VCarouselReverseTransition, VTabTransition, VTabReverseTransition, VMenuTransition, VFabTransition, VDialogTransition, VDialogBottomTransition, VDialogTopTransition, VFadeTransition, VScaleTransition, VScrollXTransition, VScrollXReverseTransition, VScrollYTransition, VScrollYReverseTransition, VSlideXTransition, VSlideXReverseTransition, VSlideYTransition, VSlideYReverseTransition, VExpandTransition, VExpandXTransition, default */
 
 /*! exports provided: VCheckbox, VSimpleCheckbox, default */
 
@@ -1212,7 +1224,7 @@ License: MIT
 
 /*! exports provided: VWindow, VWindowItem, default */
 
-/*! exports provided: af, ar, ca, cs, de, el, en, es, et, fa, fi, fr, hr, hu, he, id, it, ja, ko, lv, lt, nl, no, pl, pt, ro, ru, sk, sl, srCyrl, sv, th, tr, uk, zhHans, zhHant */
+/*! exports provided: af, ar, bg, ca, ckb, cs, de, el, en, es, et, fa, fi, fr, hr, hu, he, id, it, ja, ko, lv, lt, nl, no, pl, pt, ro, ru, sk, sl, srCyrl, sv, th, tr, az, uk, zhHans, zhHant */
 
 /*! exports provided: checkCollinear, getDistance, moveTo */
 
@@ -1272,6 +1284,8 @@ License: MIT
 
 /*! exports provided: parseEvent, isEventOn, isEventStart, isEventOverlapping */
 
+/*! exports provided: parsedCategoryText, getParsedCategories */
+
 /*! exports provided: preset */
 
 /*! exports provided: prevent, default */
@@ -1302,6 +1316,14 @@ License: MIT
 
 /*!**************************!*\
   !*** ./src/locale/ar.ts ***!
+  \**************************/
+
+/*!**************************!*\
+  !*** ./src/locale/az.ts ***!
+  \**************************/
+
+/*!**************************!*\
+  !*** ./src/locale/bg.ts ***!
   \**************************/
 
 /*!**************************!*\
@@ -1427,6 +1449,10 @@ License: MIT
 /*!**************************!*\
   !*** ./src/locale/uk.ts ***!
   \**************************/
+
+/*!***************************!*\
+  !*** ./src/locale/ckb.ts ***!
+  \***************************/
 
 /*!****************************!*\
   !*** ./src/util/colors.ts ***!
@@ -2473,6 +2499,10 @@ License: MIT
   \***********************************************/
 
 /*!************************************************!*\
+  !*** ./src/components/VAppBar/VAppBarTitle.ts ***!
+  \************************************************/
+
+/*!************************************************!*\
   !*** ./src/components/VCalendar/util/props.ts ***!
   \************************************************/
 
@@ -2514,6 +2544,10 @@ License: MIT
 
 /*!*************************************************!*\
   !*** ./src/components/VCalendar/util/events.ts ***!
+  \*************************************************/
+
+/*!*************************************************!*\
+  !*** ./src/components/VCalendar/util/parser.ts ***!
   \*************************************************/
 
 /*!*************************************************!*\

@@ -588,18 +588,18 @@
                               <div v-for="(item, index) in options" :key="index">
                                 <div class="row">
                                   <div class="col-md-6">
-                                    <input type="checkbox" :value="item.ingredientsName" v-model="storeIngredients">
+                                    <input type="checkbox" :value="item.ingredientsName" v-model="storeIngredients" id="chkPassport" @click="EnableDisableTextBox(item.ingredientsName)">
                                     <label :for="item.ingredientsName">{{item.ingredientsName}}</label>
                                   </div>
-                                  <!-- <div class="col-md-2">
-                                    <v-text-field label="Lowdose Quantity" outlined dense v-model="lowDose" type="number" @keyup="validate('')"></v-text-field> 
+                                  <div class="col-md-2">
+                                    <v-text-field label="Lowdose Quantity" outlined dense v-model="item.lowDose"  type="number" @keyup="validate('')" :id="item.ingredientsName + '1'" readonly></v-text-field> 
                                   </div>
                                   <div class="col-md-2">
-                                    <v-text-field label="Highdose Quantity" outlined dense v-model="highDose" type="number" @keyup="validate('')"></v-text-field> 
+                                    <v-text-field label="Highdose Quantity" outlined dense v-model="item.highDose" type="number" @keyup="validate('')" :id="item.ingredientsName + '2'" readonly></v-text-field> 
                                   </div>
                                   <div class="col-md-2">
-                                    <v-text-field label="Overdose Quantity" outlined dense v-model="overDose" type="number" @keyup="validate('')"></v-text-field> 
-                                  </div> -->
+                                    <v-text-field label="Overdose Quantity" outlined dense v-model="item.overDose" type="number" @keyup="validate('')" :id="item.ingredientsName + '3'" readonly></v-text-field> 
+                                  </div>
                                 </div>
                               </div>
                             </div>
@@ -820,6 +820,7 @@ import calculation from './calculation.vue';
 import swal from "sweetalert";
 import noImage from '../../../assets/noImage.jpg'
 import moment from 'moment'
+import AES from './Encryptor'
 export default {
   data() {
     return {
@@ -891,6 +892,9 @@ export default {
       lowDoseCup: null,
       highDoseCup: null,
       overDoseCup: null,
+      lowDose: null,
+      highDose: null,
+      overDose: null,
       cupSizeData: [],
       search: null,
       title: null,
@@ -982,7 +986,7 @@ export default {
       bottleCreamMilk: '',
       packOfPowder: '',
       value: [],
-      options: []
+      options: [],
     };
   },
   mounted() {
@@ -1000,7 +1004,7 @@ export default {
     calculation,
     newIngredients,
     Multiselect,
-    updateIng
+    // updateIng
   },
   methods: {
     showEditIngredients(item){
@@ -1065,8 +1069,8 @@ export default {
         }
         this.options = []
         this.ingredientsData = response.data.ingredients
-        this.ingredientsData.forEach(el => {
-          this.options.push({ingredientsName: el.ingredientsName})
+        this.ingredientsData.forEach((el, index) => {
+          this.options.push({ingredientsName: el.ingredientsName, lowDose: "", highDose: "", overDose: "", status: 'uncheck'})
         })
         console.log(this.options)
       });
@@ -1485,11 +1489,13 @@ export default {
           this.errorMessage7 = 'Size too large. It must not exceed 1MB'
         }else{
           this.errorMessage7 = null
-          this.imgURL = URL.createObjectURL(e.target.files[0])
           this.loadingShow = true
           let data = new FormData()
           data.append('file', this.img)
-          this.$axios.post('http://ec2-34-205-139-231.compute-1.amazonaws.com:3232/api/file/upload', data).then(res => {
+          this.$axios.post('https://api.mikaelagm.com/api/file/upload', data).then(res => {
+            this.imgURL = URL.createObjectURL(e.target.files[0])
+            const decrypted = JSON.parse(AES.decrypt(res.data.cypher))
+            res.data = decrypted;
             this.toSaveImage = res.data.result.body.file_url
             this.loadingShow = false
           })
@@ -1516,8 +1522,15 @@ export default {
         parseInt(this.onlinelowPrice) > 0 && parseInt(this.onlinehighPrice) > 0 && parseInt(this.onlineoverPrice) > 0 && this.errorMessage1 === null &&
         this.errorMessage7 === null && this.errorMessage8 === null && this.errorMessage9 === null){
           let value = []
-          this.value.forEach(el => {
-            value.push(el.ingredientsName)
+          this.options.forEach(el => {
+            if(el.status === 'check'){
+              value.push({
+                'ingredient': el.ingredientsName,
+                'lowDose': el.lowDose,
+                'highDose': el.highDose, 
+                'overDose': el.overDose
+              })
+            }
           })
           let currentObj = this;
           const config = {
@@ -1526,11 +1539,12 @@ export default {
                 Authorization: 'Bearer ' + localStorage.getItem('userToken')
               }
           }
+          console.log('ingredients ni cya', JSON.stringify(value))
           let formData = new FormData();
           formData.append('image', this.toSaveImage)
           formData.append('productCategory', this.prodType)
           formData.append('productName', this.productName)
-          formData.append('ingredients', value)
+          formData.append('ingredients', JSON.stringify(value))
           formData.append('description', this.description)
           formData.append('status', 'Available')
           formData.append('lowPrice', this.lowPrice)
@@ -1689,11 +1703,13 @@ export default {
         this.errorMessage8 = 'Size too large. It must not exceed 1MB'
       }else{
         this.errorMessage8 = null
-        this.imageURL = URL.createObjectURL(e.target.files[0]);
         this.loadingShow = true
         let data = new FormData()
         data.append('file', this.image)
-        this.$axios.post('http://ec2-34-205-139-231.compute-1.amazonaws.com:3232/api/file/upload', data).then(res => {
+        this.$axios.post('https://api.mikaelagm.com/api/file/upload', data).then(res => {
+          this.imageURL = URL.createObjectURL(e.target.files[0]);
+          const decrypted = JSON.parse(AES.decrypt(res.data.cypher))
+          res.data = decrypted;
           this.toSaveImage2 = res.data.result.body.file_url
           this.loadingShow = false
         })
@@ -1924,7 +1940,8 @@ export default {
       this.onlineoverPrice = null;
       this.imgURL = this.noImage;
       this.img = null;
-      this.storeIngredients = []
+      this.storeIngredients = [];
+
     },
     showIngredients() {
       this.dialogForIngredients = true;
@@ -2127,7 +2144,28 @@ export default {
           this.categoryName.push(element.productCategory);
         });
       });
-    }
+    },
+    EnableDisableTextBox(item) {
+      this.options.forEach(el => {
+        if(el.ingredientsName === item){
+          if(el.status === 'uncheck'){
+            el.status = 'check'
+            document.getElementById(item + '1').removeAttribute("readonly");
+            document.getElementById(item + '2').removeAttribute("readonly");
+            document.getElementById(item + '3').removeAttribute("readonly");
+          }else{
+            el.status = 'uncheck'
+            el.lowDose = ''
+            el.highDose = ''
+            el.overDose = ''
+            document.getElementById(item + '1').setAttribute("readonly", true);
+            document.getElementById(item + '2').setAttribute("readonly", true);
+            document.getElementById(item + '3').setAttribute("readonly", true);
+          }
+        }
+      })
+      console.log(document.getElementById(item + '3'), 'mao ni', item + '1')
+    },
   }
 };
 </script>
