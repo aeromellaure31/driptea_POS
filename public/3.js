@@ -1156,8 +1156,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             status: 'uncheck'
           });
         });
-
-        console.log(_this4.options);
       });
     },
     closeModal: function closeModal() {
@@ -1635,7 +1633,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             Authorization: 'Bearer ' + localStorage.getItem('userToken')
           }
         };
-        console.log('ingredients ni cya', JSON.stringify(value));
         var formData = new FormData();
         formData.append('image', this.toSaveImage);
         formData.append('productCategory', this.prodType);
@@ -2285,7 +2282,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           }
         }
       });
-      console.log(document.getElementById(item + '3'), 'mao ni', item + '1');
     }
   }
 });

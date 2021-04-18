@@ -481,7 +481,6 @@ export default {
                             over += el.quantity
                         }
                         var ing = JSON.parse(el.order_product[0].ingredients)
-                        console.log('yati na gyd', ing, this.newTableData)
                         ing.forEach(element => {
                             let quantConsume = 0
                             if(el.size === 'lowDose'){

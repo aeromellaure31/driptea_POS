@@ -1072,7 +1072,6 @@ export default {
         this.ingredientsData.forEach((el, index) => {
           this.options.push({ingredientsName: el.ingredientsName, lowDose: "", highDose: "", overDose: "", status: 'uncheck'})
         })
-        console.log(this.options)
       });
     },
     closeModal(){
@@ -1539,7 +1538,6 @@ export default {
                 Authorization: 'Bearer ' + localStorage.getItem('userToken')
               }
           }
-          console.log('ingredients ni cya', JSON.stringify(value))
           let formData = new FormData();
           formData.append('image', this.toSaveImage)
           formData.append('productCategory', this.prodType)
@@ -2164,7 +2162,6 @@ export default {
           }
         }
       })
-      console.log(document.getElementById(item + '3'), 'mao ni', item + '1')
     },
   }
 };

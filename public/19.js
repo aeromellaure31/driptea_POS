@@ -242,7 +242,6 @@ __webpack_require__.r(__webpack_exports__);
           value: "remaining"
         }];
         _this2.dataInDB = [];
-        console.log('heyyyy', response.data.addIngredient);
         response.data.addIngredient.forEach(function (element) {
           _this2.dataInDB.push({
             date: element.created_at,
@@ -253,7 +252,6 @@ __webpack_require__.r(__webpack_exports__);
           });
         });
         _this2.dataInDB = _this2.dataInDB.reverse();
-        console.log('mao ni cya', _this2.headersForCup);
       });
     },
     getAdmin: function getAdmin() {

@@ -208,7 +208,6 @@ export default {
                     { text: "Remaining Ingredients", value: "remaining" }
                 ];
                 this.dataInDB = []
-                console.log('heyyyy', response.data.addIngredient)
                 response.data.addIngredient.forEach(element => {
                     this.dataInDB.push({
                         date: element.created_at,
@@ -219,7 +218,6 @@ export default {
                     })
                 });
                 this.dataInDB = this.dataInDB.reverse()
-                console.log('mao ni cya', this.headersForCup)
             });
         },
         getAdmin(){
