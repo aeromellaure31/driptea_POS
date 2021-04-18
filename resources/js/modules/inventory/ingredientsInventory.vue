@@ -103,6 +103,7 @@ export default {
     mounted() {
         this.retrieveIngredients()
         this.retrieveAddedIngredients()
+        this.getAdmin();
     },
     computed: {
         dateRangeText() {
@@ -194,44 +195,11 @@ export default {
         },
         retrieveAddedIngredients(){
             this.loadingShow = true
-            this.$axios.post(AUTH.url + "retrieveData", {}, AUTH.config).then(response => {
+            this.$axios.post(AUTH.url + "retrieveAllData", {}, AUTH.config).then(response => {
                 this.loadingShow = false
                 if(response.data.status === 'Token is Expired'){
                     AUTH.deauthenticate()
                 }
-                var list = []
-                var a = [], b = [], c = [], d = [], f = []
-                response.data.addIngredient.forEach(el => {
-                    var w = el.usedQuantity
-                    var x = el.ingredients
-                    var y = el.quantity
-                    var z = el.remainingQuantity
-                    if(el.usedQuantity){
-                        JSON.parse(w).forEach(e => {
-                            f.push(e)
-                        })
-                    }
-                    JSON.parse(x).forEach(e => {
-                        a.push(e)
-                        d.push(el.created_at)
-                    })
-                    JSON.parse(y).forEach(e => {
-                        b.push(e)
-                    })
-                    JSON.parse(z).forEach(e => {
-                        c.push(e)
-                    })
-                })
-                a.forEach((el, index) => {
-                    list.push({
-                        date: d[index],
-                        ingredient: el,
-                        used: f[index],
-                        quantity: b[index],
-                        remaining: c[index]
-                    })
-                })
-                this.dataInDB = list.reverse()
                 this.headersForCup = [
                     { text: "Date", value: "date" },
                     { text: "Ingredient's Name", value: "ingredient" },
@@ -239,7 +207,33 @@ export default {
                     { text: "Used Ingredients", value: "used" },
                     { text: "Remaining Ingredients", value: "remaining" }
                 ];
+                this.dataInDB = []
+                console.log('heyyyy', response.data.addIngredient)
+                response.data.addIngredient.forEach(element => {
+                    this.dataInDB.push({
+                        date: element.created_at,
+                        ingredient: element.ingredients,
+                        used: element.usedQuantity,
+                        quantity: element.quantity,
+                        remaining: element.remainingQuantity
+                    })
+                });
+                this.dataInDB = this.dataInDB.reverse()
+                console.log('mao ni cya', this.headersForCup)
             });
+        },
+        getAdmin(){
+            this.loadingShow = true
+            let params = {
+                uname: localStorage.getItem('adminId')
+            };
+            this.$axios.post(AUTH.url + "getUserData", params, AUTH.config).then(response => {
+                this.loadingShow = false
+                if(response.data.status){
+                    AUTH.deauthenticate()
+                }
+                this.adminName = response.data.userdata[0].fname + ' ' + response.data.userdata[0].lname
+            })
         },
         toolbarClick(args) {
             if (args.item.id === 'Grid_excelexport') { // 'Grid_excelexport' -> Grid component id + _ + toolbar item name
@@ -248,18 +242,18 @@ export default {
                     header: {
                         headerRows: 7,
                         rows: [
-                            { cells: [{ colSpan: 17, value: "Driptea System", style: { fontColor: '#C67878', fontSize: 25, hAlign: 'Center', bold: true, } }] },
-                            { cells: [{ colSpan: 17, value: "A.C. Cortes Ave., Looc", style: { fontColor: '#C67878', fontSize: 20, hAlign: 'Center', bold: true, } }] },
-                            { cells: [{ colSpan: 17, value: "6014 Mandaue City, Philippine", style: { fontColor: '#C67878', fontSize: 20, hAlign: 'Center', bold: true, } }] },
-                            { cells: [{ colSpan: 17, value: "0917 329 7269", style: { fontColor: '#C67878', fontSize: 20, hAlign: 'Center', bold: true, } }] },
-                            { cells: [{ colSpan: 17, hyperlink: { target: 'https://www.facebook.com/driptealoocmandaue/', displayText: 'www.facebook.com/driptealoocmandaue' }, style: { hAlign: 'Center' } }] },
-                            { cells: [{ colSpan: 17, hyperlink: { target: 'samuelazurajr@gmail.com' }, style: { hAlign: 'Center' } }] },
+                            { cells: [{ colSpan: 5, value: "Driptea System", style: { fontColor: '#C67878', fontSize: 25, hAlign: 'Center', bold: true, } }] },
+                            { cells: [{ colSpan: 5, value: "A.C. Cortes Ave., Looc", style: { fontColor: '#C67878', fontSize: 20, hAlign: 'Center', bold: true, } }] },
+                            { cells: [{ colSpan: 5, value: "6014 Mandaue City, Philippine", style: { fontColor: '#C67878', fontSize: 20, hAlign: 'Center', bold: true, } }] },
+                            { cells: [{ colSpan: 5, value: "0917 329 7269", style: { fontColor: '#C67878', fontSize: 20, hAlign: 'Center', bold: true, } }] },
+                            { cells: [{ colSpan: 5, hyperlink: { target: 'https://www.facebook.com/driptealoocmandaue/', displayText: 'www.facebook.com/driptealoocmandaue' }, style: { hAlign: 'Center' } }] },
+                            { cells: [{ colSpan: 5, hyperlink: { target: 'samuelazurajr@gmail.com' }, style: { hAlign: 'Center' } }] },
                         ]
                     },
                     footer: {
                         footerRows: 2,
                         rows: [
-                            { cells:  [{ colSpan: 2, value: "Print By: " + this.adminName + '  ' +  moment(new Date()).format('MM/DD/YYYY'), style: {fontSize: 15, hAlign: 'Left', bold: true, }},]},
+                            { cells:  [{ colSpan: 2, value: "Printed By: " + this.adminName + '  ' +  moment(new Date()).format('MM/DD/YYYY'), style: {fontSize: 15, hAlign: 'Left', bold: true, }},]},
                         ]
                     }
                 };
@@ -281,39 +275,17 @@ export default {
                 if(response.data.status){
                     AUTH.deauthenticate()
                 }
-                var list = []
-                var a = [], b = [], c = [], d = [], f = []
-                response.data.addIngredient.forEach(el => {
-                    var w = el.usedQuantity
-                    var x = el.ingredients
-                    var y = el.quantity
-                    var z = el.remainingQuantity
-                    if(el.usedQuantity){
-                        JSON.parse(w).forEach(e => {
-                            f.push(e)
-                        })
-                    }
-                    JSON.parse(x).forEach(e => {
-                        a.push(e)
-                        d.push(el.created_at)
+                var storeData = []
+                response.data.addIngredient.forEach(element => {
+                    storeData.push({
+                        date: moment(element.created_at).format('MM/DD/YYYY'),
+                        ingredient: element.ingredients,
+                        used: element.usedQuantity ? element.usedQuantity : 0,
+                        quantity: element.quantity,
+                        remaining: element.remainingQuantity
                     })
-                    JSON.parse(y).forEach(e => {
-                        b.push(e)
-                    })
-                    JSON.parse(z).forEach(e => {
-                        c.push(e)
-                    })
-                })
-                a.forEach((el, index) => {
-                    list.push({
-                        date: moment(d[index]).format('MM/DD/YYYY'),
-                        ingredient: el,
-                        used: f[index],
-                        quantity: b[index],
-                        remaining: c[index]
-                    })
-                })
-                this.downloadData = list.reverse()
+                });
+                this.downloadData = storeData.reverse()
             });
         },
     }

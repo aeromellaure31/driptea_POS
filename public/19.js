@@ -120,6 +120,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     this.retrieveIngredients();
     this.retrieveAddedIngredients();
+    this.getAdmin();
   },
   computed: {
     dateRangeText: function dateRangeText() {
@@ -217,52 +218,13 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       this.loadingShow = true;
-      this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "retrieveData", {}, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
+      this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "retrieveAllData", {}, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
         _this2.loadingShow = false;
 
         if (response.data.status === 'Token is Expired') {
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        var list = [];
-        var a = [],
-            b = [],
-            c = [],
-            d = [],
-            f = [];
-        response.data.addIngredient.forEach(function (el) {
-          var w = el.usedQuantity;
-          var x = el.ingredients;
-          var y = el.quantity;
-          var z = el.remainingQuantity;
-
-          if (el.usedQuantity) {
-            JSON.parse(w).forEach(function (e) {
-              f.push(e);
-            });
-          }
-
-          JSON.parse(x).forEach(function (e) {
-            a.push(e);
-            d.push(el.created_at);
-          });
-          JSON.parse(y).forEach(function (e) {
-            b.push(e);
-          });
-          JSON.parse(z).forEach(function (e) {
-            c.push(e);
-          });
-        });
-        a.forEach(function (el, index) {
-          list.push({
-            date: d[index],
-            ingredient: el,
-            used: f[index],
-            quantity: b[index],
-            remaining: c[index]
-          });
-        });
-        _this2.dataInDB = list.reverse();
         _this2.headersForCup = [{
           text: "Date",
           value: "date"
@@ -279,6 +241,36 @@ __webpack_require__.r(__webpack_exports__);
           text: "Remaining Ingredients",
           value: "remaining"
         }];
+        _this2.dataInDB = [];
+        console.log('heyyyy', response.data.addIngredient);
+        response.data.addIngredient.forEach(function (element) {
+          _this2.dataInDB.push({
+            date: element.created_at,
+            ingredient: element.ingredients,
+            used: element.usedQuantity,
+            quantity: element.quantity,
+            remaining: element.remainingQuantity
+          });
+        });
+        _this2.dataInDB = _this2.dataInDB.reverse();
+        console.log('mao ni cya', _this2.headersForCup);
+      });
+    },
+    getAdmin: function getAdmin() {
+      var _this3 = this;
+
+      this.loadingShow = true;
+      var params = {
+        uname: localStorage.getItem('adminId')
+      };
+      this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "getUserData", params, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
+        _this3.loadingShow = false;
+
+        if (response.data.status) {
+          _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
+        }
+
+        _this3.adminName = response.data.userdata[0].fname + ' ' + response.data.userdata[0].lname;
       });
     },
     toolbarClick: function toolbarClick(args) {
@@ -290,7 +282,7 @@ __webpack_require__.r(__webpack_exports__);
             headerRows: 7,
             rows: [{
               cells: [{
-                colSpan: 17,
+                colSpan: 5,
                 value: "Driptea System",
                 style: {
                   fontColor: '#C67878',
@@ -301,7 +293,7 @@ __webpack_require__.r(__webpack_exports__);
               }]
             }, {
               cells: [{
-                colSpan: 17,
+                colSpan: 5,
                 value: "A.C. Cortes Ave., Looc",
                 style: {
                   fontColor: '#C67878',
@@ -312,7 +304,7 @@ __webpack_require__.r(__webpack_exports__);
               }]
             }, {
               cells: [{
-                colSpan: 17,
+                colSpan: 5,
                 value: "6014 Mandaue City, Philippine",
                 style: {
                   fontColor: '#C67878',
@@ -323,7 +315,7 @@ __webpack_require__.r(__webpack_exports__);
               }]
             }, {
               cells: [{
-                colSpan: 17,
+                colSpan: 5,
                 value: "0917 329 7269",
                 style: {
                   fontColor: '#C67878',
@@ -334,7 +326,7 @@ __webpack_require__.r(__webpack_exports__);
               }]
             }, {
               cells: [{
-                colSpan: 17,
+                colSpan: 5,
                 hyperlink: {
                   target: 'https://www.facebook.com/driptealoocmandaue/',
                   displayText: 'www.facebook.com/driptealoocmandaue'
@@ -345,7 +337,7 @@ __webpack_require__.r(__webpack_exports__);
               }]
             }, {
               cells: [{
-                colSpan: 17,
+                colSpan: 5,
                 hyperlink: {
                   target: 'samuelazurajr@gmail.com'
                 },
@@ -360,7 +352,7 @@ __webpack_require__.r(__webpack_exports__);
             rows: [{
               cells: [{
                 colSpan: 2,
-                value: "Print By: " + this.adminName + '  ' + moment__WEBPACK_IMPORTED_MODULE_3___default()(new Date()).format('MM/DD/YYYY'),
+                value: "Printed By: " + this.adminName + '  ' + moment__WEBPACK_IMPORTED_MODULE_3___default()(new Date()).format('MM/DD/YYYY'),
                 style: {
                   fontSize: 15,
                   hAlign: 'Left',
@@ -377,7 +369,7 @@ __webpack_require__.r(__webpack_exports__);
       return moment__WEBPACK_IMPORTED_MODULE_3___default()(date).format("LLL");
     },
     searchData: function searchData() {
-      var _this3 = this;
+      var _this4 = this;
 
       this.dialogForCupSize = true;
       this.loadingShow = true;
@@ -386,51 +378,23 @@ __webpack_require__.r(__webpack_exports__);
         end: this.dates[1] ? this.dates[0] > this.dates[1] ? this.dates[0] : this.dates[1] : this.dates[0]
       };
       this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "retrieveDataChosen", params, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
-        _this3.loadingShow = false;
+        _this4.loadingShow = false;
 
         if (response.data.status) {
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        var list = [];
-        var a = [],
-            b = [],
-            c = [],
-            d = [],
-            f = [];
-        response.data.addIngredient.forEach(function (el) {
-          var w = el.usedQuantity;
-          var x = el.ingredients;
-          var y = el.quantity;
-          var z = el.remainingQuantity;
-
-          if (el.usedQuantity) {
-            JSON.parse(w).forEach(function (e) {
-              f.push(e);
-            });
-          }
-
-          JSON.parse(x).forEach(function (e) {
-            a.push(e);
-            d.push(el.created_at);
-          });
-          JSON.parse(y).forEach(function (e) {
-            b.push(e);
-          });
-          JSON.parse(z).forEach(function (e) {
-            c.push(e);
+        var storeData = [];
+        response.data.addIngredient.forEach(function (element) {
+          storeData.push({
+            date: moment__WEBPACK_IMPORTED_MODULE_3___default()(element.created_at).format('MM/DD/YYYY'),
+            ingredient: element.ingredients,
+            used: element.usedQuantity ? element.usedQuantity : 0,
+            quantity: element.quantity,
+            remaining: element.remainingQuantity
           });
         });
-        a.forEach(function (el, index) {
-          list.push({
-            date: moment__WEBPACK_IMPORTED_MODULE_3___default()(d[index]).format('MM/DD/YYYY'),
-            ingredient: el,
-            used: f[index],
-            quantity: b[index],
-            remaining: c[index]
-          });
-        });
-        _this3.downloadData = list.reverse();
+        _this4.downloadData = storeData.reverse();
       });
     }
   }

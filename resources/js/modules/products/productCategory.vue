@@ -217,8 +217,6 @@ export default {
             ingredientsData: [],
             storeData: [],
             modifyFinalData: [],
-            finalData: [],
-            finalQuantity: [],
         }
     },
     components: {
@@ -482,76 +480,21 @@ export default {
                         }else if(el.size === 'overDose'){
                             over += el.quantity
                         }
-                        //We stop here
-                        // ingredient per order product
-                        // always remember
                         var ing = JSON.parse(el.order_product[0].ingredients)
                         console.log('yati na gyd', ing, this.newTableData)
                         ing.forEach(element => {
-                            if(element.ingredient === el.order_product[0].productName){
-                                let quantConsume = 0
-                                if(el.size === 'lowDose'){
-                                    quantConsume = (el.quantity * element.lowDose)
-                                }else if(el.size === 'highDose'){
-                                    quantConsume = (el.quantity * element.highDose)
-                                }else if(el.size === 'overDose'){
-                                    quantConsume = (el.quantity * element.overDose)
-                                }
-                                store.push({name: elem.name, quantityConsume: quantConsume})
-                                this.modifyFinalData = store
+                            let quantConsume = 0
+                            if(el.size === 'lowDose'){
+                                quantConsume = (el.quantity * element.lowDose)
+                            }else if(el.size === 'highDose'){
+                                quantConsume = (el.quantity * element.highDose)
+                            }else if(el.size === 'overDose'){
+                                quantConsume = (el.quantity * element.overDose)
                             }
-
-                            // this.storeData.forEach(elem => {
-                            //     if(element === elem.name){
-                            //         this.ingredientsData.forEach(e => {
-                            //             if(elem.name === e.ingredientsName){
-                            //                 let quantConsume = 0
-                            //                 if(el.size === 'lowDose'){
-                            //                     quantConsume = (el.quantity * e.lowdoseQuantity)
-                            //                 }else if(el.size === 'highDose'){
-                            //                     quantConsume = (el.quantity * e.highdoseQuantity)
-                            //                 }else if(el.size === 'overDose'){
-                            //                     quantConsume = (el.quantity * e.overdoseQuantity)
-                            //                 }
-                            //                 store.push({name: elem.name, quantityConsume: quantConsume})
-                            //                 this.modifyFinalData = store
-                            //             }
-                            //         })
-                            //     }
-                            // })
+                            store.push({name: element.ingredient, quantityConsume: quantConsume})
+                            this.modifyFinalData = store
                         })
                     })
-                    this.finalData = []
-                    this.finalQuantity = []
-                    var a = [], b = []
-                    console.log('bolbol', this.storeData, this.modifyFinalData)
-                    this.modifyFinalData.forEach((el, index) => {
-                        this.storeData.forEach(element => {
-                            if(element.name === el.name){
-                                if(a.includes(element.name)){
-                                    a[a.indexOf(element.name) + 1] = a[a.indexOf(element.name) + 1] - el.quantityConsume
-                                    b[b.indexOf(element.name) + 1] = b[b.indexOf(element.name) + 1] + el.quantityConsume
-                                }else{
-                                    a.push(element.name)
-                                    b.push(element.name)
-                                    a[a.indexOf(element.name) + 1] = element.quantity - el.quantityConsume
-                                    b[b.indexOf(element.name) + 1] = el.quantityConsume
-                                }
-                            }else{
-                                if(a.includes(element.name)){
-                                    a[a.indexOf(element.name) + 1] = a[a.indexOf(element.name) + 1]
-                                    b[b.indexOf(element.name) + 1] = b[b.indexOf(element.name) + 1]
-                                }else{
-                                    a.push(element.name)
-                                    b.push(element.name)
-                                    a[a.indexOf(element.name) + 1] = element.quantity
-                                    b[b.indexOf(element.name) + 1] = 0
-                                }
-                            }
-                        })
-                    })
-                    this.finalData = b
-                    this.finalQuantity = a
                     this.updateUsedIngredients()
                     let param = {
                         usedCupsLowDose: low,
@@ -580,17 +523,14 @@ export default {
         },
         updateUsedIngredients(){
             this.loadingShow = true
-            var used = [], remain = []
-            console.log('anhi na sad ta mag focus', this.finalData)
-            this.finalData.forEach((el, index) => {
-                if(index % 2 !== 0){
-                    used.push(el)
-                    remain.push(this.finalQuantity[index])
-                }
+            var ingredients = [], quantity = []
+            this.modifyFinalData.forEach((el, index) => {
+                ingredients.push(el.name)
+                quantity.push(el.quantityConsume)
             })
             var params = {
-                usedQuantity: used,
-                remaining: remain
+                ingredients: ingredients,
+                usedQuantity: quantity
             }
             this.$axios.post(AUTH.url + "updateUsedIngredients", params, AUTH.config).then(response => {
                 this.loadingShow = false

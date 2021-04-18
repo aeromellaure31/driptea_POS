@@ -18,45 +18,45 @@ class AddIngredientController extends Controller
     }
 
     public function addIngredientQuantity(Request $request){
-        $addIng = AddIngredients::where('deleted_at', null)->get();
-
-        if(sizeof($addIng) > 0){
-            $ingredients_array = [];
-            foreach ($addIng as $ingredient){
-                array_push($ingredients_array, $ingredient['ingredients']);
-            }
-            foreach ($request->ingredients as $key => $value) {
-                foreach ($addIng as $key_ingredients => $ingredients){
-                    if($ingredients['ingredients'] === $value){
-                        \Log::info('naa na daan');
-                        $addIngredient = AddIngredients::firstOrCreate(['id' => $ingredients['id']]);
-                        $addIngredient->quantity = $ingredients['quantity'] + $request->quantity[$key];
-                        $addIngredient->remainingQuantity = $ingredients['remainingQuantity'] + $request->quantity[$key];
-                        $addIngredient->save();
-                    }else if(!in_array($value, $ingredients_array)){
-                        \Log::info('wala pa nasulod');
-                        $addIngredient = new AddIngredients();
-                        $addIngredient->ingredients = $value;
-                        $addIngredient->quantity = $request->quantity[$key];
-                        $addIngredient->remainingQuantity = $request->quantity[$key];
-                        $addIngredient->save();
-                    }
+        $addIng = AddIngredients::where('deleted_at', null)->whereDate('created_at', '=', date("Y-m-d"))->get();
+        $ingredients_array = [];
+        foreach ($addIng as $ingredient){
+            array_push($ingredients_array, $ingredient['ingredients']);
+        }
+        foreach ($request->ingredients as $key => $value) {
+            foreach ($addIng as $key_ingredients => $ingredients){
+                $current_date = date("d/m/Y");
+                $database_date = $ingredients->created_at->format('d/m/Y');
+                if($ingredients['ingredients'] === $value && $current_date === $database_date){
+                    $addIngredient = AddIngredients::firstOrCreate(['id' => $ingredients['id']]);
+                    $addIngredient->quantity = $ingredients['quantity'] + $request->quantity[$key];
+                    $addIngredient->remainingQuantity = $ingredients['remainingQuantity'] + $request->quantity[$key];
+                    $addIngredient->save();
+                }else if($ingredients['ingredients'] === $value && $current_date !== $database_date){
+                    $addIngredient = new AddIngredients();
+                    $addIngredient->ingredients = $value;
+                    $addIngredient->quantity = $request->quantity[$key];
+                    $addIngredient->remainingQuantity = $request->quantity[$key];
+                    $addIngredient->save();
+                }else if(!in_array($value, $ingredients_array)){
+                    $addIngredient = new AddIngredients();
+                    $addIngredient->ingredients = $value;
+                    $addIngredient->quantity = $request->quantity[$key];
+                    $addIngredient->remainingQuantity = $request->quantity[$key];
+                    $addIngredient->save();
+                    array_push($ingredients_array, $value);
                 }
             }
-            return response()->json('success');
-        }else{
-            foreach ($request->ingredients as $key => $value) {
-                $addIngredient = new AddIngredients();
-                $addIngredient->ingredients = $value;
-                $addIngredient->quantity = $request->quantity[$key];
-                $addIngredient->remainingQuantity = $request->quantity[$key];
-                $addIngredient->save();
-            }
-            return response()->json('success');
         }
+        return response()->json('success');
     }
 
     public function retrieveData(Request $request){
+        $addIngredient = AddIngredients::where('deleted_at', null)->whereDate('created_at', '=', date("Y-m-d"))->get();
+        return response()->json(compact('addIngredient'));
+    }
+
+    public function retrieveAllData(Request $request){
         $addIngredient = AddIngredients::where('deleted_at', null)->get();
         return response()->json(compact('addIngredient'));
     }
@@ -68,32 +68,22 @@ class AddIngredientController extends Controller
 
     public function retrieveRemainingData(Request $request){
         $id = $this->getId();
-        $addIngredient = AddIngredients::where('id', $id)->where('deleted_at', null)->get();
+        $addIngredient = AddIngredients::where('id', $id)->whereDate('created_at', '=', date("Y-m-d"))->where('deleted_at', null)->get();
         return response()->json(compact('addIngredient'));
     }
 
     public function updateUsedIngredients(Request $request){
-        $id = $this->getId();
-        $addIng = AddIngredients::where('id', $id)->get();
-        $addIngredient = AddIngredients::firstOrCreate(['id' => $id]);
-        $addIngredient['remainingQuantity'] = json_encode($request->remaining);
-        if($addIngredient['usedQuantity']){
-            $new = json_decode($addIngredient['usedQuantity']);
-            $a = [];
-            $count = 0;
-            foreach ($request->usedQuantity as $val) {
-                if($count < sizeof($new)){
-                    array_push($a, ($val + $new[$count]));
-                }else{
-                    array_push($a, $val);
+        $addIng = AddIngredients::where('deleted_at', null)->whereDate('created_at', '=', date("Y-m-d"))->get();
+        foreach ($request->ingredients as $key => $value) {
+            foreach ($addIng as $key_ingredients => $ingredients){
+                if($ingredients['ingredients'] === $value){
+                    $addIngredient = AddIngredients::firstOrCreate(['id' => $ingredients['id']]);
+                    $addIngredient->usedQuantity = $ingredients['usedQuantity'] + $request->usedQuantity[$key];
+                    $addIngredient->remainingQuantity = $ingredients['remainingQuantity'] - $request->usedQuantity[$key];
+                    $addIngredient->save();
                 }
-                $count++;
             }
-            $addIngredient['usedQuantity'] = json_encode($a);
-        }else{
-            $addIngredient['usedQuantity'] = json_encode($request->usedQuantity);
         }
-        $addIngredient->save();
-        return response()->json(compact('addIngredient'));
+        return response()->json('success');
     }
 }
