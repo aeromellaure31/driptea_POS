@@ -240,7 +240,6 @@ class OrderController extends Controller
             ->where('store_orders.deleted_at', null)
             ->where('store_orders.status', 'complete')
             ->groupBy('year','ProductName')
-            // ->orderBy('quan', 'desc')
             ->get();
         return response()->JSON(compact('prods'));
     }
