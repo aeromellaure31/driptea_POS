@@ -177,109 +177,109 @@ class OrderController extends Controller
     }
 
     public function retrieveTopProducts(Request $request){
-        $prods = StoreOrder::leftJoin('products', function($join) {
-                $join->on('store_orders.productId', '=', 'products.id');
-            })
-            ->where('store_orders.deleted_at', null)->where('store_orders.status', 'complete' )
-            ->groupBy('products.productName')->orderByRaw('SUM(store_orders.quantity)', 'desc')->get();
-        // $prods = DB::table('store_orders')->leftJoin('products', 'store_orders.productId', '=', 'products.id')
-        //     ->select(DB::raw('products.image as img'),DB::raw('SUM(store_orders.quantity) as quan'),DB::raw('products.productName as pName'))
-        //     ->where('store_orders.deleted_at', null)
-        //     ->where('store_orders.status', 'complete' )
-        //     ->groupBy('img','pName')
-        //     ->orderBy('quan', 'desc')
-        //     ->get();
+        // $prods = StoreOrder::leftJoin('products', function($join) {
+        //         $join->on('store_orders.productId', '=', 'products.id');
+        //     })
+        //     ->where('store_orders.deleted_at', null)->where('store_orders.status', 'complete' )
+        //     ->groupBy('products.productName')->orderByRaw('SUM(store_orders.quantity)', 'desc')->get();
+        $prods = DB::table('store_orders')->leftJoin('products', 'store_orders.productId', '=', 'products.id')
+            ->select(DB::raw('products.image as img'),DB::raw('SUM(store_orders.quantity) as quan'),DB::raw('products.productName as pName'))
+            ->where('store_orders.deleted_at', null)
+            ->where('store_orders.status', 'complete' )
+            ->groupBy('img','pName')
+            ->orderBy('quan', 'desc')
+            ->get();
         return response()->JSON(compact('prods'));
     }
 
     public function DailyProductSales(Request $request){
-        $prods = StoreOrder::leftJoin('products', function($join) {
-            $join->on('store_orders.productId', '=', 'products.id');
-        })
-        ->whereMonth('store_orders.created_at', '=', $request->month)
-        ->whereYear('store_orders.created_at', '=', $request->year)
-        ->where('store_orders.deleted_at', null)->where('store_orders.status', 'complete' )
-        ->groupBy('extract(YEAR from store_orders.created_at)', 'extract(MONTH from store_orders.created_at)', 'extract(DAY from store_orders.created_at)', 'products.productName')
-        ->get();
-        // $prods = DB::table('store_orders')->leftJoin('products', 'store_orders.productId', '=', 'products.id')
-        //     ->select(DB::raw('products.productName as ProductName'),DB::raw('SUM(store_orders.quantity) as quan'),DB::raw('extract(DAY from store_orders.created_at) as date'),DB::raw('extract(YEAR from store_orders.created_at) as year'),DB::raw('extract(MONTH from store_orders.created_at) as month'))
-        //     ->whereMonth('store_orders.created_at', '=', $request->month)
-        //     ->whereYear('store_orders.created_at', '=', $request->year)
-        //     ->where('store_orders.deleted_at', null)
-        //     ->where('store_orders.status', 'complete')
-        //     ->groupBy('year','month','date','ProductName')
-        //     // ->orderBy('quan', 'desc')
-        //     ->get();
+        // $prods = StoreOrder::leftJoin('products', function($join) {
+        //     $join->on('store_orders.productId', '=', 'products.id');
+        // })
+        // ->whereMonth('store_orders.created_at', '=', $request->month)
+        // ->whereYear('store_orders.created_at', '=', $request->year)
+        // ->where('store_orders.deleted_at', null)->where('store_orders.status', 'complete' )
+        // ->groupBy('extract(YEAR from store_orders.created_at)', 'extract(MONTH from store_orders.created_at)', 'extract(DAY from store_orders.created_at)', 'products.productName')
+        // ->get();
+        $prods = DB::table('store_orders')->leftJoin('products', 'store_orders.productId', '=', 'products.id')
+            ->select(DB::raw('products.productName as ProductName'),DB::raw('SUM(store_orders.quantity) as quan'),DB::raw('extract(DAY from store_orders.created_at) as date'),DB::raw('extract(YEAR from store_orders.created_at) as year'),DB::raw('extract(MONTH from store_orders.created_at) as month'))
+            ->whereMonth('store_orders.created_at', '=', $request->month)
+            ->whereYear('store_orders.created_at', '=', $request->year)
+            ->where('store_orders.deleted_at', null)
+            ->where('store_orders.status', 'complete')
+            ->groupBy('year','month','date','ProductName')
+            // ->orderBy('quan', 'desc')
+            ->get();
         return response()->JSON(compact('prods'));
     }
 
     public function MonthlyProductSales(Request $request){
-        $prods = StoreOrder::leftJoin('products', function($join) {
-            $join->on('store_orders.productId', '=', 'products.id');
-        })
-        ->whereYear('store_orders.created_at', '=', $request->year)
-        ->where('store_orders.deleted_at', null)->where('store_orders.status', 'complete' )
-        ->groupBy('extract(MONTH from store_orders.created_at)', 'products.productName')->get();
-        // $prods = DB::table('store_orders')->leftJoin('products', 'store_orders.productId', '=', 'products.id')
-        //     ->select(DB::raw('products.productName as ProductName'),DB::raw('SUM(store_orders.quantity) as quan'),DB::raw('extract(MONTH from store_orders.created_at) as month'))
-        //     ->whereYear('store_orders.created_at', '=', $request->year)
-        //     ->where('store_orders.deleted_at', null)
-        //     ->where('store_orders.status', 'complete')
-        //     ->groupBy('month','ProductName')
-        //     // ->orderBy('quan', 'desc')
-        //     ->get();
+        // $prods = StoreOrder::leftJoin('products', function($join) {
+        //     $join->on('store_orders.productId', '=', 'products.id');
+        // })
+        // ->whereYear('store_orders.created_at', '=', $request->year)
+        // ->where('store_orders.deleted_at', null)->where('store_orders.status', 'complete' )
+        // ->groupBy('extract(MONTH from store_orders.created_at)', 'products.productName')->get();
+        $prods = DB::table('store_orders')->leftJoin('products', 'store_orders.productId', '=', 'products.id')
+            ->select(DB::raw('products.productName as ProductName'),DB::raw('SUM(store_orders.quantity) as quan'),DB::raw('extract(MONTH from store_orders.created_at) as month'))
+            ->whereYear('store_orders.created_at', '=', $request->year)
+            ->where('store_orders.deleted_at', null)
+            ->where('store_orders.status', 'complete')
+            ->groupBy('month','ProductName')
+            // ->orderBy('quan', 'desc')
+            ->get();
         return response()->JSON(compact('prods'));
     }
 
     public function QuarterlyProductSales(Request $request){
-        $prods = StoreOrder::leftJoin('products', function($join) {
-            $join->on('store_orders.productId', '=', 'products.id');
-        })
-        ->whereYear('store_orders.created_at', '=', $request->year)
-        ->where('store_orders.deleted_at', null)->where('store_orders.status', 'complete' )
-        ->groupBy('extract(MONTH from store_orders.created_at)', 'products.productName')->get();
-        // $prods = DB::table('store_orders')->leftJoin('products', 'store_orders.productId', '=', 'products.id')
-        //     ->select(DB::raw('products.productName as ProductName'),DB::raw('SUM(store_orders.quantity) as quan'),DB::raw('extract(MONTH from store_orders.created_at) as month'))
-        //     ->whereYear('store_orders.created_at', '=', $request->year)
-        //     ->where('store_orders.deleted_at', null)
-        //     ->where('store_orders.status', 'complete')
-        //     ->groupBy('month','ProductName')
-        //     // ->orderBy('quan', 'desc')
-        //     ->get();
+        // $prods = StoreOrder::leftJoin('products', function($join) {
+        //     $join->on('store_orders.productId', '=', 'products.id');
+        // })
+        // ->whereYear('store_orders.created_at', '=', $request->year)
+        // ->where('store_orders.deleted_at', null)->where('store_orders.status', 'complete' )
+        // ->groupBy('extract(MONTH from store_orders.created_at)', 'products.productName')->get();
+        $prods = DB::table('store_orders')->leftJoin('products', 'store_orders.productId', '=', 'products.id')
+            ->select(DB::raw('products.productName as ProductName'),DB::raw('SUM(store_orders.quantity) as quan'),DB::raw('extract(MONTH from store_orders.created_at) as month'))
+            ->whereYear('store_orders.created_at', '=', $request->year)
+            ->where('store_orders.deleted_at', null)
+            ->where('store_orders.status', 'complete')
+            ->groupBy('month','ProductName')
+            // ->orderBy('quan', 'desc')
+            ->get();
         return response()->JSON(compact('prods'));
     }
 
     public function SemiProductSales(Request $request){
-        $prods = StoreOrder::leftJoin('products', function($join) {
-            $join->on('store_orders.productId', '=', 'products.id');
-        })
-        ->whereYear('store_orders.created_at', '=', $request->year)
-        ->where('store_orders.deleted_at', null)->where('store_orders.status', 'complete' )
-        ->groupBy('extract(MONTH from store_orders.created_at)', 'products.productName')->get();
-        // $prods = DB::table('store_orders')->leftJoin('products', 'store_orders.productId', '=', 'products.id')
-        //     ->select(DB::raw('products.productName as ProductName'),DB::raw('SUM(store_orders.quantity) as quan'),DB::raw('extract(MONTH from store_orders.created_at) as month'))
-        //     ->whereYear('store_orders.created_at', '=', $request->year)
-        //     ->where('store_orders.deleted_at', null)
-        //     ->where('store_orders.status', 'complete')
-        //     ->groupBy('month','ProductName')
-        //     // ->orderBy('quan', 'desc')
-        //     ->get();
+        // $prods = StoreOrder::leftJoin('products', function($join) {
+        //     $join->on('store_orders.productId', '=', 'products.id');
+        // })
+        // ->whereYear('store_orders.created_at', '=', $request->year)
+        // ->where('store_orders.deleted_at', null)->where('store_orders.status', 'complete' )
+        // ->groupBy('extract(MONTH from store_orders.created_at)', 'products.productName')->get();
+        $prods = DB::table('store_orders')->leftJoin('products', 'store_orders.productId', '=', 'products.id')
+            ->select(DB::raw('products.productName as ProductName'),DB::raw('SUM(store_orders.quantity) as quan'),DB::raw('extract(MONTH from store_orders.created_at) as month'))
+            ->whereYear('store_orders.created_at', '=', $request->year)
+            ->where('store_orders.deleted_at', null)
+            ->where('store_orders.status', 'complete')
+            ->groupBy('month','ProductName')
+            // ->orderBy('quan', 'desc')
+            ->get();
         return response()->JSON(compact('prods'));
     }
 
     public function AnnualProductSales(Request $request){
-        $prods = StoreOrder::leftJoin('products', function($join) {
-            $join->on('store_orders.productId', '=', 'products.id');
-        })
-        ->where('store_orders.deleted_at', null)->where('store_orders.status', 'complete' )
-        ->groupBy('extract(YEAR from store_orders.created_at)', 'products.productName')->get();
-        // $prods = DB::table('store_orders')->leftJoin('products', 'store_orders.productId', '=', 'products.id')
-        //     ->select(DB::raw('products.productName as ProductName'),DB::raw('SUM(store_orders.quantity) as quan'),DB::raw('extract(YEAR from store_orders.created_at) as year'))
-        //     ->where('store_orders.deleted_at', null)
-        //     ->where('store_orders.status', 'complete')
-        //     ->groupBy('year','ProductName')
-        //     // ->orderBy('quan', 'desc')
-        //     ->get();
+        // $prods = StoreOrder::leftJoin('products', function($join) {
+        //     $join->on('store_orders.productId', '=', 'products.id');
+        // })
+        // ->where('store_orders.deleted_at', null)->where('store_orders.status', 'complete' )
+        // ->groupBy('extract(YEAR from store_orders.created_at)', 'products.productName')->get();
+        $prods = DB::table('store_orders')->leftJoin('products', 'store_orders.productId', '=', 'products.id')
+            ->select(DB::raw('products.productName as ProductName'),DB::raw('SUM(store_orders.quantity) as quan'),DB::raw('extract(YEAR from store_orders.created_at) as year'))
+            ->where('store_orders.deleted_at', null)
+            ->where('store_orders.status', 'complete')
+            ->groupBy('year','ProductName')
+            // ->orderBy('quan', 'desc')
+            ->get();
         return response()->JSON(compact('prods'));
     }
 
