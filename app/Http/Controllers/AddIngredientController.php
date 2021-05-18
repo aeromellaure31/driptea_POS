@@ -50,12 +50,44 @@ class AddIngredientController extends Controller
                 }
             }
         }else{
-            foreach ($request->ingredients as $key => $value){
-                $addIngredient = new AddIngredients();
-                $addIngredient->ingredients = $value;
-                $addIngredient->quantity = $request->quantity[$key];
-                $addIngredient->remainingQuantity = $request->quantity[$key];
-                $addIngredient->save();
+            $allIngredients = AddIngredients::where('deleted_at', null)->get();
+            // $storeLastIngredient = end($allIngredients);
+            $storeLastIngredient = '';
+            foreach ($allIngredients as $key => $value){
+                $storeLastIngredient = $value;
+            }
+            if(count($allIngredients) > 0){
+                $add_ingredient = AddIngredients::where('deleted_at', null)->whereDate('updated_at', '=', $storeLastIngredient->updated_at->format("Y-m-d"))->get();
+                $ingredients_array = [];
+                foreach ($add_ingredient as $ingredient){
+                    array_push($ingredients_array, $ingredient['ingredients']);
+                }
+                foreach ($request->ingredients as $key => $value){
+                    foreach ($add_ingredient as $key_ingredients => $ingredients){
+                        if($ingredients['ingredients'] === $value){
+                            $addIngredient = new AddIngredients();
+                            $addIngredient->ingredients = $value;
+                            $addIngredient->quantity = $ingredients['quantity'] + $request->quantity[$key];
+                            $addIngredient->remainingQuantity = $ingredients['remainingQuantity'] + $request->quantity[$key];
+                            $addIngredient->save();
+                        }else if(!in_array($value, $ingredients_array)){
+                            $addIngredient = new AddIngredients();
+                            $addIngredient->ingredients = $value;
+                            $addIngredient->quantity = $request->quantity[$key];
+                            $addIngredient->remainingQuantity = $request->quantity[$key];
+                            $addIngredient->save();
+                            array_push($ingredients_array, $value);
+                        }
+                    }
+                }
+            }else{                
+                foreach ($request->ingredients as $key => $value){
+                    $addIngredient = new AddIngredients();
+                    $addIngredient->ingredients = $value;
+                    $addIngredient->quantity = $request->quantity[$key];
+                    $addIngredient->remainingQuantity = $request->quantity[$key];
+                    $addIngredient->save();
+                }
             }
         }
         return response()->json('success');
@@ -83,14 +115,24 @@ class AddIngredientController extends Controller
     }
 
     public function updateUsedIngredients(Request $request){
-        $addIng = AddIngredients::where('deleted_at', null)->whereDate('created_at', '=', date("Y-m-d"))->get();
-        foreach ($request->ingredients as $key => $value) {
-            foreach ($addIng as $key_ingredients => $ingredients){
-                if($ingredients['ingredients'] === $value){
-                    $addIngredient = AddIngredients::firstOrCreate(['id' => $ingredients['id']]);
-                    $addIngredient->usedQuantity = $ingredients['usedQuantity'] + $request->usedQuantity[$key];
-                    $addIngredient->remainingQuantity = $ingredients['remainingQuantity'] - $request->usedQuantity[$key];
-                    $addIngredient->save();
+        $current_date = date("d/m/Y");
+        $allIngredients = AddIngredients::where('deleted_at', null)->get();
+        // $storeLastIngredient = end($allIngredients);
+        $storeLastIngredient = '';
+        foreach ($allIngredients as $key => $value){
+            $storeLastIngredient = $value;
+        }
+        $addIng = AddIngredients::where('deleted_at', null)->whereDate('updated_at', '=', $storeLastIngredient->updated_at->format("Y-m-d"))->get();
+        if(count($addIng) > 0){
+            foreach ($request->ingredients as $key => $value) {
+                foreach ($addIng as $key_ingredients => $ingredients){
+                    $database_date = $ingredients->updated_at->format('d/m/Y');
+                    if($ingredients['ingredients'] === $value && $current_date === $database_date){
+                        $addIngredient = AddIngredients::firstOrCreate(['id' => $ingredients['id']]);
+                        $addIngredient->usedQuantity = ($ingredients['usedQuantity'] ? $ingredients['usedQuantity'] : 0) + $request->usedQuantity[$key];
+                        $addIngredient->remainingQuantity = $ingredients['remainingQuantity'] - $request->usedQuantity[$key];
+                        $addIngredient->save();
+                    }
                 }
             }
         }
