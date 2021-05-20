@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Product;
+use App\Models\AddIngredients;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -86,6 +87,43 @@ class ProductController extends Controller
 
     public function retrieveAllProductAscending(Request $request){
         $product = Product::orderBy('id','ASC')->where('remove', null)->get();
+        // new code start here
+        $allIngredients = AddIngredients::where('deleted_at', null)->get();
+        $storeLastIngredient = '';
+        foreach ($allIngredients as $key => $value){
+            $storeLastIngredient = $value;
+        }
+        $ingredients = AddIngredients::where('deleted_at', null)->whereDate('updated_at', '=', $storeLastIngredient->updated_at->format("Y-m-d"))->get();
+        $notEnoughIngredients = [];
+        foreach ($ingredients as $key => $el) {
+            if($el['remainingQuantity'] <= 15){
+                array_push($notEnoughIngredients, $el);
+            }
+        }
+        if(sizeof($notEnoughIngredients) > 0){
+            $finalProduct = [];
+            foreach ($product as $index => $element) {
+                $productIngredient = json_decode(str_replace('/', '', $element->ingredients));
+                foreach ($productIngredient as $singleIngredient) {
+                    foreach ($ingredients as $key => $el) {
+                        if($singleIngredient['ingredient'] === $el['ingredients']){
+                            if($el['remainingQuantity'] <= 15){
+                                array_push($finalProduct, $index);
+                            }
+                        }
+                    }
+                }
+            }
+            $productIndex = array_unique($finalProduct);
+            $prodFinal = [];
+            foreach ($product as $key => $value) {
+                if(!in_array($key, $productIndex)){
+                    array_push($prodFinal, $value)
+                }
+            }
+            $product = $prodFinal;
+        }
+        // end here
         return response()->json(compact('product'));
     }
 
