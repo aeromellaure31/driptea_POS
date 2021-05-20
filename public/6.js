@@ -710,7 +710,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.empty[data-v-2b20b1c4]{\r\n    width: 100%;\r\n    margin-top: 25px;\r\n    margin-bottom: 25px;\r\n    float: left;\r\n    min-height: 450px;\r\n    overflow-y: hidden;\r\n    text-align: center;\r\n    border: solid 1px #ddd;\n}\n.empty i[data-v-2b20b1c4]{\r\n    font-size: 100px;\r\n    padding-top: 150px;\n}\n.empty span[data-v-2b20b1c4]{\r\n    width: 100%;\r\n    float: left;\n}\n.empty .description[data-v-2b20b1c4]{\r\n    font-size: 24px;\n}\r\n", ""]);
+exports.push([module.i, "\n.empty[data-v-2b20b1c4]{\n    width: 100%;\n    margin-top: 25px;\n    margin-bottom: 25px;\n    float: left;\n    min-height: 450px;\n    overflow-y: hidden;\n    text-align: center;\n    border: solid 1px #ddd;\n}\n.empty i[data-v-2b20b1c4]{\n    font-size: 100px;\n    padding-top: 150px;\n}\n.empty span[data-v-2b20b1c4]{\n    width: 100%;\n    float: left;\n}\n.empty .description[data-v-2b20b1c4]{\n    font-size: 24px;\n}\n", ""]);
 
 // exports
 
@@ -729,7 +729,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.selectWidth[data-v-118875fa] {\r\n  width: 70%;\n}\n.table[data-v-118875fa] {\r\n  width: 170%;\n}\n.imageSize2[data-v-118875fa] {\r\n  height: 300px;\r\n  width: 300px;\r\n  margin-top: 2%;\n}\r\n", ""]);
+exports.push([module.i, "\n.selectWidth[data-v-118875fa] {\n  width: 70%;\n}\n.table[data-v-118875fa] {\n  width: 170%;\n}\n.imageSize2[data-v-118875fa] {\n  height: 300px;\n  width: 300px;\n  margin-top: 2%;\n}\n", ""]);
 
 // exports
 

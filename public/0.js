@@ -214,7 +214,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.logo[data-v-23355ca8]{\r\n  height: 150px;\r\n  width: 150px;\n}\n.design[data-v-23355ca8]{\r\n  margin-top: 20%;\n}\r\n", ""]);
+exports.push([module.i, "\n.logo[data-v-23355ca8]{\n  height: 150px;\n  width: 150px;\n}\n.design[data-v-23355ca8]{\n  margin-top: 20%;\n}\n", ""]);
 
 // exports
 

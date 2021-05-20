@@ -1130,7 +1130,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this3.quantityRetrieve = JSON.parse(response.data.addIngredient[0].remainingQuantity);
+        _this3.quantityRetrieve = JSON.parse(response.data.addIngredient[0].remainingQuantity.replace('/', ''));
       });
     },
     retrieveIngredients: function retrieveIngredients() {
@@ -1670,15 +1670,34 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     editProduct: function editProduct(item) {
-      var _this17 = this;
-
-      this.value = [];
-      var selected = JSON.parse(item.ingredients).split(',');
+      var selected = JSON.parse(item.ingredients.replace('/', ''));
+      var storeData = [];
       selected.forEach(function (el) {
-        _this17.value.push({
-          ingredientsName: el
-        });
+        storeData.push(el.ingredient);
       });
+      console.log(storeData);
+      var storage = [];
+      this.options.forEach(function (element) {
+        if (!storeData.includes(element.ingredientsName)) {
+          storage.push(element);
+        } else {
+          selected.forEach(function (el) {
+            if (element.ingredientsName === el.ingredient && storeData.includes(el.ingredient)) {
+              storeData.push(element.ingredientsName);
+              storage.push({
+                ingredientsName: el.ingredient,
+                lowDose: el.lowDose,
+                highDose: el.highDose,
+                overDose: el.overDose,
+                status: 'uncheck'
+              });
+            }
+          });
+        }
+      });
+      this.options = [];
+      this.options = storage;
+      storage = [];
       this.errorMessage = null;
       this.dialogForProduct = true;
       this.productName = item.productName;
@@ -1703,8 +1722,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       if (this.toSaveImage !== '' && this.prodType !== '' && this.productName !== '' && this.lowPrice !== '' && this.highPrice !== '' && this.overPrice !== '' && this.onlinelowPrice !== '' && this.onlinehighPrice !== '' & this.onlineoverPrice !== '' && this.lowPrice !== '' && this.highPrice !== '' && this.overPrice !== '' && this.onlinelowPrice !== '' && this.onlinehighPrice !== '' && this.onlineoverPrice !== '' && this.toSaveImage !== null && this.prodType !== null && this.productName !== null && this.lowPrice !== null && this.highPrice !== null && this.overPrice !== null && this.onlinelowPrice !== null && this.onlinehighPrice !== null & this.onlineoverPrice !== null && this.lowPrice > 0 && this.highPrice > 0 && this.overPrice > 0 && this.onlinelowPrice > 0 && this.onlinehighPrice > 0 && this.onlineoverPrice > 0 && this.errorMessage1 === null && this.errorMessage7 === null && this.errorMessage8 === null) {
         e.preventDefault();
         var value = [];
-        this.value.forEach(function (el) {
-          value.push(el.ingredientsName);
+        this.options.forEach(function (el) {
+          if (el.status === 'check') {
+            value.push({
+              'ingredient': el.ingredientsName,
+              'lowDose': el.lowDose,
+              'highDose': el.highDose,
+              'overDose': el.overDose
+            });
+          }
         });
         var currentObj = this;
         var config = {
@@ -1716,7 +1742,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         var formData = new FormData();
         formData.append('id', this.prodId);
         formData.append('image', this.toSaveImage);
-        formData.append('ingredients', value);
+        formData.append('ingredients', JSON.stringify(value));
         formData.append('status', this.status);
         formData.append('productCategory', this.prodType);
         formData.append('productName', this.productName);
@@ -1751,7 +1777,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     productStatusUpdate: function productStatusUpdate(id) {
-      var _this18 = this;
+      var _this17 = this;
 
       this.loadingShow = true;
       var param = {
@@ -1763,13 +1789,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this18.retrieveProducts();
+        _this17.retrieveProducts();
 
-        _this18.loadingShow = false;
+        _this17.loadingShow = false;
       });
     },
     productStatusAvailable: function productStatusAvailable(id) {
-      var _this19 = this;
+      var _this18 = this;
 
       this.loadingShow = true;
       var param = {
@@ -1781,13 +1807,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this19.retrieveProducts();
+        _this18.retrieveProducts();
 
-        _this19.loadingShow = false;
+        _this18.loadingShow = false;
       });
     },
     onImageChange: function onImageChange(e) {
-      var _this20 = this;
+      var _this19 = this;
 
       this.image = e.target.files[0];
 
@@ -1801,11 +1827,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         var data = new FormData();
         data.append('file', this.image);
         this.$axios.post('https://api.mikaelagm.com/api/file/upload', data).then(function (res) {
-          _this20.imageURL = URL.createObjectURL(e.target.files[0]);
+          _this19.imageURL = URL.createObjectURL(e.target.files[0]);
           var decrypted = JSON.parse(_Encryptor__WEBPACK_IMPORTED_MODULE_10__["default"].decrypt(res.data.cypher));
           res.data = decrypted;
-          _this20.toSaveImage2 = res.data.result.body.file_url;
-          _this20.loadingShow = false;
+          _this19.toSaveImage2 = res.data.result.body.file_url;
+          _this19.loadingShow = false;
         });
       }
     },
@@ -2108,7 +2134,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       _router__WEBPACK_IMPORTED_MODULE_1__["default"].push(route)["catch"](function () {});
     },
     addAddOns: function addAddOns() {
-      var _this21 = this;
+      var _this20 = this;
 
       this.loadingShow = true;
 
@@ -2124,15 +2150,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
           }
 
-          _this21.loadingShow = false;
+          _this20.loadingShow = false;
           sweetalert__WEBPACK_IMPORTED_MODULE_7___default()({
             title: "You have successfully added an add-ons",
             icon: "success"
           });
 
-          _this21.retrieveAddOns();
+          _this20.retrieveAddOns();
 
-          _this21.dialogForAddOns = false;
+          _this20.dialogForAddOns = false;
         });
       } else {
         this.errorMessage = "Please fill up all fields";
@@ -2140,7 +2166,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     retrieveAddOns: function retrieveAddOns() {
-      var _this22 = this;
+      var _this21 = this;
 
       this.loadingShow = true;
       this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "retrieveAllAddOns", {}, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
@@ -2148,8 +2174,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this22.datas = response.data.addons;
-        _this22.loadingShow = false;
+        _this21.datas = response.data.addons;
+        _this21.loadingShow = false;
       });
     },
     editAddOns: function editAddOns(item) {
@@ -2165,7 +2191,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.idAddOns = item.id;
     },
     editAddOnsData: function editAddOnsData() {
-      var _this23 = this;
+      var _this22 = this;
 
       this.loadingShow = true;
 
@@ -2182,15 +2208,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
           }
 
-          _this23.loadingShow = false;
+          _this22.loadingShow = false;
           sweetalert__WEBPACK_IMPORTED_MODULE_7___default()({
             title: "You have successfully updated the add-ons",
             icon: "success"
           });
 
-          _this23.retrieveAddOns();
+          _this22.retrieveAddOns();
 
-          _this23.hide();
+          _this22.hide();
         });
       } else {
         this.errorMessage = "Please fill up all fields";
@@ -2198,7 +2224,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     NAStatusUpdate: function NAStatusUpdate(id) {
-      var _this24 = this;
+      var _this23 = this;
 
       this.loadingShow = true;
       var param = {
@@ -2210,13 +2236,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this24.loadingShow = false;
+        _this23.loadingShow = false;
 
-        _this24.retrieveAddOns();
+        _this23.retrieveAddOns();
       });
     },
     availableStatusUpdate: function availableStatusUpdate(id) {
-      var _this25 = this;
+      var _this24 = this;
 
       this.loadingShow = true;
       var param = {
@@ -2228,13 +2254,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this25.loadingShow = false;
+        _this24.loadingShow = false;
 
-        _this25.retrieveAddOns();
+        _this24.retrieveAddOns();
       });
     },
     retrieveProducts: function retrieveProducts() {
-      var _this26 = this;
+      var _this25 = this;
 
       this.loadingShow = true;
       this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "retrieveAllProduct", {}, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
@@ -2242,12 +2268,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this26.loadingShow = false;
-        _this26.productData = response.data.product;
+        _this25.loadingShow = false;
+        _this25.productData = response.data.product;
       });
     },
     retrieveCategories: function retrieveCategories() {
-      var _this27 = this;
+      var _this26 = this;
 
       this.loadingShow = true;
       this.$axios.post(_services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].url + "retrieveCategory", {}, _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].config).then(function (response) {
@@ -2255,11 +2281,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].deauthenticate();
         }
 
-        _this27.loadingShow = false;
-        _this27.categoryData = response.data.addCategory;
-        _this27.categoryName = [];
+        _this26.loadingShow = false;
+        _this26.categoryData = response.data.addCategory;
+        _this26.categoryName = [];
         response.data.addCategory.forEach(function (element) {
-          _this27.categoryName.push(element.productCategory);
+          _this26.categoryName.push(element.productCategory);
         });
       });
     },
@@ -3086,7 +3112,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.multiSelectDesign[data-v-62e92aac] .multiselect__tags{\r\n  border: 1px solid #9e9e9e !important;\n}\n.ingredientSpan[data-v-62e92aac]{\r\n  font-style: italic;\r\n  color: blue;\r\n  text-align: center;\r\n  cursor: pointer;\r\n  padding: 5%;\n}\n.v-input__slot[data-v-62e92aac] {\r\n  margin-bottom: -35px;\n}\n.errorColor[data-v-62e92aac] {\r\n  color: red;\n}\n[data-v-62e92aac]::-webkit-scrollbar {\r\n  width: 2px;\n}\n.my-custom-scrollbar[data-v-62e92aac][data-v-62e92aac] {\r\n  position: relative;\r\n  height: 500px;\r\n  width: 100%;\r\n  overflow: auto;\n}\n.fileStyle[data-v-62e92aac] {\r\n  font-size: 17px !important;\r\n  width: 97px;\r\n  margin-top: 3%;\r\n  margin-bottom: 3%;\n}\n.addOnsImage[data-v-62e92aac] {\r\n  width: 250px !important;\r\n  height: 250px !important;\r\n  margin-top: 2% !important;\n}\n.navButton[data-v-62e92aac] {\r\n  float: left;\r\n  width: 200px;\n}\n.borderStyle1[data-v-62e92aac] {\r\n  border-left: 1px solid #d8dce3;\r\n  border-top: 1px solid #d8dce3;\r\n  border-right: 1px solid #d8dce3;\n}\n.btnBorderStyle[data-v-62e92aac] {\r\n  margin-top: -0.7%;\r\n  border-bottom: 1px solid #d8dce3;\n}\n.borderStyle[data-v-62e92aac] {\r\n  border-left: 3px solid grey;\r\n  border-top: 3px solid grey;\r\n  border-right: 3px solid grey;\n}\n.btnBorderStyle1[data-v-62e92aac] {\r\n  border-bottom: 3px solid grey;\n}\n.table tr[data-v-62e92aac] {\r\n  text-align: center;\n}\nimg[data-v-62e92aac] {\r\n  height: 50px;\r\n  width: 100px;\n}\nhr[data-v-62e92aac] {\r\n  border: 1px solid gray;\n}\nh1[data-v-62e92aac]{\r\n  text-align: center;\r\n  margin-top: 3%;\n}\nth[data-v-62e92aac] {\r\n  text-align: center;\r\n  font-size: 30px;\n}\nlabel[data-v-62e92aac] {\r\n  font-size: 20px !important;\n}\n.blurred-background[data-v-62e92aac] {\r\n  position: fixed;\r\n  box-sizing: border-box;\r\n  width: 100%;\r\n  height: 100%;\r\n  z-index: 1;\r\n  top: 0;\r\n  left: 0;\r\n  text-align: center;\r\n  background: rgb(54, 54, 54, 0.7);\n}\n.table[data-v-62e92aac] {\r\n  width: 90%;\r\n  margin-top: 60px;\n}\n.searchInput[data-v-62e92aac] {\r\n  width: 50%;\n}\n#alert-box[data-v-62e92aac] {\r\n  width: 400px;\r\n  background: white;\r\n  display: inline-block;\r\n  margin-top: 180px;\r\n  font-weight: lighter;\r\n  border-radius: 3px;\r\n  font-size: 30px;\r\n  padding: 20px;\r\n  transition: 0.2s;\r\n  text-align: left;\r\n  box-shadow: 5px 5px gray;\n}\n.alert-box2[data-v-62e92aac] {\r\n  width: 550px;\r\n  background: white;\r\n  display: inline-block;\r\n  margin-top: 150px;\r\n  font-weight: lighter;\r\n  border-radius: 3px;\r\n  font-size: 30px;\r\n  padding: 20px;\r\n  transition: 0.2s;\r\n  text-align: left;\r\n  box-shadow: 5px 5px gray;\n}\n#alert-box3[data-v-62e92aac] {\r\n  width: 550px;\r\n  background: white;\r\n  display: inline-block;\r\n  margin-top: 50px;\r\n  font-weight: lighter;\r\n  border-radius: 3px;\r\n  font-size: 20px;\r\n  padding: 20px;\r\n  transition: 0.2s;\r\n  text-align: left;\r\n  box-shadow: 5px 5px gray;\n}\n.productTable[data-v-62e92aac] {\r\n  width: 100%;\r\n  margin-top: 5%;\r\n  margin-bottom: 5%;\n}\n.categoryTable[data-v-62e92aac] {\r\n  width: 70%;\r\n  margin-top: 5%;\r\n  margin-bottom: 5%;\n}\n.addOnsTable[data-v-62e92aac] {\r\n  width: 50%;\r\n  margin-top: 5%;\r\n  margin-bottom: 5%;\n}\n.cupTable[data-v-62e92aac] {\r\n  width: 60%;\r\n  margin-top: 5%;\r\n  margin-bottom: 5%;\n}\n.my-custom-scrollbar[data-v-62e92aac] {\r\n  position: relative;\r\n  height: 500px;\r\n  width: 70%;\r\n  overflow: auto;\n}\n.table-wrapper-scroll-y[data-v-62e92aac] {\r\n  display: contents;\n}\n.div[data-v-62e92aac] {\r\n  /* border-style: solid; */\r\n  margin-top: 3%;\r\n  margin-bottom: 5%;\n}\n.btnModal[data-v-62e92aac] {\r\n  float: right;\r\n  margin-right: 1%;\n}\n#buttonAdd[data-v-62e92aac] {\r\n  float: right;\n}\r\n", ""]);
+exports.push([module.i, "\n.multiSelectDesign[data-v-62e92aac] .multiselect__tags{\n  border: 1px solid #9e9e9e !important;\n}\n.ingredientSpan[data-v-62e92aac]{\n  font-style: italic;\n  color: blue;\n  text-align: center;\n  cursor: pointer;\n  padding: 5%;\n}\n.v-input__slot[data-v-62e92aac] {\n  margin-bottom: -35px;\n}\n.errorColor[data-v-62e92aac] {\n  color: red;\n}\n[data-v-62e92aac]::-webkit-scrollbar {\n  width: 2px;\n}\n.my-custom-scrollbar[data-v-62e92aac][data-v-62e92aac] {\n  position: relative;\n  height: 500px;\n  width: 100%;\n  overflow: auto;\n}\n.fileStyle[data-v-62e92aac] {\n  font-size: 17px !important;\n  width: 97px;\n  margin-top: 3%;\n  margin-bottom: 3%;\n}\n.addOnsImage[data-v-62e92aac] {\n  width: 250px !important;\n  height: 250px !important;\n  margin-top: 2% !important;\n}\n.navButton[data-v-62e92aac] {\n  float: left;\n  width: 200px;\n}\n.borderStyle1[data-v-62e92aac] {\n  border-left: 1px solid #d8dce3;\n  border-top: 1px solid #d8dce3;\n  border-right: 1px solid #d8dce3;\n}\n.btnBorderStyle[data-v-62e92aac] {\n  margin-top: -0.7%;\n  border-bottom: 1px solid #d8dce3;\n}\n.borderStyle[data-v-62e92aac] {\n  border-left: 3px solid grey;\n  border-top: 3px solid grey;\n  border-right: 3px solid grey;\n}\n.btnBorderStyle1[data-v-62e92aac] {\n  border-bottom: 3px solid grey;\n}\n.table tr[data-v-62e92aac] {\n  text-align: center;\n}\nimg[data-v-62e92aac] {\n  height: 50px;\n  width: 100px;\n}\nhr[data-v-62e92aac] {\n  border: 1px solid gray;\n}\nh1[data-v-62e92aac]{\n  text-align: center;\n  margin-top: 3%;\n}\nth[data-v-62e92aac] {\n  text-align: center;\n  font-size: 30px;\n}\nlabel[data-v-62e92aac] {\n  font-size: 20px !important;\n}\n.blurred-background[data-v-62e92aac] {\n  position: fixed;\n  box-sizing: border-box;\n  width: 100%;\n  height: 100%;\n  z-index: 1;\n  top: 0;\n  left: 0;\n  text-align: center;\n  background: rgb(54, 54, 54, 0.7);\n}\n.table[data-v-62e92aac] {\n  width: 90%;\n  margin-top: 60px;\n}\n.searchInput[data-v-62e92aac] {\n  width: 50%;\n}\n#alert-box[data-v-62e92aac] {\n  width: 400px;\n  background: white;\n  display: inline-block;\n  margin-top: 180px;\n  font-weight: lighter;\n  border-radius: 3px;\n  font-size: 30px;\n  padding: 20px;\n  transition: 0.2s;\n  text-align: left;\n  box-shadow: 5px 5px gray;\n}\n.alert-box2[data-v-62e92aac] {\n  width: 550px;\n  background: white;\n  display: inline-block;\n  margin-top: 150px;\n  font-weight: lighter;\n  border-radius: 3px;\n  font-size: 30px;\n  padding: 20px;\n  transition: 0.2s;\n  text-align: left;\n  box-shadow: 5px 5px gray;\n}\n#alert-box3[data-v-62e92aac] {\n  width: 550px;\n  background: white;\n  display: inline-block;\n  margin-top: 50px;\n  font-weight: lighter;\n  border-radius: 3px;\n  font-size: 20px;\n  padding: 20px;\n  transition: 0.2s;\n  text-align: left;\n  box-shadow: 5px 5px gray;\n}\n.productTable[data-v-62e92aac] {\n  width: 100%;\n  margin-top: 5%;\n  margin-bottom: 5%;\n}\n.categoryTable[data-v-62e92aac] {\n  width: 70%;\n  margin-top: 5%;\n  margin-bottom: 5%;\n}\n.addOnsTable[data-v-62e92aac] {\n  width: 50%;\n  margin-top: 5%;\n  margin-bottom: 5%;\n}\n.cupTable[data-v-62e92aac] {\n  width: 60%;\n  margin-top: 5%;\n  margin-bottom: 5%;\n}\n.my-custom-scrollbar[data-v-62e92aac] {\n  position: relative;\n  height: 500px;\n  width: 70%;\n  overflow: auto;\n}\n.table-wrapper-scroll-y[data-v-62e92aac] {\n  display: contents;\n}\n.div[data-v-62e92aac] {\n  /* border-style: solid; */\n  margin-top: 3%;\n  margin-bottom: 5%;\n}\n.btnModal[data-v-62e92aac] {\n  float: right;\n  margin-right: 1%;\n}\n#buttonAdd[data-v-62e92aac] {\n  float: right;\n}\n", ""]);
 
 // exports
 
@@ -3105,7 +3131,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.errorColor[data-v-5dae969f] {\r\n  color: red;\n}\r\n", ""]);
+exports.push([module.i, "\n.errorColor[data-v-5dae969f] {\n  color: red;\n}\n", ""]);
 
 // exports
 
@@ -3124,7 +3150,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.errorColor[data-v-0469fbd2] {\r\n  color: red;\n}\n.spanDesign[data-v-0469fbd2]{\r\n    font-size: 15px;\r\n    font-weight: bold;\r\n    margin-top: 5px;\n}\n.rowDesign[data-v-0469fbd2]{\r\n    margin-bottom: -5%\n}\r\n", ""]);
+exports.push([module.i, "\n.errorColor[data-v-0469fbd2] {\n  color: red;\n}\n.spanDesign[data-v-0469fbd2]{\n    font-size: 15px;\n    font-weight: bold;\n    margin-top: 5px;\n}\n.rowDesign[data-v-0469fbd2]{\n    margin-bottom: -5%\n}\n", ""]);
 
 // exports
 
@@ -3143,7 +3169,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.errorColor[data-v-0f54414b] {\r\n  color: red;\n}\n.spanDesign[data-v-0f54414b]{\r\n    font-size: 15px;\r\n    font-weight: bold;\r\n    margin-top: 5px;\n}\n.rowDesign[data-v-0f54414b]{\r\n    margin-bottom: -5%\n}\n.addStyle[data-v-0f54414b]{\r\n    margin-top: 2px;\r\n    width: 50%;\n}\r\n", ""]);
+exports.push([module.i, "\n.errorColor[data-v-0f54414b] {\n  color: red;\n}\n.spanDesign[data-v-0f54414b]{\n    font-size: 15px;\n    font-weight: bold;\n    margin-top: 5px;\n}\n.rowDesign[data-v-0f54414b]{\n    margin-bottom: -5%\n}\n.addStyle[data-v-0f54414b]{\n    margin-top: 2px;\n    width: 50%;\n}\n", ""]);
 
 // exports
 

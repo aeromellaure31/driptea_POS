@@ -1,7 +1,7 @@
 import axios from 'axios'
 import ROUTER from '../../router'
 export default {
-    url: 'https://driptea-pos.herokuapp.com/',
+    url: 'http://ec2-54-175-164-203.compute-1.amazonaws.com/',
     // url: 'http://localhost:8000/',
     productPrice: null,
     imageSelected: null,

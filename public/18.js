@@ -494,7 +494,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 exports.push([module.i, "@import url(https://cdn.syncfusion.com/ej2/material.css);", ""]);
 
 // module
-exports.push([module.i, "\n.table[data-v-2d64b2de] {\r\n  margin-left: 50px;\r\n  width: 90%;\n}\ntd[data-v-2d64b2de] {\r\n  text-align: center;\n}\n.calendarDate[data-v-2d64b2de]{\r\n  width: 0%;\r\n  margin-top: 2.3%;\r\n  margin-right: 3%;\n}\r\n", ""]);
+exports.push([module.i, "\n.table[data-v-2d64b2de] {\n  margin-left: 50px;\n  width: 90%;\n}\ntd[data-v-2d64b2de] {\n  text-align: center;\n}\n.calendarDate[data-v-2d64b2de]{\n  width: 0%;\n  margin-top: 2.3%;\n  margin-right: 3%;\n}\n", ""]);
 
 // exports
 

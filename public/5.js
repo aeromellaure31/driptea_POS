@@ -659,7 +659,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.empty[data-v-2b20b1c4]{\r\n    width: 100%;\r\n    margin-top: 25px;\r\n    margin-bottom: 25px;\r\n    float: left;\r\n    min-height: 450px;\r\n    overflow-y: hidden;\r\n    text-align: center;\r\n    border: solid 1px #ddd;\n}\n.empty i[data-v-2b20b1c4]{\r\n    font-size: 100px;\r\n    padding-top: 150px;\n}\n.empty span[data-v-2b20b1c4]{\r\n    width: 100%;\r\n    float: left;\n}\n.empty .description[data-v-2b20b1c4]{\r\n    font-size: 24px;\n}\r\n", ""]);
+exports.push([module.i, "\n.empty[data-v-2b20b1c4]{\n    width: 100%;\n    margin-top: 25px;\n    margin-bottom: 25px;\n    float: left;\n    min-height: 450px;\n    overflow-y: hidden;\n    text-align: center;\n    border: solid 1px #ddd;\n}\n.empty i[data-v-2b20b1c4]{\n    font-size: 100px;\n    padding-top: 150px;\n}\n.empty span[data-v-2b20b1c4]{\n    width: 100%;\n    float: left;\n}\n.empty .description[data-v-2b20b1c4]{\n    font-size: 24px;\n}\n", ""]);
 
 // exports
 
@@ -678,7 +678,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 exports.push([module.i, "@import url(https://cdn.syncfusion.com/ej2/material.css);", ""]);
 
 // module
-exports.push([module.i, "\n.top[data-v-d32a416e]{\r\n    margin-top: 6%;\n}\n.colorstyle[data-v-d32a416e]{\r\n    width: 25%;\r\n    color: white;\r\n    background-color: #ff5b04;\r\n    border-top-style: hidden;\r\n    border-right-style: hidden;\r\n    border-left-style: hidden;\r\n    border-bottom-style: white;\n}\n.calendarDate[data-v-d32a416e]{\r\n    width: 0%;\r\n    margin-top: 2.3%;\r\n    margin-right: 3%;\n}\r\n", ""]);
+exports.push([module.i, "\n.top[data-v-d32a416e]{\n    margin-top: 6%;\n}\n.colorstyle[data-v-d32a416e]{\n    width: 25%;\n    color: white;\n    background-color: #ff5b04;\n    border-top-style: hidden;\n    border-right-style: hidden;\n    border-left-style: hidden;\n    border-bottom-style: white;\n}\n.calendarDate[data-v-d32a416e]{\n    width: 0%;\n    margin-top: 2.3%;\n    margin-right: 3%;\n}\n", ""]);
 
 // exports
 

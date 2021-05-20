@@ -1057,7 +1057,7 @@ export default {
         if(response.data.status === 'Token is Expired'){
           AUTH.deauthenticate()
         }
-        this.quantityRetrieve = JSON.parse(response.data.addIngredient[0].remainingQuantity)
+        this.quantityRetrieve = JSON.parse((response.data.addIngredient[0].remainingQuantity).replace('/', ''))
       });
     },
     retrieveIngredients(){
@@ -1575,11 +1575,28 @@ export default {
       }
     },
     editProduct(item) {
-      this.value = []
-      var selected = JSON.parse(item.ingredients).split(',')
+      let selected = JSON.parse((item.ingredients).replace('/', ''))
+      let storeData = [];
       selected.forEach(el => {
-        this.value.push({ingredientsName: el})
+          storeData.push(el.ingredient)
       })
+      console.log(storeData)
+      let storage = [];
+      this.options.forEach(element => {
+          if(!storeData.includes(element.ingredientsName)){
+              storage.push(element)
+          }else{
+               selected.forEach(el => {
+                    if(element.ingredientsName === el.ingredient && storeData.includes(el.ingredient)){
+                         storeData.push(element.ingredientsName)
+                         storage.push({ingredientsName: el.ingredient, lowDose: el.lowDose, highDose: el.highDose, overDose: el.overDose, status: 'uncheck'})
+                    }
+              })
+          }
+      })
+      this.options = [];
+      this.options = storage;
+      storage = [];
       this.errorMessage = null;
       this.dialogForProduct = true;
       this.productName = item.productName
@@ -1612,9 +1629,17 @@ export default {
         this.onlinelowPrice > 0 && this.onlinehighPrice > 0 && this.onlineoverPrice > 0 && this.errorMessage1 === null &&
         this.errorMessage7 === null && this.errorMessage8 === null){
           e.preventDefault();
-          var value = []
-          this.value.forEach(el => {
-            value.push(el.ingredientsName)
+
+          let value = []
+          this.options.forEach(el => {
+            if(el.status === 'check'){
+              value.push({
+                'ingredient': el.ingredientsName,
+                'lowDose': el.lowDose,
+                'highDose': el.highDose, 
+                'overDose': el.overDose
+              })
+            }
           })
           let currentObj = this;
           const config = {
@@ -1626,7 +1651,7 @@ export default {
           let formData = new FormData();
           formData.append('id', this.prodId)
           formData.append('image', this.toSaveImage)
-          formData.append('ingredients', value)
+          formData.append('ingredients', JSON.stringify(value))
           formData.append('status', this.status)
           formData.append('productCategory', this.prodType)
           formData.append('productName', this.productName)

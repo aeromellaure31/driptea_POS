@@ -149,7 +149,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\r\n/* width */\n[data-v-2ce7e3b8]::-webkit-scrollbar {\r\n  width: 1px;\n}\n.noImage[data-v-2ce7e3b8]{\r\n    margin-top: 10%;\r\n    height: 200px;\r\n    width: 30%;\n}\n.imgItem[data-v-2ce7e3b8]{\r\n    height: 200px;\r\n    width: 80%;\n}\n.row[data-v-2ce7e3b8]{\r\n    width: 80%;\r\n    /* height: 650px; */\r\n    overflow-y: scroll;\n}\n.secRow[data-v-2ce7e3b8]{\r\n    width: 80%;\r\n    height: 650px;\r\n    overflow-y: scroll;\n}\n.sudlanan[data-v-2ce7e3b8]{\r\n    font-family: Roboto Slab;\n}\n.imageSize[data-v-2ce7e3b8]{\r\n    height: 250px;\r\n    margin-top: 2%;\n}\r\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n/* width */\n[data-v-2ce7e3b8]::-webkit-scrollbar {\n  width: 1px;\n}\n.noImage[data-v-2ce7e3b8]{\n    margin-top: 10%;\n    height: 200px;\n    width: 30%;\n}\n.imgItem[data-v-2ce7e3b8]{\n    height: 200px;\n    width: 80%;\n}\n.row[data-v-2ce7e3b8]{\n    width: 80%;\n    /* height: 650px; */\n    overflow-y: scroll;\n}\n.secRow[data-v-2ce7e3b8]{\n    width: 80%;\n    height: 650px;\n    overflow-y: scroll;\n}\n.sudlanan[data-v-2ce7e3b8]{\n    font-family: Roboto Slab;\n}\n.imageSize[data-v-2ce7e3b8]{\n    height: 250px;\n    margin-top: 2%;\n}\n", ""]);
 
 // exports
 

@@ -194,7 +194,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.empty[data-v-2b20b1c4]{\r\n    width: 100%;\r\n    margin-top: 25px;\r\n    margin-bottom: 25px;\r\n    float: left;\r\n    min-height: 450px;\r\n    overflow-y: hidden;\r\n    text-align: center;\r\n    border: solid 1px #ddd;\n}\n.empty i[data-v-2b20b1c4]{\r\n    font-size: 100px;\r\n    padding-top: 150px;\n}\n.empty span[data-v-2b20b1c4]{\r\n    width: 100%;\r\n    float: left;\n}\n.empty .description[data-v-2b20b1c4]{\r\n    font-size: 24px;\n}\r\n", ""]);
+exports.push([module.i, "\n.empty[data-v-2b20b1c4]{\n    width: 100%;\n    margin-top: 25px;\n    margin-bottom: 25px;\n    float: left;\n    min-height: 450px;\n    overflow-y: hidden;\n    text-align: center;\n    border: solid 1px #ddd;\n}\n.empty i[data-v-2b20b1c4]{\n    font-size: 100px;\n    padding-top: 150px;\n}\n.empty span[data-v-2b20b1c4]{\n    width: 100%;\n    float: left;\n}\n.empty .description[data-v-2b20b1c4]{\n    font-size: 24px;\n}\n", ""]);
 
 // exports
 
@@ -213,7 +213,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* width */\n[data-v-a3679af6]::-webkit-scrollbar {\r\n    width: 1px;\n}\n.noImage[data-v-a3679af6] {\r\n    margin-top: 10%;\r\n    height: 200px;\r\n    width: 30%;\n}\n.imgItem[data-v-a3679af6] {\r\n    height: 200px;\r\n    width: 80%;\n}\n.row[data-v-a3679af6] {\r\n    width: 80%;\r\n    height: 650px;\r\n    overflow-y: scroll;\n}\n.secRow[data-v-a3679af6] {\r\n    width: 80%;\r\n    height: 650px;\r\n    overflow-y: scroll;\n}\n.sudlanan[data-v-a3679af6] {\r\n    background-color: white;\r\n    height: 92.8vh;\r\n    overflow: hidden;\r\n    color: white;\r\n    font-family: Roboto Slab;\n}\n.imageSize[data-v-a3679af6] {\r\n    height: 250px;\r\n    margin-top: 2%;\n}\r\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* width */\n[data-v-a3679af6]::-webkit-scrollbar {\n    width: 1px;\n}\n.noImage[data-v-a3679af6] {\n    margin-top: 10%;\n    height: 200px;\n    width: 30%;\n}\n.imgItem[data-v-a3679af6] {\n    height: 200px;\n    width: 80%;\n}\n.row[data-v-a3679af6] {\n    width: 80%;\n    height: 650px;\n    overflow-y: scroll;\n}\n.secRow[data-v-a3679af6] {\n    width: 80%;\n    height: 650px;\n    overflow-y: scroll;\n}\n.sudlanan[data-v-a3679af6] {\n    background-color: white;\n    height: 92.8vh;\n    overflow: hidden;\n    color: white;\n    font-family: Roboto Slab;\n}\n.imageSize[data-v-a3679af6] {\n    height: 250px;\n    margin-top: 2%;\n}\n", ""]);
 
 // exports
 
@@ -354,7 +354,7 @@ var render = function() {
             },
             [
               _c("v-icon", [_vm._v("mdi-home")]),
-              _vm._v("  Back\r\n            ")
+              _vm._v("  Back\n            ")
             ],
             1
           )
