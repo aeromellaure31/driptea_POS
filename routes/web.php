@@ -38,7 +38,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('retrieveProduct','App\Http\Controllers\ProductController@retrieveProduct');
     Route::post('retrieveOneProduct','App\Http\Controllers\ProductController@retrieveOneProduct');
     Route::post('retrieveAllProduct','App\Http\Controllers\ProductController@retrieveAllProduct');
-    Route::post('retrieveAllProductAscending','App\Http\Controllers\ProductController@retrieveAllProductAscending');
+    Route::post('retrieveAllProductAscending','App\Http\Controllers\ProductController@retrieveProductsWithIngredients');
     Route::post('updateStatusProduct','App\Http\Controllers\ProductController@updateStatusProduct');
     Route::post('deleteProduct','App\Http\Controllers\ProductController@deleteProduct');
     Route::post('getProducts','App\Http\Controllers\ProductController@retrieveAllProductAscending');
