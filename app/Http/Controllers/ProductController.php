@@ -103,7 +103,7 @@ class ProductController extends Controller
             $prodFinal = [];
             foreach ($product as $key => $value) {
                 if(!in_array($key, $productIndex)){
-                    array_push($prodFinal, $value)
+                    array_push($prodFinal, $value);
                 }
             }
             $product = $prodFinal;
@@ -155,7 +155,7 @@ class ProductController extends Controller
             $prodFinal = [];
             foreach ($product as $key => $value) {
                 if(!in_array($key, $productIndex)){
-                    array_push($prodFinal, $value)
+                    array_push($prodFinal, $value);
                 }
             }
             $product = $prodFinal;

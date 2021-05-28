@@ -36,9 +36,9 @@
             <template v-slot:item.date="{ item }">
                 <span>{{getDate(item.date)}}</span>
             </template>
-            <template v-slot:item.quantity="{ item }">
+            <!-- <template v-slot:item.quantity="{ item }">
                 <span>{{putData(item)}}</span>
-            </template>
+            </template> -->
             <template v-slot:item.remaining="{ item }">
                 <span>{{putDataRemaining(item)}}</span>
             </template>
@@ -119,7 +119,7 @@ export default {
             this.ingredientsData.forEach(elem => {
                 if(e.ingredient === elem.ingredientsName){
                     if(elem.type === 'Pack of Pearl'){
-                        output = e.remaining + ' scope'
+                        output = e.remaining + ' scoop'
                     }else if(elem.type === 'Can of Fructose'){
                         output = e.remaining + ' ml'
                     }else if(elem.type === 'Bottle of Dough Syrup'){
@@ -131,7 +131,7 @@ export default {
                     }else if(elem.type === 'Bottle of Cream Milk'){
                         output = e.remaining + ' ml'
                     }else if(elem.type === 'Pack of Powder'){
-                        output = e.remaining + ' scope'
+                        output = e.remaining + ' scoop'
                     }
                 }
             })
@@ -142,7 +142,7 @@ export default {
             this.ingredientsData.forEach(elem => {
                 if(e.ingredient === elem.ingredientsName){
                     if(elem.type === 'Pack of Pearl'){
-                        output = e.quantity + ' scope'
+                        output = e.quantity + ' scoop'
                     }else if(elem.type === 'Can of Fructose'){
                         output = e.quantity + ' ml'
                     }else if(elem.type === 'Bottle of Dough Syrup'){
@@ -154,7 +154,7 @@ export default {
                     }else if(elem.type === 'Bottle of Cream Milk'){
                         output = e.quantity + ' ml'
                     }else if(elem.type === 'Pack of Powder'){
-                        output = e.quantity + ' scope'
+                        output = e.quantity + ' scoop'
                     }
                 }
             })
@@ -165,7 +165,7 @@ export default {
             this.ingredientsData.forEach(elem => {
                 if(e.ingredient === elem.ingredientsName){
                     if(elem.type === 'Pack of Pearl'){
-                        e.used ? output = e.used + ' scope' : output = '0 scope'
+                        e.used ? output = e.used + ' scoop' : output = '0 scoop'
                     }else if(elem.type === 'Can of Fructose'){
                         e.used ? output = e.used + ' ml' : output = '0 ml'
                     }else if(elem.type === 'Bottle of Dough Syrup'){
@@ -177,7 +177,7 @@ export default {
                     }else if(elem.type === 'Bottle of Cream Milk'){
                         e.used ? output = e.used + ' ml' : output = '0 ml'
                     }else if(elem.type === 'Pack of Powder'){
-                        e.used ? output = e.used + ' scope' :  output = '0 scope'
+                        e.used ? output = e.used + ' scoop' :  output = '0 scoop'
                     }
                 }
             })
@@ -259,7 +259,7 @@ export default {
             }
         },
         getDate(date) {
-            return moment(date).format("LLL");
+            return moment(date).format("MM/DD/YYYY");
         },
         searchData() {
             this.dialogForCupSize = true

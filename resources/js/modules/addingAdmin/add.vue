@@ -55,6 +55,13 @@
             type="button"
             class="btn btn-primary btnModal"
             dark
+            @click="showIngredientType"
+          >Ingredient's Type</v-btn>
+          <v-btn
+            color="primary"
+            type="button"
+            class="btn btn-primary btnModal"
+            dark
             @click="showCalculation"
           >Calculation</v-btn>
           <v-btn
@@ -617,6 +624,7 @@
         <calculation v-if="dialogForCalculation"></calculation>
         <addingIngredients v-if="dialogForIngredients"></addingIngredients>
         <newIngredients ref="show" v-if="dialogForNewIngredients"></newIngredients>
+        <ingredientsType v-if="dialogForIngredientsType"></ingredientsType>
         <loading v-if="loadingShow"></loading>
   </div>
 </template>
@@ -816,6 +824,7 @@ import loading from '../../basic/loading.vue';
 import addingIngredients from './addingQuantityIngredients.vue';
 import Multiselect from 'vue-multiselect'
 import newIngredients from './ingredients.vue';
+import ingredientsType from './ingredientsType.vue';
 import calculation from './calculation.vue';
 import swal from "sweetalert";
 import noImage from '../../../assets/noImage.jpg'
@@ -906,6 +915,7 @@ export default {
       dialogForIngredients: false,
       dialogForNewIngredients: false,
       dialogForCalculation: false,
+      dialogForIngredientsType: false,
       dataHeader: null,
       catId: null,
       exampleRules : {
@@ -1003,6 +1013,7 @@ export default {
     addingIngredients,
     calculation,
     newIngredients,
+    ingredientsType,
     Multiselect,
     // updateIng
   },
@@ -1017,19 +1028,19 @@ export default {
     },
     getData(param){
       if(param.type === 'Pack of Pearl'){
-        return this.quantityRetrieve[param.id-1] ? this.quantityRetrieve[param.id-1] + ' scopes of pearl available' : 'No available scopes of powder'
+        return this.quantityRetrieve[param.id-1] ? this.quantityRetrieve[param.id-1] + ' scoops of pearl available' : 'No available scoops of powder'
       }else if(param.type === 'Can of Fructose'){
-        return this.quantityRetrieve[param.id-1] ? this.quantityRetrieve[param.id-1] + ' ml of fructose available' : 'No available scopes of powder'
+        return this.quantityRetrieve[param.id-1] ? this.quantityRetrieve[param.id-1] + ' ml of fructose available' : 'No available scoops of powder'
       }else if(param.type === 'Bottle of Dough Syrup'){
-        return this.quantityRetrieve[param.id-1] ? this.quantityRetrieve[param.id-1] + ' ml of cookie dough syrup available' : 'No available scopes of powder'
+        return this.quantityRetrieve[param.id-1] ? this.quantityRetrieve[param.id-1] + ' ml of cookie dough syrup available' : 'No available scoops of powder'
       }else if(param.type === 'Pack of Tea'){
-        return this.quantityRetrieve[param.id-1] ? this.quantityRetrieve[param.id-1] + ' ml of tea available' : 'No available scopes of powder'
+        return this.quantityRetrieve[param.id-1] ? this.quantityRetrieve[param.id-1] + ' ml of tea available' : 'No available scoops of powder'
       }else if(param.type === 'Can of Wintermelon Syrup'){
-        return this.quantityRetrieve[param.id-1] ? this.quantityRetrieve[param.id-1] + ' ml of wintermelon syrup available' : 'No available scopes of powder'
+        return this.quantityRetrieve[param.id-1] ? this.quantityRetrieve[param.id-1] + ' ml of wintermelon syrup available' : 'No available scoops of powder'
       }else if(param.type === 'Bottle of Cream Milk'){
-        return this.quantityRetrieve[param.id-1] ? this.quantityRetrieve[param.id-1] + ' ml of cream milk available' : 'No available scopes of powder'
+        return this.quantityRetrieve[param.id-1] ? this.quantityRetrieve[param.id-1] + ' ml of cream milk available' : 'No available scoops of powder'
       }else if(param.type === 'Pack of Powder'){
-        return this.quantityRetrieve[param.id-1] ? this.quantityRetrieve[param.id-1] + ' scopes of powder available' : 'No available scopes of powder'
+        return this.quantityRetrieve[param.id-1] ? this.quantityRetrieve[param.id-1] + ' scoops of powder available' : 'No available scoops of powder'
       }else{
         return 0
       }
@@ -1076,6 +1087,7 @@ export default {
     },
     closeModal(){
       this.dialogForCalculation = false
+      this.dialogForIngredientsType = false
       this.dialogForIngredients = false
       this.dialogForNewIngredients = false
       // this.ingredientsToAdd = false
@@ -1974,6 +1986,9 @@ export default {
     },
     showCalculation() {
       this.dialogForCalculation = true;
+    },
+    showIngredientType() {
+      this.dialogForIngredientsType = true;
     },
     showCategory() {
       this.editCat = false
